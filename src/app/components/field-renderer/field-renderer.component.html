@@ -1,4 +1,4 @@
-<div *ngFor="let field of fieldEditor.config.fields">
+<div *ngFor="let field of fieldEditor.config.fields; trackBy: trackByGuid">
   <fs-field-render
     [attr.data-guid]="field.config.guid"
     [field]="field"

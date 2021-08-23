@@ -10,7 +10,7 @@ import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
-import { FieldEditorConfig } from './../../interfaces/field.interface';
+import { Field, FieldEditorConfig } from './../../interfaces/field.interface';
 import { FieldRenderDirective } from './../../directives/field-render/field-render.directive';
 import { FieldEditorService } from '../../services/field-editor.service';
 
@@ -45,4 +45,7 @@ export class FieldRendererComponent {
     this.fieldEditor.setConfig(config);
   }
 
+  public trackByGuid(index: number, item: Field) {
+    return item.config.guid;
+  }
 }
