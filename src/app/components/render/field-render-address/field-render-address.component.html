@@ -1,5 +1,9 @@
-<fs-address
-  [config]="config"
-  [(address)]="field.data.value"
-  (addressChange)="changed.emit(field)">
-+</fs-address>
+<fs-label-field>
+  <fs-label>{{field.config.label}}</fs-label>
+
+  <fs-address
+    [config]="config"
+    [(address)]="field.data.value"
+    (addressChange)="changed.emit(field)">
+  </fs-address>
+</fs-label-field>
