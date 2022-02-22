@@ -66,7 +66,7 @@ export class TermsFieldConfigComponent implements Validator, ControlValueAccesso
   }
 
   public validate(control: AbstractControl): ValidationErrors | null {
-    if (this.field.config.configs.termsContentSource === 'url' && !this._urlModel?.control.valid) {
+    if (this.field?.config?.configs?.termsContentSource === 'url' && !this._urlModel?.control.valid) {
       return {
         url: false,
       };

@@ -40,7 +40,7 @@
         <ng-template fsFieldConfig type="terms" let-field="field" let-fieldEditor="fieldEditor">
           <div fxLayout="column">
             <app-terms-field-config
-              name="terms"
+              name="terms_{{ field?.data?.guid }}"
               [ngModel]="field"
               (ngModelChange)="fieldChanged(fieldEditor, field)">
             </app-terms-field-config>

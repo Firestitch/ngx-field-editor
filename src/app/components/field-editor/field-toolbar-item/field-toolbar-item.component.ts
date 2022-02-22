@@ -6,6 +6,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 import { guid } from '@firestitch/common';
 
+import { cloneDeep } from 'lodash-es';
+
 import { Field, ToolbarItem } from '../../../interfaces/field.interface';
 import { FieldType } from '../../../enums/field-type';
 import { BACKDROP_CLASS, BACKDROP_HIDDEN_CLASS } from '../../../constants/backdrop-class';
@@ -42,7 +44,7 @@ export class FieldToolbarItemComponent {
 
     this.field = {
       config: {
-        ...this.item.config,
+        ...cloneDeep(this.item.config),
         guid: guid(),
         type: item.type,
         label: item.label,
