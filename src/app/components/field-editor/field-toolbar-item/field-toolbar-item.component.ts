@@ -75,7 +75,7 @@ export class FieldToolbarItemComponent {
   public itemClick(item: ToolbarItem): void {
     const field = this._prepareField(item)
     this.fieldEditor.insertNewField(
-      field,
+      cloneDeep(field),
       undefined,
       {
         item: {
