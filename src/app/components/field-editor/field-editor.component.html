@@ -18,17 +18,20 @@
 
   <div class="toolbar-container" #boundary>
     <div #spacer></div>
-    <ng-container
-      *ngTemplateOutlet="editoToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl} ">
-    </ng-container>
-    <ng-template #toolbarTpl>
-      <fs-field-toolbar
-        stickyThing
-        [spacer]="spacer"
-        [scrollContainer]="scrollContainer"
-        [boundary]="scrollContainer ? null : boundary"
-        marginTop="30">
-      </fs-field-toolbar>
-    </ng-template>
+    <div class="toolbar">
+      <ng-container
+        *ngTemplateOutlet="editoToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl} ">
+      </ng-container>
+      <ng-template #toolbarTpl>
+        <fs-field-toolbar
+          stickyThing
+          [spacer]="spacer"
+          [scrollContainer]="scrollContainer"
+          [boundary]="scrollContainer ? null : boundary"
+          marginTop="30">
+        </fs-field-toolbar>
+      </ng-template>      
+    </div>
+
   </div>
 </div>

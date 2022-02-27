@@ -33,7 +33,7 @@ export class ExampleComponent implements OnInit {
     public fsApi: FsApi,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.config = {
       fieldDrop: (field, toolbarItem) => {
         if (field.config.type === 'share') {

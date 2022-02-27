@@ -18,7 +18,6 @@
   .fields-container {
     display: flex;
     flex-grow: 1;
-    margin-right: -60px;
   }
 }
 
@@ -29,7 +28,11 @@
 }
 
 .toolbar-container {
-  width: 60px;
+  .toolbar {
+    position: absolute;
+    right: 0;    
+    margin-right: 15px;
+  }
 }
 
 fs-field-toolbar {

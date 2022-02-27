@@ -73,8 +73,8 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     private _elRef: ElementRef,
   ) {}
 
-  @Input('config')
-  set setConfig(config: FieldEditorConfig) {
+  @Input()
+  set config(config: FieldEditorConfig) {
     this.fieldEditor.setConfig(config);
   }
 
@@ -103,10 +103,13 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     }
   }
 
+  public setConfig(config: FieldEditorConfig) {
+    this.fieldEditor.setConfig(config);
+    this._cdRef.markForCheck();
+  }
+
   public drop(event: CdkDragDrop<string[]>) {
-
     if (event.container === event.previousContainer) {
-
       moveItemInArray(
         this.fieldEditor.config.fields,
         event.previousIndex,
