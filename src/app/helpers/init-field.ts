@@ -10,7 +10,7 @@ export function initField(field: Field): Field {
   }
 
   if (!field.data) {
-    field.data = { value: '' };
+    field.data = {};
   }
 
   if (!field.config) {
@@ -29,6 +29,11 @@ export function initField(field: Field): Field {
 
     case FieldType.Content:
       field.config.hideRequired = true;
+
+      if(typeof field.data?.value !== 'string') {
+        field.data = { value: field.config.configs?.content };
+      }
+
       break;
 
     case FieldType.Checkbox:

@@ -75,8 +75,9 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="fieldType.Content">
-          <fs-field-config-content [field]="field"
-                                   (changed)="fieldEditor.fieldChanged($event)">
+          <fs-field-config-content 
+            [field]="field"
+            (changed)="fieldEditor.fieldChanged($event)">
           </fs-field-config-content>
         </ng-container>
 
@@ -154,7 +155,18 @@
           </ng-container>
 
           <ng-container *ngSwitchCase="fieldType.Content">
-            <fs-field-render-content [disabled]="true" [field]="field"></fs-field-render-content>
+            <fs-label-field>
+              <fs-label>{{field.config.label}}</fs-label>
+            
+              <fs-html-editor
+                [config]="{ autofocus: false, disabled: true }"
+                [ngModel]="field.config.configs.content">
+              </fs-html-editor>
+            
+              <fs-label-message *ngIf="field.config.description">
+                {{ field.config.description }}
+              </fs-label-message>
+            </fs-label-field>
           </ng-container>
 
           <ng-container *ngSwitchCase="fieldType.Address">

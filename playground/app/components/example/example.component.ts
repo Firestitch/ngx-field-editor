@@ -269,15 +269,17 @@ export class ExampleComponent implements OnInit {
         },
       },
       {
-        data: {
-          content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        },
-        config:
-        {
+        // data: {
+        //   value: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        // },
+        config: {
           guid: '2',
           type: FieldType.Content,
           label: 'Content',
-          description: 'Content Description'
+          description: 'Content Description',
+          configs: {
+            content: this._getTerms()
+          }
         },
       },
       {
