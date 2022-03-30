@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 .field-container,
 .fs-field-option {
@@ -63,10 +63,10 @@ fs-field-renderer {
 
 @mixin fs-field-editor($theme) {
 
-  $primary: mat-palette($theme);
+  $primary: mat.define-palette($theme);
 
   .toolbar-field.cdk-drag-preview {
-    background: mat-color($primary);
+    background: mat.get-color-from-palette($primary);
     white-space: nowrap;
     height: auto !important;
 
@@ -84,7 +84,7 @@ fs-field-renderer {
   }
 
   .toolbar-button {
-    color: mat-contrast($primary, 500);
+    color: mat.get-contrast-color-from-palette($primary, 500);
   }
 }
 
