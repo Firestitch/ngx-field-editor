@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @use "~@firestitch/style/styles" as fs-style;
 
 @import '../tools/assets/playground.scss';
@@ -10,8 +11,8 @@
 
 
 @include fs-style.core();
-@include mat-core();
-@include fs-file($mat-blue);
-@include fs-html-editor($mat-blue);
-@include fs-field-editor($mat-blue);
-@include fs-form($mat-blue);
+@include mat.core();
+@include fs-file(mat.$blue-palette);
+@include fs-html-editor(mat.$blue-palette);
+@include fs-field-editor(mat.$blue-palette);
+@include fs-form($app-theme);
