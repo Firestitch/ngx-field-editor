@@ -56,18 +56,17 @@ export class FieldFilePickerComponent implements OnInit, OnDestroy, ControlValue
     this.onTouched();
 
     if (this._fieldEditor.config.fileUpload) {
-
       if (!this.field.config.configs.allowMultiple) {
         files = [files];
       }
 
       files.forEach((fsFile: FsFile) => {
-
         this._fieldEditor.config.fileUpload(this.field, fsFile.file)
         .pipe(
           takeUntil(this._destroy$)
         )
         .subscribe((response: any) => {
+          debugger;
           const file = new FileRenderFile(response.url, response.name);
           file.value = response;
 

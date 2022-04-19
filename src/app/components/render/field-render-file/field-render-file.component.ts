@@ -1,12 +1,11 @@
 import { Component, ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
 
-import { GalleryLayout, FsGalleryConfig, FsGalleryComponent, mime, ThumbnailScale } from '@firestitch/gallery';
-
-import { of } from 'rxjs';
-
 import { FieldComponent } from '../../field/field.component';
 import { FieldEditorService } from '../../../services/field-editor.service';
 import { FieldFilePickerComponent } from './file-picker/field-file-picker.component';
+import { FsPrompt } from '@firestitch/prompt';
+import { switchMap } from 'rxjs/operators';
+import { FieldViewGalleryComponent } from '../../field-view-gallery/field-view-gallery.component';
 
 
 @Component({
@@ -20,20 +19,21 @@ export class FieldRenderFileComponent extends FieldComponent implements OnInit {
   @ViewChild(FieldFilePickerComponent)
   public filePicker: FieldFilePickerComponent;
 
-  @ViewChild(FsGalleryComponent)
-  public gallery: FsGalleryComponent;
+  @ViewChild(FieldViewGalleryComponent)
+  public fieldViewGallery: FieldViewGalleryComponent;
 
-  public galleryConfig: FsGalleryConfig;
+  public actions = [];
 
   public constructor(
     public fieldEditor: FieldEditorService,
+    public _prompt: FsPrompt,
   ) {
     super();
   }
 
   public change(files: any) {
     this.field.data.value = files;
-    this.gallery.refresh();
+    this.fieldViewGallery.reload();
   }
 
   public ngOnInit() {
@@ -43,9 +43,8 @@ export class FieldRenderFileComponent extends FieldComponent implements OnInit {
       this.field.data.value = [];
     }
 
-    const actions = [];
     if (this.fieldEditor.config && this.fieldEditor.config.fileDownload) {
-      actions.push({
+      this.actions.push({
         label: 'Download',
         click: (item) => {
           this.fieldEditor.config.fileDownload(this.field, item);
@@ -53,18 +52,25 @@ export class FieldRenderFileComponent extends FieldComponent implements OnInit {
       });
     }
 
-    if (this.fieldEditor.config && this.fieldEditor.config.fileRemove) {
-      actions.push({
+    if (this.fieldEditor.config?.fileRemove) {
+      this.actions.push({
         label: 'Remove',
         click: (item) => {
-
-          this.fieldEditor.config.fileRemove(this.field, item)
+          this._prompt.confirm({
+            title: 'Confirm',
+            template: 'Are you sure you would like to remove this file?',
+          })
+          .pipe(
+            switchMap(() => {
+              return this.fieldEditor.config.fileRemove(this.field, item);
+            })
+          )
           .subscribe(() => {
             const idx = this.field.data.value.indexOf(item);
 
             if (idx >= 0) {
               this.field.data.value.splice(idx, 1);
-              this.gallery.refresh();
+              this.fieldViewGallery.reload();
               this.filePicker.triggerChange();
 
               if (this.fieldEditor.config.fileRemoved) {
@@ -76,39 +82,6 @@ export class FieldRenderFileComponent extends FieldComponent implements OnInit {
       });
     }
 
-    this.galleryConfig = {
-      map: (data) => {
-        return {
-          url: data.url,
-          preview: data.url,
-          name: data.name,
-          mime: mime(data.name)
-        }
-      },
-      thumbnail: {
-        width: 200,
-        scale: ThumbnailScale.None,
-      },
-      noResults: false,
-      layout: GalleryLayout.Flow,
-      toolbar: false,
-      zoom: false,
-      info: {
-        icon: true,
-      },
-      fetch: () => {
-        return of(this.field.data.value);
-      },
-    };
-
-    if (actions.length) {
-      this.galleryConfig.info = {
-        icon: true,
-        menu: {
-          actions,
-        },
-      };
-    }
   }
 
 }

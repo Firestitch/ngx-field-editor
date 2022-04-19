@@ -55,12 +55,7 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="fieldType.File">
-      <div *ngIf="field.data?.value && field.data.value.length; else notUploaded">
-        <fs-gallery [config]="galleryConfig"></fs-gallery>
-      </div>
-      <ng-template #notUploaded>
-        <span>Files are not uploaded yet.</span>
-      </ng-template>
+      <fs-field-view-gallery [field]="field"></fs-field-view-gallery>
     </ng-container>
 
     <ng-container *ngSwitchCase="fieldType.Gender">

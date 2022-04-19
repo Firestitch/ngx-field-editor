@@ -15,6 +15,9 @@
 </fs-label-field>
 
 <div class="files-preview" [hidden]="!field.data?.value?.length">
-  <fs-gallery [config]="galleryConfig"></fs-gallery>
+  <fs-field-view-gallery
+    [actions]="actions"
+    [field]="field">
+  </fs-field-view-gallery>
 </div>
 

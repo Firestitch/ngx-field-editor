@@ -55,6 +55,7 @@ import { FieldViewDirective } from './directives/field-view/field-view.directive
 import { FieldEditorConfig } from './interfaces/field.interface';
 import { FieldType } from './enums/field-type';
 import { FieldRenderComponent } from './components/render/field-render/field-render.component';
+import { FieldViewGalleryComponent } from './components/field-view-gallery/field-view-gallery.component';
 import { FieldViewComponent } from './components/field-view/field-view.component';
 import { FieldConfigNameComponent } from './components/config/field-config-name/field-config-name.component';
 import { FieldConfigOptionsComponent } from './components/config/field-config-options/field-config-options.component';
@@ -161,6 +162,7 @@ export function defaultConfigFactory(config) {
     FieldViewComponent,
     FieldViewDirective,
     FieldViewDirective,
+    FieldViewGalleryComponent,
 
     FieldRendererComponent,
     FieldRenderChoiceComponent,

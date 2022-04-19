@@ -7,9 +7,7 @@ import {
   Optional
 } from '@angular/core';
 
-import { FsGalleryConfig, GalleryLayout, mime, ThumbnailScale } from '@firestitch/gallery';
-
-import { of } from 'rxjs';
+import { FsGalleryConfig } from '@firestitch/gallery';
 
 import { FieldEditorConfig } from '../../interfaces/field.interface';
 import { FieldEditorService } from '../../services/field-editor.service';
@@ -23,14 +21,13 @@ import { FieldType } from '../../enums/field-type';
   styleUrls: ['field-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldViewComponent implements OnInit {
+export class FieldViewComponent {
 
   @Input() public showLabel = true;
 
   public field: any = { config: {} };
 
   public fieldType = FieldType;
-  public galleryConfig: FsGalleryConfig;
 
   constructor(
     @Optional() public fieldEditor: FieldEditorService,
@@ -57,38 +54,5 @@ export class FieldViewComponent implements OnInit {
   @Input('config')
   public set setConfig(config: FieldEditorConfig) {
     this.fieldEditor.setConfig(config);
-  }
-
-  public ngOnInit() {
-    if (this.field.config.type === FieldType.File) {
-      this._initGalleryConfig();
-    }
-  }
-
-  private _initGalleryConfig(): void {
-    this.galleryConfig = {
-      map: (data) => {
-        return {
-          url: data.url,
-          preview: data.url,
-          name: data.name,
-          mime: mime(data.name)
-        }
-      },
-      thumbnail: {
-        width: 200,
-        scale: ThumbnailScale.None,
-      },
-      noResults: false,
-      layout: GalleryLayout.Flow,
-      toolbar: false,
-      zoom: false,
-      info: {
-        icon: true,
-      },
-      fetch: () => {
-        return of(this.field.data.value);
-      },
-    }
   }
 }
