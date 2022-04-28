@@ -69,6 +69,10 @@
         <fs-field-render-content [field]="field" (changed)="fieldEditor.fieldChanged($event)"></fs-field-render-content>
       </ng-container>
 
+      <ng-container *ngSwitchCase="fieldType.Paragraph">
+        <fs-field-render-paragraph [field]="field"></fs-field-render-paragraph>
+      </ng-container>
+
       <ng-template #fsFieldText>
         <fs-field-render-text [field]="field" (changed)="fieldEditor.fieldChanged($event)"></fs-field-render-text>
       </ng-template>

@@ -16,4 +16,5 @@ export enum FieldType {
   Address = 'address',
   Heading = 'heading',
   Content = 'content',
+  Paragraph = 'paragraph',
 }

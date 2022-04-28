@@ -38,6 +38,12 @@
       </fs-html-renderer>
     </ng-container>
 
+    <ng-container *ngSwitchCase="fieldType.Paragraph">
+      <fs-html-renderer
+        [html]="field.data.value">
+      </fs-html-renderer>
+    </ng-container>
+
     <ng-container *ngSwitchCase="fieldType.Date">
       {{field.data.value | fsDate}}
     </ng-container>

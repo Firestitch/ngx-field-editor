@@ -35,6 +35,14 @@ export function initField(field: Field): Field {
       }
 
       break;
+    case FieldType.Paragraph:
+      field.config.hideRequired = true;
+
+      if(typeof field.data?.value !== 'string') {
+        field.data = { value: field.config.configs?.content };
+      }
+
+      break;
 
     case FieldType.Checkbox:
     case FieldType.Choice:

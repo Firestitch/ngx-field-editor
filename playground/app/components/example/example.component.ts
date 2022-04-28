@@ -283,6 +283,20 @@ export class ExampleComponent implements OnInit {
         },
       },
       {
+        // data: {
+        //   value: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        // },
+        config: {
+          guid: '2',
+          type: FieldType.Paragraph,
+          label: 'Paragraph',
+          description: 'Paragraph Description',
+          configs: {
+            content: this._getTerms()
+          }
+        },
+      },
+      {
         data: {
           value: '',
         },
