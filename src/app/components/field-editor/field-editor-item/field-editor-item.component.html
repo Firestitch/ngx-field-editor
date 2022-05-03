@@ -81,11 +81,11 @@
           </fs-field-config-content>
         </ng-container>
 
-        <ng-container *ngSwitchCase="fieldType.Paragraph">
-          <fs-field-config-content 
+        <ng-container *ngSwitchCase="fieldType.RichText">
+          <fs-field-config-rich-text 
             [field]="field"
             (changed)="fieldEditor.fieldChanged($event)">
-          </fs-field-config-content>
+          </fs-field-config-rich-text>
         </ng-container>
 
         <ng-container *ngSwitchCase="fieldType.Address">
@@ -176,13 +176,13 @@
             </fs-label-field>
           </ng-container>
 
-          <ng-container *ngSwitchCase="fieldType.Paragraph">
+          <ng-container *ngSwitchCase="fieldType.RichText">
             <fs-label-field>
               <fs-label *ngIf="field.config.label">{{field.config.label}}</fs-label>
             
               <fs-html-editor
                 [config]="{ autofocus: false, disabled: true }"
-                [ngModel]="field.config.configs.content">
+                [ngModel]="field.config.configs.default">
               </fs-html-editor>
             
               <fs-label-message *ngIf="field.config.description">

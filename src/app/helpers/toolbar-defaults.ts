@@ -15,6 +15,6 @@ export const TOOLBAR_DEFAULTS = {
   [FieldType.Gender]: { icon: 'wc', label: 'Gender' },
   [FieldType.Address]: { icon: 'location_on', label: 'Address' },
   [FieldType.Heading]: { icon: 'title', label: 'Heading' },
-  [FieldType.Content]: { icon: 'art_track', label: 'Content' },
-  [FieldType.Paragraph]: { icon: 'art_track', label: 'Paragraph' },
+  [FieldType.Content]: { icon: 'text_format', label: 'Content' },
+  [FieldType.RichText]: { icon: 'art_track', label: 'RichText' },
 };

@@ -62,12 +62,13 @@ import { FieldConfigOptionsComponent } from './components/config/field-config-op
 import { FieldConfigFileComponent } from './components/config/field-config-file/field-config-file.component';
 import { FieldConfigGenderComponent } from './components/config/field-config-gender/field-config-gender.component';
 import { FieldConfigAddressComponent } from './components/config/field-config-address/field-config-address.component';
+import { FieldConfigRichTextComponent } from './components/config/field-config-rich-text/field-config-rich-text.component';
 import { FieldRenderNameModelComponent } from './components/render/field-render-name-model/field-render-name-model.component';
 import { FieldConfigHeadingComponent } from './components/config/field-config-heading/field-config-heading.component';
 import { FieldRenderHeadingComponent } from './components/render/field-render-heading/field-render-heading.component';
 import { FieldConfigContentComponent } from './components/config/field-config-content/field-config-content.component';
 import { FieldRenderContentComponent } from './components/render/field-render-content/field-render-content.component';
-import { FieldRenderParagraphComponent } from './components/render/field-render-paragraph/field-render-paragraph.component';
+import { FieldRenderRichTextComponent } from './components/render/field-render-rich-text/field-render-rich-text.component';
 import { FieldFilePickerComponent } from './components/render/field-render-file/file-picker/field-file-picker.component';
 import { FieldRenderCheckboxComponent } from './components/render/field-render-checkbox/field-render-checkbox.component';
 import { FieldToolbarItemComponent } from './components/field-editor/field-toolbar-item/field-toolbar-item.component';
@@ -83,9 +84,10 @@ export function defaultConfigFactory(config) {
         items: [
           { type: FieldType.Heading },
           { type: FieldType.Content },
-          { type: FieldType.Paragraph },
+          { type: FieldType.Divider },
           { type: FieldType.ShortText },
           { type: FieldType.LongText },
+          { type: FieldType.RichText },
           { type: FieldType.Dropdown },
           { type: FieldType.Choice },
           { type: FieldType.Checkbox },
@@ -179,7 +181,7 @@ export function defaultConfigFactory(config) {
     FieldRenderNameModelComponent,
     FieldRenderHeadingComponent,
     FieldRenderContentComponent,
-    FieldRenderParagraphComponent,
+    FieldRenderRichTextComponent,
     FieldRenderCheckboxComponent,
     FieldRenderDateComponent,
 
@@ -190,6 +192,7 @@ export function defaultConfigFactory(config) {
     FieldConfigAddressComponent,
     FieldConfigHeadingComponent,
     FieldConfigContentComponent,
+    FieldConfigRichTextComponent,
     FieldConfigDirective,
     FieldEditorToolbarDirective,
   ],

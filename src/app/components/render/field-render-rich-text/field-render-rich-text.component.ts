@@ -9,9 +9,9 @@ import { FieldComponent } from '../../field/field.component';
 
 
 @Component({
-  selector: 'fs-field-render-paragraph',
-  styleUrls: ['./field-render-paragraph.component.scss'],
-  templateUrl: 'field-render-paragraph.component.html',
+  selector: 'fs-field-render-rich-text',
+  styleUrls: ['./field-render-rich-text.component.scss'],
+  templateUrl: 'field-render-rich-text.component.html',
   viewProviders: [
     {
       provide: ControlContainer,
@@ -21,21 +21,12 @@ import { FieldComponent } from '../../field/field.component';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderParagraphComponent extends FieldComponent implements OnInit {
+export class FieldRenderRichTextComponent extends FieldComponent implements OnInit {
 
   public editorConfig: FsHtmlEditorConfig;
 
   constructor(public fieldEditor: FieldEditorService) {
     super();
-  }
-
-  public ngOnInit(): void {
-    super.ngOnInit();
-
-    this.editorConfig = {
-      autofocus: false,
-      disabled: true,
-    };
   }
 
 }

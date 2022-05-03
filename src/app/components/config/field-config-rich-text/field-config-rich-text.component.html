@@ -1,0 +1,6 @@
+<fs-html-editor
+  [(ngModel)]="field.config.configs.default"
+  [config]="config"
+  [name]="name"
+  (ngModelChange)="changed.emit(field)">
+</fs-html-editor>

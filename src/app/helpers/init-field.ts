@@ -27,27 +27,20 @@ export function initField(field: Field): Field {
       field.config.hideRequired = true;
       break;
 
-    case FieldType.Content:
-      field.config.hideRequired = true;
+      case FieldType.Content:
+        field.config.hideRequired = true;
+        break;
 
-      if(typeof field.data?.value !== 'string') {
-        field.data = { value: field.config.configs?.content };
-      }
-
-      break;
-    case FieldType.Paragraph:
-      field.config.hideRequired = true;
-
-      if(typeof field.data?.value !== 'string') {
-        field.data = { value: field.config.configs?.content };
-      }
-
-      break;
+      case FieldType.RichText:
+        if(typeof field.data?.value !== 'string') {
+          field.data = { value: field.config.configs?.default };
+        }
+  
+        break;
 
     case FieldType.Checkbox:
     case FieldType.Choice:
     case FieldType.Dropdown:
-
       if (!field.config.configs.options) {
         field.config.configs.options = [];
       }
