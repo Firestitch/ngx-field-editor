@@ -34,6 +34,12 @@
 
     <ng-container *ngSwitchCase="fieldType.Content">
       <fs-html-renderer
+        [html]="field.config.configs.content">
+      </fs-html-renderer>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="fieldType.RichText">
+      <fs-html-renderer
         [html]="field.data.value">
       </fs-html-renderer>
     </ng-container>

@@ -7,8 +7,6 @@ import {
   Optional
 } from '@angular/core';
 
-import { FsGalleryConfig } from '@firestitch/gallery';
-
 import { FieldEditorConfig } from '../../interfaces/field.interface';
 import { FieldEditorService } from '../../services/field-editor.service';
 import { FS_FIELD_EDITOR_CONFIG } from '../../injectors/fs-field-editor.providers';
