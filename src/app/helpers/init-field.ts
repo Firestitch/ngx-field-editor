@@ -31,13 +31,6 @@ export function initField(field: Field): Field {
         field.config.hideRequired = true;
         break;
 
-      case FieldType.RichText:
-        if(typeof field.data?.value !== 'string') {
-          field.data = { value: field.config.configs?.default };
-        }
-  
-        break;
-
     case FieldType.Checkbox:
     case FieldType.Choice:
     case FieldType.Dropdown:

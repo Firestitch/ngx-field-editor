@@ -17,6 +17,7 @@ import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
 import { transformInput } from '../helpers/transform-input';
 import { transformOutput } from '../helpers/transform-output';
+import { FieldType } from '../enums/field-type';
 
 
 @Injectable()

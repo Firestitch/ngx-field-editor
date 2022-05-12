@@ -1,6 +1,6 @@
 .field-editor-container {
   display: flex;
-  padding: 15px;
+  padding: 0 4px;
   min-height: 56px;
 
   &:not(.has-fields) {
@@ -9,8 +9,8 @@
 
     ::ng-deep {
       .fields.cdk-drop-list {
-        margin: -15px;
-        padding: 15px;
+        margin: -4px;
+        padding: 4px;
       }
     }
   }
