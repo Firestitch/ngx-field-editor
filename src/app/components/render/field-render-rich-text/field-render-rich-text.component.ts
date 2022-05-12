@@ -23,7 +23,7 @@ import { FieldComponent } from '../../field/field.component';
 })
 export class FieldRenderRichTextComponent extends FieldComponent implements OnInit {
 
-  public editorConfig: FsHtmlEditorConfig;
+  public editorConfig: FsHtmlEditorConfig = { autofocus: false };
 
   constructor(public fieldEditor: FieldEditorService) {
     super();
