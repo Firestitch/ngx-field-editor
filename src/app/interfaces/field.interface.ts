@@ -29,6 +29,9 @@ export interface FieldEditorConfig {
   fields?: Field[],
   toolbar?: Toolbar,
   fieldDrop?: Function,
+  fieldCanEdit?: (field: Field) => Observable<boolean>,
+  fieldCanDelete?: (field: Field) => Observable<boolean>,
+  fieldCanDuplicate?: (field: Field) => Observable<boolean>,
   fieldChanged?: (field?: Field) => void,
   fieldAdd?: FsFieldEditorCallbackFn,
   fieldAdded?: FsFieldEditorCallbackFn,
@@ -38,7 +41,6 @@ export interface FieldEditorConfig {
   fieldDuplicate?: FsFieldEditorCallbackFn,
   fieldDuplicated?: FsFieldEditorCallbackFn,
   fieldRemoved?: FsFieldEditorCallbackFn,
-  case?: 'camel' | 'snake',
   imageUpload?: (field: Field, file: File) => Observable<string>,
   fileUpload?: (field: Field, file: File) => Observable<{ name: string, url: string }>,
   fileRemove?: (field: Field, data: any) => Observable<boolean>,
@@ -46,9 +48,15 @@ export interface FieldEditorConfig {
   fileDownload?: (field: Field, data: any) => void,
 }
 
+
 export interface FieldRendererConfig {
   fields?: Field[],
   fieldChanged?: (field?: Field) => void,
+  imageUpload?: (field: Field, file: File) => Observable<string>,
+  fileUpload?: (field: Field, file: File) => Observable<{ name: string, url: string }>,
+  fileRemove?: (field: Field, data: any) => Observable<boolean>,
+  fileRemoved?: (field: Field, data: any) => void,
+  fileDownload?: (field: Field, data: any) => void,
 }
 
 export interface Toolbar {

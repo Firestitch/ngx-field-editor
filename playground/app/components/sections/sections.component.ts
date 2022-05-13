@@ -22,15 +22,16 @@ export class SectionsComponent implements OnInit {
   public configured: FieldEditorConfig;
   public selectedIndex = 0;
 
-  constructor(@Inject(FS_FIELD_EDITOR_CONFIG) private defaultConfig,
-              public dialog: MatDialog,
-              public fsApi: FsApi)  {}
+  constructor(
+    @Inject(FS_FIELD_EDITOR_CONFIG) private defaultConfig,
+    public dialog: MatDialog,
+    public fsApi: FsApi
+  )  {}
 
   ngOnInit() {
 
     this.config = {
       fieldDrop: (field, toolbarItem) => {
-
         if (field.config.type === 'share') {
           field.config.configs.facebook = true;
           field.config.configs.google = true;

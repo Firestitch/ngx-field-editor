@@ -10,10 +10,9 @@ import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
-import { Field, FieldEditorConfig } from './../../interfaces/field.interface';
+import { Field, FieldRendererConfig } from './../../interfaces/field.interface';
 import { FieldRenderDirective } from './../../directives/field-render/field-render.directive';
 import { FieldEditorService } from '../../services/field-editor.service';
-import { FieldType } from '../../enums/field-type';
 
 
 @Component({
@@ -42,19 +41,7 @@ export class FieldRendererComponent {
   ) {}
 
   @Input('config')
-  set setConfig(config: FieldEditorConfig) {
-    config.fields = config.fields.map((field) => {
-      let data = field.data;
-      if(field.config.type === FieldType.RichText) {
-        data = { value: field.config.configs?.default || '' };
-      }
-
-      return {
-        ...field,
-        data,
-      };
-    });
-
+  set setConfig(config: FieldRendererConfig) {
     this.fieldEditor.setConfig(config);
   }
 

@@ -10,7 +10,7 @@ import { FsApi } from '@firestitch/api';
 import { guid } from '@firestitch/common';
 
 import { map } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { DialogExampleComponent } from '../dialog-example';
 import { FieldEditorService } from '../../../../src/app/services/field-editor.service';
@@ -108,13 +108,23 @@ export class ExampleComponent implements OnInit {
       fileDownload: (field, data) => {
         window.location = data.url;
       },
+      // fieldCanDelete: (field: Field) => {
+      //   return of(false);
+      // },
+      // fieldCanDuplicate: (field: Field) => {
+      //   return of(false);
+      // },
+      // fieldCanEdit: (field: Field) => {
+      //   return of(false);
+      // },
       toolbar: {
         items: [
           ...this.defaultConfig.toolbar.items,
           {
             type: FieldType.Divider,
           },
-          { icon: 'share',
+          { 
+            icon: 'share',
             label: 'Share',
             type: 'share',
             config: { id: 99 }

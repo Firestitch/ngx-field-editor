@@ -37,7 +37,7 @@
 .field-container {
   border-radius: 6px;
   margin: 8px 0;
-  padding: 0 20px 10px 20px;
+  padding: 20px 20px 10px 20px;
   box-sizing: border-box;
 }
 
@@ -70,7 +70,8 @@
 
 .drag-button {
   &.field-drag-button {
-    margin-top: -6px;
+    position: absolute;
+    margin-top: -20px;
     visibility: hidden;
   }
 

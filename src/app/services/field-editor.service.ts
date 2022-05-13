@@ -4,7 +4,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { guid } from '@firestitch/common';
 
 import { BehaviorSubject, isObservable, Observable, of, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { cloneDeep } from 'lodash-es';
 
@@ -15,8 +15,6 @@ import {
 } from '../interfaces/field.interface';
 import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
-import { transformInput } from '../helpers/transform-input';
-import { transformOutput } from '../helpers/transform-output';
 import { FieldType } from '../enums/field-type';
 
 
@@ -64,18 +62,38 @@ export class FieldEditorService implements OnDestroy {
     return this._scrollTargetField;
   }
 
+  public fieldCanDelete(field: Field): Observable<boolean> {
+    return this.config.fieldCanDelete ? 
+    this.config.fieldCanDelete(field) : 
+    of(true);
+  }
+
+  public fieldCanEdit(field: Field): Observable<boolean> {
+    return this.config.fieldCanEdit ? 
+    this.config.fieldCanEdit(field) : 
+    of(true);
+  }
+
+  public fieldCanDuplicate(field: Field): Observable<boolean> {
+    return this.config.fieldCanDuplicate ? 
+    this.config.fieldCanDuplicate(field) : 
+    of(true);
+  }
+
   public ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
   }
 
-  public selectField(field: Field) {
+  public selectField(field: Field): Observable<Field> {
     if (this.selectedField) {
       this.unselectField();
     }
-
-    this._selectedField$.next(field);
-    this.fieldSelected({ field });
+    
+    return this.fieldSelected(field)
+    .pipe(
+      tap(() => this._selectedField$.next(field))
+    );
   }
 
   public unselectField() {
@@ -90,8 +108,6 @@ export class FieldEditorService implements OnDestroy {
     this.config = { ...this._defaultConfig, ...config };
 
     if (this.config.fields) {
-      this.config.fields = transformInput(this.config.fields, this.config.case);
-
       this.config.fields = this.config.fields.map((field) => {
         return initField(field);
       });
@@ -100,6 +116,10 @@ export class FieldEditorService implements OnDestroy {
 
   public insertNewField(field: Field, index?: number, event?: CdkDragDrop<string[]>) {
     field = initField(field);
+
+    if(field.config.type === FieldType.RichText) {
+      field.data = { value: field.config.configs?.default || '' };
+    }
 
     if (index === undefined) {
       if (this.selectedField) {
@@ -165,12 +185,20 @@ export class FieldEditorService implements OnDestroy {
     }
   }
 
-  public fieldSelected(item: FsFieldEditorCallbackParams) {
-    if (this.config.fieldSelected) {
-      item = this._prepareItem(item);
+  public fieldSelected(field: Field): Observable<Field> {
+    return of(true)
+    .pipe(
+      switchMap(() => {        
+        if (this.config.fieldSelected) {
+          const item = this._prepareItem(field);
+          const result = this.config.fieldSelected(item);
+            
+          return result instanceof Observable ? result : of(field);
+        }
 
-      this.config.fieldSelected(item);
-    }
+        return of(field);
+      }),
+    );
   }
 
   public fieldUnselected(item: FsFieldEditorCallbackParams) {
@@ -225,12 +253,12 @@ export class FieldEditorService implements OnDestroy {
     this._scrollTargetField = null;
   }
 
-  private _prepareItem(params: Field | FsFieldEditorCallbackParams) {
+  private _prepareItem(params: Field | FsFieldEditorCallbackParams): any {
     const item = {
       fields: cloneDeep(this.config.fields),
       ...params,
     };
 
-    return transformOutput(item, this.config.case);
+    return item;
   }
 }

@@ -199,7 +199,7 @@ export function defaultConfigFactory(config) {
 })
 
 export class FsFieldEditorModule {
-  static forRoot(config: FieldEditorConfig = { case: 'camel' }): ModuleWithProviders<FsFieldEditorModule> {
+  static forRoot(config: FieldEditorConfig = {}): ModuleWithProviders<FsFieldEditorModule> {
     return {
       ngModule: FsFieldEditorModule,
       providers: [

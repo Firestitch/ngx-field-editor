@@ -29,6 +29,9 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit {
   public descriptionEl: ElementRef;
 
   public hasDescription;
+  public canDelete = false;
+  public canDuplicate = false;
+  public canEdit = false;
 
   public constructor(
     public fieldEditor: FieldEditorService,
@@ -40,6 +43,24 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit {
 
   public ngOnInit(): void {
     this.hasDescription = !!this.field.config.description;
+
+    this.fieldEditor.fieldCanDelete(this.field)
+    .subscribe((value) => {
+      this.canDelete = value;
+      this._cdRef.markForCheck();
+    });
+    
+    this.fieldEditor.fieldCanEdit(this.field)
+    .subscribe((value) => {
+      this.canEdit = value;
+      this._cdRef.markForCheck();
+    });
+    
+    this.fieldEditor.fieldCanDuplicate(this.field)
+    .subscribe((value) => {
+      this.canDuplicate = value;
+      this._cdRef.markForCheck();
+    });
   }
 
   public toggleRequired(): void {

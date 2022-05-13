@@ -99,7 +99,8 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
 
   public fieldClick(field: Field) {
     if (this.fieldEditor.selectedField !== field) {
-      this.fieldEditor.selectField(field);
+      this.fieldEditor.selectField(field)
+      .subscribe();
     }
   }
 

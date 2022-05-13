@@ -9,12 +9,12 @@ export function initField(field: Field): Field {
     field = {};
   }
 
-  if (!field.data) {
-    field.data = {};
-  }
-
   if (!field.config) {
     field.config = {};
+  }
+
+  if (!field.data) {
+    field.data = {};
   }
 
   if (!field.config.configs) {
@@ -125,6 +125,13 @@ export function initField(field: Field): Field {
       if (!field.config.configs.country) {
         field.config.configs.country = { enabled: true, label: 'Country' };
       }
+
+      break;
+    
+      case FieldType.RichText:
+        if(!('value' in field.data)) {
+          field.data.value = field.config.configs.default;
+        }
       break;
     }
 

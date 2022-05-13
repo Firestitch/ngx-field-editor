@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Field } from '@firestitch/field-editor';
 
 @Component({
   selector: 'field-render',
@@ -7,10 +8,11 @@ import { Component } from '@angular/core';
 })
 export class FieldRenderComponent {
 
-  public field = {
+  public field: Field = {
       config: {
-          type: 'dropdown',
-          label: 'Custom Dropdown',
+        type: 'dropdown',
+        label: 'Custom Dropdown',
+        configs: {
           options: [
             {
               value: 'A',
@@ -21,6 +23,7 @@ export class FieldRenderComponent {
               name: 'Option B'
             }
           ]
+        }
       }
     }
 }

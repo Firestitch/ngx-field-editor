@@ -7,11 +7,13 @@
           placeholder="Label"
           [(ngModel)]="field.config.label"
           name="label"
+          [disabled]="!canEdit"
           [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="changed.emit(field)">
       </mat-form-field>
     </div>
-    <button *ngIf="field.config.hideRequired !== true"
+    <button 
+      *ngIf="canEdit && field.config.hideRequired !== true"
       mat-icon-button
       type="button"
       (click)="toggleRequired()"
@@ -30,26 +32,28 @@
         </svg>
     </button>
     <button
-      mat-icon-button
-      type="button"
-      (click)="copy($event)"
-      matTooltip="Duplicate">
+        *ngIf="canDuplicate"
+        mat-icon-button
+        type="button"
+        (click)="copy($event)"
+        matTooltip="Duplicate">
       <mat-icon>filter_none</mat-icon>
     </button>
     <button
-      *ngIf="field.config.hideDescription !== true"
-      mat-icon-button
-      type="button"
-      (click)="toggleDescriptionNote()"
-      matTooltip="Description"
-      [ngClass]="{ disabled: !hasDescription }">
+        *ngIf="canEdit && field.config.hideDescription !== true"
+        mat-icon-button
+        type="button"
+        (click)="toggleDescriptionNote()"
+        matTooltip="Description"
+        [ngClass]="{ disabled: !hasDescription }">
       <mat-icon>subject</mat-icon>
     </button>
     <button
-      mat-icon-button
-      type="button"
-      (click)="delete($event)"
-      matTooltip="Delete">
+        *ngIf="canDelete"
+        mat-icon-button
+        type="button"
+        (click)="delete($event)"
+        matTooltip="Delete">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
@@ -62,6 +66,7 @@
       [matTextareaAutosize]="true"
       [(ngModel)]="field.config.description"
       name="description"
+      [disabled]="!canEdit"
       [ngModelOptions]="{ updateOn: 'blur' }"
       (ngModelChange)="changed.emit(field)">
     </textarea>

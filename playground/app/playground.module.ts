@@ -47,7 +47,7 @@ const routes: Routes = [
   bootstrap: [AppComponent],
   imports: [
     BrowserModule,
-    FsFieldEditorModule.forRoot({ case: 'camel' }),
+    FsFieldEditorModule.forRoot({}),
     FsHtmlEditorModule.forRoot(),
     BrowserAnimationsModule,
     AppMaterialModule,

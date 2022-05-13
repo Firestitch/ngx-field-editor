@@ -6,6 +6,7 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   ElementRef,
+  ChangeDetectorRef,
 } from '@angular/core';
 
 import { Field } from '../../../interfaces/field.interface';
@@ -33,10 +34,12 @@ export class FieldEditorItemComponent implements OnInit {
   public fieldRenderTemplateRefs: Record<string, TemplateRef<unknown>>;
 
   public fieldType = FieldType;
+  public canEdit = false;
 
   constructor(
     public fieldEditor: FieldEditorService,
     private _elRef: ElementRef,
+    private _cdRef: ChangeDetectorRef,
   ) {
   }
 
@@ -54,6 +57,12 @@ export class FieldEditorItemComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.fieldEditor.fieldCanEdit(this.field)
+    .subscribe((value) => {
+      this.canEdit = value;
+      this._cdRef.markForCheck();
+    });
+
     if (this.field === this.fieldEditor.scrollTargetField) {
       this.fieldEditor.resetScrollTarget();
 
