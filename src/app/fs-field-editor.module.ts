@@ -69,7 +69,8 @@ import { FieldRenderHeadingComponent } from './components/render/field-render-he
 import { FieldConfigContentComponent } from './components/config/field-config-content/field-config-content.component';
 import { FieldRenderContentComponent } from './components/render/field-render-content/field-render-content.component';
 import { FieldRenderRichTextComponent } from './components/render/field-render-rich-text/field-render-rich-text.component';
-import { FieldFilePickerComponent } from './components/render/field-render-file/file-picker/field-file-picker.component';
+import { FieldRenderFileMultipleComponent } from './components/render/field-render-file/field-render-file-multiple/field-render-file-multiple.component';
+import { FieldRenderFileSingleComponent } from './components/render/field-render-file/field-render-file-single/field-render-file-single.component';
 import { FieldRenderCheckboxComponent } from './components/render/field-render-checkbox/field-render-checkbox.component';
 import { FieldToolbarItemComponent } from './components/field-editor/field-toolbar-item/field-toolbar-item.component';
 import { FieldRenderDateComponent } from './components/render/field-render-date/field-render-date.component';
@@ -161,7 +162,7 @@ export function defaultConfigFactory(config) {
     FieldHeaderComponent,
     FieldComponent,
     FieldViewerComponent,
-    FieldFilePickerComponent,
+    FieldRenderFileMultipleComponent,
 
     FieldViewComponent,
     FieldViewDirective,
@@ -184,6 +185,7 @@ export function defaultConfigFactory(config) {
     FieldRenderRichTextComponent,
     FieldRenderCheckboxComponent,
     FieldRenderDateComponent,
+    FieldRenderFileSingleComponent,
 
     FieldConfigNameComponent,
     FieldConfigOptionsComponent,

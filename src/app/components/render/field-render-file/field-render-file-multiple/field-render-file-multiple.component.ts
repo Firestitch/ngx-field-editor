@@ -1,25 +1,27 @@
 import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef,
-  OnInit, OnDestroy, forwardRef, Optional, } from '@angular/core';
+  OnInit, OnDestroy, forwardRef, Optional, ViewChild, } from '@angular/core';
 import {
   ControlContainer, ControlValueAccessor,
   NgForm, NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 
+import { FsPrompt } from '@firestitch/prompt';
+import { controlContainerFactory } from '@firestitch/core';
 import { FsFile } from '@firestitch/file';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { Field } from '../../../../interfaces/field.interface';
 import { FileRenderFile } from '../../../../classes/file-render-file';
 import { FieldEditorService } from '../../../../services/field-editor.service';
-import { controlContainerFactory } from '@firestitch/core';
+import { FieldViewGalleryComponent } from '../../../field-view-gallery/field-view-gallery.component';
 
 
 @Component({
-  selector: 'app-field-file-picker',
-  templateUrl: 'field-file-picker.component.html',
-  styleUrls: ['field-file-picker.component.scss'],
+  selector: 'app-field-render-file-multiple',
+  templateUrl: 'field-render-file-multiple.component.html',
+  styleUrls: ['field-render-file-multiple.component.scss'],
   providers: [
     {
       provide: ControlContainer,
@@ -29,53 +31,50 @@ import { controlContainerFactory } from '@firestitch/core';
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => FieldFilePickerComponent),
+      useExisting: forwardRef(() => FieldRenderFileMultipleComponent),
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldFilePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  
+  @ViewChild(FieldViewGalleryComponent)
+  public fieldViewGallery: FieldViewGalleryComponent;
+
+  public actions = [];
 
   @Input() public field: Field;
   @Input() public disabled = false;
+  @Input() public accept;
 
   public onChange = (data: any) => {};
   public onTouched = () => {};
-  public allowedTypes = {};
+  public files = [];
 
-  private _files = [];
   private _destroy$ = new Subject();
 
   public constructor(
     private _fieldEditor: FieldEditorService,
     private _cdRef: ChangeDetectorRef,
-  ) {
-  }
+    private _prompt: FsPrompt,
+  ) {}
 
   public selectFile(files: any) {
     this.onTouched();
 
     if (this._fieldEditor.config.fileUpload) {
-      if (!this.field.config.configs.allowMultiple) {
-        files = [files];
-      }
-
       files.forEach((fsFile: FsFile) => {
         this._fieldEditor.config.fileUpload(this.field, fsFile.file)
         .pipe(
           takeUntil(this._destroy$)
         )
         .subscribe((response: any) => {
-          debugger;
           const file = new FileRenderFile(response.url, response.name);
           file.value = response;
 
-          if (!this.field.config.configs.allowMultiple) {
-            this._files = [];
-          }
-
-          this._files.push(response);
-          this.onChange(this._files);
+          this.files.push(response);
+          this.onChange(this.files);
+          this.fieldViewGallery.reload();
           this._cdRef.markForCheck();
         });
       });
@@ -83,7 +82,7 @@ export class FieldFilePickerComponent implements OnInit, OnDestroy, ControlValue
   }
 
   public writeValue(data: any): void {
-    this._files = data || [];
+    this.files = data || [];
   }
 
   public registerOnChange(fn: (data: any) => void): void {
@@ -94,19 +93,11 @@ export class FieldFilePickerComponent implements OnInit, OnDestroy, ControlValue
     this.onTouched = fn;
   }
 
-  public triggerChange(): void {
-    this.onChange(this._files);
-  }
-
   public ngOnInit() {
     const config = this.field.config?.configs?.allowedFileTypes || {};
-    const types = this._getAllowedTypes(config);
 
-    this.allowedTypes = types.length ? types.join(',') : '*';
-
-    const actions = [];
     if (this._fieldEditor.config && this._fieldEditor.config.fileDownload) {
-      actions.push({
+      this.actions.push({
         label: 'Download',
         click: (item) => {
           this._fieldEditor.config.fileDownload(this.field, item);
@@ -114,19 +105,26 @@ export class FieldFilePickerComponent implements OnInit, OnDestroy, ControlValue
       });
     }
 
-    if (this._fieldEditor.config && this._fieldEditor.config.fileRemove) {
-      actions.push({
+    if (this._fieldEditor.config?.fileRemove) {
+      this.actions.push({
         label: 'Remove',
         click: (item) => {
-
-          this._fieldEditor.config.fileRemove(this.field, item)
+          this._prompt.confirm({
+            title: 'Confirm',
+            template: 'Are you sure you would like to remove this file?',
+          })
+          .pipe(
+            switchMap(() => {
+              return this._fieldEditor.config.fileRemove(this.field, item);
+            })
+          )
           .subscribe(() => {
-
-            const idx = this._files.indexOf(item);
+            const idx = this.files.indexOf(item);
 
             if (idx >= 0) {
-              this._files.splice(idx, 1);
-              this.onChange(this._files);
+              this.files.splice(idx, 1);
+              this.fieldViewGallery.reload();
+              this.onChange(this.files);
 
               if (this._fieldEditor.config.fileRemoved) {
                 this._fieldEditor.config.fileRemoved(this.field, item);
@@ -142,26 +140,4 @@ export class FieldFilePickerComponent implements OnInit, OnDestroy, ControlValue
     this._destroy$.next();
     this._destroy$.complete();
   }
-
-  private _getAllowedTypes(allowedTypes) {
-
-    const allowed = [];
-
-    if (!allowedTypes.other) {
-      if (allowedTypes.image) {
-        allowed.push('image/*');
-      }
-
-      if (allowedTypes.video) {
-        allowed.push('video/*');
-      }
-
-      if (allowedTypes.pdf) {
-        allowed.push('application/pdf');
-      }
-    }
-
-    return allowed;
-  }
-
 }

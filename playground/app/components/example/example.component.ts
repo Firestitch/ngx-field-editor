@@ -10,7 +10,7 @@ import { FsApi } from '@firestitch/api';
 import { guid } from '@firestitch/common';
 
 import { map } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 import { DialogExampleComponent } from '../dialog-example';
 import { FieldEditorService } from '../../../../src/app/services/field-editor.service';
@@ -84,19 +84,18 @@ export class ExampleComponent implements OnInit {
       },
       fileUpload: (field, file: File) => {
         console.log('File Selected', file);
-        const data = {
-          file: file,
-          sleep: 1
-        };
 
-        return this.fsApi.post('https://specify.dev.firestitch.com/api/dummy/upload', data)
-          .pipe(
-            map(response => ({
-              id: 99999,
-              url: response.data.url,
-              name: file.name
-            })
-          ))
+        return new Observable((observer) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            observer.next({
+              name: file.name,
+              url: reader.result as any
+            });
+            observer.complete();
+          };
+          reader.readAsDataURL(file);
+        });
       },
       fileRemove: (field, data) => {
         console.log('File Remove', field, data);
@@ -412,7 +411,8 @@ export class ExampleComponent implements OnInit {
           type: FieldType.File,
           label: 'File Upload',
           configs: {
-            basic: true
+            basic: true,
+            allowMultiple: false
           }
         },
         data: {

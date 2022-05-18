@@ -3,7 +3,7 @@
     [imageQuality]="field.config.configs.imageQuality"
     [imageWidth]="field.config.configs.maxWidth"
     [imageHeight]="field.config.configs.maxHeight"
-    [accept]="allowedTypes"
+    [accept]="accept"
     [disabled]="disabled"
     [multiple]="field.config.configs.allowMultiple">
   <button
@@ -15,3 +15,11 @@
     Select File
   </button>
 </fs-file>
+
+<div class="files-preview" [hidden]="!field.data?.value?.length">
+  <fs-field-view-gallery
+    [actions]="actions"
+    [field]="field">
+  </fs-field-view-gallery>
+</div>
+

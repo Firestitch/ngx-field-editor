@@ -1,23 +1,29 @@
 
 <fs-label-field class="fs-form-wrapper">
   <fs-label class="fs-form-label">{{ field.config.label }}</fs-label>
-  <app-field-file-picker
-    [field]="field"
-    [name]="name"
-    [required]="field.config.configs.required"
-    (ngModelChange)="change($event)"
-    [disabled]="disabled"
-    [(ngModel)]="field.data.value">
-  </app-field-file-picker>
+  <ng-container *ngIf="field.config.configs.allowMultiple">
+    <app-field-render-file-multiple
+      [field]="field"
+      [name]="name"
+      [required]="field.config.configs.required"
+      (ngModelChange)="change($event)"
+      [disabled]="disabled"
+      [accept]="accept"
+      [ngModel]="field.data.value">
+    </app-field-render-file-multiple>
+  </ng-container>
+  <ng-container *ngIf="!field.config.configs.allowMultiple">
+    <app-field-render-file-single
+      [field]="field"
+      [name]="name"
+      [required]="field.config.configs.required"
+      (ngModelChange)="change($event)"
+      [disabled]="disabled"
+      [accept]="accept"
+      [ngModel]="field.data.value">
+    </app-field-render-file-single>
+  </ng-container>  
   <fs-label-message class="fs-form-message">
     <div class="fs-form-hint" *ngIf="field.config.description">{{ field.config.description }}</div>
   </fs-label-message>
 </fs-label-field>
-
-<div class="files-preview" [hidden]="!field.data?.value?.length">
-  <fs-field-view-gallery
-    [actions]="actions"
-    [field]="field">
-  </fs-field-view-gallery>
-</div>
-
