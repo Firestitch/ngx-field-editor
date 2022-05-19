@@ -14,8 +14,8 @@
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.LongText">
     <textarea
       matInput
-      matTextareaAutosize
-      matAutosizeMinRows="1"
+      [matTextareaAutosize]="true"
+      [matAutosizeMinRows]="1"
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
       [placeholder]="field.config.label"
@@ -42,8 +42,7 @@
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Time">
     <input
       matInput
-      fsDatePicker
-      view="time"
+      fsDatePickerTime
       [placeholder]="field.config.label"
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"

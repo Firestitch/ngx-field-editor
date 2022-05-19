@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FsHtmlEditorConfig } from '@firestitch/html-editor';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+
+import { FsHtmlEditorComponent, FsHtmlEditorConfig } from '@firestitch/html-editor';
+
+import { throwError } from 'rxjs';
 
 import { FieldComponent } from '../../field/field.component';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { throwError } from 'rxjs';
+
 
 @Component({
   selector: 'fs-field-config-rich-text',
@@ -13,7 +16,10 @@ import { throwError } from 'rxjs';
 })
 export class FieldConfigRichTextComponent extends FieldComponent implements OnInit {
 
-  public config: FsHtmlEditorConfig = {};
+  @ViewChild(FsHtmlEditorComponent)
+  public htmlEditor: FsHtmlEditorComponent;
+
+  public config: FsHtmlEditorConfig;
 
   constructor(
     public fieldEditor: FieldEditorService,
@@ -21,11 +27,12 @@ export class FieldConfigRichTextComponent extends FieldComponent implements OnIn
     super();
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     super.ngOnInit();
 
     this.config = {
       ...this.field.config.configs,
+      disabled: true,
       autofocus: false,
       image: {
         upload: (file: File) => {
@@ -36,5 +43,4 @@ export class FieldConfigRichTextComponent extends FieldComponent implements OnIn
       }
     };
   }
-
 }

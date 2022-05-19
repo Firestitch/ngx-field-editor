@@ -223,10 +223,7 @@ export class ExampleComponent implements OnInit {
         config: {
           guid: '2',
           type: FieldType.RichText,
-          label: 'Rich Text',
-          configs: {
-            default: 'Default content'
-          }
+          label: 'Rich Text'
         },
       },
       {

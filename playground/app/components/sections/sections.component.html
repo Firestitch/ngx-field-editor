@@ -11,8 +11,8 @@
 
           <ng-template fsFieldConfig type="share" let-field="field">
             <div fxLayout="column">
-              <mat-checkbox [(ngModel)]="field.config.configs['facebook']" name="facebook" (click)="shareChange({ field: field })">Enable Facebook</mat-checkbox>
-              <mat-checkbox [(ngModel)]="field.config.configs['google']" name="google" (click)="shareChange({ field: field })">Enable Google</mat-checkbox>
+              <mat-checkbox [(ngModel)]="field.config.configs['facebook']" name="facebook" (click)="shareChange()">Enable Facebook</mat-checkbox>
+              <mat-checkbox [(ngModel)]="field.config.configs['google']" name="google" (click)="shareChange()">Enable Google</mat-checkbox>
             </div>
           </ng-template>
 

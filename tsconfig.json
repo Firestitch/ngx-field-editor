@@ -6,5 +6,8 @@
         "src/public_api.ts"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true
   }
 }
