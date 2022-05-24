@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, Optional } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { parse } from '@firestitch/date';
+import { parse, parseLocal } from '@firestitch/date';
 import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldComponent } from '../../field/field.component';
@@ -24,7 +24,7 @@ export class FieldRenderDateComponent extends FieldComponent implements OnInit {
   public ngOnInit(): void {
     super.ngOnInit();
 
-    this.field.data.value = parse(this.field.data.value);
+    this.field.data.value = parseLocal(this.field.data.value);
   }
 
 }
