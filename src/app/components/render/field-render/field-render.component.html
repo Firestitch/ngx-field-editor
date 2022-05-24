@@ -30,7 +30,7 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Time">
-        <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
+        <fs-field-render-time [field]="field" (changed)="fieldEditor.fieldChanged($event)"></fs-field-render-time>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Choice">

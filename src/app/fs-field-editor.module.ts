@@ -74,6 +74,7 @@ import { FieldRenderFileSingleComponent } from './components/render/field-render
 import { FieldRenderCheckboxComponent } from './components/render/field-render-checkbox/field-render-checkbox.component';
 import { FieldToolbarItemComponent } from './components/field-editor/field-toolbar-item/field-toolbar-item.component';
 import { FieldRenderDateComponent } from './components/render/field-render-date/field-render-date.component';
+import { FieldRenderTimeComponent } from './components/render/field-render-time/field-render-time.component';
 import { FieldEditorItemComponent } from './components/field-editor/field-editor-item/field-editor-item.component';
 import { FieldEditorToolbarDirective } from './directives/field-editor-toolbar/field-editor-toolbar.directive';
 
@@ -185,6 +186,7 @@ export function defaultConfigFactory(config) {
     FieldRenderRichTextComponent,
     FieldRenderCheckboxComponent,
     FieldRenderDateComponent,
+    FieldRenderTimeComponent,
     FieldRenderFileSingleComponent,
 
     FieldConfigNameComponent,
