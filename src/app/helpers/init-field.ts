@@ -2,6 +2,7 @@ import { guid } from '@firestitch/common';
 import { FieldType } from '../enums/field-type';
 import { isObject } from 'lodash-es';
 import { Field } from '../interfaces/field.interface';
+import { parseLocal } from '@firestitch/date';
 
 
 export function initField(field: Field): Field {
@@ -128,6 +129,11 @@ export function initField(field: Field): Field {
 
       break;
     
+      case FieldType.Date:
+      case FieldType.Time:
+        field.data.value = field.data.value ? parseLocal(field.data.value) : null;
+        break;
+        
       case FieldType.RichText:
         if(!('value' in field.data)) {
           field.data.value = field.config.configs.default;
