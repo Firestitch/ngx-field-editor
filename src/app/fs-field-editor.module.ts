@@ -52,31 +52,32 @@ import { FieldViewerComponent } from './components/field-viewer/field-viewer.com
 import { FieldConfigDirective } from './directives/field-config/field-config.directive';
 import { FieldRenderDirective } from './directives/field-render/field-render.directive';
 import { FieldViewDirective } from './directives/field-view/field-view.directive';
-import { FieldEditorConfig } from './interfaces/field.interface';
 import { FieldType } from './enums/field-type';
 import { FieldRenderComponent } from './components/render/field-render/field-render.component';
 import { FieldViewGalleryComponent } from './components/field-view-gallery/field-view-gallery.component';
 import { FieldViewComponent } from './components/field-view/field-view.component';
-import { FieldConfigNameComponent } from './components/config/field-config-name/field-config-name.component';
-import { FieldConfigOptionsComponent } from './components/config/field-config-options/field-config-options.component';
-import { FieldConfigFileComponent } from './components/config/field-config-file/field-config-file.component';
-import { FieldConfigGenderComponent } from './components/config/field-config-gender/field-config-gender.component';
-import { FieldConfigAddressComponent } from './components/config/field-config-address/field-config-address.component';
-import { FieldConfigRichTextComponent } from './components/config/field-config-rich-text/field-config-rich-text.component';
-import { FieldRenderNameModelComponent } from './components/render/field-render-name-model/field-render-name-model.component';
-import { FieldConfigHeadingComponent } from './components/config/field-config-heading/field-config-heading.component';
-import { FieldRenderHeadingComponent } from './components/render/field-render-heading/field-render-heading.component';
-import { FieldConfigContentComponent } from './components/config/field-config-content/field-config-content.component';
+
+import { FieldConfigOptionsComponent } from './components/field-editor/config/field-config-options/field-config-options.component';
+import { FieldConfigNameComponent } from './components/field-editor/config/field-config-name/field-config-name.component';
+import { FieldConfigFileComponent } from './components/field-editor/config/field-config-file/field-config-file.component';
+import { FieldConfigGenderComponent } from './components/field-editor/config/field-config-gender/field-config-gender.component';
+import { FieldConfigAddressComponent } from './components/field-editor/config/field-config-address/field-config-address.component';
+import { FieldConfigRichTextComponent } from './components/field-editor/config/field-config-rich-text/field-config-rich-text.component';
+import { FieldConfigHeadingComponent } from './components/field-editor/config/field-config-heading/field-config-heading.component';
+import { FieldConfigContentComponent } from './components/field-editor/config/field-config-content/field-config-content.component';
 import { FieldRenderContentComponent } from './components/render/field-render-content/field-render-content.component';
 import { FieldRenderRichTextComponent } from './components/render/field-render-rich-text/field-render-rich-text.component';
 import { FieldRenderFileMultipleComponent } from './components/render/field-render-file/field-render-file-multiple/field-render-file-multiple.component';
 import { FieldRenderFileSingleComponent } from './components/render/field-render-file/field-render-file-single/field-render-file-single.component';
+import { FieldRenderNameModelComponent } from './components/render/field-render-name-model/field-render-name-model.component';
+import { FieldRenderHeadingComponent } from './components/render/field-render-heading/field-render-heading.component';
 import { FieldRenderCheckboxComponent } from './components/render/field-render-checkbox/field-render-checkbox.component';
 import { FieldToolbarItemComponent } from './components/field-editor/field-toolbar-item/field-toolbar-item.component';
 import { FieldRenderDateComponent } from './components/render/field-render-date/field-render-date.component';
 import { FieldRenderTimeComponent } from './components/render/field-render-time/field-render-time.component';
 import { FieldEditorItemComponent } from './components/field-editor/field-editor-item/field-editor-item.component';
 import { FieldEditorToolbarDirective } from './directives/field-editor-toolbar/field-editor-toolbar.directive';
+import { FieldEditorConfig } from './interfaces/field-editor-config.interface';
 
 
 export function defaultConfigFactory(config) {

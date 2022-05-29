@@ -116,6 +116,12 @@ export class ExampleComponent implements OnInit {
       // fieldCanEdit: (field: Field) => {
       //   return of(false);
       // },
+      // fieldCanRequire: (field: Field) => {
+      //   return of(false);
+      // },
+      fieldCanConfig: (field: Field) => {
+        return of(false);
+      },
       toolbar: {
         items: [
           ...this.defaultConfig.toolbar.items,

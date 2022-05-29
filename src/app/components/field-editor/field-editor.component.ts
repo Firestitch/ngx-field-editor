@@ -22,10 +22,8 @@ import { fromEvent, Subject } from 'rxjs';
 import { delay, filter, takeUntil } from 'rxjs/operators';
 
 
-import {
-  Field,
-  FieldEditorConfig,
-} from '../../interfaces/field.interface';
+import { FieldEditorConfig } from '../../interfaces/field-editor-config.interface';
+import { Field } from '../../interfaces/field.interface';
 import { FieldConfigDirective } from '../../directives/field-config/field-config.directive';
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
 import { FieldEditorService } from '../../services/field-editor.service';

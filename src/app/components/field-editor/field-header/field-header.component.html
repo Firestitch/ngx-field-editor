@@ -1,7 +1,10 @@
 <div *ngIf="(fieldEditor.selectedField$ | async) === field; else selectedElse">
   <div fxFlexLayout="row" fxLayoutAlign="start center">
     <div fxFlex>
-      <mat-form-field floatLabel="never" class="label">
+      <mat-form-field 
+          *ngIf="canLabel"
+          floatLabel="never" 
+          class="label">
         <input
           matInput
           placeholder="Label"
@@ -13,7 +16,7 @@
       </mat-form-field>
     </div>
     <button 
-      *ngIf="canEdit && field.config.hideRequired !== true"
+      *ngIf="canEdit && canRequire"
       mat-icon-button
       type="button"
       (click)="toggleRequired()"

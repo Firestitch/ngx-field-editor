@@ -15,17 +15,15 @@
   </fs-field-header>
 
   <ng-container *ngIf="isSelectedField; else renderField">
-      <ng-container *ngIf="canEdit">
-      <div class="field-config">
-        <ng-container *ngIf="fieldConfigTemplateRef; else configStandardField">
-          <ng-template
-            *ngTemplateOutlet="fieldConfigTemplateRef; context: { field: field, fieldEditor: fieldEditor }">
-          </ng-template>
-        </ng-container>
+    <div class="field-config" [ngClass]="{ 'disabled': !canEdit || !canConfig }">
+      <ng-container *ngIf="fieldConfigTemplateRef; else configStandardField">
+        <ng-template
+          *ngTemplateOutlet="fieldConfigTemplateRef; context: { field: field, fieldEditor: fieldEditor }">
+        </ng-template>
+      </ng-container>
 
-        <ng-template #configStandardField>
+      <ng-template #configStandardField>
         <ng-container [ngSwitch]="field.config.type">
-
           <ng-container *ngSwitchCase="fieldType.Choice">
             <fs-field-config-options
               [field]="field"
@@ -96,9 +94,8 @@
             </fs-field-config-address>
           </ng-container>
         </ng-container>
-        </ng-template>
-      </div>
-    </ng-container>
+      </ng-template>
+    </div>
   </ng-container>
 
   <ng-template #renderField>

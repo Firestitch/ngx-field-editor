@@ -10,7 +10,8 @@ import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
-import { Field, FieldRendererConfig } from './../../interfaces/field.interface';
+import { Field } from './../../interfaces/field.interface';
+import { FieldRendererConfig } from './../../interfaces/field-renderer-config.interface';
 import { FieldRenderDirective } from './../../directives/field-render/field-render.directive';
 import { FieldEditorService } from '../../services/field-editor.service';
 

@@ -8,8 +8,8 @@ import { guid } from '@firestitch/common';
 
 import { cloneDeep } from 'lodash-es';
 
-import { Field, ToolbarItem } from '../../../interfaces/field.interface';
-import { FieldType } from '../../../enums/field-type';
+import { ToolbarItem } from '../../../interfaces/toolbar.interface';
+import { Field } from '../../../interfaces/field.interface';
 import { BACKDROP_CLASS, BACKDROP_HIDDEN_CLASS } from '../../../constants/backdrop-class';
 import { FieldEditorService } from '../../../services/field-editor.service';
 

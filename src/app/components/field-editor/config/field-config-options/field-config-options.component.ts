@@ -5,8 +5,10 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FsPrompt } from '@firestitch/prompt';
 import { guid } from '@firestitch/common';
 
-import { FieldComponent } from '../../field/field.component';
-import { FieldEditorService } from '../../../services/field-editor.service';
+import { FieldComponent } from '../../../field/field.component';
+import { FieldEditorService } from '../../../../services/field-editor.service';
+import { forkJoin } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -19,14 +21,31 @@ export class FieldConfigOptionsComponent extends FieldComponent {
 
   public newOption = '';
 
-  @ViewChild('addOptionInput')
+  @ViewChild('addOptionInput', { static: true })
   private _addOptionInput: ElementRef;
 
   constructor(
     public fieldEditor: FieldEditorService,
-    private fsPrompt: FsPrompt,
+    private _prompt: FsPrompt,
   ) {
     super();
+  }
+
+  public ngOnInit(): void {
+    super.ngOnInit();
+    
+    if(this._addOptionInput) {
+      forkJoin([
+        this.fieldEditor.fieldCanEdit(this.field),
+        this.fieldEditor.fieldCanConfig(this.field)
+      ])
+      .pipe(
+        filter((response) => response[0] && response[1]),
+      )
+      .subscribe((value) => {
+        this._addOptionInput.nativeElement.focus();
+      });
+    }
   }
 
   public addOption(e): void {
@@ -45,27 +64,26 @@ export class FieldConfigOptionsComponent extends FieldComponent {
 
       this.newOption = '';
     }
-
-    this._addOptionInput.nativeElement.focus();
+    
     this.changed.emit(this.field);
   }
 
-  otherToggle() {
+  public otherToggle(): void {
     this.field.config.configs.other = !this.field.config.configs.other;
     this.changed.emit(this.field);
   }
 
-  removeOption(index: number) {
-    this.fsPrompt.confirm({
+  public removeOption(index: number): void {
+    this._prompt.confirm({
       title: 'Confirm',
       template: 'Are you sure you would like to remove this option?',
-    }).subscribe((value) => {
+    }).subscribe(() => {
         this.field.config.configs.options.splice(index, 1);
         this.changed.emit(this.field);
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  public drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.field.config.configs.options, event.previousIndex, event.currentIndex);
     this.changed.emit(this.field);
   }

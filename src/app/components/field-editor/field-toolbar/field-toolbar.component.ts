@@ -4,7 +4,8 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { Field, ToolbarItems } from '../../../interfaces/field.interface';
+import { ToolbarItems } from '../../../interfaces/toolbar.interface';
+import { Field } from '../../../interfaces/field.interface';
 import { TOOLBAR_DEFAULTS } from '../../../helpers/toolbar-defaults';
 import {
   BACKDROP_CLASS,

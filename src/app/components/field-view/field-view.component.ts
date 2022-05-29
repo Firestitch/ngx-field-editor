@@ -7,7 +7,7 @@ import {
   Optional
 } from '@angular/core';
 
-import { FieldEditorConfig } from '../../interfaces/field.interface';
+import { FieldEditorConfig } from '../../interfaces/field-editor-config.interface';
 import { FieldEditorService } from '../../services/field-editor.service';
 import { FS_FIELD_EDITOR_CONFIG } from '../../injectors/fs-field-editor.providers';
 import { FieldType } from '../../enums/field-type';

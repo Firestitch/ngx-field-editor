@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FieldViewDirective } from './../../directives/field-view/field-view.directive';
 import { FieldEditorService } from '../../services/field-editor.service';
-import { FieldEditorConfig } from '../../interfaces/field.interface';
+import { FieldEditorConfig } from '../../interfaces/field-editor-config.interface';
 
 @Component({
   selector: 'fs-field-viewer',

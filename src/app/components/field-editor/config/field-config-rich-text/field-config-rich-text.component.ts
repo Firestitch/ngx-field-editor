@@ -4,8 +4,8 @@ import { FsHtmlEditorComponent, FsHtmlEditorConfig } from '@firestitch/html-edit
 
 import { throwError } from 'rxjs';
 
-import { FieldComponent } from '../../field/field.component';
-import { FieldEditorService } from '../../../services/field-editor.service';
+import { FieldComponent } from '../../../field/field.component';
+import { FieldEditorService } from '../../../../services/field-editor.service';
 
 
 @Component({

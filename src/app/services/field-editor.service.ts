@@ -10,12 +10,11 @@ import { cloneDeep } from 'lodash-es';
 
 import {
   Field,
-  FieldEditorConfig,
-  FsFieldEditorCallbackParams
 } from '../interfaces/field.interface';
 import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
 import { FieldType } from '../enums/field-type';
+import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
 
 
 @Injectable()
@@ -77,6 +76,24 @@ export class FieldEditorService implements OnDestroy {
   public fieldCanDuplicate(field: Field): Observable<boolean> {
     return this.config.fieldCanDuplicate ? 
     this.config.fieldCanDuplicate(field) : 
+    of(true);
+  }
+
+  public fieldCanRequire(field: Field): Observable<boolean> {
+    return this.config.fieldCanRequire ? 
+    this.config.fieldCanRequire(field) : 
+    of(field.config.hideRequired !== true);
+  }
+
+  public fieldCanLabel(field: Field): Observable<boolean> {
+    return this.config.fieldCanLabel ? 
+    this.config.fieldCanLabel(field) : 
+    of(true);
+  }
+
+  public fieldCanConfig(field: Field): Observable<boolean> {
+    return this.config.fieldCanConfig ? 
+    this.config.fieldCanConfig(field) : 
     of(true);
   }
 

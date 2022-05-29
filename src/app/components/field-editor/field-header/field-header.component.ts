@@ -32,6 +32,8 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit {
   public canDelete = false;
   public canDuplicate = false;
   public canEdit = false;
+  public canRequire = false;
+  public canLabel = false;
 
   public constructor(
     public fieldEditor: FieldEditorService,
@@ -59,6 +61,18 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit {
     this.fieldEditor.fieldCanDuplicate(this.field)
     .subscribe((value) => {
       this.canDuplicate = value;
+      this._cdRef.markForCheck();
+    });
+    
+    this.fieldEditor.fieldCanRequire(this.field)
+    .subscribe((value) => {
+      this.canRequire = value;
+      this._cdRef.markForCheck();
+    });
+    
+    this.fieldEditor.fieldCanLabel(this.field)
+    .subscribe((value) => {
+      this.canLabel = value;
       this._cdRef.markForCheck();
     });
   }

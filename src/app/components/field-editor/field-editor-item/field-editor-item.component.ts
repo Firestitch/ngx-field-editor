@@ -24,7 +24,7 @@ import { FieldEditorService } from '../../../services/field-editor.service';
 })
 export class FieldEditorItemComponent implements OnInit {
 
-  @Input()
+  @Input() 
   public field: Field;
 
   @Input()
@@ -35,6 +35,7 @@ export class FieldEditorItemComponent implements OnInit {
 
   public fieldType = FieldType;
   public canEdit = false;
+  public canConfig = false;
 
   constructor(
     public fieldEditor: FieldEditorService,
@@ -60,6 +61,12 @@ export class FieldEditorItemComponent implements OnInit {
     this.fieldEditor.fieldCanEdit(this.field)
     .subscribe((value) => {
       this.canEdit = value;
+      this._cdRef.markForCheck();
+    });
+    
+    this.fieldEditor.fieldCanConfig(this.field)
+    .subscribe((value) => {
+      this.canConfig = value;
       this._cdRef.markForCheck();
     });
 
