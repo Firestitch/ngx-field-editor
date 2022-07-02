@@ -120,7 +120,7 @@ export class ExampleComponent implements OnInit {
       //   return of(false);
       // },
       fieldCanConfig: (field: Field) => {
-        return of(false);
+        return of(true);
       },
       toolbar: {
         items: [

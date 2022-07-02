@@ -11,6 +11,7 @@
         name="firstName"
         [ngModelOptions]="{ updateOn: 'blur' }"
         (ngModelChange)="changed.emit(field)">
+      <div matPrefix>{{field.config.label}}&nbsp;</div>
     </mat-form-field>
   </div>
 
@@ -26,6 +27,7 @@
         name="lastName"
         [ngModelOptions]="{ updateOn: 'blur' }"
         (ngModelChange)="changed.emit(field)">
+      <div matPrefix>{{field.config.label}}&nbsp;</div>
     </mat-form-field>
   </div>
 </div>

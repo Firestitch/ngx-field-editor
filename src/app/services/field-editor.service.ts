@@ -136,6 +136,8 @@ export class FieldEditorService implements OnDestroy {
 
     if(field.config.type === FieldType.RichText) {
       field.data = { value: field.config.configs?.default || '' };
+    } else if(field.config.type === FieldType.Name) {
+      field.config.label = '';
     }
 
     if (index === undefined) {

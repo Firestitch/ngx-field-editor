@@ -10,3 +10,16 @@
     }
   }
 }
+
+@media (max-width: 599px) {
+  .row {
+    flex-direction: column;
+
+    mat-form-field {
+      + mat-form-field {
+        margin-top: 1.25em;
+        margin-left: 0;
+      }
+    }
+  }
+}
