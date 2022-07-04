@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FieldType } from '@firestitch/field-editor';
 
 @Component({
   selector: 'field-view',
@@ -9,21 +10,26 @@ export class FieldViewComponent {
 
   public field = {
       data: {
-        value: 'A'
+        value: {
+          selected: ['A','B', 'other'],
+          other: 'Another One',
+        },
       },
       config: {
-          type: 'dropdown',
+          type: FieldType.Checkbox,
           label: 'Custom Dropdown',
-          options: [
-            {
-              value: 'A',
-              name: 'Option A'
-            },
-            {
-              value: 'B',
-              name: 'Option B'
-            }
-          ]
+          configs: {
+              options: [
+              {
+                value: 'A',
+                name: 'Option A'
+              },
+              {
+                value: 'B',
+                name: 'Option B'
+              }
+            ]
+          }
       }
     }
 }

@@ -1,4 +1,11 @@
-.option:not(:first-child):before,
 .address span:not(:first-child):before {
   content: ", ";
+}
+
+.option + .option:before {
+  content: ", ";
+}
+
+.option + .option:last-child:before {
+  content: " and ";
 }
