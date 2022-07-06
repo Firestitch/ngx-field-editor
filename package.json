@@ -46,7 +46,7 @@
     "@angular/platform-browser-dynamic": "^12.2.16",
     "@angular/router": "^12.2.16",
     "@compodoc/compodoc": "^1.1.11",
-    "@firestitch/address": "^12.0.3",
+    "@firestitch/address": "^12.1.3",
     "@firestitch/api": "^12.0.0",
     "@firestitch/autocomplete": "^12.0.0",
     "@firestitch/autocomplete-chips": "^12.0.0",
@@ -119,10 +119,11 @@
     "zone.js": "~0.11.4"
   },
   "peerDependencies": {
-    "@firestitch/file": ">=8.3.0",
-    "@firestitch/html-editor": ">=9.3.4",
-    "@firestitch/label": ">=8.2.0",
-    "@firestitch/signature": ">=10.0.0",
+    "@firestitch/file": ">=12.0.6",
+    "@firestitch/html-editor": ">=12.0.3",
+    "@firestitch/label": ">=12.0.0",
+    "@firestitch/signature": ">=12.0.0",
+    "@firestitch/address": ">=12.1.3",
     "camelcase-keys": ">=6.0.0",
     "snakecase-keys": ">=3.0.0"
   },

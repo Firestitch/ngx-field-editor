@@ -35,7 +35,7 @@ import { FsListModule } from '@firestitch/list';
 import { FsHtmlEditorModule } from '@firestitch/html-editor';
 import { TermsFieldModule } from './modules/terms-field';
 import { LAZY_MAPS_API_CONFIG } from '@agm/core';
-import { GOOGLE_MAP_KEY } from '@firestitch/address';
+import { FsAddressModule, GOOGLE_MAP_KEY } from '@firestitch/address';
 import { GoogleMapConfig } from './google-map.config';
 
 
@@ -49,6 +49,7 @@ const routes: Routes = [
     BrowserModule,
     FsFieldEditorModule.forRoot({}),
     FsHtmlEditorModule.forRoot(),
+    FsAddressModule.forRoot(),
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
@@ -87,7 +88,7 @@ const routes: Routes = [
       provide: LAZY_MAPS_API_CONFIG,
       useClass: GoogleMapConfig,
     },
-    { provide: GOOGLE_MAP_KEY, useValue: '' },
+    { provide: GOOGLE_MAP_KEY, useValue: 'AIzaSyBigr-zo7xG6tqAiAvpqE2Bh4foHVrrSBE' },
   ],
 })
 export class PlaygroundModule {
