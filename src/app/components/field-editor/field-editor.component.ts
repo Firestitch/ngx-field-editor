@@ -46,7 +46,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   public scrollContainer: string | HTMLElement = null;
 
   @ContentChild(FieldEditorToolbarDirective, { read: TemplateRef })
-  public editoToolbarTpl: TemplateRef<FieldEditorToolbarDirective>
+  public editorToolbarTpl: TemplateRef<FieldEditorToolbarDirective>
 
   @ContentChildren(FieldConfigDirective)
   public queryListFieldConfig: QueryList<FieldConfigDirective>;

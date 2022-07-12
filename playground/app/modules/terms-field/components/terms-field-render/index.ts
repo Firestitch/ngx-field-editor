@@ -1,1 +1,1 @@
-export { TermsFieldRenderComponent } from './terms-field-render.component';
+export * from './terms-field-render.component';

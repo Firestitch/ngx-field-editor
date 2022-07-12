@@ -29,7 +29,7 @@ import { FsGalleryModule } from '@firestitch/gallery';
 import { FsCheckboxGroupModule } from '@firestitch/checkboxgroup';
 import { FsRadioGroupModule } from '@firestitch/radiogroup';
 import { FsAddressModule } from '@firestitch/address';
-import { FsHtmlEditorModule } from '@firestitch/html-editor';
+import { FsHtmlEditorModule, FsHtmlRendererModule } from '@firestitch/html-editor';
 
 import { AngularStickyThingsModule } from '@w11k/angular-sticky-things';
 
@@ -139,6 +139,7 @@ export function defaultConfigFactory(config) {
     FsLabelModule,
     FsDateModule,
     FsHtmlEditorModule,
+    FsHtmlRendererModule,
     FsFileModule,
     FsPromptModule,
     FsCheckboxGroupModule,

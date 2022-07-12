@@ -37,6 +37,7 @@ import { TermsFieldModule } from './modules/terms-field';
 import { LAZY_MAPS_API_CONFIG } from '@agm/core';
 import { FsAddressModule, GOOGLE_MAP_KEY } from '@firestitch/address';
 import { GoogleMapConfig } from './google-map.config';
+import { SignatureFieldModule } from './modules/signature-field';
 
 
 const routes: Routes = [
@@ -70,6 +71,7 @@ const routes: Routes = [
     FsSelectionModule,
     FsListModule.forRoot(),
     TermsFieldModule,
+    SignatureFieldModule,
   ],
   entryComponents: [
     DialogExampleComponent

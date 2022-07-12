@@ -5,6 +5,7 @@ import {
   forwardRef,
   Input,
   OnDestroy,
+  OnInit,
   Optional,
 } from '@angular/core';
 import {
@@ -24,9 +25,10 @@ import { Field } from '@firestitch/field-editor';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TermType } from '../../enums';
+import { Term } from '../../interfaces';
 
-import { SignatureDialogComponent } from '../signature-dialog';
-import { TermsFieldDialogComponent } from '../terms-field-dialog';
+import { TermsFieldRenderDialogComponent } from '../terms-field-render-dialog';
 
 
 @Component({
@@ -51,12 +53,10 @@ import { TermsFieldDialogComponent } from '../terms-field-dialog';
 })
 export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestroy {
 
-  @Input() public agreedName;
   @Input() public disabled;
 
-  public checked;
-  public signature;
-  public name;
+  public TermType = TermType;
+  public terms: Term[] = [];
 
   private _onChange: (value: unknown) => void;
   private _onTouch: (value: unknown) => void;
@@ -68,65 +68,56 @@ export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestro
     private _cdRef: ChangeDetectorRef,
     private _dialog: MatDialog,
     private _sanitizer: DomSanitizer,
-  ) {
-    this.name = `terms-${guid()}`;
-  }
+  ) {}
 
-  public checkboxChange(event: MatCheckboxChange): void {
+  public checkboxChange(event: MatCheckboxChange, termData): void {
     if (event.checked) {
-      this.agree();
+      this.agree(termData);
     } else {
-      this.disagree();
+      this.disagree(termData);
     }
   }
 
-  public agree(signature?: string) {
-    this.field.data = {
-      agreed: {
-        signature,
-        date: new Date(),
-        name: this.agreedName,
-      },
-    }
-
-    this.signature = null;
-    if (signature) {
-      const base64 = `data:image/svg+xml;base64,${window.btoa(signature)}`;
-      this.signature = this._sanitizer.bypassSecurityTrustUrl(base64);
-    }
+  public agree(termData) {
+    termData.date = new Date();
+    // this.signature = null;
+    // if (signature) {
+    //   const base64 = `data:image/svg+xml;base64,${window.btoa(signature)}`;
+    //   this.signature = this._sanitizer.bypassSecurityTrustUrl(base64);
+    // }
   }
 
-  public disagree() {
-    this.signature = null;
-    this.field.data = {
-      agreed: null,
-    }
+  public disagree(termData) {
+    // this.signature = null;
+    // this.field.data = {
+    //   agreed: null,
+    // }
   }
 
   public checkboxClick(event: UIEvent): void {
-    if (!this.disabled) {
-      if (this.checked) {
-        this.field.data.agree = {};
-      } else if (this.field.config.configs.signature) {
-        event.preventDefault();
+    // if (!this.disabled) {
+    //   if (this.checked) {
+    //     this.field.data.agree = {};
+    //   } else if (this.field.config.configs.signature) {
+    //     event.preventDefault();
 
-        const dialogRef = this._dialog.open(SignatureDialogComponent, {
-          data: { field: this._field },
-        });
+    //     const dialogRef = this._dialog.open(SignatureDialogComponent, {
+    //       data: { field: this._field },
+    //     });
 
-        dialogRef.afterClosed()
-          .pipe(
-            takeUntil(this._destroy$),
-          )
-          .subscribe((signature) => {
-            if (signature) {
-              this.checked = true;
-              this.agree(signature);
-              this._cdRef.markForCheck();
-            }
-          });
-      }
-    }
+    //     dialogRef.afterClosed()
+    //       .pipe(
+    //         takeUntil(this._destroy$),
+    //       )
+    //       .subscribe((signature) => {
+    //         if (signature) {
+    //           this.checked = true;
+    //           this.agree(signature);
+    //           this._cdRef.markForCheck();
+    //         }
+    //       });
+    //   }
+    // }
   }
 
   public get field(): Field {
@@ -137,24 +128,37 @@ export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestro
     event.stopPropagation();
   }
 
-  public dialogClick(event: UIEvent): void {
+  public dialogClick(event: UIEvent, term: Term): void {
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
 
-    this._dialog.open(TermsFieldDialogComponent, {
-      data: { content: this.field.config.configs.content },
+    this._dialog.open(TermsFieldRenderDialogComponent, {
+      data: { term },
       minWidth: '500px',
     });
   }
 
   public writeValue(field: Field): void {
-    if (field && !field.data) {
-      field.data = {};
-    }
+    if(field) {
+      if (!field?.data) {
+        field.data = {};
+      }
 
-    this._field = field;
-    this._cdRef.markForCheck();
+      this.terms = field?.config?.configs?.terms || [];  
+
+      field.data.terms = field?.data?.terms || {};
+
+      this.terms
+      .forEach((term) => {
+        if(!field.data.terms[term.guid]) {
+          field.data.terms[term.guid] = {};
+        }
+      });   
+
+      this._field = field;
+      this._cdRef.markForCheck();
+    }
   }
 
   public fieldChange(field: Field): void {

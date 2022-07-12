@@ -12,17 +12,13 @@
           </div>
         </ng-template>
 
-        <ng-template fsFieldConfig type="signpad" let-field="field">
-          <div fxLayout="column">
-            <fs-signature (changed)="field.data.value"></fs-signature>
-          </div>
-        </ng-template>
-
-        <ng-template fsFieldRender type="signpad" let-field="field">
-          <fs-label-field>
-            <fs-label>Signature</fs-label>
-            <fs-signature (change)="field.data.value = $event"></fs-signature>
-          </fs-label-field>
+        <ng-template fsFieldRender type="signature" let-field="field" let-fieldEditor="fieldEditor">
+          <app-signature-field-render
+            [disabled]="true"
+            name="signature"
+            [ngModel]="field"
+            (ngModelChange)="fieldChanged(fieldEditor, field)">
+          </app-signature-field-render>
         </ng-template>
 
         <ng-template fsFieldRender type="share" let-field="field">
@@ -40,7 +36,7 @@
         <ng-template fsFieldConfig type="terms" let-field="field" let-fieldEditor="fieldEditor">
           <div fxLayout="column">
             <app-terms-field-config
-              name="terms_{{ field?.data?.guid }}"
+              name="terms-{{ field?.data?.guid }}"
               [ngModel]="field"
               (ngModelChange)="fieldChanged(fieldEditor, field)">
             </app-terms-field-config>
@@ -72,18 +68,19 @@
                 <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
               </ng-template>
 
-              <ng-template fsFieldRender type="signpad" let-field="field">
-                <fs-label-field>
-                  <fs-label>Signature</fs-label>
-                  <fs-signature (change)="field.data.value = $event"></fs-signature>
-                </fs-label-field>
+              <ng-template fsFieldRender type="signature" let-field="field" let-fieldEditor="fieldEditor">
+                <app-signature-field-render
+                  name="signature"
+                  [ngModel]="field"
+                  (ngModelChange)="fieldChanged(fieldEditor, field)">
+                </app-signature-field-render>
               </ng-template>
 
               <ng-template fsFieldRender type="terms" let-field="field" let-fieldEditor="fieldEditor">
                 <app-terms-field-render
                   name="terms"
                   [ngModel]="field"
-                  agreedName="Bob Smith">
+                  (ngModelChange)="fieldChanged(fieldEditor, field)">
                 </app-terms-field-render>
               </ng-template>
             </fs-field-renderer>
@@ -105,19 +102,11 @@
               </fs-label-field>
             </ng-template>
 
-            <ng-template fsFieldView type="signpad" let-field="field">
+            <ng-template fsFieldView type="signature" let-field="field">
               <fs-label-field>
                 <fs-label>Signature</fs-label>
                 <img [src]="field.data.value">
               </fs-label-field>
-            </ng-template>
-
-            <ng-template fsFieldView type="signpad" let-field="field">
-              <app-terms-field-render
-                name="terms"
-                [disabled]="true"
-                [ngModel]="field">
-              </app-terms-field-render>
             </ng-template>
           </fs-field-viewer>
         </p>

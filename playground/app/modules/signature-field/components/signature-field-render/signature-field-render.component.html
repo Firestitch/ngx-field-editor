@@ -1,0 +1,12 @@
+<fs-label-field class="fs-form-wrapper">
+  <fs-label class="fs-form-label" *ngIf="field.config.label">{{field.config.label}}</fs-label>
+  <fs-signature
+    [ngModel]="signature"
+    [required]="field.config.configs.required"
+    [disabled]="disabled"
+    [signature]="signature"
+    [label]="'Signature'"
+    (changed)="changed($event)">
+  </fs-signature>
+  <fs-label-message class="fs-form-message"></fs-label-message>
+</fs-label-field>

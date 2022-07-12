@@ -1,51 +1,10 @@
-<div fxLayout="column" *ngIf="field">
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Terms & Condition Label"
-      [(ngModel)]="field.config.configs.termsLabel"
-      (ngModelChange)="fieldChange(field)"
-      [ngModelOptions]="{ updateOn: 'blur' }"
-      [disabled]="disabled"
-      name="terms-label">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-select
-      [(ngModel)]="field.config.configs.termsContentSource"
-      (ngModelChange)="fieldChange(field)"
-      [disabled]="disabled"
-      name="terms-content-source"
-      placeholder="Terms & Conditions Content">
-      <mat-option value="none">None</mat-option>
-      <mat-option value="url">URL</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <ng-container *ngIf="field.config.configs.termsContentSource==='url'">
-    <mat-form-field>
-      <input
-        matInput
-        #url
-        placeholder="Terms & Conditions Content URL"
-        [(ngModel)]="field.config.configs.termsContentUrl"
-        (ngModelChange)="fieldChange(field)"
-        [ngModelOptions]="{ updateOn: 'blur' }"
-        [disabled]="disabled"
-        name="terms-content-url"
-        [fsFormUrl]="true"
-        [fsFormUrlProtocol]="true">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="Terms & Conditions Content Label"
-        [(ngModel)]="field.config.configs.termsContentLabel"
-        (ngModelChange)="fieldChange(field)"
-        [ngModelOptions]="{ updateOn: 'blur' }"
-        [disabled]="disabled"
-        name="terms-content-label">
-    </mat-form-field>
-  </ng-container>
-</div>
+<fs-list [config]="listConfig" *ngIf="terms">
+  <fs-list-column title="Terms">    
+    <ng-template fs-list-cell let-row="row">
+      <a
+          (click)="open(row)">
+        {{row.label}} {{row.contentLabel}}
+      </a>
+    </ng-template>
+  </fs-list-column>
+</fs-list>

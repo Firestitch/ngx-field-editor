@@ -6,21 +6,22 @@ import {
 import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Term } from '../../interfaces';
 
 
 @Component({
-  templateUrl: './terms-field-dialog.component.html',
+  templateUrl: './terms-field-render-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TermsFieldDialogComponent {
+export class TermsFieldRenderDialogComponent {
 
-  public content;
+  public term: Term;
 
   constructor(
-    public dialogRef: MatDialogRef<TermsFieldDialogComponent>,
+    public dialogRef: MatDialogRef<TermsFieldRenderDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
   ) {
-    this.content = data.content;
+    this.term = data.term;
   }
 
 }

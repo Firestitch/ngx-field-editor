@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   forwardRef,
+  Input,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -10,18 +11,23 @@ import { Field } from '@firestitch/field-editor';
 
 
 @Component({
-  selector: 'app-signature',
-  templateUrl: './signature.component.html',
+  selector: 'app-signature-field-render',
+  templateUrl: './signature-field-render.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SignatureComponent),
+      useExisting: forwardRef(() => SignatureFieldRenderComponent),
       multi: true,
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignatureComponent implements ControlValueAccessor {
+export class SignatureFieldRenderComponent implements ControlValueAccessor {
+
+  @Input() public disabled = false;
+
+  public signature;
+  public field;
 
   private _onChange: (value: unknown) => void;
   private _onTouch: (value: unknown) => void;
@@ -31,7 +37,9 @@ export class SignatureComponent implements ControlValueAccessor {
   ) {
   }
 
-  public writeValue(obj: Field | undefined): void {
+  public writeValue(field: Field | undefined): void {
+    this.field = field;
+    this.signature = field?.data.signature;
     this._cdRef.markForCheck();
   }
 
@@ -44,7 +52,10 @@ export class SignatureComponent implements ControlValueAccessor {
   }
 
   public changed(signature): void {
-    this._onChange(signature);
+    this._onChange({ 
+      signature,
+      date: new Date(),
+    });
   }
 
 }

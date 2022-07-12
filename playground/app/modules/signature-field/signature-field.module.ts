@@ -13,16 +13,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { FsFormModule } from '@firestitch/form';
 import { FsSignatureModule } from '@firestitch/signature';
 import { FsLabelModule } from '@firestitch/label';
-import { FsHtmlEditorModule, FsHtmlRendererModule } from '@firestitch/html-editor';
+import { FsHtmlEditorModule } from '@firestitch/html-editor';
 import { FsDateModule } from '@firestitch/date';
 import { FsDialogModule } from '@firestitch/dialog';
-import { FsListModule } from '@firestitch/list';
 
 import { 
-  TermsFieldConfigDialogComponent,
-  TermsFieldRenderDialogComponent, TermsFieldRenderComponent, 
-  TermsFieldConfigComponent
+  SignatureFieldRenderComponent, SignatureDialogComponent
  } from './components';
+import { FsListModule } from '@firestitch/list';
 
 
 @NgModule({
@@ -42,21 +40,18 @@ import {
     FsFormModule,
     FsLabelModule,
     FsHtmlEditorModule,
-    FsHtmlRendererModule,
     FsDialogModule,
     FsDateModule,
     FsListModule,
     FsSignatureModule,
   ],
   declarations: [
-    TermsFieldConfigComponent,
-    TermsFieldRenderComponent,
-    TermsFieldRenderDialogComponent,
-    TermsFieldConfigDialogComponent,
+    SignatureDialogComponent,
+    SignatureFieldRenderComponent,
   ],
   exports: [
-    TermsFieldConfigComponent,
-    TermsFieldRenderComponent,
+    SignatureDialogComponent,
+    SignatureFieldRenderComponent,
   ],
 })
-export class TermsFieldModule {}
+export class SignatureFieldModule {}
