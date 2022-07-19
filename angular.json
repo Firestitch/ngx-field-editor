@@ -31,7 +31,7 @@
                 "glob": "**/*",
                 "input": "node_modules/@firestitch/froala/js/",
                 "output": "assets/js/froala/"
-              },
+              }
             ],
             "styles": [
               "playground/styles.scss"
