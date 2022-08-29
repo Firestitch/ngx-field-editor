@@ -2,7 +2,7 @@
   "name": "@firestitch/field-editor",
   "title": "Field Editor",
   "description": "@firestitch/field-editor",
-  "version": "12.7.0",
+  "version": "12.7.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-field-editor"
@@ -123,9 +123,7 @@
     "@firestitch/html-editor": ">=12.0.3",
     "@firestitch/label": ">=12.0.0",
     "@firestitch/signature": ">=12.0.0",
-    "@firestitch/address": ">=12.1.3",
-    "camelcase-keys": ">=6.0.0",
-    "snakecase-keys": ">=3.0.0"
+    "@firestitch/address": ">=12.1.3"
   },
   "dependencies": {
     "@w11k/angular-sticky-things": "^1.4.0",

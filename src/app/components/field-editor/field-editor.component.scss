@@ -28,17 +28,16 @@
 }
 
 .toolbar-container {
+  position: relative;
+  right: 76px;
+  top: 20px;
+  z-index: 1;
+  
   .toolbar {
-    position: absolute;
-    height: 99%;
-    right: 0;
-    margin-right: 15px;
+    position: fixed;
   }
 }
 
-fs-field-toolbar {
-  z-index: 100;
-}
 
 .fields {
   max-width: 100%;
