@@ -16,6 +16,7 @@ import { Field } from '../../../../interfaces/field.interface';
 import { FileRenderFile } from '../../../../classes/file-render-file';
 import { FieldEditorService } from '../../../../services/field-editor.service';
 import { FieldViewGalleryComponent } from '../../../field-view-gallery/field-view-gallery.component';
+import { FsGalleryItem } from '@firestitch/gallery';
 
 
 @Component({
@@ -108,18 +109,18 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
     if (this._fieldEditor.config?.fileRemove) {
       this.actions.push({
         label: 'Remove',
-        click: (item) => {
+        click: (item: FsGalleryItem) => {
           this._prompt.confirm({
             title: 'Confirm',
             template: 'Are you sure you would like to remove this file?',
           })
           .pipe(
             switchMap(() => {
-              return this._fieldEditor.config.fileRemove(this.field, item);
+              return this._fieldEditor.config.fileRemove(this.field, item.data);
             })
           )
           .subscribe(() => {
-            const idx = this.files.indexOf(item);
+            const idx = this.files.indexOf(item.data);
 
             if (idx >= 0) {
               this.files.splice(idx, 1);
@@ -127,7 +128,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
               this.onChange(this.files);
 
               if (this._fieldEditor.config.fileRemoved) {
-                this._fieldEditor.config.fileRemoved(this.field, item);
+                this._fieldEditor.config.fileRemoved(this.field, item.data);
               }
             }
           });

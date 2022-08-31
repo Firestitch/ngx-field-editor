@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { FsGalleryComponent, FsGalleryConfig, FsGalleryItem, GalleryLayout, GalleryThumbnailSize, mime, ThumbnailScale } from '@firestitch/gallery';
+import { FsGalleryComponent, FsGalleryConfig, FsGalleryItem, GalleryLayout, GalleryThumbnailSize, mime } from '@firestitch/gallery';
 
 import { Observable, of } from 'rxjs';
 
@@ -69,6 +69,7 @@ export class FieldViewGalleryComponent implements OnInit {
           preview: item.url,
           name: item.name,
           mime: item.mime || mime(item.name, item.url, '', false),
+          data: item,
         }));
 
         return of(items);
