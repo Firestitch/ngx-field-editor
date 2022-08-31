@@ -67,13 +67,15 @@ export class FieldViewGalleryComponent implements OnInit {
           this.field.data.value : 
           [];
 
-        return items.map((item) => ({
-          url: item.url,
-          preview: item.url,
-          name: item.name,
-          mime: item.mime || mime(item.name, item.url, '', false),
-          data: item,
-        }));
+        return of(
+          items.map((item) => ({
+            url: item.url,
+            preview: item.url,
+            name: item.name,
+            mime: item.mime || mime(item.name, item.url, '', false),
+            data: item,
+          }))
+        );
       },
     }
   }

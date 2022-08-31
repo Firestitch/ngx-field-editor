@@ -95,8 +95,6 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   }
 
   public ngOnInit() {
-    const config = this.field.config?.configs?.allowedFileTypes || {};
-
     if (this._fieldEditor.config && this._fieldEditor.config.fileDownload) {
       this.actions.push({
         label: 'Download',
