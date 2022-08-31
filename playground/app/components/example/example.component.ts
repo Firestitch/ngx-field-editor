@@ -422,7 +422,7 @@ export class ExampleComponent implements OnInit {
           label: 'File Upload',
           configs: {
             basic: true,
-            allowMultiple: false
+            allowMultiple: true
           }
         },
         data: {

@@ -6,9 +6,9 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { FsGalleryComponent, FsGalleryConfig, GalleryLayout, mime, ThumbnailScale } from '@firestitch/gallery';
+import { FsGalleryComponent, FsGalleryConfig, FsGalleryItem, GalleryLayout, GalleryThumbnailSize, mime, ThumbnailScale } from '@firestitch/gallery';
 
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
@@ -50,28 +50,28 @@ export class FieldViewGalleryComponent implements OnInit {
     }
 
     this.galleryConfig = {
-      map: (data) => {
-        return {
-          url: data.url,
-          preview: data.url,
-          name: data.name,
-          mime: data.mime || mime(data.name, data.url)
-        }
-      },
       thumbnail: {
-        width: 150,
-        scale: ThumbnailScale.None,
+        width: 250,
+        height: 200,
+        size: GalleryThumbnailSize.Cover,
       },
       showChangeSize: false,
       showChangeView: false,
       noResults: false,
       persist: false,
       layout: GalleryLayout.Flow,
-      toolbar: false,
       zoom: false,
       info,
-      fetch: () => {
-        return of(this.field.data.value);
+      fetch: (query?: any, item?: FsGalleryItem): Observable<FsGalleryItem[]> => {
+        const items = this.field.data.value
+        .map((item) => ({
+          url: item.url,
+          preview: item.url,
+          name: item.name,
+          mime: item.mime || mime(item.name, item.url, '', false),
+        }));
+
+        return of(items);
       },
     }
   }
