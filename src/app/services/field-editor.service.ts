@@ -181,6 +181,11 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public fieldChanged(item: Field) {
+    this.config.fields = this.config.fields
+    .map((field) => {
+      return field.config.guid === item.config.guid ? item : field;
+    });
+
     if (this.config.fieldChanged) {
       item = this._prepareItem(item);
 

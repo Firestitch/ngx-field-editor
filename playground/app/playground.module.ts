@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FsExampleModule } from '@firestitch/example';
 import { FsMessageModule } from '@firestitch/message';
-import { FsFieldEditorModule } from '@firestitch/field-editor';
+import { FsFieldEditorModule, FsFieldRendererModule, FsFieldViewerModule } from '@firestitch/field-editor';
 import { FsPhoneModule } from '@firestitch/phone';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -49,6 +49,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FsFieldEditorModule.forRoot({}),
+    FsFieldViewerModule,
+    FsFieldRendererModule,
     FsHtmlEditorModule.forRoot(),
     FsAddressModule.forRoot(),
     BrowserAnimationsModule,

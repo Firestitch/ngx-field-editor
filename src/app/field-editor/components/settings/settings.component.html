@@ -1,0 +1,102 @@
+<form fsForm [submit]="save">
+  <fs-dialog>
+    <h1 mat-dialog-title>Settings</h1>
+    <mat-dialog-content>
+      <div fxLayout="column">
+        <mat-form-field>
+          <mat-label>Default Value</mat-label>
+          <input
+            matInput
+            [(ngModel)]="configs.default"
+            name="default">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Identifier</mat-label>
+          <input
+            matInput
+            [required]="configs.populate"
+            [(ngModel)]="configs.identifier"
+            name="identifier">
+        </mat-form-field>
+        <fs-label-field>
+          <fs-label>Populate from URL</fs-label>
+          <mat-checkbox name="populate" [(ngModel)]="configs.populate">
+            <div class="populated-checkbox">
+              Allow field to be populated from URL            
+              <fs-popover 
+                  [wrapperClass]="'popover-populate-url'"
+                  [maxWidth]="null"
+                  [indication]="false"
+                  [template]="populateTemplate">
+                <mat-icon>help_outline</mat-icon>              
+              </fs-popover>
+            </div>
+          </mat-checkbox>
+        </fs-label-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button
+          type="submit"
+          color="primary"
+          mat-button>
+        Save
+      </button>
+      <button
+          type="button"
+          mat-button
+          [mat-dialog-close]="null">
+        Cancel
+      </button>
+    </mat-dialog-actions>
+  </fs-dialog>
+</form>
+
+<ng-template #populateTemplate>
+  <fs-label>Example URL</fs-label>
+  <ng-container [ngSwitch]="field.config.type">
+    <ng-container *ngSwitchCase="FieldType.Checkbox">
+      <ng-container *ngTemplateOutlet="choicePopulate"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="FieldType.Dropdown">
+      <ng-container *ngTemplateOutlet="choicePopulate"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="FieldType.Choice">
+      <ng-container *ngTemplateOutlet="choicePopulate"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="FieldType.Gender">
+      <ng-container *ngTemplateOutlet="genderPopulate"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <app-populate-url 
+        [identifier]="configs.identifier"
+        [value]="populateValue">
+      </app-populate-url>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #choicePopulate>
+    <ng-container *ngFor="let option of configs.options">
+      <div>
+        {{option.label}} 
+        <app-populate-url 
+          [identifier]="configs.identifier" 
+          [value]="option.value">
+        </app-populate-url>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #genderPopulate>
+    <ng-container *ngFor="let option of configs.genders">
+      <div>
+        {{option.label}} 
+        <app-populate-url 
+          [identifier]="configs.identifier" 
+          [value]="option.value">
+        </app-populate-url>
+      </div>
+    </ng-container>
+  </ng-template>
+
+</ng-template>

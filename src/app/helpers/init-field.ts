@@ -3,6 +3,7 @@ import { FieldType } from '../enums/field-type';
 import { isObject } from 'lodash-es';
 import { Field } from '../interfaces/field.interface';
 import { parseLocal } from '@firestitch/date';
+import { getPopulateFieldValue } from './get-populate-field-value';
 
 
 export function initField(field: Field): Field {
@@ -28,9 +29,9 @@ export function initField(field: Field): Field {
       field.config.hideRequired = true;
       break;
 
-      case FieldType.Content:
-        field.config.hideRequired = true;
-        break;
+    case FieldType.Content:
+      field.config.hideRequired = true;
+      break;
 
     case FieldType.Checkbox:
     case FieldType.Choice:
@@ -46,6 +47,15 @@ export function initField(field: Field): Field {
 
         if (!isObject(field.data.value)) {
           field.data.value = { selected: selected };
+        }
+ 
+        const value = getPopulateFieldValue(field); 
+        if(value !==null) {
+          if(field.config.type === FieldType.Checkbox) {
+            field.data.value.selected = value.split(',');
+          } else {
+            field.data.value.selected = value;
+          }
         }
       }
       break;
@@ -95,6 +105,12 @@ export function initField(field: Field): Field {
           { name: 'Other', value: 'other' },
         ];
       }
+
+      const value = getPopulateFieldValue(field); 
+      if(value !==null) {
+        field.data.value = value;
+      }
+
       break;
 
     case FieldType.Address:
@@ -128,16 +144,39 @@ export function initField(field: Field): Field {
       }
 
       break;
-    
-      case FieldType.Date:
-      case FieldType.Time:
-        field.data.value = field.data.value ? parseLocal(field.data.value) : null;
-        break;
-        
-      case FieldType.RichText:
-        if(!('value' in field.data)) {
-          field.data.value = field.config.configs.default;
+  
+    case FieldType.Date:
+    case FieldType.Time:
+      field.data.value = field.data.value ? parseLocal(field.data.value) : null;
+
+      if(field.data.value === null) {
+        const value = getPopulateFieldValue(field);
+        if(value !== null) {
+          field.data.value = value;
         }
+      }      
+
+      break;
+      
+    case FieldType.RichText:
+      if(!('value' in field.data)) {
+        field.data.value = field.config.configs.default;
+      }
+      break;
+  
+    case FieldType.ShortText:
+    case FieldType.LongText:
+      field.data.value = field.data.value === null || field.data.value === undefined ?
+        '' : 
+        String(field.data.value);
+
+      if(field.config.configs.populate) {
+        const value = getPopulateFieldValue(field);
+        if(value !== null) {
+          field.data.value = value
+        }
+      }
+
       break;
     }
 

@@ -1,0 +1,19 @@
+.populate-url {
+  display: flex;
+  align-items: center;
+  
+  a {
+    color: inherit;
+    display: flex;
+
+    mat-icon {
+      margin-left: 5px;
+    }
+  }
+}
+
+::ng-deep {
+  .popover-populate-url .popover-content {
+    padding: 12px !important;
+  }
+}

@@ -1,20 +1,45 @@
-export { FsFieldEditorModule } from './app/fs-field-editor.module';
+export { FsFieldEditorModule } from './app/field-editor/fs-field-editor.module';
+export { FsFieldViewerModule } from './app/field-viewer/fs-field-viewer.module';
+export { FsFieldRendererModule } from './app/field-renderer/fs-field-renderer.module';
 
 export { FieldType } from './app/enums/field-type';
 
-export { FieldConfigDirective } from './app/directives/field-config/field-config.directive';
-export { FieldRenderDirective } from './app/directives/field-render/field-render.directive';
-export { FieldViewDirective } from './app/directives/field-view/field-view.directive';
+export { FieldConfigDirective } from './app/field-editor/directives/field-config/field-config.directive';
+export { FieldRenderDirective } from './app/field-renderer/directives/field-render/field-render.directive';
+export { FieldViewDirective } from './app/field-viewer/directives/field-view/field-view.directive';
 
-export { FieldEditorComponent } from './app/components/field-editor/field-editor.component';
-export { FieldRendererComponent } from './app/components/field-renderer/field-renderer.component';
-export { FieldViewerComponent } from './app/components/field-viewer/field-viewer.component';
-export { FieldRenderComponent } from './app/components/render/field-render/field-render.component';
-export { FieldViewComponent } from './app/components/field-view/field-view.component';
+export { FieldEditorComponent } from './app/field-editor/components/field-editor/field-editor.component';
+
+export { 
+  FieldViewComponent,
+  FieldViewerComponent,
+  FieldViewHeadingComponent,
+  FieldViewGalleryComponent,
+} from './app/field-viewer/components';
+
+export { 
+  FieldRendererComponent,
+  FieldRenderComponent,
+  FieldRenderTimeComponent,
+  FieldRenderDateComponent,
+  FieldRenderNameComponent,
+  FieldRenderNameModelComponent,
+  FieldRenderCheckboxComponent,
+  FieldRenderFileMultipleComponent,
+  FieldRenderFileSingleComponent,
+  FieldRenderFileComponent,
+  FieldRenderTextComponent,
+  FieldRenderRichTextComponent,
+  FieldRenderGenderComponent,
+  FieldRenderAddressComponent,
+  FieldRenderDropdownComponent,
+  FieldRenderContentComponent,
+  FieldRenderChoiceComponent,
+} from './app/field-renderer/components';
 
 export { FieldEditorService } from './app/services/field-editor.service';
 
-export { FieldEditorToolbarDirective } from './app/directives/field-editor-toolbar/field-editor-toolbar.directive';
+export { FieldEditorToolbarDirective } from './app/field-editor/directives/field-editor-toolbar/field-editor-toolbar.directive';
 export { FS_FIELD_EDITOR_CONFIG } from './app/injectors/fs-field-editor.providers';
 
 export { Field } from './app/interfaces/field.interface';

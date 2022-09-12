@@ -10,7 +10,7 @@ import { FsApi } from '@firestitch/api';
 import { guid } from '@firestitch/common';
 
 import { map } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { DialogExampleComponent } from '../dialog-example';
 import { FieldEditorService } from '../../../../src/app/services/field-editor.service';
@@ -180,7 +180,7 @@ export class ExampleComponent implements OnInit {
     this.selectedIndex = event.index;
   }
 
-  public getFields() {
+  public getFields(): Field[] {
     return [
       {
         data: {},
@@ -207,15 +207,19 @@ export class ExampleComponent implements OnInit {
         data: {},
         config:
         {
-          guid: '2',
+          guid: '222',
           type: FieldType.ShortText,
           label: 'Short Text Question',
-          description: 'Description Description Description'
+          description: 'Description Description Description',
+          configs: {
+            identifier: 'shortText',
+            populate: true,
+          }
         },
       },
       {
         config: {
-          guid: '2',
+          guid: '233',
           type: FieldType.Content,
           label: 'Content',
           description: 'Content Description',
@@ -226,7 +230,7 @@ export class ExampleComponent implements OnInit {
       },
       {
         config: {
-          guid: '2',
+          guid: '444',
           type: FieldType.RichText,
           label: 'Rich Text'
         },
@@ -294,6 +298,8 @@ export class ExampleComponent implements OnInit {
           type: FieldType.Gender,
           label: 'Gender',
           configs: {
+            populate: true,
+            identifier: 'gender',
             genders: [
               {
                 name: 'Male',
@@ -316,6 +322,8 @@ export class ExampleComponent implements OnInit {
           label: 'Choice Question',
           configs: {
             other: true,
+            identifier: 'choice',
+            populate: true,
             options: [
               {
                 value: '66',
@@ -349,7 +357,11 @@ export class ExampleComponent implements OnInit {
         config: {
           guid: '9',
           type: FieldType.Date,
-          label: 'Date Question'
+          label: 'Date Question',
+          configs: {
+            identifier: 'date',
+            populate: true,
+          }          
         },
       },
       {
@@ -361,6 +373,8 @@ export class ExampleComponent implements OnInit {
           label: 'Checkboxes Question',
           configs: {
             other: true,
+            populate: true,
+            identifier: 'checkboxes',
             options: [
               {
                 value: '99',
