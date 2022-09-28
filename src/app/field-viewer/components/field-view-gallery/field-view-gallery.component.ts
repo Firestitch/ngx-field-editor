@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  OnInit,
+  Input, OnChanges,
+  OnInit, SimpleChanges,
   ViewChild,
 } from '@angular/core';
 
@@ -17,7 +17,7 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['field-view-gallery.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldViewGalleryComponent implements OnInit {
+export class FieldViewGalleryComponent implements OnInit, OnChanges {
 
   @ViewChild(FsGalleryComponent)
   public gallery: FsGalleryComponent;
@@ -30,7 +30,16 @@ export class FieldViewGalleryComponent implements OnInit {
   public ngOnInit(): void {
     this._initGalleryConfig();
   }
-  
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes.field?.currentValue !== changes.field?.previousValue
+      || changes.actions?.currentValue !== changes.actions?.previousValue
+    ) {
+      this.gallery.reload();
+    }
+  }
+
   public reload(): void {
     this.gallery.reload();
   }
@@ -63,8 +72,8 @@ export class FieldViewGalleryComponent implements OnInit {
       zoom: false,
       info,
       fetch: (query?: any, item?: FsGalleryItem): Observable<FsGalleryItem[]> => {
-        const items = Array.isArray(this.field.data?.value) ? 
-          this.field.data.value : 
+        const items = Array.isArray(this.field.data?.value) ?
+          this.field.data.value :
           [];
 
         return of(
