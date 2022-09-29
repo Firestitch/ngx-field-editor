@@ -62,7 +62,7 @@
 
     <ng-container *ngSwitchCase="fieldType.File">
       <ng-container *ngIf="field.data.value?.length">
-        <fs-field-view-gallery [field]="field"></fs-field-view-gallery>
+        <fs-field-view-gallery [field]="field" [actions]="actions"></fs-field-view-gallery>
       </ng-container>
     </ng-container>
 
