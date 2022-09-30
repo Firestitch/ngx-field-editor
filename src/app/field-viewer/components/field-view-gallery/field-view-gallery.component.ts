@@ -19,7 +19,7 @@ import { Observable, of } from 'rxjs';
 })
 export class FieldViewGalleryComponent implements OnInit, OnChanges {
 
-  @ViewChild(FsGalleryComponent)
+  @ViewChild(FsGalleryComponent, { static: true })
   public gallery: FsGalleryComponent;
 
   @Input() public field: any = { config: {} };
@@ -36,7 +36,7 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
       changes.field?.currentValue !== changes.field?.previousValue
       || changes.actions?.currentValue !== changes.actions?.previousValue
     ) {
-      this.gallery.reload();
+      this.reload();
     }
   }
 
