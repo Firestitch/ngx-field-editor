@@ -19,7 +19,7 @@ import { FieldEditorService } from '../../../services/field-editor.service';
 export class FieldViewComponent implements OnInit {
 
   @Input() public showLabel = true;
-  @Input() public field: Field;
+  @Input() public field: (Field & { hasValue?: boolean });
 
   public fieldType = FieldType;
   public actions = [];
