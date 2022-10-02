@@ -49,6 +49,11 @@ export class FieldViewerComponent implements AfterContentInit {
       const value = field.data?.value;
       let hasValue = false;
       switch(field.config.type) {
+        case FieldType.Content:
+        case FieldType.Heading:
+          hasValue = true;
+          break;
+          
         case FieldType.Address:
           hasValue = Object.keys(value || {}).length !== 0;
         break;
