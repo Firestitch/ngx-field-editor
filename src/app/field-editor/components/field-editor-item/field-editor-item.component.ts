@@ -46,7 +46,7 @@ export class FieldEditorItemComponent implements OnInit {
 
   @HostBinding('class.selected')
   public get isSelectedField(): boolean {
-    return this.field.config.guid === this.fieldEditor.selectedField?.config.guid;
+    return this.fieldEditor.selectedField && (this.field.config.guid === this.fieldEditor.selectedField.config.guid);
   }
 
   public get fieldConfigTemplateRef(): TemplateRef<unknown> | false {
