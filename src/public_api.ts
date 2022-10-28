@@ -10,14 +10,14 @@ export { FieldViewDirective } from './app/field-viewer/directives/field-view/fie
 
 export { FieldEditorComponent } from './app/field-editor/components/field-editor/field-editor.component';
 
-export { 
+export {
   FieldViewComponent,
   FieldViewerComponent,
   FieldViewHeadingComponent,
   FieldViewGalleryComponent,
 } from './app/field-viewer/components';
 
-export { 
+export {
   FieldRendererComponent,
   FieldRenderComponent,
   FieldRenderTimeComponent,
@@ -35,6 +35,7 @@ export {
   FieldRenderDropdownComponent,
   FieldRenderContentComponent,
   FieldRenderChoiceComponent,
+  FieldRenderBirthdayComponent,
 } from './app/field-renderer/components';
 
 export { FieldEditorService } from './app/services/field-editor.service';
