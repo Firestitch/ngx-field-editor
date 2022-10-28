@@ -13,6 +13,7 @@ export const TOOLBAR_DEFAULTS = {
   [FieldType.Email]: { icon: 'email', label: 'Email' },
   [FieldType.File]: { icon: 'publish', label: 'File' },
   [FieldType.Gender]: { icon: 'wc', label: 'Gender' },
+  [FieldType.Birthday]: { icon: 'cake', label: 'Birthday' },
   [FieldType.Address]: { icon: 'location_on', label: 'Address' },
   [FieldType.Heading]: { icon: 'title', label: 'Heading' },
   [FieldType.Content]: { icon: 'text_format', label: 'Content' },

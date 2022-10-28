@@ -87,6 +87,7 @@ export function defaultConfigFactory(config) {
           { type: FieldType.Email },
           { type: FieldType.Address },
           { type: FieldType.Gender },
+          { type: FieldType.Birthday },
           { type: FieldType.Divider },
           { type: FieldType.File },
         ]

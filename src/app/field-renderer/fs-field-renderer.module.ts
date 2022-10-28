@@ -49,6 +49,7 @@ import { FieldRenderNameModelComponent } from './components/field-render-name-mo
 import { FieldRenderCheckboxComponent } from './components/field-render-checkbox/field-render-checkbox.component';
 import { FieldRenderDateComponent } from './components/field-render-date/field-render-date.component';
 import { FieldRenderTimeComponent } from './components/field-render-time/field-render-time.component';
+import { FieldRenderBirthdayComponent } from './components/field-render-birthday/field-render-birthday.component';
 import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
 
 
@@ -106,6 +107,7 @@ import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
     FieldRenderDateComponent,
     FieldRenderTimeComponent,
     FieldRenderFileSingleComponent,
+    FieldRenderBirthdayComponent,
   ],
   declarations: [
     FieldRendererComponent,
@@ -126,6 +128,7 @@ import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
     FieldRenderDateComponent,
     FieldRenderTimeComponent,
     FieldRenderFileSingleComponent,
+    FieldRenderBirthdayComponent,
   ],
 })
 

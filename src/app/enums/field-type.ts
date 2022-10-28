@@ -9,6 +9,7 @@ export enum FieldType {
   Time = 'time',
   Checkbox = 'checkbox',
   Date = 'date',
+  Birthday = 'birthday',
   File = 'file',
   Gender = 'gender',
   Custom = 'custom',

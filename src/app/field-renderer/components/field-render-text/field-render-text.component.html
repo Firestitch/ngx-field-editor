@@ -39,6 +39,19 @@
     <mat-hint>{{field.config.description}}</mat-hint>
   </mat-form-field>
 
+  <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Birthday">
+    <input
+      matInput
+      [placeholder]="field.config.label"
+      fsDatePickerBirthday
+      [(ngModel)]="field.data.value"
+      (ngModelChange)="changed.emit(field)"
+      [name]="name"
+      [disabled]="disabled"
+      [required]="field.config.configs.required===true">
+    <mat-hint>{{field.config.description}}</mat-hint>
+  </mat-form-field>
+
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Time">
     <input
       matInput

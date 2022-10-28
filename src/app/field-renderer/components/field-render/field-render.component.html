@@ -29,6 +29,10 @@
         <fs-field-render-date [field]="field" (changed)="fieldEditor.fieldChanged($event)"></fs-field-render-date>
       </ng-container>
 
+      <ng-container *ngSwitchCase="fieldType.Birthday">
+        <fs-field-render-birthday [field]="field" (changed)="fieldEditor.fieldChanged($event)"></fs-field-render-birthday>
+      </ng-container>
+
       <ng-container *ngSwitchCase="fieldType.Time">
         <fs-field-render-time [field]="field" (changed)="fieldEditor.fieldChanged($event)"></fs-field-render-time>
       </ng-container>
