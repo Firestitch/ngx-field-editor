@@ -27,7 +27,7 @@
   }
 
   &.selected {
-    box-shadow: 0 3px 3px -2px #0003, 0 3px 4px #00000024, 0 1px 8px #0000001f;  
+    box-shadow: 0 3px 3px -2px #0003, 0 3px 4px #00000024, 0 1px 8px #0000001f;
     z-index: 1;
     position: relative;
     cursor: initial;
@@ -79,6 +79,7 @@
   &.field-drag-button {
     position: absolute;
     margin-top: -20px;
+    z-index: 999;
     visibility: hidden;
   }
 
