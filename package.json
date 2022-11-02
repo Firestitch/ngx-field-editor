@@ -67,7 +67,7 @@
     "@firestitch/filter": "^12.2.1",
     "@firestitch/form": "^12.0.1",
     "@firestitch/froala": "^1.0.2",
-    "@firestitch/gallery": "^12.2.14",
+    "@firestitch/gallery": "^12.7.3",
     "@firestitch/html-editor": "^12.1.2",
     "@firestitch/iframe": "^12.0.0",
     "@firestitch/label": "^12.0.0",
@@ -120,11 +120,11 @@
     "zone.js": "~0.11.4"
   },
   "peerDependencies": {
+    "@firestitch/address": ">=12.1.3",
     "@firestitch/file": ">=12.0.6",
     "@firestitch/html-editor": ">=12.0.3",
     "@firestitch/label": ">=12.0.0",
-    "@firestitch/signature": ">=12.0.0",
-    "@firestitch/address": ">=12.1.3"
+    "@firestitch/signature": ">=12.0.0"
   },
   "dependencies": {
     "@w11k/angular-sticky-things": "^1.4.0",
