@@ -22,9 +22,9 @@
     [disabled]="disabled"
     class="other choice">
     <mat-form-field floatLabel="never" class="subscript-remove">
+      <mat-label>Other</mat-label>
       <input
         matInput
-        placeholder="Other"
         (click)="otherInputClick()"
         (ngModelChange)="changed.emit(field)"
         [(ngModel)]="field.data.value.other"

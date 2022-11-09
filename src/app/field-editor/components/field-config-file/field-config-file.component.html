@@ -44,9 +44,9 @@
       fxFlexLayout="column"
       fxLayoutGap="20px">
     <mat-form-field>
+      <mat-label>Max Image Width</mat-label>
       <input
         matInput
-        placeholder="Max Image Width"
         [(ngModel)]="field.config.configs.maxWidth"
         name="maxWidth"
         [ngModelOptions]="{ updateOn: 'blur' }"
@@ -54,9 +54,9 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Max Image Height</mat-label>
       <input
         matInput
-        placeholder="Max Image Height"
         [(ngModel)]="field.config.configs.maxHeight"
         name="maxHeight"
         [ngModelOptions]="{ updateOn: 'blur' }"
@@ -64,9 +64,9 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Image Quality</mat-label>
       <input
         matInput
-        placeholder="Image Quality"
         [(ngModel)]="imageQuality"
         name="imageQuality"
         [ngModelOptions]="{ updateOn: 'blur' }"

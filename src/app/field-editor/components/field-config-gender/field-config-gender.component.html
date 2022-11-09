@@ -10,25 +10,25 @@
       <mat-radio-button disabled="true"></mat-radio-button>
 
       <mat-form-field floatLabel="never" class="gender-name" fxFlex>
-        <input 
-          matInput 
-          placeholder="Label" 
-          [(ngModel)]="gender.name" 
-          name="label" 
-          [ngModelOptions]="{ updateOn: 'blur' }" 
+        <mat-label>Label</mat-label>
+        <input
+          matInput
+          [(ngModel)]="gender.name"
+          name="label"
+          [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="changed.emit(field)">
       </mat-form-field>
-      
-      <mat-form-field 
+
+      <mat-form-field
           *ngIf="field.config.configs.showValues"
-          floatLabel="never" 
+          floatLabel="never"
           class="gender-value">
-        <input 
-          matInput 
-          placeholder="Value" 
-          [(ngModel)]="gender.value" 
-          name="value" 
-          [ngModelOptions]="{ updateOn: 'blur' }" 
+        <mat-label>Value</mat-label>
+        <input
+          matInput
+          [(ngModel)]="gender.value"
+          name="value"
+          [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="changed.emit(field)">
       </mat-form-field>
 
@@ -43,7 +43,8 @@
     <mat-checkbox disabled="true" style="visibility: hidden"></mat-checkbox>
 
     <mat-form-field floatLabel="never" class="new-option" fxFlex>
-      <input matInput #addOptionInput placeholder="Add New Gender" [(ngModel)]="newOption" name="newOption" (keydown.tab)="add()" (keyup.enter)="add()">
+      <mat-label>Add New Gender</mat-label>
+      <input matInput #addOptionInput [(ngModel)]="newOption" name="newOption" (keydown.tab)="add()" (keyup.enter)="add()">
     </mat-form-field>
   </div>
 </div>

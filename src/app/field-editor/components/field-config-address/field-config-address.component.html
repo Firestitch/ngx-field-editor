@@ -21,9 +21,9 @@
       </td>
       <td>
           <mat-form-field floatLabel="never">
+            <mat-label>Label</mat-label>
             <input
               matInput
-              placeholder="Label"
               [(ngModel)]="field.config.configs[item].label"
               [disabled]="!field.config.configs[item].enabled"
               [name]="field.config.configs[item]"

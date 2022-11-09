@@ -1,7 +1,7 @@
 <mat-form-field class="form-field-multiline-subscript">
+  <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
   <input
     matInput
-    [placeholder]="field.config.label"
     fsDatePickerBirthday
     [(ngModel)]="field.data.value"
     (ngModelChange)="changed.emit(field)"

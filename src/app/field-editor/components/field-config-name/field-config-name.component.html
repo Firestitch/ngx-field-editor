@@ -3,9 +3,9 @@
     <mat-checkbox color="primary" [(ngModel)]="field.config.configs.firstName.display" (ngModelChange)="changed.emit(field)"></mat-checkbox>
 
     <mat-form-field floatLabel="never" fxFlex>
+      <mat-label>Label</mat-label>
       <input
         matInput
-        placeholder="Label"
         [(ngModel)]="field.config.configs.firstName.label"
         [disabled]="!field.config.configs.firstName.display"
         name="firstName"
@@ -19,9 +19,9 @@
     <mat-checkbox color="primary" [(ngModel)]="field.config.configs.lastName.display" (ngModelChange)="changed.emit(field)"></mat-checkbox>
 
     <mat-form-field floatLabel="never" fxFlex>
+      <mat-label>Label</mat-label>
       <input
         matInput
-        placeholder="Label"
         [(ngModel)]="field.config.configs.lastName.label"
         [disabled]="!field.config.configs.lastName.display"
         name="lastName"

@@ -1,26 +1,26 @@
 <fs-label-field class="fs-form-wrapper">
   <div class="row">
-    <mat-form-field 
+    <mat-form-field
       class="form-field-padless-bottom"
         *ngIf="field.config.configs.firstName?.display">
+      <mat-label>{{field.config.label + ' ' + field.config.configs.firstName.label}}</mat-label>
       <input
         matInput
         [name]="name + 'firstName'"
         [disabled]="disabled"
         (ngModelChange)="change($event,'firstName')"
-        [(ngModel)]="field.data.value.firstName"
-        [placeholder]="field.config.label + ' ' + field.config.configs.firstName.label">
+        [(ngModel)]="field.data.value.firstName">
     </mat-form-field>
-    <mat-form-field 
-        class="form-field-padless-bottom" 
+    <mat-form-field
+        class="form-field-padless-bottom"
         *ngIf="field.config.configs.lastName?.display">
+      <mat-label>{{field.config.label + ' ' + field.config.configs.lastName.label}}</mat-label>
       <input
         matInput
         [name]="name + 'lastName'"
         [disabled]="disabled"
         (ngModelChange)="change($event,'lastName')"
-        [(ngModel)]="field.data.value.lastName"
-        [placeholder]="field.config.label + ' ' + field.config.configs.lastName.label">
+        [(ngModel)]="field.data.value.lastName">
     </mat-form-field>
   </div>
 

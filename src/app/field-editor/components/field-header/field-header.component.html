@@ -1,13 +1,13 @@
 <div *ngIf="(fieldEditor.selectedField$ | async).config.guid === field.config.guid; else selectedElse">
   <div fxFlexLayout="row" fxLayoutAlign="start center">
     <div fxFlex>
-      <mat-form-field 
+      <mat-form-field
           *ngIf="canLabel"
-          floatLabel="never" 
+          floatLabel="never"
           class="label">
+        <mat-label>Label</mat-label>
         <input
           matInput
-          placeholder="Label"
           [(ngModel)]="field.config.label"
           name="label"
           [disabled]="!canEdit"
@@ -15,7 +15,7 @@
           (ngModelChange)="changed.emit(field)">
       </mat-form-field>
     </div>
-    <button 
+    <button
       *ngIf="canEdit && canRequire"
       mat-icon-button
       type="button"
@@ -52,19 +52,19 @@
       <mat-icon>delete</mat-icon>
     </button>
     <fs-menu>
-      <ng-template       
+      <ng-template
             fs-menu-item
-            *ngIf="canDuplicate"  
+            *ngIf="canDuplicate"
             (click)="copy($event)">
           Duplicate
         </ng-template>
-        <ng-template    
-            *ngIf="field.config.type === FieldType.Checkbox || field.config.type === FieldType.Dropdown || field.config.type === FieldType.Choice || field.config.type === FieldType.Gender"    
+        <ng-template
+            *ngIf="field.config.type === FieldType.Checkbox || field.config.type === FieldType.Dropdown || field.config.type === FieldType.Choice || field.config.type === FieldType.Gender"
             fs-menu-item
             (click)="showValues($event)">
           {{field.config.configs.showValues ? 'Hide Option Values' : 'Show Option Values'}}
         </ng-template>
-        <ng-template        
+        <ng-template
             fs-menu-item
             (click)="settings($event)">
           Settings
@@ -73,10 +73,10 @@
   </div>
 
   <mat-form-field *ngIf="hasDescription" class="description">
+    <mat-label>Description</mat-label>
     <textarea
       matInput
       #description
-      placeholder="Description"
       [matTextareaAutosize]="true"
       [(ngModel)]="field.config.description"
       name="description"

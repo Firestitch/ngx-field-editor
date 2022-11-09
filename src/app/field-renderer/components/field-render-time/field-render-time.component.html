@@ -1,7 +1,7 @@
 <mat-form-field class="form-field-multiline-subscript">
+  <mat-label>{{field.config.label}}</mat-label>
   <input
     matInput
-    [placeholder]="field.config.label"
     fsTimePicker
     [(ngModel)]="field.data.value"
     (ngModelChange)="changed.emit(field)"

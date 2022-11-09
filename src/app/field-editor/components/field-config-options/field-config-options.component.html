@@ -12,35 +12,37 @@
         <mat-radio-button *ngSwitchCase="fieldType.Choice" disabled="true"></mat-radio-button>
       </ng-container>
 
-      <mat-form-field 
-          floatLabel="never" 
+      <mat-form-field
+          floatLabel="never"
           fxFlex>
-        <input 
-          matInput 
-          placeholder="Label" 
-          [(ngModel)]="option.name" 
-          name="label" 
-          [ngModelOptions]="{ updateOn: 'blur' }" 
+        <mat-label>"Label"</mat-label>
+        <input
+          matInput
+
+          [(ngModel)]="option.name"
+          name="label"
+          [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="changed.emit(field)">
       </mat-form-field>
 
-      <mat-form-field 
+      <mat-form-field
           *ngIf="field.config.configs.showValues"
-          floatLabel="never" 
+          floatLabel="never"
           class="option-value">
-        <input 
-          matInput 
-          placeholder="Value" 
-          [(ngModel)]="option.value" 
-          name="guid" 
-          [ngModelOptions]="{ updateOn: 'blur' }" 
+        <mat-label>"Value"</mat-label>
+        <input
+          matInput
+
+          [(ngModel)]="option.value"
+          name="guid"
+          [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="changed.emit(field)">
       </mat-form-field>
 
-      <button 
-          button 
-          mat-icon-button 
-          type="button" 
+      <button
+          button
+          mat-icon-button
+          type="button"
           (click)="removeOption(idx)">
         <mat-icon>delete</mat-icon>
       </button>
@@ -49,39 +51,39 @@
 </div>
 
 <div *ngIf="field.config.configs.other" fxFlexLayout="row" fxLayoutAlign="start center">
-  <button 
-      button 
-      mat-icon-button 
-      type="button" 
+  <button
+      button
+      mat-icon-button
+      type="button"
       [ngStyle]="{'visibility': 'hidden'}">
     <mat-icon>drag_indicator</mat-icon>
   </button>
 
   <ng-container [ngSwitch]="field.config.type">
-    <mat-checkbox   
-      *ngSwitchCase="fieldType.Checkbox" 
+    <mat-checkbox
+      *ngSwitchCase="fieldType.Checkbox"
       [disabled]="true">
     </mat-checkbox>
-    <mat-radio-button 
-      *ngSwitchCase="fieldType.Choice" 
+    <mat-radio-button
+      *ngSwitchCase="fieldType.Choice"
       [disabled]="true">
     </mat-radio-button>
   </ng-container>
 
-  <mat-form-field 
-      floatLabel="never" 
+  <mat-form-field
+      floatLabel="never"
       fxFlex>
+    <mat-label>"Label"</mat-label>
     <input
       matInput
-      placeholder="Label"
       disabled="true"
       name="label"
       value="Other">
   </mat-form-field>
-  
-  <button 
-      mat-icon-button 
-      type="button" 
+
+  <button
+      mat-icon-button
+      type="button"
       (click)="field.config.configs.other = false">
     <mat-icon>delete</mat-icon>
   </button>
@@ -90,17 +92,17 @@
 <div>
   <div fxFlexLayout="row" fxLayoutAlign="start center">
     <button button mat-icon-button type="button" *ngIf="field.config.configs.options.length"><mat-icon></mat-icon></button>
-    <mat-checkbox 
-      [disabled]="true" 
-      style="visibility: hidden" 
+    <mat-checkbox
+      [disabled]="true"
+      style="visibility: hidden"
       *ngIf="(field.config.type===fieldType.Checkbox || field.config.type===fieldType.Choice) && field.config.configs.options.length">
     </mat-checkbox>
 
     <mat-form-field floatLabel="never" class="new-option" fxFlex>
+      <mat-label>Add New Option</mat-label>
       <input
         matInput
         #addOptionInput
-        placeholder="Add New Option"
         [(ngModel)]="newOption"
         name="newOption"
         (keydown)="addOption($event)">

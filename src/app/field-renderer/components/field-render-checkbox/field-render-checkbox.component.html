@@ -23,9 +23,9 @@
       [disabled]="disabled"
       class="other checkbox">
     <mat-form-field floatLabel="never" class="subscript-remove">
+      <mat-label>Other</mat-label>
       <input
         matInput
-        placeholder="Other"
         (click)="otherInputClick($event)"
         [(ngModel)]="field.data.value.other"
         (ngModelChange)="changed.emit(field)"

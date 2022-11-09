@@ -1,8 +1,8 @@
 <ng-container [ngSwitch]="field.config.type">
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.ShortText">
+    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
     <input
       matInput
-      [placeholder]="field.config.label"
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
       [name]="name"
@@ -12,13 +12,13 @@
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.LongText">
+    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
     <textarea
       matInput
       [matTextareaAutosize]="true"
       [matAutosizeMinRows]="1"
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
-      [placeholder]="field.config.label"
       [name]="name"
       [disabled]="disabled"
       [required]="field.config.configs.required===true">
@@ -27,9 +27,9 @@
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Date">
+    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
     <input
       matInput
-      [placeholder]="field.config.label"
       fsDatePicker
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
@@ -40,9 +40,9 @@
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Birthday">
+    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
     <input
       matInput
-      [placeholder]="field.config.label"
       fsDatePickerBirthday
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
@@ -53,10 +53,10 @@
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Time">
+    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
     <input
       matInput
       fsDatePickerTime
-      [placeholder]="field.config.label"
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
       [name]="name"
@@ -66,10 +66,10 @@
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Phone">
+    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
     <input
       matInput
       fsPhone
-      [placeholder]="field.config.label"
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
       fsFormPhone
@@ -80,10 +80,10 @@
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Email">
+    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
     <input
       matInput
       [fsFormEmail]="true"
-      [placeholder]="field.config.label"
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
       [name]="name"
