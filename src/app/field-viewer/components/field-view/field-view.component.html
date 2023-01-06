@@ -6,7 +6,14 @@
       </ng-container>
       <ng-container *ngSwitchDefault>
         <fs-label-field>
-          <fs-label>{{field.config.label}}</fs-label>
+          <fs-label>
+            <div class="label-container" [ngClass]="{ tooltip: !!field.config.description }">
+              {{field.config.label}}
+              <ng-container *ngIf="field.config.description">
+                <mat-icon [matTooltip]="field.config.description">info</mat-icon>
+              </ng-container>
+            </div>            
+          </fs-label>
           <ng-container *ngTemplateOutlet="content"></ng-container>
         </fs-label-field>
       </ng-container>

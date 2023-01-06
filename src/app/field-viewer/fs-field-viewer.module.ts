@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
 
 import { FsLabelModule } from '@firestitch/label';
 import { FsDateModule } from '@firestitch/date';
@@ -14,11 +15,15 @@ import { FieldViewGalleryComponent } from './components/field-view-gallery/field
 import { FieldViewComponent } from './components/field-view/field-view.component';
 
 import { FieldViewHeadingComponent } from './components/field-view-heading/field-view-heading.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
     CommonModule,
     FlexLayoutModule,
+
+    MatIconModule,
+    MatTooltipModule,
 
     FsDateModule,
     FsHtmlRendererModule,
