@@ -103,9 +103,14 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Dropdown">
-        <ng-container *ngFor="let option of field.config.configs?.options || []">
-          <span *ngIf="field.data.value===option.value">{{option.name}}</span>
-        </ng-container>
+        <span *ngIf="field.data.value === OtherOption; else dropdownValue">
+          {{field.data.other}}
+        </span>
+        <ng-template #dropdownValue>
+          <ng-container *ngFor="let option of field.config.configs?.options || []">
+            <span *ngIf="field.data.value===option.value">{{option.name}}</span>
+          </ng-container>
+        </ng-template>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Checkbox">

@@ -8,6 +8,7 @@ import {
 import { Field } from '../../../interfaces/field.interface';
 import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services/field-editor.service';
+import { OtherOption } from '../../../consts';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class FieldViewComponent implements OnInit {
   @Input() public field: (Field & { hasValue?: boolean });
 
   public fieldType = FieldType;
+  public OtherOption = OtherOption;
   public actions = [];
 
   constructor(

@@ -3,12 +3,33 @@
   <mat-select
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
-      [required]="field.config.configs.required===true"
+      [required]="field.config.configs.required === true"
       name="{{name}}Dropdown"
       [disabled]="disabled">
-    <mat-option *ngFor="let option of field.config.configs.options" [value]="option.value">
+    <mat-option 
+        *ngFor="let option of field.config.configs.options" 
+        [value]="option.value">
       {{option.name}}
+    </mat-option>
+    <mat-option 
+        *ngIf="field.config.configs.other" 
+        [value]="OtherOption">
+      Other
     </mat-option>
   </mat-select>
   <mat-hint>{{field.config.description}}</mat-hint>
+</mat-form-field>
+
+<mat-form-field *ngIf="field.data.value === OtherOption" class="other">
+  <mat-label>{{field.config.label}} Other</mat-label>
+  <textarea
+    matInput
+    [required]="field.config.configs.required === true"
+    [matTextareaAutosize]="true"
+    [(ngModel)]="field.data.other"
+    name="{{name}}DropdownOther"
+    [disabled]="disabled"
+    [ngModelOptions]="{ updateOn: 'blur' }"
+    (ngModelChange)="changed.emit(field)">
+  </textarea>
 </mat-form-field>

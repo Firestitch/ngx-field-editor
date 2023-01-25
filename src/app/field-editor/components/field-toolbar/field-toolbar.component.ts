@@ -11,7 +11,7 @@ import {
   BACKDROP_CLASS,
   TOOLBAR_MENU_CLASS,
   TOOLBAR_SUB_MENU_CLASS
-} from '../../../constants/backdrop-class';
+} from '../../../consts/backdrop-class';
 import { FieldEditorService } from '../../../services/field-editor.service';
 
 

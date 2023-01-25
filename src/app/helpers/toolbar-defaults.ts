@@ -4,7 +4,7 @@ export const TOOLBAR_DEFAULTS = {
   [FieldType.ShortText]: { icon: 'short_text', label: 'Short Text'},
   [FieldType.LongText]: { icon: 'subject', label: 'Long Text' },
   [FieldType.Dropdown]: { icon: 'arrow_drop_down_circle', label: 'Dropdown' },
-  [FieldType.Choice]: { icon: 'radio_button_checked', label: 'Choice' },
+  [FieldType.Choice]: { icon: 'radio_button_checked', label: 'Multiple Choice' },
   [FieldType.Checkbox]: { icon: 'check_box', label: 'Checkboxes' },
   [FieldType.Date]: { icon: 'date_range', label: 'Date' },
   [FieldType.Time]: { icon: 'access_time', label: 'Time' },

@@ -7,18 +7,14 @@
         <button button mat-icon-button type="button" class="drag-button option-drag-button"><mat-icon>drag_indicator</mat-icon></button>
       </div>
 
-      <ng-container [ngSwitch]="field.config.type">
-        <mat-checkbox *ngSwitchCase="fieldType.Checkbox" disabled="true"></mat-checkbox>
-        <mat-radio-button *ngSwitchCase="fieldType.Choice" disabled="true"></mat-radio-button>
-      </ng-container>
-
+      <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
+    
       <mat-form-field
           floatLabel="never"
           fxFlex>
         <mat-label>"Label"</mat-label>
         <input
           matInput
-
           [(ngModel)]="option.name"
           name="label"
           [ngModelOptions]="{ updateOn: 'blur' }"
@@ -32,7 +28,6 @@
         <mat-label>"Value"</mat-label>
         <input
           matInput
-
           [(ngModel)]="option.value"
           name="guid"
           [ngModelOptions]="{ updateOn: 'blur' }"
@@ -50,6 +45,29 @@
   </div>
 </div>
 
+<div>
+  <div fxFlexLayout="row" fxLayoutAlign="start center">
+    <button button mat-icon-button type="button" *ngIf="field.config.configs.options.length"><mat-icon></mat-icon></button>
+    <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
+
+    <mat-form-field floatLabel="never" class="new-option" fxFlex>
+      <mat-label>Add New Option</mat-label>
+      <input
+        matInput
+        #addOptionInput
+        [(ngModel)]="newOption"
+        name="newOption"
+        (keydown)="addOption($event)">
+    </mat-form-field>
+    <ng-container *ngIf="field.config.configs.options.length && !field.config.configs.other">
+      <span class="or">Or</span> <button mat-button type="button" color="primary" (click)="otherToggle()">
+        {{ field.config.configs.other ? 'Remove' : 'Add' }} "Other" Option</button>
+    </ng-container>
+
+    <button button mat-icon-button type="button" style="visibility: hidden"><mat-icon>delete</mat-icon></button>
+  </div>
+</div>
+
 <div *ngIf="field.config.configs.other" fxFlexLayout="row" fxLayoutAlign="start center">
   <button
       button
@@ -58,17 +76,7 @@
       [ngStyle]="{'visibility': 'hidden'}">
     <mat-icon>drag_indicator</mat-icon>
   </button>
-
-  <ng-container [ngSwitch]="field.config.type">
-    <mat-checkbox
-      *ngSwitchCase="fieldType.Checkbox"
-      [disabled]="true">
-    </mat-checkbox>
-    <mat-radio-button
-      *ngSwitchCase="fieldType.Choice"
-      [disabled]="true">
-    </mat-radio-button>
-  </ng-container>
+  <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
 
   <mat-form-field
       floatLabel="never"
@@ -89,29 +97,10 @@
   </button>
 </div>
 
-<div>
-  <div fxFlexLayout="row" fxLayoutAlign="start center">
-    <button button mat-icon-button type="button" *ngIf="field.config.configs.options.length"><mat-icon></mat-icon></button>
-    <mat-checkbox
-      [disabled]="true"
-      style="visibility: hidden"
-      *ngIf="(field.config.type===fieldType.Checkbox || field.config.type===fieldType.Choice) && field.config.configs.options.length">
-    </mat-checkbox>
-
-    <mat-form-field floatLabel="never" class="new-option" fxFlex>
-      <mat-label>Add New Option</mat-label>
-      <input
-        matInput
-        #addOptionInput
-        [(ngModel)]="newOption"
-        name="newOption"
-        (keydown)="addOption($event)">
-    </mat-form-field>
-    <ng-container *ngIf="(field.config.type === fieldType.Checkbox || field.config.type === fieldType.Choice) && field.config.configs.options.length && !field.config.configs.other">
-      <span class="or">Or</span> <button mat-button type="button" color="primary" (click)="otherToggle()">
-        {{ field.config.configs.other ? 'Remove' : 'Add' }} "Other" Option</button>
-    </ng-container>
-
-    <button button mat-icon-button type="button" style="visibility: hidden"><mat-icon>delete</mat-icon></button>
-  </div>
-</div>
+<ng-template #disabledPlaceholder>
+  <ng-container [ngSwitch]="field.config.type">
+    <mat-checkbox *ngSwitchCase="FieldType.Checkbox" disabled="true"></mat-checkbox>
+    <mat-radio-button *ngSwitchCase="FieldType.Choice" disabled="true"></mat-radio-button>
+    <mat-radio-button *ngSwitchCase="FieldType.Dropdown" disabled="true"></mat-radio-button>
+  </ng-container>
+</ng-template>

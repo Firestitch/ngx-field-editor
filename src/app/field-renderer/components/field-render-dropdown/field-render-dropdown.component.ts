@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Optional } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
+import { OtherOption } from '../../../consts';
 
 import { FieldComponent } from '../field/field.component';
 
@@ -20,5 +21,6 @@ import { FieldComponent } from '../field/field.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldRenderDropdownComponent extends FieldComponent {
-
+  
+  public OtherOption = OtherOption;
 }

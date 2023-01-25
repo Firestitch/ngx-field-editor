@@ -19,7 +19,7 @@ export class FieldComponent implements OnDestroy, OnInit {
   @Output() changed = new EventEmitter();
 
   public fieldMode = FieldMode;
-  public fieldType = FieldType;
+  public FieldType = FieldType;
   public field: Field = null;
   public name = `field-${guid()}`;
 
