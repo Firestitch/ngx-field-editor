@@ -1,0 +1,15 @@
+export enum FieldAction {
+  OptionImageUpload = 'optionImageUpload',
+  OptionAdd = 'optionAdd',
+  OptionSave = 'optionSave',
+  OptionReorder = 'optionReorder',
+  OptionOther = 'optionOther',
+  OptionDelete = 'optionDelete',
+  FieldSave = 'fieldSave',
+  FieldAdd = 'fieldAdd',
+  FieldDuplicate = 'fieldDuplicate',
+  FieldDelete = 'fieldDelete',
+  ImageUpload = 'imageUpload',
+  FileUpload = 'fileUpload',
+  FieldReorder = 'fieldReorder',
+}

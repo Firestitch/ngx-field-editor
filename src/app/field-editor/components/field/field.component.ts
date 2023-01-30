@@ -1,48 +1,45 @@
-import { Component, Input, EventEmitter, OnInit, OnDestroy, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+
+import { Subject } from 'rxjs';
 
 import { guid } from '@firestitch/common';
 
-import { initField } from './../../../helpers/init-field';
-import { Field } from '../../../interfaces/field.interface';
+import { Field, FieldOption } from '../../../interfaces';
 import { FieldType } from '../../../enums/field-type';
-import { FieldMode } from '../../../enums/field-mode';
+import { FieldEditorService } from '../../../services';
+import { FieldAction } from '../../../enums';
 
 
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldComponent implements OnDestroy, OnInit {
+export class FieldComponent implements OnDestroy {
 
-  @Input() disabled = false;
+  @Input() public disabled = false;
 
-  @Output() changed = new EventEmitter();
+  @Input() public field: Field;
 
-  public fieldMode = FieldMode;
   public FieldType = FieldType;
-  public field: Field = null;
   public name = `field-${guid()}`;
 
-  protected $destory = new EventEmitter();
+  protected _destory$ = new Subject();
 
-  @Input('field') set _field(field: Field) {
-    this.setField(field);
-  }
-
-  public setField(field) {
-    this.field = this.initField(field);
+  public constructor(
+    public fieldEditor: FieldEditorService,
+  ) {
   }
 
   public ngOnDestroy() {
-    this.$destory.complete();
+    this._destory$.next();
+    this._destory$.complete();
   }
 
-  public ngOnInit(): void {
-    this.field = this.initField(this.field);
-  }
-
-  public initField(field) {
-    return initField(field);
+  public fieldSave() {
+    this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+    .subscribe(() => {
+      this.fieldEditor.fieldChanged(this.field);
+    });
   }
 
 }

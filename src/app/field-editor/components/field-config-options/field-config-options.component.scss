@@ -2,10 +2,35 @@ mat-checkbox {
   margin-right: 10px;
 }
 
-.option-value {
-  margin-left: 10px;
+.option-container {
+  display: flex;
+  align-items: center;
+  padding: 3px 0;
+
+  .option-data {
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    .option-value:not(:first-child),
+    .option-label:not(:first-child), 
+    .option-image:not(:first-child) {
+      margin-left: 15px;
+    }
+
+    .option-label {
+      flex: 1;
+      mat-form-field {
+        width: 100%;
+      }
+    }
+  }
 }
 
 .or {
   margin: 0 10px 0 20px;
+}
+
+.option-drag-placeholder {
+  visibility: hidden;
 }

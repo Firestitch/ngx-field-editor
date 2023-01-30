@@ -10,5 +10,7 @@ import { FieldComponent } from '../field/field.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldConfigAddressComponent extends FieldComponent {
+
   public fieldNames = ['street', 'address2', 'city', 'region', 'zip', 'country'];
+
 }

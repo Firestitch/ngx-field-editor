@@ -4,9 +4,11 @@ import { isObject } from 'lodash-es';
 import { Field } from '../interfaces/field.interface';
 import { parseLocal } from '@firestitch/date';
 import { getPopulateFieldValue } from './get-populate-field-value';
+import { VisualSelectorFormat } from '../enums';
+import { FieldOption } from '../interfaces';
 
 
-export function initField(field: Field): Field {
+export function initField(field: Field | FieldOption): Field {
   if (!field) {
     field = {};
   }
@@ -36,29 +38,12 @@ export function initField(field: Field): Field {
     case FieldType.Checkbox:
     case FieldType.Choice:
     case FieldType.Dropdown:
-      if (!field.config.configs.options) {
-        field.config.configs.options = [];
-      }
-
-      if (field.config.type === FieldType.Checkbox ||
-          field.config.type === FieldType.Choice) {
-
-        const selected = field.config.type === FieldType.Checkbox ? [] : null;
-
-        if (!isObject(field.data.value)) {
-          field.data.value = { selected: selected };
-        }
- 
-        const value = getPopulateFieldValue(field); 
-        if(value !==null) {
-          if(field.config.type === FieldType.Checkbox) {
-            field.data.value.selected = value.split(',');
-          } else {
-            field.data.value.selected = value;
-          }
-        }
-      }
+    case FieldType.Gender:
+    case FieldType.VisualSelector:
+      initOption(field);
       break;
+  
+    break;
 
     case FieldType.Name:
       if (!field.config.configs.firstName) {
@@ -95,22 +80,6 @@ export function initField(field: Field): Field {
       if (field.config.configs.allowMultiple === undefined ) {
         field.config.configs.allowMultiple = true;
       }
-      break;
-
-    case FieldType.Gender:
-      if (!field.config.configs.genders) {
-        field.config.configs.genders = [
-          { name: 'Male', value: 'male' },
-          { name: 'Female', value: 'female' },
-          { name: 'Other', value: 'other' },
-        ];
-      }
-
-      const value = getPopulateFieldValue(field); 
-      if(value !==null) {
-        field.data.value = value;
-      }
-
       break;
 
     case FieldType.Address:
@@ -162,6 +131,7 @@ export function initField(field: Field): Field {
       if(!('value' in field.data)) {
         field.data.value = field.config.configs.default;
       }
+    
       break;
   
     case FieldType.ShortText:
@@ -189,4 +159,66 @@ export function initField(field: Field): Field {
     }
 
     return field;
+  }
+
+
+  function initOption(field: FieldOption) {
+    if(field.config.type === FieldType.Gender) {
+      if (!field.config.options) {
+        field.config.options = [
+          { name: 'Male', value: 'male', guid: guid() },
+          { name: 'Female', value: 'female', guid: guid() },
+        ];
+      }
+    } else {
+      if (!field.config.options) {
+        field.config.options = [];
+      }
+    }
+
+    if (
+      field.config.type === FieldType.Checkbox ||
+      field.config.type === FieldType.Choice ||
+      field.config.type === FieldType.Gender
+    ) {
+      const selected = field.config.type === FieldType.Checkbox ? [] : null;
+
+      if (!isObject(field.data.value)) {
+        field.data.value = { selected: selected };
+      }
+
+      const value = getPopulateFieldValue(field); 
+      if(value !==null) {
+        if(field.config.type === FieldType.Checkbox) {
+          field.data.value.selected = value.split(',');
+        } else {
+          field.data.value.selected = value;
+        }
+      }
+    } else if (field.config.type === FieldType.Dropdown) {
+      if (isObject(field.data.value)) {
+        field.data.value = null;
+      }
+    } else if (field.config.type === FieldType.VisualSelector) {
+      const configs = field.config.configs;
+      if (!configs.previewWidth) {
+        configs.previewWidth = 150;
+      }
+      
+      if (!configs.previewHeight) {
+        configs.previewHeight = 150;
+      }
+      
+      if (!configs.format) {
+        configs.format = VisualSelectorFormat.ImageName;
+      }
+
+      if (!isObject(field.data.value)) {
+        field.data.value = {};
+      }
+
+      if(!Array.isArray(field.data.value.selected)) {
+        field.data.value.selected = [];
+      }
+    }
   }

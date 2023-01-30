@@ -74,7 +74,7 @@
 
       <ng-container *ngSwitchCase="fieldType.File">
         <ng-container *ngIf="field.data.value?.length">
-          <fs-field-view-gallery [field]="field" [actions]="actions"></fs-field-view-gallery>
+          <fs-field-view-gallery [field]="field"></fs-field-view-gallery>
         </ng-container>
       </ng-container>
 
@@ -97,7 +97,7 @@
 
       <ng-container *ngSwitchCase="fieldType.Choice">
         <ng-container *ngFor="let option of field.config.configs?.options || []">
-          <span *ngIf="field.data.value?.selected===option.value">{{option.name}}</span>
+          <span *ngIf="field.data.value?.selected===option.guid">{{option.name}}</span>
         </ng-container>
         <span *ngIf="field.data.value?.selected==='other'">{{field.data.value?.other}}</span>
       </ng-container>
@@ -108,14 +108,21 @@
         </span>
         <ng-template #dropdownValue>
           <ng-container *ngFor="let option of field.config.configs?.options || []">
-            <span *ngIf="field.data.value===option.value">{{option.name}}</span>
+            <span *ngIf="field.data.value===option.guid">{{option.name}}</span>
           </ng-container>
         </ng-template>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Checkbox">
         <ng-container *ngFor="let option of field.config.configs?.options || []">
-          <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.value)!==-1">{{option.name}}</span>
+          <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
+        </ng-container>
+        <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="fieldType.VisualSelector">
+        <ng-container *ngFor="let option of field.config.configs?.options || []">
+          <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
         </ng-container>
         <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span>
       </ng-container>

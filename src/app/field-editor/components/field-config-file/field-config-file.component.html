@@ -2,7 +2,7 @@
   <div class="row-allow">
     <fs-label-field>
       <fs-label>Allow Multiple</fs-label>
-      <mat-checkbox color="primary" [(ngModel)]="field.config.configs.allowMultiple" (ngModelChange)="changed.emit(field)"></mat-checkbox>
+      <mat-checkbox color="primary" [(ngModel)]="field.config.configs.allowMultiple" (ngModelChange)="fieldSave()"></mat-checkbox>
     </fs-label-field>
 
     <fs-label-field>
@@ -11,28 +11,28 @@
         <mat-checkbox
             color="primary"
             [(ngModel)]="field.config.configs.allowedFileTypes.other"
-            (ngModelChange)="changed.emit(field)">
+            (ngModelChange)="fieldSave()">
           Any
         </mat-checkbox>
         <mat-checkbox
             color="primary"
             *ngIf="!field.config.configs.allowedFileTypes.other"
             [(ngModel)]="field.config.configs.allowedFileTypes.image"
-            (ngModelChange)="changed.emit(field)">
+            (ngModelChange)="fieldSave()">
           Image
         </mat-checkbox>
         <mat-checkbox
             color="primary"
             *ngIf="!field.config.configs.allowedFileTypes.other"
             [(ngModel)]="field.config.configs.allowedFileTypes.video"
-            (ngModelChange)="changed.emit(field)">
+            (ngModelChange)="fieldSave()">
             Video
         </mat-checkbox>
         <mat-checkbox
             color="primary"
             *ngIf="!field.config.configs.allowedFileTypes.other"
             [(ngModel)]="field.config.configs.allowedFileTypes.pdf"
-            (ngModelChange)="changed.emit(field)">
+            (ngModelChange)="fieldSave()">
           PDF
         </mat-checkbox>
       </div>
@@ -50,7 +50,7 @@
         [(ngModel)]="field.config.configs.maxWidth"
         name="maxWidth"
         [ngModelOptions]="{ updateOn: 'blur' }"
-        (ngModelChange)="changed.emit(field)">
+        (ngModelChange)="fieldSave()">
     </mat-form-field>
 
     <mat-form-field>
@@ -60,7 +60,7 @@
         [(ngModel)]="field.config.configs.maxHeight"
         name="maxHeight"
         [ngModelOptions]="{ updateOn: 'blur' }"
-        (ngModelChange)="changed.emit(field)">
+        (ngModelChange)="fieldSave()">
     </mat-form-field>
 
     <mat-form-field>

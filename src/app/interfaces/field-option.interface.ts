@@ -1,4 +1,7 @@
-export interface FieldOption {
-  value: string,
-  name: string
+import { Field, FieldConfig } from '.';
+
+export interface FieldOption extends Field {
+  config?: FieldConfig & {
+    options?: any[],
+  },
 }

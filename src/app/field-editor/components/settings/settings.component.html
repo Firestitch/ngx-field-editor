@@ -33,6 +33,64 @@
             </div>
           </mat-checkbox>
         </fs-label-field>
+
+        <ng-container
+          *ngIf="type === FieldType.Checkbox || type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.Gender || type === FieldType.VisualSelector">
+
+          <fs-label-field>
+            <fs-label>Option Values</fs-label>
+            <mat-checkbox 
+                name="showValues" 
+                [(ngModel)]="configs.showValues">
+              Show  
+            </mat-checkbox>
+          </fs-label-field>
+        </ng-container>
+
+        <ng-container *ngIf="type === FieldType.VisualSelector">
+          <fs-label-field>
+            <fs-label>Allow multiple selection</fs-label>
+            <mat-checkbox 
+                name="multipleSelection" 
+                [(ngModel)]="configs.multipleSelection">
+              Enable
+            </mat-checkbox>
+          </fs-label-field>
+
+          <mat-form-field>
+            <mat-label>Format</mat-label>
+            <mat-select
+                [(ngModel)]="configs.format"
+                name="format">
+              <mat-option [value]="VisualSelectorFormat.Name">Name Only</mat-option>
+              <mat-option [value]="VisualSelectorFormat.Image">Image Only</mat-option>
+              <mat-option [value]="VisualSelectorFormat.ImageName">Image and Name</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ng-container *ngIf="configs.format">
+            <div fxLayout="row" fxLayoutGap="20px" class="preview-image-ratio">
+              <mat-form-field>
+                <mat-label>Preview Image Ratio Width</mat-label>
+                <input
+                  matInput
+                  [required]="true"
+                  [(ngModel)]="configs.previewWidth"
+                  name="previewWidth">
+                <mat-icon matSuffix>px</mat-icon>
+              </mat-form-field>
+              
+              <mat-form-field>
+                <mat-label>Preview Image Ratio Height</mat-label>
+                <input
+                  matInput
+                  [required]="true"
+                  [(ngModel)]="configs.previewHeight"
+                  name="previewHeight">
+                <mat-icon matSuffix>px</mat-icon>
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </ng-container>          
       </div>
     </mat-dialog-content>
     <mat-dialog-actions>
@@ -54,7 +112,7 @@
 
 <ng-template #populateTemplate>
   <fs-label>Example URL</fs-label>
-  <ng-container [ngSwitch]="field.config.type">
+  <ng-container [ngSwitch]="type">
     <ng-container *ngSwitchCase="FieldType.Checkbox">
       <ng-container *ngTemplateOutlet="choicePopulate"></ng-container>
     </ng-container>
@@ -76,12 +134,12 @@
   </ng-container>
 
   <ng-template #choicePopulate>
-    <ng-container *ngFor="let option of configs.options">
+    <ng-container *ngFor="let option of field.config.options">
       <div>
         {{option.label}} 
         <app-populate-url 
           [identifier]="configs.identifier" 
-          [value]="option.value">
+          [value]="option.value || option.guid">
         </app-populate-url>
       </div>
     </ng-container>
@@ -93,7 +151,7 @@
         {{option.label}} 
         <app-populate-url 
           [identifier]="configs.identifier" 
-          [value]="option.value">
+          [value]="option.value || option.guid">
         </app-populate-url>
       </div>
     </ng-container>

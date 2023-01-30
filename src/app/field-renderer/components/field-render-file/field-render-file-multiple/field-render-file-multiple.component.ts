@@ -7,6 +7,7 @@ import {
 
 import { FsPrompt } from '@firestitch/prompt';
 import { controlContainerFactory } from '@firestitch/core';
+import { FsGalleryItem } from '@firestitch/gallery';
 import { FsFile } from '@firestitch/file';
 
 import { Subject } from 'rxjs';
@@ -14,9 +15,8 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { Field } from '../../../../interfaces/field.interface';
 import { FileRenderFile } from '../../../../classes/file-render-file';
-import { FieldEditorService } from '../../../../services/field-editor.service';
+import { FieldRendererService } from '../../../../services';
 import { FieldViewGalleryComponent } from '../../../../field-viewer/components/field-view-gallery/field-view-gallery.component';
-import { FsGalleryItem } from '@firestitch/gallery';
 
 
 @Component({
@@ -55,7 +55,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   private _destroy$ = new Subject();
 
   public constructor(
-    private _fieldEditor: FieldEditorService,
+    private _fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
     private _prompt: FsPrompt,
   ) {}
@@ -63,9 +63,9 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   public selectFile(files: any) {
     this.onTouched();
 
-    if (this._fieldEditor.config.fileUpload) {
+    if (this._fieldRenderer.config.fileUpload) {
       files.forEach((fsFile: FsFile) => {
-        this._fieldEditor.config.fileUpload(this.field, fsFile.file)
+        this._fieldRenderer.config.fileUpload(this.field, fsFile.file)
         .pipe(
           takeUntil(this._destroy$)
         )
@@ -95,16 +95,16 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   }
 
   public ngOnInit() {
-    if (this._fieldEditor.config && this._fieldEditor.config.fileDownload) {
+    if (this._fieldRenderer.config && this._fieldRenderer.config.fileDownload) {
       this.actions.push({
         label: 'Download',
         click: (item) => {
-          this._fieldEditor.config.fileDownload(this.field, item);
+          this._fieldRenderer.config.fileDownload(this.field, item);
         }
       });
     }
 
-    if (this._fieldEditor.config?.fileRemove) {
+    if (this._fieldRenderer.config?.fileRemove) {
       this.actions.push({
         label: 'Remove',
         click: (item: FsGalleryItem) => {
@@ -114,7 +114,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
           })
           .pipe(
             switchMap(() => {
-              return this._fieldEditor.config.fileRemove(this.field, item.data);
+              return this._fieldRenderer.config.fileRemove(this.field, item.data);
             })
           )
           .subscribe(() => {
@@ -125,8 +125,8 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
               this.fieldViewGallery.reload();
               this.onChange(this.files);
 
-              if (this._fieldEditor.config.fileRemoved) {
-                this._fieldEditor.config.fileRemoved(this.field, item.data);
+              if (this._fieldRenderer.config.afterFileRemoved) {
+                this._fieldRenderer.config.afterFileRemoved(this.field, item.data);
               }
             }
           });

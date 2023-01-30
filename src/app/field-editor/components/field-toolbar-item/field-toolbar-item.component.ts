@@ -77,7 +77,8 @@ export class FieldToolbarItemComponent {
           }
         }
       } as any
-    );
+    )
+     .subscribe();
   }
 
   private _hideMenuBackdrop(): void {

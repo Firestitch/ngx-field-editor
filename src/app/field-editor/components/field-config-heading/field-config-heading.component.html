@@ -1,11 +1,11 @@
 <mat-form-field>
     <mat-label>Heading Type</mat-label>
     <mat-select
-      matInput
-      [(ngModel)]="field.config.configs.type"
-      name="type"
-      [ngModelOptions]="{ updateOn: 'blur' }"
-      (ngModelChange)="changed.emit(field)">
+        matInput
+        [(ngModel)]="field.config.configs.type"
+        name="type"
+        [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="fieldSave()">
       <mat-option [value]="1">Heading 1</mat-option>
       <mat-option [value]="2">Heading 2</mat-option>
       <mat-option [value]="3">Heading 3</mat-option>

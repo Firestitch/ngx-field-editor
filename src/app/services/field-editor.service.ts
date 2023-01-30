@@ -3,7 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 import { guid } from '@firestitch/common';
 
-import { BehaviorSubject, isObservable, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { cloneDeep } from 'lodash-es';
@@ -13,14 +13,14 @@ import {
 } from '../interfaces/field.interface';
 import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
-import { FieldType } from '../enums/field-type';
 import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
+import { FieldAction } from '../enums';
 
 
 @Injectable()
 export class FieldEditorService implements OnDestroy {
 
-  public config: FieldEditorConfig = {};
+  public config: FieldEditorConfig;
   public editorId = 'fs-fields-' + guid();
 
   public inDeletionMode = false;
@@ -28,10 +28,15 @@ export class FieldEditorService implements OnDestroy {
   private _selectedField$ = new BehaviorSubject<Field>(null);
   private _scrollTargetField: Field = null;
   private _destroy$ = new Subject<void>();
+  private _fieldAdded$ = new Subject<Field>();
 
   constructor(
     @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig: FieldEditorConfig,
   ) {}
+
+  public get fieldAdded$(): Observable<Field> {
+    return this._fieldAdded$.asObservable();
+  }
 
   public get selectedField(): Field {
     return this._selectedField$.getValue();
@@ -102,27 +107,38 @@ export class FieldEditorService implements OnDestroy {
     this._destroy$.complete();
   }
 
-  public selectField(field: Field): Observable<Field> {
-    if (this.selectedField) {
-      this.unselectField();
-    }
-    
-    return this.fieldSelected(field)
-    .pipe(
-      tap(() => this._selectedField$.next(field))
-    );
+  public selectField(field: Field): void {
+    this.config.beforeFieldSelected(field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe(() => {
+        this._selectedField$.next(field);
+      });
   }
 
   public unselectField() {
-    this.fieldUnselected({
-      field: this.selectedField
-    });
-
-    this._selectedField$.next(null);
+    if(this.selectedField) {
+      this.config.afterFieldUnselected(this.selectedField);
+      this._selectedField$.next(null);
+    }
   }
 
   public setConfig(config: FieldEditorConfig) {
-    this.config = { ...this._defaultConfig, ...config };
+    this.config = { 
+      ...this._defaultConfig, 
+      ...config,
+    };
+
+    this.config = { 
+      ...config,
+      afterFieldUnselected: config.afterFieldUnselected ? config.afterFieldUnselected : (field: Field) => { return of(field); },      
+      afterFieldDuplicated: config.afterFieldDuplicated ? config.afterFieldDuplicated : (field: Field) => { return of(field); },
+      afterFieldDropped: config.afterFieldDropped ? config.afterFieldDropped : (field: Field) => { return of(field); },
+      beforeFieldAdded: config.beforeFieldAdded ? config.beforeFieldAdded : (field: Field) => { return of(field); },
+      beforeFieldSelected: config.beforeFieldSelected ? config.beforeFieldSelected : (field: Field) => { return of(field); },
+      afterFieldAdded: config.afterFieldAdded ? config.afterFieldAdded : (field: Field) => { return of(field); },
+    };
 
     if (this.config.fields) {
       this.config.fields = this.config.fields.map((field) => {
@@ -131,14 +147,8 @@ export class FieldEditorService implements OnDestroy {
     }
   }
 
-  public insertNewField(field: Field, index?: number, event?: CdkDragDrop<string[]>) {
+  public insertNewField(field: Field, index?: number, event?: CdkDragDrop<string[]>): Observable<Field> {
     field = initField(field);
-
-    if(field.config.type === FieldType.RichText) {
-      field.data = { value: field.config.configs?.default || '' };
-    } else if(field.config.type === FieldType.Name) {
-      field.config.label = '';
-    }
 
     if (index === undefined) {
       if (this.selectedField) {
@@ -148,129 +158,45 @@ export class FieldEditorService implements OnDestroy {
       }
     }
 
-    const data: FsFieldEditorCallbackParams = {
-      field,
-      toolbarField: event?.item.data.item,
-      event,
-      fields: this.fields,
-    };
-
-    let result$ = of(field);
-
-    const result = this.fieldAdd(data);
-    result$ = isObservable(result) ? result : result$;
-
-    result$
+    return this.config.beforeFieldAdded(field, event?.item.data.item)
       .pipe(
+        switchMap((field) => this.fieldAction(FieldAction.FieldAdd, field, { index })),
+        switchMap((response) => {
+          const newField = initField(response.field);
+          this.config.fields.splice(index, 0, newField);          
+          this._scrollTargetField = newField;
+
+          return this.config.afterFieldAdded(newField);
+        }),
+        tap((newField) => this.selectField(newField)),
         takeUntil(this._destroy$),
-      )
-      .subscribe((newField: Field) => {
-        this.fieldDrop(field);
-
-        this.config.fields.splice(index, 0, newField);
-
-        this.selectField(newField);
-
-        this._scrollTargetField = newField;
-
-        this.fieldAdded({
-          field: newField,
-          toolbarField: event?.item.data.item,
-        });
-      });
+      );
   }
 
-  public fieldChanged(item: Field) {
+  public fieldChanged(field: Field): void {
     this.config.fields = this.config.fields
-    .map((field) => {
-      return field.config.guid === item.config.guid ? item : field;
-    });
+      .map((_field) => {
+        return _field.config.guid === field.config.guid ? field : _field;
+      });
 
     if (this.config.fieldChanged) {
-      item = this._prepareItem(item);
+      field = this._prepareItem(field);
 
-      this.config.fieldChanged(item);
+      this.config.fieldChanged(field);
     }
   }
 
-  public fieldAdd(item: FsFieldEditorCallbackParams): Observable<Field> | void {
-    if (this.config.fieldAdd) {
-      item = this._prepareItem(item);
-
-      return this.config.fieldAdd(item);
-    }
-  }
-
-  public fieldAdded(item: FsFieldEditorCallbackParams) {
-    if (this.config.fieldAdded) {
-      item = this._prepareItem(item);
-
-      this.config.fieldAdded(item);
-    }
-  }
-
-  public fieldSelected(field: Field): Observable<Field> {
-    return of(true)
+  public fieldAction(action: FieldAction, field: Field = null, data: any = {}): Observable<any> {
+    return (
+      this.config.fieldAction ?
+      this.config.fieldAction(action, field, data) :
+      of(field)
+    )
     .pipe(
-      switchMap(() => {        
-        if (this.config.fieldSelected) {
-          const item = this._prepareItem(field);
-          const result = this.config.fieldSelected(item);
-            
-          return result instanceof Observable ? result : of(field);
-        }
-
-        return of(field);
+      tap((field) => {
+   
       }),
     );
-  }
-
-  public fieldUnselected(item: FsFieldEditorCallbackParams) {
-    if (this.config.fieldUnselected) {
-      item = this._prepareItem(item);
-
-      this.config.fieldUnselected(item);
-    }
-  }
-
-  public fieldMoved(item: FsFieldEditorCallbackParams) {
-    if (this.config.fieldMoved) {
-      item = this._prepareItem(item);
-
-      this.config.fieldMoved(item);
-    }
-  }
-
-  public fieldDuplicate(item: FsFieldEditorCallbackParams) {
-    if (this.config.fieldDuplicate) {
-      item = this._prepareItem(item);
-
-      this.config.fieldDuplicate(item);
-    }
-  }
-
-  public fieldDrop(item: Field) {
-    if (this.config.fieldDrop) {
-      item = this._prepareItem(item);
-
-      this.config.fieldDrop(item);
-    }
-  }
-
-  public fieldDuplicated(item: FsFieldEditorCallbackParams) {
-    if (this.config.fieldDuplicated) {
-      item = this._prepareItem(item);
-
-      this.config.fieldDuplicated(item);
-    }
-  }
-
-  public fieldRemoved(item: FsFieldEditorCallbackParams) {
-    if (this.config.fieldRemoved) {
-      item = this._prepareItem(item);
-
-      this.config.fieldRemoved(item);
-    }
   }
 
   public resetScrollTarget(): void {

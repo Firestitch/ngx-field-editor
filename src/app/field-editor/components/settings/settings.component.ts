@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/cor
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { format } from '@firestitch/date';
-import { FieldEditorService } from '../../../services/field-editor.service';
 
-import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { FieldType } from '../../../enums';
-import { Field } from '../../../interfaces';
+import { FieldAction, FieldType, VisualSelectorFormat } from '../../../enums';
+import { FieldOption } from '../../../interfaces';
+import { FieldEditorService } from '../../../services';
 
 
 @Component({
@@ -17,11 +18,11 @@ import { Field } from '../../../interfaces';
 })
 export class SettingsComponent implements OnInit {
 
-  public field: Field;
-  public configs;
+  public field: FieldOption;
   public populateValue = '';
   public FieldType = FieldType;
   public fieldEditor: FieldEditorService;
+  public VisualSelectorFormat = VisualSelectorFormat;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private _data,
@@ -30,7 +31,7 @@ export class SettingsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.field = this._data.field;
-    this.configs = { ...this._data.field.config.configs };
+    this.fieldEditor = this._data.fieldEditor;
 
     if(this.field.config.type === FieldType.Date) {
       this.populateValue =  format(new Date(),'yyyy-MM-dd');
@@ -39,17 +40,19 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public save = (): Observable<any> => {
-    const field = {
-      ...this.field,
-      config: {
-        ...this.field.config,
-        configs: this.configs,
-      }
-    };
+  public get type(): FieldType|string {
+    return this.field.config.type;
+  }
 
-    this._dialogRef.close(field);
-    return of(true);
+  public get configs() {
+    return this.field.config.configs;
+  }
+
+  public save = (): Observable<any> => {
+    return this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+    .pipe(
+      tap(() => this._dialogRef.close(this.field)),
+    );
   }
 
 

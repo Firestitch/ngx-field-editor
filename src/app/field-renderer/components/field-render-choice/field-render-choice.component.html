@@ -10,17 +10,17 @@
     messageSelector=".fs-form-message"
     orientation="vertical">
   <mat-radio-button
-    *ngFor="let item of field.config.configs.options"
-    [disabled]="disabled"
-    [value]="item.value">
-      {{ item.name }}
+      *ngFor="let item of field.config.options"
+      [disabled]="disabled"
+      [value]="item.guid">
+    {{ item.name }}
   </mat-radio-button>
   <mat-radio-button
-    *ngIf="field.config.configs.other"
-    value="other"
-    [name]="'otherChoice' + name"
-    [disabled]="disabled"
-    class="other choice">
+      *ngIf="field.config.configs.other"
+      value="other"
+      [name]="'otherChoice' + name"
+      [disabled]="disabled"
+      class="other choice">
     <mat-form-field floatLabel="never" class="subscript-remove">
       <mat-label>Other</mat-label>
       <input

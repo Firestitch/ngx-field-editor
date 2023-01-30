@@ -15,6 +15,23 @@
     }
   }
 
+  &.field-selected {
+    .toolbar-container {
+      display: none;
+    }
+  }
+
+  .toolbar-container {
+    position: relative;
+    right: 76px;
+    top: 20px;
+    z-index: 1;
+    
+    .toolbar {
+      position: fixed;
+    }
+  }
+
   .fields-container {
     display: flex;
     flex-grow: 1;
@@ -28,17 +45,19 @@
   align-self: stretch;
 }
 
-.toolbar-container {
-  position: relative;
-  right: 76px;
-  top: 20px;
-  z-index: 1;
-  
-  .toolbar {
-    position: fixed;
+:host ::ng-deep {
+  .cdk-drag-placeholder {
+    background: #eee;
+    padding: 10px 10px;
+    margin: 8px 0;
+    box-sizing: content-box;
+    border-radius: 5px;
+
+    * {
+      visibility: hidden;
+    }
   }
 }
-
 
 .fields {
   max-width: 100%;

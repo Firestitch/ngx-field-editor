@@ -1,0 +1,50 @@
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px,2fr));
+  grid-gap: 10px;
+  justify-content: space-between;
+  margin: 0 auto;
+  user-select: none;
+  
+  .option {    
+    border-radius: 3px;    
+    border: 3px solid transparent; 
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover:not(.selected) {
+      background: rgba(76, 76, 76, 0.2);
+      border: 3px solid rgba(76, 76, 76, .02); 
+    }
+
+    &.selected {
+      border: 3px solid #ddd; 
+    }
+
+    &:not(.selected) {
+      .option-image {        
+        border-radius: 3px;  
+      }
+    }
+
+    .option-container {
+      width: 100%;
+
+      .option-image {
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+      }
+
+      .option-name {
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+      }
+    }
+  }
+}

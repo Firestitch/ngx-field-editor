@@ -11,10 +11,10 @@
     [attr.validation-required]="this.field.config.configs.required"
     messageSelector=".fs-form-message">
   <mat-checkbox
-    *ngFor="let item of this.field.config.configs.options"
-    [value]="item.value"
-    [disabled]="disabled">
-      {{ item.name }}
+      *ngFor="let item of this.field.config.options"
+      [value]="item.guid"
+      [disabled]="disabled">
+    {{ item.name }}
   </mat-checkbox>
   <mat-checkbox
       *ngIf="field.config.configs.other"

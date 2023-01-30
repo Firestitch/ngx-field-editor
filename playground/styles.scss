@@ -10,8 +10,8 @@
 @import '~@firestitch/form/styles';
 
 
-@include fs-style.core();
 @include mat.core();
+@include fs-style.core();
 @include fs-file(mat.$blue-palette);
 @include fs-html-editor(mat.$blue-palette);
 @include fs-field-editor(mat.$blue-palette);

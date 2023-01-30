@@ -17,9 +17,7 @@ import { FieldEditorService } from '../../../services/field-editor.service';
 @Component({
   selector: 'fs-field-editor-item',
   templateUrl: './field-editor-item.component.html',
-  styleUrls: [
-    './field-editor-item.component.scss',
-  ],
+  styleUrls: ['./field-editor-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldEditorItemComponent implements OnInit {
@@ -33,7 +31,7 @@ export class FieldEditorItemComponent implements OnInit {
   @Input()
   public fieldRenderTemplateRefs: Record<string, TemplateRef<unknown>>;
 
-  public fieldType = FieldType;
+  public FieldType = FieldType;
   public canEdit = false;
   public canConfig = false;
 
@@ -41,8 +39,7 @@ export class FieldEditorItemComponent implements OnInit {
     public fieldEditor: FieldEditorService,
     private _elRef: ElementRef,
     private _cdRef: ChangeDetectorRef,
-  ) {
-  }
+  ) {}
 
   @HostBinding('class.selected')
   public get isSelectedField(): boolean {
@@ -85,6 +82,16 @@ export class FieldEditorItemComponent implements OnInit {
           });
       }, 0);
     }
+  }
+
+  public dragStarted(): void {
+    this.fieldEditor.unselectField();
+  }
+
+  public headerFieldChanged(field: Field): void {
+    this.field = {
+      ...field,
+    };
   }
 
 }

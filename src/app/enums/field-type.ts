@@ -18,5 +18,5 @@ export enum FieldType {
   Heading = 'heading',
   Content = 'content',
   RichText = 'richtext',
-  Selector = 'richtext',
+  VisualSelector = 'visualSelector',
 }

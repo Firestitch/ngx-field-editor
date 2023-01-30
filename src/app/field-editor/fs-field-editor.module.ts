@@ -60,13 +60,13 @@ import { FieldEditorToolbarDirective } from './directives/field-editor-toolbar/f
 import { FieldEditorConfig } from '../interfaces/field-editor-config.interface';
 import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
 import { FsFieldRendererModule } from '../field-renderer/fs-field-renderer.module';
-import { PopulateUrlComponent, SettingsComponent } from './components';
+import { FieldConfigVisualSelectorComponent, PopulateUrlComponent, SettingsComponent } from './components';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FsDialogModule } from '@firestitch/dialog';
 
 
 export function defaultConfigFactory(config) {
-  return Object.assign(config,
+  return Object.assign(config || {},
     { fields: [],
       toolbar: {
         items: [
@@ -79,6 +79,7 @@ export function defaultConfigFactory(config) {
           { type: FieldType.Dropdown },
           { type: FieldType.Choice },
           { type: FieldType.Checkbox },
+          { type: FieldType.VisualSelector },
           { type: FieldType.Date },
           { type: FieldType.Time },
           { type: FieldType.Divider },
@@ -163,11 +164,12 @@ export function defaultConfigFactory(config) {
     FieldEditorToolbarDirective,
     SettingsComponent,
     PopulateUrlComponent,
+    FieldConfigVisualSelectorComponent,
   ],
 })
 
 export class FsFieldEditorModule {
-  static forRoot(config: FieldEditorConfig = {}): ModuleWithProviders<FsFieldEditorModule> {
+  static forRoot(config: FieldEditorConfig = null): ModuleWithProviders<FsFieldEditorModule> {
     return {
       ngModule: FsFieldEditorModule,
       providers: [

@@ -36,6 +36,7 @@ export {
   FieldRenderContentComponent,
   FieldRenderChoiceComponent,
   FieldRenderBirthdayComponent,
+  FieldRenderVisualSelectorComponent,
 } from './app/field-renderer/components';
 
 export { FieldEditorService } from './app/services/field-editor.service';
@@ -43,19 +44,23 @@ export { FieldEditorService } from './app/services/field-editor.service';
 export { FieldEditorToolbarDirective } from './app/field-editor/directives/field-editor-toolbar/field-editor-toolbar.directive';
 export { FS_FIELD_EDITOR_CONFIG } from './app/injectors/fs-field-editor.providers';
 
-export { Field } from './app/interfaces/field.interface';
-export { FieldRendererConfig } from './app/interfaces/field-renderer-config.interface';
-
 export {
+  FieldEditorConfig,
+  FieldRendererConfig,
+  FieldViewerConfig,
+  FsFieldEditorCallbackFn,
+  FsFieldEditorCallbackParams,
   ToolbarItem,
   ToolbarSection,
   Toolbar,
   ToolbarItems,
-} from './app/interfaces/toolbar.interface';
+  Field,
+  FieldOption,
+  FieldConfig,
+} from './app/interfaces';
 
-export {
-  FieldEditorConfig,
-  FsFieldEditorCallbackFn,
-  FsFieldEditorCallbackParams,
-} from './app/interfaces/field-editor-config.interface';
 
+export { 
+  FieldAction, 
+  VisualSelectorFormat,
+} from './app/enums';

@@ -1,123 +1,108 @@
 
 <mat-tab-group (selectedTabChange)="tabChange($event)">
-
   <mat-tab label="Fields Editor">
-    <form fsForm>
-      <fs-field-editor
-          #fieldEditor
-          [config]="config">
-        <ng-template fsFieldEditorToolbar let-toolbar>
-          <div class="custom-wrapper">
-            <ng-container *ngTemplateOutlet="toolbar"></ng-container>
-          </div>
+    <fs-field-editor [config]="fieldEditorConfig">
+      <ng-template fsFieldEditorToolbar let-toolbar>
+        <div class="custom-wrapper">
+          <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+        </div>
+      </ng-template>
+
+      <ng-template fsFieldRender type="signature" let-field="field" let-fieldEditor="fieldEditor">
+        <app-signature-field-render
+          [disabled]="true"
+          name="signature"
+          [ngModel]="field"
+          (ngModelChange)="fieldChanged(fieldEditor, field)">
+        </app-signature-field-render>
+      </ng-template>
+
+      <ng-template fsFieldRender type="share" let-field="field">
+        <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
+        <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
+      </ng-template>
+
+      <ng-template fsFieldConfig type="share" let-field="field" let-fieldEditor="fieldEditor">
+        <div fxLayout="column">
+          <mat-checkbox [(ngModel)]="field.config.configs['facebook']" name="facebook" (click)="fieldEditor.fieldChanged(field)">Enable Facebook</mat-checkbox>
+          <mat-checkbox [(ngModel)]="field.config.configs['google']" name="google" (click)="fieldEditor.fieldChanged(field)">Enable Google</mat-checkbox>
+        </div>
+      </ng-template>
+
+      <ng-template fsFieldConfig type="terms" let-field="field" let-fieldEditor="fieldEditor">
+        <div fxLayout="column">
+          <app-terms-field-config
+            name="terms-{{ field?.data?.guid }}"
+            [ngModel]="field"
+            (ngModelChange)="fieldChanged(fieldEditor, field)">
+          </app-terms-field-config>
+        </div>
+      </ng-template>
+
+      <ng-template fsFieldRender type="terms" let-field="field" let-fieldEditor="fieldEditor">
+        <div fxLayout="column">
+          <app-terms-field-render
+            name="terms"
+            [disabled]="true"
+            [ngModel]="field"
+            (ngModelChange)="fieldChanged(fieldEditor, field)">
+          </app-terms-field-render>
+        </div>
+      </ng-template>
+    </fs-field-editor>
+  </mat-tab>
+  <mat-tab label="Rendered Fields">
+    <form (fsForm)="save()">
+      <fs-field-renderer [config]="fieldRendererConfig">
+        <ng-template fsFieldRender type="share" let-field="field">
+          <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
+          <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
         </ng-template>
 
         <ng-template fsFieldRender type="signature" let-field="field" let-fieldEditor="fieldEditor">
           <app-signature-field-render
-            [disabled]="true"
             name="signature"
             [ngModel]="field"
             (ngModelChange)="fieldChanged(fieldEditor, field)">
           </app-signature-field-render>
         </ng-template>
 
-        <ng-template fsFieldRender type="share" let-field="field">
+        <ng-template fsFieldRender type="terms" let-field="field" let-fieldEditor="fieldEditor">
+          <app-terms-field-render
+            name="terms"
+            [ngModel]="field"
+            (ngModelChange)="fieldChanged(fieldEditor, field)">
+          </app-terms-field-render>
+        </ng-template>
+      </fs-field-renderer>
+
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </form>
+  </mat-tab>
+  <mat-tab label="View Fields">
+    <fs-field-viewer [config]="fieldViewerConfig">
+      <ng-template fsFieldView type="share" let-field="field">
+        <fs-label-field>
+          <fs-label>Share</fs-label>
           <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
           <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
-        </ng-template>
-
-        <ng-template fsFieldConfig type="share" let-field="field" let-fieldEditor="fieldEditor">
-          <div fxLayout="column">
-            <mat-checkbox [(ngModel)]="field.config.configs['facebook']" name="facebook" (click)="fieldEditor.fieldChanged(field)">Enable Facebook</mat-checkbox>
-            <mat-checkbox [(ngModel)]="field.config.configs['google']" name="google" (click)="fieldEditor.fieldChanged(field)">Enable Google</mat-checkbox>
-          </div>
-        </ng-template>
-
-        <ng-template fsFieldConfig type="terms" let-field="field" let-fieldEditor="fieldEditor">
-          <div fxLayout="column">
-            <app-terms-field-config
-              name="terms-{{ field?.data?.guid }}"
-              [ngModel]="field"
-              (ngModelChange)="fieldChanged(fieldEditor, field)">
-            </app-terms-field-config>
-          </div>
-        </ng-template>
-
-        <ng-template fsFieldRender type="terms" let-field="field" let-fieldEditor="fieldEditor">
-          <div fxLayout="column">
-            <app-terms-field-render
-              name="terms"
-              [disabled]="true"
-              [ngModel]="field"
-              (ngModelChange)="fieldChanged(fieldEditor, field)">
-            </app-terms-field-render>
-          </div>
-        </ng-template>
-      </fs-field-editor>
-    </form>
-
-    </mat-tab>
-
-    <mat-tab label="Rendered Fields">
-      <ng-template matTabContent>
-        <div class="padding">
-          <form (fsForm)="save()">
-            <fs-field-renderer [config]="config">
-              <ng-template fsFieldRender type="share" let-field="field">
-                <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
-                <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
-              </ng-template>
-
-              <ng-template fsFieldRender type="signature" let-field="field" let-fieldEditor="fieldEditor">
-                <app-signature-field-render
-                  name="signature"
-                  [ngModel]="field"
-                  (ngModelChange)="fieldChanged(fieldEditor, field)">
-                </app-signature-field-render>
-              </ng-template>
-
-              <ng-template fsFieldRender type="terms" let-field="field" let-fieldEditor="fieldEditor">
-                <app-terms-field-render
-                  name="terms"
-                  [ngModel]="field"
-                  (ngModelChange)="fieldChanged(fieldEditor, field)">
-                </app-terms-field-render>
-              </ng-template>
-            </fs-field-renderer>
-
-            <button mat-raised-button color="primary" type="submit">Save</button>
-          </form>
-        </div>
+        </fs-label-field>
       </ng-template>
-    </mat-tab>
-    <mat-tab label="View Fields">
-      <ng-template matTabContent>
-        <p class="padding">
-          <fs-field-viewer [config]="config">
-            <ng-template fsFieldView type="share" let-field="field">
-              <fs-label-field>
-                <fs-label>Share</fs-label>
-                <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
-                <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
-              </fs-label-field>
-            </ng-template>
 
-            <ng-template fsFieldView type="signature" let-field="field">
-              <fs-label-field>
-                <fs-label>Signature</fs-label>
-                <img [src]="field.data.value">
-              </fs-label-field>
-            </ng-template>
-          </fs-field-viewer>
-        </p>
+      <ng-template fsFieldView type="signature" let-field="field">
+        <fs-label-field>
+          <fs-label>Signature</fs-label>
+          <img [src]="field.data.value">
+        </fs-label-field>
       </ng-template>
-    </mat-tab>
-    <mat-tab label="Config">
+    </fs-field-viewer>
+  </mat-tab>
+    <!-- <mat-tab label="Config">
       <ng-template matTabContent>
         <pre *ngIf="config">
           {{config|json}}
         </pre>
       </ng-template>
-    </mat-tab>
+    </mat-tab> -->
   </mat-tab-group>
 

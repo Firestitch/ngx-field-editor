@@ -2,10 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/
 
 import { FsHtmlEditorComponent, FsHtmlEditorConfig } from '@firestitch/html-editor';
 
-import { throwError } from 'rxjs';
-
+import { FieldAction } from '../../../enums';
 import { FieldComponent } from '../field/field.component';
-import { FieldEditorService } from '../../../services/field-editor.service';
 
 
 @Component({
@@ -21,24 +19,19 @@ export class FieldConfigRichTextComponent extends FieldComponent implements OnIn
 
   public config: FsHtmlEditorConfig;
 
-  constructor(
-    public fieldEditor: FieldEditorService,
-  ) {
-    super();
-  }
-
   public ngOnInit(): void {
-    super.ngOnInit();
-
     this.config = {
       ...this.field.config.configs,
       disabled: true,
       autofocus: false,
       image: {
         upload: (file: File) => {
-          return this.fieldEditor.config.imageUpload ? 
-           this.fieldEditor.config.imageUpload(this.field, file) :
-           throwError('Image upload callback is not configured');
+          return this.fieldEditor.fieldAction(FieldAction.ImageUpload, this.field)
+          .subscribe(() => {
+            if(this.fieldEditor.config.imageUpload) { 
+              this.fieldEditor.config.imageUpload(this.field, file);
+            }
+          });
         }
       }
     };

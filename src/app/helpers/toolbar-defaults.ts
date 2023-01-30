@@ -18,4 +18,5 @@ export const TOOLBAR_DEFAULTS = {
   [FieldType.Heading]: { icon: 'title', label: 'Heading' },
   [FieldType.Content]: { icon: 'text_format', label: 'Content' },
   [FieldType.RichText]: { icon: 'art_track', label: 'RichText' },
+  [FieldType.VisualSelector]: { icon: 'grid_view', label: 'Visual Selector' },
 };

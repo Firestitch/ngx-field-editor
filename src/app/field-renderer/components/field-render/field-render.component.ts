@@ -5,8 +5,8 @@ import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
 import { initField } from '../../../helpers/init-field';
-import { Field } from './../../../interfaces/field.interface';
-import { FieldEditorService } from '../../../services/field-editor.service';
+import { Field, FieldRendererConfig } from './../../../interfaces';
+import { FieldRendererService } from '../../../services';
 import { FieldType } from '../../../enums/field-type';
 
 
@@ -33,9 +33,8 @@ export class FieldRenderComponent implements AfterContentInit {
   public fieldRenders: FieldRenderDirective[] = [];
 
   constructor(
-    public fieldEditor: FieldEditorService,
-  ) {
-  }
+    @Optional() public fieldRenderer: FieldRendererService,
+  ) {}
 
   @Input('field')
   public set setField(field) {

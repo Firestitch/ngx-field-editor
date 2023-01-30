@@ -14,3 +14,9 @@ mat-dialog-content {
     display: flex;
   }
 }
+
+.preview-image-ratio {
+  mat-form-field {
+    width: 160px;
+  }
+}

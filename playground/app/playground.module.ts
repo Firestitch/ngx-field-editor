@@ -18,7 +18,6 @@ import {
   ExamplesComponent,
   FieldRenderComponent,
   FieldViewComponent,
-  SectionsComponent,
 } from './components';
 import { AppComponent } from './app.component';
 import { FsFormModule } from '@firestitch/form';
@@ -48,7 +47,7 @@ const routes: Routes = [
   bootstrap: [AppComponent],
   imports: [
     BrowserModule,
-    FsFieldEditorModule.forRoot({}),
+    FsFieldEditorModule.forRoot(),
     FsFieldViewerModule,
     FsFieldRendererModule,
     FsHtmlEditorModule.forRoot(),
@@ -85,7 +84,6 @@ const routes: Routes = [
     DialogExampleComponent,
     FieldRenderComponent,
     FieldViewComponent,
-    SectionsComponent,
   ],
   providers: [
     {

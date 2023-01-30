@@ -1,4 +1,9 @@
-<div class="field-editor-container" [ngClass]="{ 'has-fields': fieldEditor.hasFields }">
+<div 
+    class="field-editor-container" 
+    [ngClass]="{ 
+      'has-fields': fieldEditor.hasFields,
+      'field-selected': !!(fieldEditor.selectedField$ | async)
+    }">
   <div class="fields-container">
     <div class="fields"
         cdkDropList

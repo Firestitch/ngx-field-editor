@@ -1,14 +1,18 @@
-import { Component, Input, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
+import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+
 import { FsPrompt } from '@firestitch/prompt';
 import { guid } from '@firestitch/common';
+import { FsFile, FsFileImagePickerComponent } from '@firestitch/file';
 
 import { FieldComponent } from '../field/field.component';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { forkJoin } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { FieldAction } from '../../../enums';
+import { FieldOption } from '../../../interfaces';
 
 
 @Component({
@@ -19,7 +23,13 @@ import { filter } from 'rxjs/operators';
 })
 export class FieldConfigOptionsComponent extends FieldComponent {
 
+  @Input() public showOther = false;
+  @Input() public showOptionName = false;
+  @Input() public showOptionImage = false;
+  @Input() public field: FieldOption;
+
   public newOption = '';
+  public newOptionValue = '';
 
   @ViewChild('addOptionInput', { static: true })
   private _addOptionInput: ElementRef;
@@ -27,13 +37,12 @@ export class FieldConfigOptionsComponent extends FieldComponent {
   constructor(
     public fieldEditor: FieldEditorService,
     private _prompt: FsPrompt,
+    private _cdRef: ChangeDetectorRef,
   ) {
-    super();
+    super(fieldEditor);
   }
 
   public ngOnInit(): void {
-    super.ngOnInit();
-    
     if(this._addOptionInput) {
       forkJoin([
         this.fieldEditor.fieldCanEdit(this.field),
@@ -42,49 +51,148 @@ export class FieldConfigOptionsComponent extends FieldComponent {
       .pipe(
         filter((response) => response[0] && response[1]),
       )
-      .subscribe((value) => {
+      .subscribe(() => {
         this._addOptionInput.nativeElement.focus();
       });
     }
   }
 
-  public addOption(e): void {
-    if (e.key !== 'Enter' && e.key !== 'Tab') {
+  public optionSave(option) {
+    this.fieldEditor.fieldAction(FieldAction.OptionSave, this.field, { option })
+    .subscribe(() => {
+      this.fieldEditor.fieldChanged(this.field);
+    });
+  }
+
+  public addOptionKeydown(e, listenTab): void {
+    if (!(e.key === 'Enter' || (e.key === 'Tab' && listenTab))) {
       return;
     }
 
     e.preventDefault();
 
     if (this.newOption.length) {
+      this.addOption()
+        .subscribe((option) => {
+          this.field.config.options.push(option);
+          this._cdRef.markForCheck();
+          this.fieldEditor.fieldChanged(this.field);
+        });
+    }  
+  }
 
-      this.field.config.configs.options.push({
-        value: guid(),
-        name: this.newOption,
+  public addOption(): Observable<any> {
+    const option = {
+      value: this.newOptionValue,
+      name: this.newOption,
+      guid: guid('xxxxxx'),
+    };
+
+    return this.fieldEditor.fieldAction(FieldAction.OptionAdd, this.field, { option })
+      .pipe(
+        tap(() => {          
+          this.newOption = '';
+          this.newOptionValue = '';
+          this._cdRef.markForCheck();
+        }),
+        map((response) => {
+          return {
+              ...option,
+              ...response.option,
+            };
+        }),
+      );
+  }
+
+  public selectNewOptionImage(fsFile: FsFile, fileImagePicker: FsFileImagePickerComponent): void {
+    this.addOption()
+      .pipe(
+        switchMap((option) => {
+          const data = {
+            file: fsFile.file,
+            option,
+          };
+          
+          return this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
+          .pipe(
+            map((response) => {
+              return {
+                ...option,
+                ...response.option,
+              };
+            })
+          );
+        }),
+        tap((option) => {
+          this.field.config.options.push(option);
+          this._cdRef.markForCheck();
+        }), 
+        finalize(() => fileImagePicker.cancel()),
+        takeUntil(this._destory$),
+      )
+      .subscribe(() => {
+        this.fieldEditor.fieldChanged(this.field);
       });
+  }
 
-      this.newOption = '';
-    }
-    
-    this.changed.emit(this.field);
+  public selectOptionImage(fsFile: FsFile, option, fileImagePicker: FsFileImagePickerComponent): void {
+    const data = {
+      file: fsFile.file,
+      option,
+    };
+
+    this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
+      .pipe(
+        catchError(() => {
+          fileImagePicker.cancel();
+          
+          return of(null);
+        }),
+        takeUntil(this._destory$),
+      )
+      .subscribe(() => {
+        this.fieldEditor.fieldChanged(this.field);
+      });
   }
 
   public otherToggle(): void {
     this.field.config.configs.other = !this.field.config.configs.other;
-    this.changed.emit(this.field);
+    this.fieldEditor.fieldAction(FieldAction.OptionOther, this.field)
+    .pipe(
+      takeUntil(this._destory$),
+    )
+      .subscribe(() => {
+        this.fieldEditor.fieldChanged(this.field);
+        this._cdRef.markForCheck();
+      });
   }
 
-  public removeOption(index: number): void {
+
+  public removeOption(option): void {
     this._prompt.confirm({
       title: 'Confirm',
       template: 'Are you sure you would like to remove this option?',
-    }).subscribe(() => {
-        this.field.config.configs.options.splice(index, 1);
-        this.changed.emit(this.field);
-    });
+    })
+      .pipe(
+        switchMap(() => this.fieldEditor.fieldAction(FieldAction.OptionDelete, this.field, { option })),
+        tap(() => {
+          this.field.config.options = this.field.config.options
+          .filter((item) => item !== option);
+        }),
+        takeUntil(this._destory$),
+      )
+      .subscribe(() => {
+        this.fieldEditor.fieldChanged(this.field);
+        this._cdRef.markForCheck();
+      });
   }
 
   public drop(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.field.config.configs.options, event.previousIndex, event.currentIndex);
-    this.changed.emit(this.field);
+    moveItemInArray(this.field.config.options, event.previousIndex, event.currentIndex);
+
+    this.fieldEditor.fieldAction(FieldAction.OptionReorder, this.field)
+      .subscribe(() => {
+        this.fieldEditor.fieldChanged(this.field);
+      });
   }
 }

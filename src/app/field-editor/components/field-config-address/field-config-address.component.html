@@ -10,14 +10,14 @@
         <mat-checkbox
           color="primary"
           [(ngModel)]="field.config.configs[item].enabled"
-          (ngModelChange)="changed.emit(field)"></mat-checkbox>
+          (ngModelChange)="fieldSave()"></mat-checkbox>
       </td>
       <td class="checkbox">
         <mat-checkbox
           color="primary"
           [(ngModel)]="field.config.configs[item].required"
           [disabled]="!field.config.configs[item].enabled"
-          (ngModelChange)="changed.emit(field)"></mat-checkbox>
+          (ngModelChange)="fieldSave()"></mat-checkbox>
       </td>
       <td>
           <mat-form-field floatLabel="never">
@@ -28,7 +28,7 @@
               [disabled]="!field.config.configs[item].enabled"
               [name]="field.config.configs[item]"
               [ngModelOptions]="{ updateOn: 'blur' }"
-              (ngModelChange)="changed.emit(field)">
+              (ngModelChange)="fieldSave()">
           </mat-form-field>
       </td>
   </tr>

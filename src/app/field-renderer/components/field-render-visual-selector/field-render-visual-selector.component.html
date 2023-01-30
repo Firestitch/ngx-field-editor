@@ -1,0 +1,26 @@
+<fs-label-field>
+  <fs-label *ngIf="field.config.label">{{field.config.label}}</fs-label>
+  <div class="options">
+    <ng-container 
+      *ngFor="let option of field.config.options; let index = index">
+      <div class="option" [ngClass]="{ selected: selected[option.guid] }" (click)="select(option)">
+        <div class="option-container">  
+          <ng-container *ngIf="configs.format === VisualSelectorFormat.Image || configs.format === VisualSelectorFormat.ImageName">
+            <div 
+              class="option-image"
+              [style.aspectRatio]="configs.previewWidth/configs.previewHeight"
+              [style.backgroundImage]="option.image?.preview ? 'url(' + option.image.preview + ')' : null">
+            </div>
+          </ng-container>
+          <ng-container *ngIf="configs.format === VisualSelectorFormat.Name || configs.format === VisualSelectorFormat.ImageName">
+            <div class="option-name">{{option.name}}</div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <fs-label-message *ngIf="field.config.description">
+    {{ field.config.description }}
+  </fs-label-message>
+</fs-label-field>

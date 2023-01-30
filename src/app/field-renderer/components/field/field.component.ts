@@ -3,7 +3,7 @@ import { Component, Input, EventEmitter, OnInit, OnDestroy, Output, ChangeDetect
 import { guid } from '@firestitch/common';
 
 import { initField } from './../../../helpers/init-field';
-import { Field } from '../../../interfaces/field.interface';
+import { Field, FieldOption } from '../../../interfaces';
 import { FieldType } from '../../../enums/field-type';
 import { FieldMode } from '../../../enums/field-mode';
 
@@ -20,7 +20,7 @@ export class FieldComponent implements OnDestroy, OnInit {
 
   public fieldMode = FieldMode;
   public fieldType = FieldType;
-  public field: Field = null;
+  public field: FieldOption;
   public name = `field-${guid()}`;
 
   protected $destory = new EventEmitter();
@@ -39,6 +39,10 @@ export class FieldComponent implements OnDestroy, OnInit {
 
   public ngOnInit(): void {
     this.field = this.initField(this.field);
+  }
+
+  public get configs() {
+   return this.field.config.configs;
   }
 
   public initField(field) {

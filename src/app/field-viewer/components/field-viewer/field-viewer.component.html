@@ -1,8 +1,7 @@
-<div fxLayout="column" fxLayoutAlign="start start">
-  <ng-container *ngFor="let field of fields">
-
+<ng-container *ngFor="let field of fields">
+  <div>
     <ng-container *ngIf="fieldViewTemplateRefs[field.config.type]; else standardField">
-      <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.config.type]; context: { field: field, fieldEditor: fieldEditor }"></ng-template>
+      <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.config.type]; context: { field: field }"></ng-template>
     </ng-container>
 
     <ng-template #standardField>
@@ -10,6 +9,5 @@
         [field]="field">
       </fs-field-view>
     </ng-template>
-
-  </ng-container>
-</div>
+  </div>
+</ng-container>

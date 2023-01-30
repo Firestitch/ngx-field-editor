@@ -19,16 +19,17 @@ import { DOCUMENT } from '@angular/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 import { fromEvent, Subject } from 'rxjs';
-import { delay, filter, takeUntil } from 'rxjs/operators';
+import { delay, filter, switchMap, takeUntil } from 'rxjs/operators';
 
 
 import { FieldEditorConfig } from '../../../interfaces/field-editor-config.interface';
 import { Field } from '../../../interfaces/field.interface';
 import { FieldConfigDirective } from '../../directives/field-config/field-config.directive';
 import { FieldRenderDirective } from '../../../field-renderer/directives/field-render/field-render.directive';
-import { FieldEditorService } from '../../../services/field-editor.service';
+import { FieldEditorService, FieldRendererService } from '../../../services';
 import { clickOutsideElement } from '../../../helpers/click-outside-element';
 import { FieldEditorToolbarDirective } from '../../directives/field-editor-toolbar/field-editor-toolbar.directive';
+import { FieldAction } from '../../../enums';
 
 
 @Component({
@@ -36,9 +37,7 @@ import { FieldEditorToolbarDirective } from '../../directives/field-editor-toolb
   templateUrl: 'field-editor.component.html',
   styleUrls: ['field-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    FieldEditorService,
-  ],
+  providers: [FieldEditorService, FieldRendererService],
 })
 export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy {
 
@@ -67,17 +66,19 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   constructor(
     @Inject(DOCUMENT) public document: any,
     public fieldEditor: FieldEditorService,
+    public fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
     private _elRef: ElementRef,
   ) {}
 
   @Input()
-  set config(config: FieldEditorConfig) {
+  public set config(config: FieldEditorConfig) {
     this.fieldEditor.setConfig(config);
   }
 
   public ngOnInit(): void {
     this._listenClickOutside();
+    this._listenFieldAdded();
   }
 
   public ngAfterContentInit() {
@@ -97,8 +98,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
 
   public fieldClick(field: Field) {
     if (this.fieldEditor.selectedField !== field) {
-      this.fieldEditor.selectField(field)
-      .subscribe();
+      this.fieldEditor.selectField(field);
     }
   }
 
@@ -115,17 +115,37 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
         event.currentIndex,
       );
 
-      this.fieldEditor.fieldMoved({
-        event: event,
-      });
+      const field = this.fieldEditor.config.fields[event.previousIndex];
+
+      this.fieldEditor
+        .fieldAction(FieldAction.FieldReorder, field, { 
+          fields: this.fieldEditor.config.fields, 
+          previousIndex: event.previousIndex,  
+          currentIndex: event.currentIndex,  
+        })
+        .subscribe();
 
     } else {
-      this.fieldEditor.insertNewField(
-        event.item.data.field,
-        event.currentIndex,
-        event
-      );
+      this.fieldEditor.config.afterFieldDropped(event.item.data.field, event.currentIndex)
+      .pipe(
+        switchMap((field) => this.fieldEditor.insertNewField(
+          field,
+          event.currentIndex,
+          event
+        )),
+      )
+        .subscribe();
     }
+  }
+
+  private _listenFieldAdded(): void {
+    this.fieldEditor.fieldAdded$
+    .pipe(
+      takeUntil(this._destroy$),
+    )
+    .subscribe((field) => {
+      this.fieldEditor.selectField(field);
+    });
   }
 
   private _listenClickOutside(): void {
@@ -144,4 +164,10 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
       });
   }
 
+  public get fields(): Field[] {
+    return [
+      ...this.fieldEditor.config.fields,
+    ];
+  }
 }
+

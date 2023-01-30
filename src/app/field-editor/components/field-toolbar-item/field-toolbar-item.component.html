@@ -5,15 +5,18 @@
   <button
       mat-menu-item
       [disabled]="item.disabled">
-    <div cdkDropList [cdkDropListConnectedTo]="fieldEditor.editorId">
-      <div class="toolbar-field"
-           [ngClass]="{ disabled: item.disabled }"
-           cdkDrag
-           [cdkDragData]="{ field: field, item: item }"
-           [cdkDragDisabled]="item.disabled"
-           (click)="itemClick(item)"
-           (cdkDragStarted)="dragStarted(item)"
-           (cdkDragDropped)="dragDropped($event)">
+    <div 
+        cdkDropList 
+        [cdkDropListConnectedTo]="fieldEditor.editorId">
+      <div  
+          class="toolbar-field"
+          [ngClass]="{ disabled: item.disabled }"
+          cdkDrag
+          [cdkDragData]="{ field: field, item: item }"
+          [cdkDragDisabled]="item.disabled"
+          (click)="itemClick(item)"
+          (cdkDragStarted)="dragStarted(item)"
+          (cdkDragDropped)="dragDropped($event)">
         <div fxFlexLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <button mat-icon-button type="button"><mat-icon>{{ item.icon }}</mat-icon></button>
           <span class="label">{{ item.label }}</span>

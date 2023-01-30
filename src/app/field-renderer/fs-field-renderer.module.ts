@@ -51,6 +51,7 @@ import { FieldRenderDateComponent } from './components/field-render-date/field-r
 import { FieldRenderTimeComponent } from './components/field-render-time/field-render-time.component';
 import { FieldRenderBirthdayComponent } from './components/field-render-birthday/field-render-birthday.component';
 import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
+import { FieldRenderVisualSelectorComponent } from './components';
 
 
 @NgModule({
@@ -89,26 +90,6 @@ import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
     FsAddressModule,
     FsFieldViewerModule,
   ],
-  exports: [
-    FieldRendererComponent,
-    FieldRenderComponent,
-    FieldRenderChoiceComponent,
-    FieldRenderDropdownComponent,
-    FieldRenderTextComponent,
-    FieldRenderNameComponent,
-    FieldRenderFileComponent,
-    FieldRenderGenderComponent,
-    FieldRenderAddressComponent,
-    FieldRenderDirective,
-    FieldRenderNameModelComponent,
-    FieldRenderContentComponent,
-    FieldRenderRichTextComponent,
-    FieldRenderCheckboxComponent,
-    FieldRenderDateComponent,
-    FieldRenderTimeComponent,
-    FieldRenderFileSingleComponent,
-    FieldRenderBirthdayComponent,
-  ],
   declarations: [
     FieldRendererComponent,
     FieldRenderComponent,
@@ -129,6 +110,28 @@ import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
     FieldRenderTimeComponent,
     FieldRenderFileSingleComponent,
     FieldRenderBirthdayComponent,
+    FieldRenderVisualSelectorComponent,
+  ],
+  exports: [
+    FieldRendererComponent,
+    FieldRenderComponent,
+    FieldRenderChoiceComponent,
+    FieldRenderDropdownComponent,
+    FieldRenderTextComponent,
+    FieldRenderNameComponent,
+    FieldRenderFileComponent,
+    FieldRenderGenderComponent,
+    FieldRenderAddressComponent,
+    FieldRenderDirective,
+    FieldRenderNameModelComponent,
+    FieldRenderContentComponent,
+    FieldRenderRichTextComponent,
+    FieldRenderCheckboxComponent,
+    FieldRenderDateComponent,
+    FieldRenderTimeComponent,
+    FieldRenderFileSingleComponent,
+    FieldRenderBirthdayComponent,
+    FieldRenderVisualSelectorComponent,
   ],
 })
 

@@ -12,7 +12,7 @@
   }
 
   &.cdk-drag-placeholder {
-    background: #F7F7F7;
+    background: #F9F9F9;
 
     & > * {
       visibility: hidden;
@@ -80,6 +80,19 @@ fs-field-renderer {
 
     ::ng-deep .mat-button-ripple {
       display: none;
+    }
+  }
+
+  .options {
+    .option {    
+      &:hover:not(.selected) {
+        background-color: mat.get-color-from-palette($primary, 500, .2) !important;
+        border-color: mat.get-color-from-palette($primary, 500, .02) !important;
+      }
+
+      &.selected {
+        border-color: mat.get-color-from-palette($primary) !important;
+      } 
     }
   }
 

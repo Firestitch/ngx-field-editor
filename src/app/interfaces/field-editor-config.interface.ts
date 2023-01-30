@@ -3,6 +3,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Toolbar, ToolbarItem } from './toolbar.interface';
 
 import { Field } from './field.interface';
+import { FieldAction } from '../enums';
+import { FieldOption } from './field-option.interface';
 
 export interface FsFieldEditorCallbackParams {
   field?: Field;
@@ -14,27 +16,28 @@ export interface FsFieldEditorCallbackParams {
 export type FsFieldEditorCallbackFn = (data: FsFieldEditorCallbackParams) => void | Observable<Field>;
 
 export interface FieldEditorConfig {
-  fields?: Field[],
+  fields?: (Field | FieldOption)[],
   toolbar?: Toolbar,
-  fieldDrop?: Function,
+
   fieldCanEdit?: (field: Field) => Observable<boolean>,
   fieldCanDelete?: (field: Field) => Observable<boolean>,
   fieldCanDuplicate?: (field: Field) => Observable<boolean>,
   fieldCanRequire?: (field: Field) => Observable<boolean>,
   fieldCanLabel?: (field: Field) => Observable<boolean>,
   fieldCanConfig?: (field: Field) => Observable<boolean>,
+  
   fieldChanged?: (field?: Field) => void,
-  fieldAdd?: FsFieldEditorCallbackFn,
-  fieldAdded?: FsFieldEditorCallbackFn,
-  fieldSelected?: FsFieldEditorCallbackFn,
-  fieldUnselected?: FsFieldEditorCallbackFn,
-  fieldMoved?: FsFieldEditorCallbackFn,
-  fieldDuplicate?: FsFieldEditorCallbackFn,
-  fieldDuplicated?: FsFieldEditorCallbackFn,
-  fieldRemoved?: FsFieldEditorCallbackFn,
+
+  beforeFieldAdded?: (field: Field, toolbarItem: ToolbarItem) => Observable<Field>,
+  beforeFieldDuplicated?: (field: Field) => Observable<Field>,
+  beforeFieldSelected?: (field: Field) => Observable<any>,
+
+  afterFieldDuplicated?: (field: Field) => Observable<any>,
+  afterFieldRemoved?: (field: Field) => Observable<any>,
+  afterFieldAdded?: (field: Field) => Observable<any>,
+  afterFieldUnselected?: (field: Field) => Observable<any>,
+  afterFieldDropped?: (field: Field, index: number) => Observable<any>,
+
   imageUpload?: (field: Field, file: File) => Observable<string>,
-  fileUpload?: (field: Field, file: File) => Observable<{ name: string, url: string }>,
-  fileRemove?: (field: Field, data: any) => Observable<boolean>,
-  fileRemoved?: (field: Field, data: any) => void,
-  fileDownload?: (field: Field, data: any) => void,
+  fieldAction: (action: FieldAction, field: Field, data: any) => Observable<Field>,
 }

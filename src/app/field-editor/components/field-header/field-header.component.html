@@ -12,7 +12,7 @@
           name="label"
           [disabled]="!canEdit"
           [ngModelOptions]="{ updateOn: 'blur' }"
-          (ngModelChange)="changed.emit(field)">
+          (ngModelChange)="fieldActionConfig()">
       </mat-form-field>
     </div>
     <button
@@ -55,14 +55,8 @@
       <ng-template
             fs-menu-item
             *ngIf="canDuplicate"
-            (click)="copy($event)">
+            (click)="duplicate($event)">
           Duplicate
-        </ng-template>
-        <ng-template
-            *ngIf="field.config.type === FieldType.Checkbox || field.config.type === FieldType.Dropdown || field.config.type === FieldType.Choice || field.config.type === FieldType.Gender"
-            fs-menu-item
-            (click)="showValues($event)">
-          {{field.config.configs.showValues ? 'Hide Option Values' : 'Show Option Values'}}
         </ng-template>
         <ng-template
             fs-menu-item
@@ -82,7 +76,7 @@
       name="description"
       [disabled]="!canEdit"
       [ngModelOptions]="{ updateOn: 'blur' }"
-      (ngModelChange)="changed.emit(field)">
+      (ngModelChange)="fieldActionConfig()">
     </textarea>
   </mat-form-field>
 </div>

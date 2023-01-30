@@ -1,15 +1,6 @@
-import { FieldType } from '../enums/field-type';
-
+import { FieldConfig } from './field-config.interface';
 
 export interface Field {
-  config?: {
-    guid?: string,
-    type?: FieldType | string,
-    label?: string,
-    description?: string,
-    hideRequired?: boolean;
-    hideDescription?: boolean;
-    configs?: any,
-  },
+  config?: FieldConfig,
   data?: any,
 }

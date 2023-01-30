@@ -6,7 +6,6 @@ import {
   NgForm, NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 
-import { FsPrompt } from '@firestitch/prompt';
 import { controlContainerFactory } from '@firestitch/core';
 import { FsFile } from '@firestitch/file';
 
@@ -14,8 +13,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { Field } from '../../../../interfaces/field.interface';
-import { FileRenderFile } from '../../../../classes/file-render-file';
-import { FieldEditorService } from '../../../../services/field-editor.service';
+import { FieldRendererService } from '../../../../services';
 
 
 @Component({
@@ -51,15 +49,15 @@ export class FieldRenderFileSingleComponent implements OnDestroy, ControlValueAc
   private _destroy$ = new Subject();
 
   public constructor(
-    private _fieldEditor: FieldEditorService,
+    private _fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
   ) {}
 
   public selectFile(fsFile: FsFile) {
     this.onTouched();
 
-    if (this._fieldEditor.config.fileUpload) {
-      this._fieldEditor.config.fileUpload(this.field, fsFile.file)
+    if (this._fieldRenderer.config.fileUpload) {
+      this._fieldRenderer.config.fileUpload(this.field, fsFile.file)
       .pipe(
         takeUntil(this._destroy$)
       )
@@ -89,24 +87,18 @@ export class FieldRenderFileSingleComponent implements OnDestroy, ControlValueAc
   }
 
   public get allowDownload(): boolean {
-    return !!this._fieldEditor.config?.fileDownload;
+    return !!this._fieldRenderer.config?.fileDownload;
   }
 
   public get allowRemove(): boolean {
-    return !!this._fieldEditor.config?.fileRemove;
+    return !!this._fieldRenderer.config?.fileRemove;
   }
 
   public remove() {
-    this._fieldEditor.config.fileRemove(this.field, this.file)
-    .subscribe(() => {
-      this.onChange([]);
-
-      if (this._fieldEditor.config.fileRemoved) {
-        this._fieldEditor.config.fileRemoved(this.field, this.file);
-      }
-
+    if (this._fieldRenderer.config.afterFileRemoved) {
+      this._fieldRenderer.config.afterFileRemoved(this.field, this.file);
       this.file = null;
-    });
+    }
   }
 
   public ngOnDestroy(): void {
