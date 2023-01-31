@@ -4,7 +4,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { guid } from '@firestitch/common';
 
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { delay, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { cloneDeep } from 'lodash-es';
 
@@ -135,9 +135,10 @@ export class FieldEditorService implements OnDestroy {
       afterFieldUnselected: config.afterFieldUnselected ? config.afterFieldUnselected : (field: Field) => { return of(field); },      
       afterFieldDuplicated: config.afterFieldDuplicated ? config.afterFieldDuplicated : (field: Field) => { return of(field); },
       afterFieldDropped: config.afterFieldDropped ? config.afterFieldDropped : (field: Field) => { return of(field); },
+      afterFieldAdded: config.afterFieldAdded ? config.afterFieldAdded : (field: Field) => { return of(field); },
       beforeFieldAdded: config.beforeFieldAdded ? config.beforeFieldAdded : (field: Field) => { return of(field); },
       beforeFieldSelected: config.beforeFieldSelected ? config.beforeFieldSelected : (field: Field) => { return of(field); },
-      afterFieldAdded: config.afterFieldAdded ? config.afterFieldAdded : (field: Field) => { return of(field); },
+      beforeFieldDuplicated: config.beforeFieldDuplicated ? config.beforeFieldDuplicated : (field: Field) => { return of(field); },
     };
 
     if (this.config.fields) {
@@ -163,17 +164,17 @@ export class FieldEditorService implements OnDestroy {
         switchMap((field) => this.fieldAction(FieldAction.FieldAdd, field, { index })),
         switchMap((response) => {
           const newField = initField(response.field);
-          this.config.fields.splice(index, 0, newField);          
+          this.config.fields.splice(index, 0, newField);
           this._scrollTargetField = newField;
+          this._fieldAdded$.next(newField);
 
           return this.config.afterFieldAdded(newField);
         }),
-        tap((newField) => this.selectField(newField)),
         takeUntil(this._destroy$),
       );
   }
 
-  public fieldChanged(field: Field): void {
+  public fieldChange(field: Field): void {
     this.config.fields = this.config.fields
       .map((_field) => {
         return _field.config.guid === field.config.guid ? field : _field;

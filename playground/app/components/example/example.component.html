@@ -13,7 +13,7 @@
           [disabled]="true"
           name="signature"
           [ngModel]="field"
-          (ngModelChange)="fieldChanged(fieldEditor, field)">
+          (ngModelChange)="fieldChange(fieldEditor, field)">
         </app-signature-field-render>
       </ng-template>
 
@@ -24,8 +24,8 @@
 
       <ng-template fsFieldConfig type="share" let-field="field" let-fieldEditor="fieldEditor">
         <div fxLayout="column">
-          <mat-checkbox [(ngModel)]="field.config.configs['facebook']" name="facebook" (click)="fieldEditor.fieldChanged(field)">Enable Facebook</mat-checkbox>
-          <mat-checkbox [(ngModel)]="field.config.configs['google']" name="google" (click)="fieldEditor.fieldChanged(field)">Enable Google</mat-checkbox>
+          <mat-checkbox [(ngModel)]="field.config.configs['facebook']" name="facebook" (click)="fieldEditor.fieldChange(field)">Enable Facebook</mat-checkbox>
+          <mat-checkbox [(ngModel)]="field.config.configs['google']" name="google" (click)="fieldEditor.fieldChange(field)">Enable Google</mat-checkbox>
         </div>
       </ng-template>
 
@@ -34,7 +34,7 @@
           <app-terms-field-config
             name="terms-{{ field?.data?.guid }}"
             [ngModel]="field"
-            (ngModelChange)="fieldChanged(fieldEditor, field)">
+            (ngModelChange)="fieldChange(fieldEditor, field)">
           </app-terms-field-config>
         </div>
       </ng-template>
@@ -45,7 +45,7 @@
             name="terms"
             [disabled]="true"
             [ngModel]="field"
-            (ngModelChange)="fieldChanged(fieldEditor, field)">
+            (ngModelChange)="fieldChange(fieldEditor, field)">
           </app-terms-field-render>
         </div>
       </ng-template>
@@ -63,7 +63,7 @@
           <app-signature-field-render
             name="signature"
             [ngModel]="field"
-            (ngModelChange)="fieldChanged(fieldEditor, field)">
+            (ngModelChange)="fieldChange(fieldEditor, field)">
           </app-signature-field-render>
         </ng-template>
 
@@ -71,7 +71,7 @@
           <app-terms-field-render
             name="terms"
             [ngModel]="field"
-            (ngModelChange)="fieldChanged(fieldEditor, field)">
+            (ngModelChange)="fieldChange(fieldEditor, field)">
           </app-terms-field-render>
         </ng-template>
       </fs-field-renderer>

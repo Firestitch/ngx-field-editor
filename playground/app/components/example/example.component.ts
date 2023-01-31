@@ -127,19 +127,20 @@ export class ExampleComponent implements OnInit {
         return of(true);
       },
       fieldAction: (action: FieldAction, field: Field, data: any): Observable<any> => {
-        console.log('Field Action', field, action, data);
+        console.log('Field Action', action, field, data);
         return of(true)
           .pipe(
             map(() => {
-              if(action === FieldAction.OptionImageUpload) {
-                return { 
-                  option: {
-                    ...data.option,                  
-                    image: {
-                      preview: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/B875/production/_102512274_gettyimages-518360318.jpg'
-                    },
-                  }
-                };
+              switch(action) {
+                case FieldAction.OptionImageUpload:
+                  return { 
+                    option: {
+                      ...data.option,                  
+                      image: {
+                        preview: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/B875/production/_102512274_gettyimages-518360318.jpg'
+                      },
+                    }
+                  };
               }
 
               return { field };
@@ -176,7 +177,8 @@ export class ExampleComponent implements OnInit {
           },
         ]
       },
-      fields: this.getFields(),
+      //fields: this.getFields(),
+      fields: []
     };
   }
 
@@ -224,8 +226,8 @@ export class ExampleComponent implements OnInit {
     };
   }
 
-  public fieldChanged(editor: FieldEditorService, field: Field): void {
-    editor.fieldChanged(field);
+  public fieldChange(editor: FieldEditorService, field: Field): void {
+    editor.fieldAction(FieldAction.FieldSave, field);
   }
 
   public save() {
@@ -427,10 +429,12 @@ export class ExampleComponent implements OnInit {
             {
               name: 'Male',
               value: 'male',
+              guid: '32423423',
             },
             {
               name: 'Female',
               value: 'female',
+              guid: '32423423',
             },
           ],
         },

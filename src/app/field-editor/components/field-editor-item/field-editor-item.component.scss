@@ -1,6 +1,7 @@
 :host {
   display: block;
   border-radius: 5px;
+  position: relative;
 
   &.selected .field-container {
     box-sizing: border-box;

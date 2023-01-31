@@ -19,7 +19,7 @@ import { DOCUMENT } from '@angular/common';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 import { fromEvent, Subject } from 'rxjs';
-import { delay, filter, switchMap, takeUntil } from 'rxjs/operators';
+import { delay, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 
 import { FieldEditorConfig } from '../../../interfaces/field-editor-config.interface';
@@ -141,6 +141,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   private _listenFieldAdded(): void {
     this.fieldEditor.fieldAdded$
     .pipe(
+      delay(100),
       takeUntil(this._destroy$),
     )
     .subscribe((field) => {

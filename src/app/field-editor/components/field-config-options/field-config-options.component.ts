@@ -60,7 +60,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
   public optionSave(option) {
     this.fieldEditor.fieldAction(FieldAction.OptionSave, this.field, { option })
     .subscribe(() => {
-      this.fieldEditor.fieldChanged(this.field);
+      this.fieldEditor.fieldChange(this.field);
     });
   }
 
@@ -76,7 +76,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
         .subscribe((option) => {
           this.field.config.options.push(option);
           this._cdRef.markForCheck();
-          this.fieldEditor.fieldChanged(this.field);
+          this.fieldEditor.fieldChange(this.field);
         });
     }  
   }
@@ -131,7 +131,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
         takeUntil(this._destory$),
       )
       .subscribe(() => {
-        this.fieldEditor.fieldChanged(this.field);
+        this.fieldEditor.fieldChange(this.field);
       });
   }
 
@@ -151,7 +151,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
         takeUntil(this._destory$),
       )
       .subscribe(() => {
-        this.fieldEditor.fieldChanged(this.field);
+        this.fieldEditor.fieldChange(this.field);
       });
   }
 
@@ -162,7 +162,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
       takeUntil(this._destory$),
     )
       .subscribe(() => {
-        this.fieldEditor.fieldChanged(this.field);
+        this.fieldEditor.fieldChange(this.field);
         this._cdRef.markForCheck();
       });
   }
@@ -182,7 +182,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
         takeUntil(this._destory$),
       )
       .subscribe(() => {
-        this.fieldEditor.fieldChanged(this.field);
+        this.fieldEditor.fieldChange(this.field);
         this._cdRef.markForCheck();
       });
   }
@@ -192,7 +192,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
 
     this.fieldEditor.fieldAction(FieldAction.OptionReorder, this.field)
       .subscribe(() => {
-        this.fieldEditor.fieldChanged(this.field);
+        this.fieldEditor.fieldChange(this.field);
       });
   }
 }

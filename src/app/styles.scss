@@ -65,6 +65,11 @@ fs-field-renderer {
 
   $primary: mat.define-palette($theme);
 
+  .cdk-drag-placeholder {
+    background-color: mat.get-color-from-palette($primary, 500) !important;
+    opacity: .2;
+  }
+
   .toolbar-field.cdk-drag-preview {
     background: mat.get-color-from-palette($primary);
     white-space: nowrap;
@@ -80,19 +85,6 @@ fs-field-renderer {
 
     ::ng-deep .mat-button-ripple {
       display: none;
-    }
-  }
-
-  .options {
-    .option {    
-      &:hover:not(.selected) {
-        background-color: mat.get-color-from-palette($primary, 500, .2) !important;
-        border-color: mat.get-color-from-palette($primary, 500, .02) !important;
-      }
-
-      &.selected {
-        border-color: mat.get-color-from-palette($primary) !important;
-      } 
     }
   }
 

@@ -15,7 +15,7 @@ import { FsPrompt } from '@firestitch/prompt';
 import { guid } from '@firestitch/common';
 
 import { cloneDeep } from 'lodash-es';
-import { filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { FieldComponent } from '../field/field.component';
@@ -59,7 +59,7 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
   
   public changed(): void {
     this.fieldChanged.emit(this.field);
-    this.fieldEditor.fieldChanged(this.field);
+    this.fieldEditor.fieldChange(this.field);
   }
 
   public ngOnInit(): void {
@@ -163,21 +163,22 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
   public duplicate(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-
-    const copiedField = cloneDeep(this.field);
     const index = this.fieldEditor.config.fields.indexOf(this.field) + 1;
 
-    copiedField.config.guid = guid();
-    copiedField.data = {};
+    const copiedField = {
+      ...cloneDeep(this.field),
+      data: {},
+    };
 
     this.fieldEditor.config.beforeFieldDuplicated(copiedField)
       .pipe(
         takeUntil(this._destory$),
-        switchMap((field) => this.fieldEditor.fieldAction(FieldAction.FieldDuplicate, field, { index })),
+        switchMap((field) => this.fieldEditor.fieldAction(FieldAction.FieldDuplicate, field, { index })),        
+        map((response) => response.field),
         switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
-        tap(() => {
-          this.fieldEditor.config.fields.splice(index, 0, copiedField);
-          this.fieldEditor.selectField(copiedField);
+        tap((field) =>  {
+          this.fieldEditor.config.fields.splice(index, 0, field);
+          this.fieldEditor.selectField(field);
         }),
       )
     .subscribe();
@@ -201,7 +202,6 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
       .subscribe(() => {
         this.fieldEditor.config.fields.splice(this.fieldEditor.config.fields.indexOf(this.field), 1);
         this.fieldEditor.unselectField();
-        //this.fieldEditor.afterFieldRemove(this.field);
         this._cdRef.markForCheck();
       });
   }

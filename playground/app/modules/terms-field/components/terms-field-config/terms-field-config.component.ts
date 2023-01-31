@@ -144,7 +144,10 @@ export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit {
   public writeValue(field: Field | undefined): void {
     this._field = field;
     this.terms = field?.config?.configs?.terms || [];
-    this.list.reload();
+    if(this.list) {
+      this.list.reload();
+    }
+    
     this._cdRef.markForCheck();
   }
 

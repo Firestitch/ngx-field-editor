@@ -7,11 +7,14 @@ import {
   OnInit,
   ElementRef,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 
 import { Field } from '../../../interfaces/field.interface';
 import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services/field-editor.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -20,7 +23,7 @@ import { FieldEditorService } from '../../../services/field-editor.service';
   styleUrls: ['./field-editor-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldEditorItemComponent implements OnInit {
+export class FieldEditorItemComponent implements OnInit, OnDestroy {
 
   @Input() 
   public field: Field;
@@ -35,16 +38,16 @@ export class FieldEditorItemComponent implements OnInit {
   public canEdit = false;
   public canConfig = false;
 
+  private _destroy$ = new Subject();
+  
   constructor(
     public fieldEditor: FieldEditorService,
     private _elRef: ElementRef,
     private _cdRef: ChangeDetectorRef,
   ) {}
 
-  @HostBinding('class.selected')
-  public get isSelectedField(): boolean {
-    return this.fieldEditor.selectedField && (this.field.config.guid === this.fieldEditor.selectedField.config.guid);
-  }
+  @HostBinding('class.selected') 
+  public isSelectedField = false;
 
   public get fieldConfigTemplateRef(): TemplateRef<unknown> | false {
     return this.fieldConfigTemplateRefs && this.fieldConfigTemplateRefs[this.field.config.type];
@@ -54,34 +57,50 @@ export class FieldEditorItemComponent implements OnInit {
     return this.fieldRenderTemplateRefs && this.fieldRenderTemplateRefs[this.field.config.type];
   }
 
-  public fieldChanged(field: Field) {
-    this.fieldEditor.fieldChanged(field);
+  public fieldChange(field: Field) {
+    this.fieldEditor.fieldChange(field);
     this.field = field;
   }
 
   public ngOnInit(): void {
     this.fieldEditor.fieldCanEdit(this.field)
-    .subscribe((value) => {
-      this.canEdit = value;
-      this._cdRef.markForCheck();
-    });
+      .pipe(
+        takeUntil(this._destroy$)
+      )
+      .subscribe((value) => {
+        this.canEdit = value;
+        this._cdRef.markForCheck();
+      });
     
-    this.fieldEditor.fieldCanConfig(this.field)
-    .subscribe((value) => {
-      this.canConfig = value;
-      this._cdRef.markForCheck();
-    });
+    this.fieldEditor
+    .fieldCanConfig(this.field)
+      .pipe(
+        takeUntil(this._destroy$)
+      )
+      .subscribe((value) => {
+        this.canConfig = value;
+        this._cdRef.markForCheck();
+      });
 
     if (this.field === this.fieldEditor.scrollTargetField) {
       this.fieldEditor.resetScrollTarget();
 
       setTimeout(() => {
-          this._elRef.nativeElement.scrollIntoView({
-            block: 'nearest',
-            behavior: 'smooth',
-          });
+        this._elRef.nativeElement.scrollIntoView({
+          block: 'nearest',
+          behavior: 'smooth',
+        });
       }, 0);
     }
+
+    this.fieldEditor.selectedField$
+      .pipe(
+        takeUntil(this._destroy$)
+      )
+      .subscribe((field) => {
+        this.isSelectedField = field?.config?.guid === this.field.config.guid;
+        this._cdRef.markForCheck();
+      });
   }
 
   public dragStarted(): void {
@@ -92,6 +111,11 @@ export class FieldEditorItemComponent implements OnInit {
     this.field = {
       ...field,
     };
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
 }
