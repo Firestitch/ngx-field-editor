@@ -31,8 +31,12 @@ export class FieldConfigOptionsComponent extends FieldComponent {
   public newOption = '';
   public newOptionValue = '';
 
-  @ViewChild('addOptionInput', { static: true })
+  @ViewChild('addOptionInput')
   private _addOptionInput: ElementRef;
+
+  private _newOptionFile: FsFile;
+  private _newFileImagePicker: FsFileImagePickerComponent;
+
 
   constructor(
     public fieldEditor: FieldEditorService,
@@ -72,13 +76,49 @@ export class FieldConfigOptionsComponent extends FieldComponent {
     e.preventDefault();
 
     if (this.newOption.length) {
-      this.addOption()
-        .subscribe((option) => {
-          this.field.config.options.push(option);
-          this._cdRef.markForCheck();
-          this.fieldEditor.fieldChange(this.field);
-        });
-    }  
+      if (this._newOptionFile) {
+        this.addOption()
+          .pipe(
+            switchMap((option) => {
+              const data = {
+                file: this._newOptionFile.file,
+                option,
+              };
+              
+              return this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
+              .pipe(
+                map((response) => {
+                  return {
+                    ...option,
+                    ...response.option,
+                  };
+                })
+              );
+            }),
+            tap((option) => {
+              this.field.config.options.push(option);
+              this._newOptionFile = null;
+
+              this._cdRef.markForCheck();
+            }), 
+            finalize(() => {
+              this._newFileImagePicker.cancel()
+              this._newFileImagePicker = null;
+            }),
+            takeUntil(this._destory$),
+          )
+          .subscribe(() => {
+            this.fieldEditor.fieldChange(this.field);
+          });
+      } else {
+        this.addOption()
+          .subscribe((option) => {
+            this.field.config.options.push(option);
+            this._cdRef.markForCheck();
+            this.fieldEditor.fieldChange(this.field);
+          });
+      }
+    }
   }
 
   public addOption(): Observable<any> {
@@ -105,34 +145,9 @@ export class FieldConfigOptionsComponent extends FieldComponent {
   }
 
   public selectNewOptionImage(fsFile: FsFile, fileImagePicker: FsFileImagePickerComponent): void {
-    this.addOption()
-      .pipe(
-        switchMap((option) => {
-          const data = {
-            file: fsFile.file,
-            option,
-          };
-          
-          return this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
-          .pipe(
-            map((response) => {
-              return {
-                ...option,
-                ...response.option,
-              };
-            })
-          );
-        }),
-        tap((option) => {
-          this.field.config.options.push(option);
-          this._cdRef.markForCheck();
-        }), 
-        finalize(() => fileImagePicker.cancel()),
-        takeUntil(this._destory$),
-      )
-      .subscribe(() => {
-        this.fieldEditor.fieldChange(this.field);
-      });
+    this._newOptionFile = fsFile;
+    this._newFileImagePicker = fileImagePicker;
+    this._addOptionInput.nativeElement.focus();
   }
 
   public selectOptionImage(fsFile: FsFile, option, fileImagePicker: FsFileImagePickerComponent): void {
