@@ -38,7 +38,7 @@
         *ngIf="canEdit && field.config.hideDescription !== true"
         mat-icon-button
         type="button"
-        (click)="toggleDescriptionNote()"
+        (click)="toggleDescriptionNote($event)"
         matTooltip="Description"
         [ngClass]="{ disabled: !hasDescription }">
       <mat-icon>subject</mat-icon>

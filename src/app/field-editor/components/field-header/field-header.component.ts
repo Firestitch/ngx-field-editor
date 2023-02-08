@@ -4,6 +4,8 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
@@ -16,7 +18,7 @@ import { guid } from '@firestitch/common';
 
 import { cloneDeep } from 'lodash-es';
 import { filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { FieldComponent } from '../field/field.component';
 import { FieldEditorService } from '../../../services/field-editor.service';
@@ -31,12 +33,15 @@ import { Field } from '../../../interfaces';
   styleUrls: ['field-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDestroy {
+export class FieldHeaderComponent
+  extends FieldComponent
+  implements OnInit, OnChanges, OnDestroy {
 
+  @Input()
+  public hasDescription = false;
   @ViewChild('description')
   public descriptionEl: ElementRef;
 
-  public hasDescription;
   public canDelete = false;
   public canDuplicate = false;
   public canEdit = false;
@@ -44,10 +49,14 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
   public canLabel = false;
   public FieldType = FieldType;
 
-  @Output() public fieldChanged = new EventEmitter<Field>();
+  @Output()
+  public fieldChanged = new EventEmitter<Field>();
+
+  @Output()
+  public toggleDescription = new EventEmitter<Field>();
 
   private _destroy$ = new Subject();
-  
+
   public constructor(
     public fieldEditor: FieldEditorService,
     private _prompt: FsPrompt,
@@ -56,15 +65,13 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
   ) {
     super(fieldEditor);
   }
-  
+
   public changed(): void {
     this.fieldChanged.emit(this.field);
     this.fieldEditor.fieldChange(this.field);
   }
 
   public ngOnInit(): void {
-    this.hasDescription = !!this.field.config.description;
-
     this.fieldEditor.fieldCanDelete(this.field)
     .pipe(
       takeUntil(this._destroy$),
@@ -73,7 +80,7 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
       this.canDelete = value;
       this._cdRef.markForCheck();
     });
-    
+
     this.fieldEditor.fieldCanEdit(this.field)
     .pipe(
       takeUntil(this._destroy$),
@@ -82,7 +89,7 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
       this.canEdit = value;
       this._cdRef.markForCheck();
     });
-    
+
     this.fieldEditor.fieldCanDuplicate(this.field)
     .pipe(
       takeUntil(this._destroy$),
@@ -91,7 +98,7 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
       this.canDuplicate = value;
       this._cdRef.markForCheck();
     });
-    
+
     this.fieldEditor.fieldCanRequire(this.field)
     .pipe(
       takeUntil(this._destroy$),
@@ -100,7 +107,7 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
       this.canRequire = value;
       this._cdRef.markForCheck();
     });
-    
+
     this.fieldEditor.fieldCanLabel(this.field)
     .pipe(
       takeUntil(this._destroy$),
@@ -111,6 +118,14 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
     });
   }
 
+  public ngOnChanges(changes: any): void {
+    if (changes.hasDescription?.currentValue) {
+      setTimeout(() => {
+        this.descriptionEl?.nativeElement?.focus();
+      });
+    }
+  }
+
   public toggleRequired(): void {
     this.field.config.configs.required = !this.field.config.configs.required;
     this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
@@ -119,19 +134,10 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
     });
   }
 
-  public toggleDescriptionNote(): void {
-    this.hasDescription = !this.hasDescription;
-    this._cdRef.markForCheck();
-    this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
-    .subscribe(() => {
-      this.changed();
+  public toggleDescriptionNote(event: Event): void {
+    event.stopPropagation();
 
-      if (this.hasDescription) {
-        setTimeout(() => {
-          this.descriptionEl.nativeElement.focus();
-        });
-      }
-    });
+    this.toggleDescription.emit(this.field);
   }
 
   public settings(event: Event): void {
@@ -155,9 +161,9 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
 
   public fieldActionConfig(): void {
     this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
-    .subscribe(() => {
-      this.changed();
-    });
+      .subscribe(() => {
+        this.changed();
+      });
   }
 
   public duplicate(event: Event): void {
@@ -173,7 +179,7 @@ export class FieldHeaderComponent extends FieldComponent implements OnInit, OnDe
     this.fieldEditor.config.beforeFieldDuplicated(copiedField)
       .pipe(
         takeUntil(this._destory$),
-        switchMap((field) => this.fieldEditor.fieldAction(FieldAction.FieldDuplicate, field, { index })),        
+        switchMap((field) => this.fieldEditor.fieldAction(FieldAction.FieldDuplicate, field, { index })),
         map((response) => response.field),
         switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
         tap((field) =>  {
