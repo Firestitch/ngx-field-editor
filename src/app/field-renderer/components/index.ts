@@ -3,7 +3,7 @@ export * from './field-render-time/field-render-time.component';
 export * from './field-render-date/field-render-date.component';
 export * from './field-render-checkbox/field-render-checkbox.component';
 export * from './field-render-name/field-render-name.component';
-export * from './field-render-name-model/field-render-name-model.component';
+export * from './field-render-name/field-render-name-model/field-render-name-model.component';
 export * from './field-render-file/field-render-file-multiple/field-render-file-multiple.component';
 export * from './field-render-file/field-render-file-single/field-render-file-single.component';
 export * from './field-render-rich-text/field-render-rich-text.component';

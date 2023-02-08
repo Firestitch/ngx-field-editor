@@ -177,8 +177,7 @@ export class ExampleComponent implements OnInit {
           },
         ]
       },
-      //fields: this.getFields(),
-      fields: []
+      fields: this.getFields(),
     };
   }
 
@@ -348,7 +347,7 @@ export class ExampleComponent implements OnInit {
         },
         data: {
           value: {
-            selected: ['dog','cat']
+            selected: ['2314rewf']
           }
         },
       },

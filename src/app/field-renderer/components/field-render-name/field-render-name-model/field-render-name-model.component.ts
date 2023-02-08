@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, forwardRef, Input} from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
-import { FieldComponent } from '../field/field.component';
+import { FieldComponent } from '../../field/field.component';
 
 @Component({
   selector: 'fs-field-render-name-model',
