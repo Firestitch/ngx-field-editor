@@ -112,6 +112,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
 
 
     this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+      .pipe(takeUntil(this._destroy$))
       .subscribe(() => {
         this.fieldEditor.fieldAction(FieldAction.FieldSave, field);
       });
