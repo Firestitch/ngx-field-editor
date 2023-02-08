@@ -15,6 +15,7 @@ import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services/field-editor.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { FieldAction } from '@firestitch/field-editor';
 
 
 @Component({
@@ -25,7 +26,7 @@ import { Subject } from 'rxjs';
 })
 export class FieldEditorItemComponent implements OnInit, OnDestroy {
 
-  @Input() 
+  @Input()
   public field: Field;
 
   @Input()
@@ -37,16 +38,17 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public FieldType = FieldType;
   public canEdit = false;
   public canConfig = false;
+  public hasDescription = false;
 
   private _destroy$ = new Subject();
-  
+
   constructor(
     public fieldEditor: FieldEditorService,
     private _elRef: ElementRef,
     private _cdRef: ChangeDetectorRef,
   ) {}
 
-  @HostBinding('class.selected') 
+  @HostBinding('class.selected')
   public isSelectedField = false;
 
   public get fieldConfigTemplateRef(): TemplateRef<unknown> | false {
@@ -63,6 +65,8 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.hasDescription = !!this.field.config.description;
+
     this.fieldEditor.fieldCanEdit(this.field)
       .pipe(
         takeUntil(this._destroy$)
@@ -71,7 +75,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
         this.canEdit = value;
         this._cdRef.markForCheck();
       });
-    
+
     this.fieldEditor
     .fieldCanConfig(this.field)
       .pipe(
@@ -100,6 +104,16 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
       .subscribe((field) => {
         this.isSelectedField = field?.config?.guid === this.field.config.guid;
         this._cdRef.markForCheck();
+      });
+  }
+
+  public toggleDescriptionNote(field): void {
+    this.hasDescription = !this.hasDescription;
+
+
+    this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+      .subscribe(() => {
+        this.fieldEditor.fieldAction(FieldAction.FieldSave, field);
       });
   }
 

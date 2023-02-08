@@ -16,6 +16,8 @@
   <fs-field-header
     *ngIf="isSelectedField"
     [field]="field"
+    [hasDescription]="hasDescription"
+    (toggleDescription)="toggleDescriptionNote($event)"
     (fieldChanged)="headerFieldChanged($event)">
   </fs-field-header>
 
