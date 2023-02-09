@@ -10,12 +10,13 @@ import {
   OnDestroy,
 } from '@angular/core';
 
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { Field } from '../../../interfaces/field.interface';
 import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { FieldAction } from '@firestitch/field-editor';
+import { FieldAction } from '../../../enums/field-action';
 
 
 @Component({
