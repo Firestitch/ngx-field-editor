@@ -108,7 +108,7 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public selectField(field: Field): void {
-    this.config.beforeFieldSelected(field)
+    this.config.beforeFieldSelect(field)
       .pipe(
         takeUntil(this._destroy$),
       )
@@ -136,9 +136,9 @@ export class FieldEditorService implements OnDestroy {
       afterFieldDuplicated: config.afterFieldDuplicated ? config.afterFieldDuplicated : (field: Field) => { return of(field); },
       afterFieldDropped: config.afterFieldDropped ? config.afterFieldDropped : (field: Field) => { return of(field); },
       afterFieldAdded: config.afterFieldAdded ? config.afterFieldAdded : (field: Field) => { return of(field); },
-      beforeFieldAdded: config.beforeFieldAdded ? config.beforeFieldAdded : (field: Field) => { return of(field); },
-      beforeFieldSelected: config.beforeFieldSelected ? config.beforeFieldSelected : (field: Field) => { return of(field); },
-      beforeFieldDuplicated: config.beforeFieldDuplicated ? config.beforeFieldDuplicated : (field: Field) => { return of(field); },
+      beforeFieldAdd: config.beforeFieldAdd ? config.beforeFieldAdd : (field: Field) => { return of(field); },
+      beforeFieldSelect: config.beforeFieldSelect ? config.beforeFieldSelect : (field: Field) => { return of(field); },
+      beforeFieldDuplicate: config.beforeFieldDuplicate ? config.beforeFieldDuplicate : (field: Field) => { return of(field); },
     };
 
     if (this.config.fields) {
@@ -159,7 +159,7 @@ export class FieldEditorService implements OnDestroy {
       }
     }
 
-    return this.config.beforeFieldAdded(field, event?.item.data.item)
+    return this.config.beforeFieldAdd(field, event?.item.data.item)
       .pipe(
         switchMap((field) => this.fieldAction(FieldAction.FieldAdd, field, { index })),
         switchMap((response) => {

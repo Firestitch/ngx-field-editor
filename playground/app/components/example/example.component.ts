@@ -66,7 +66,7 @@ export class ExampleComponent implements OnInit {
         console.log('Field Dropped', field);
         return of(field);
       },
-      beforeFieldAdded: (field: Field, toolbar: ToolbarItem) => {
+      beforeFieldAdd: (field: Field, toolbar: ToolbarItem) => {
         console.log('Before Field Added', field);
 
         if (field.config.type === 'share') {
@@ -85,7 +85,7 @@ export class ExampleComponent implements OnInit {
         console.log('After Field Added', field);
         return of(field);
       },
-      beforeFieldDuplicated: (field: Field) => {
+      beforeFieldDuplicate: (field: Field) => {
         console.log('Before Field Duplicated', field);
         return of(field);
       },
@@ -93,7 +93,7 @@ export class ExampleComponent implements OnInit {
         console.log('After Field Duplicated', field);
         return of(field);
       },
-      beforeFieldSelected: (field: Field) => {
+      beforeFieldSelect: (field: Field) => {
         console.log('Before Field Selected', field);
         return of(field);
       },

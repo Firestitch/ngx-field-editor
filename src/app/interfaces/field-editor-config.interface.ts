@@ -28,9 +28,9 @@ export interface FieldEditorConfig {
   
   fieldChanged?: (field?: Field) => void,
 
-  beforeFieldAdded?: (field: Field, toolbarItem: ToolbarItem) => Observable<Field>,
-  beforeFieldDuplicated?: (field: Field) => Observable<Field>,
-  beforeFieldSelected?: (field: Field) => Observable<any>,
+  beforeFieldAdd?: (field: Field, toolbarItem: ToolbarItem) => Observable<Field>,
+  beforeFieldDuplicate?: (field: Field) => Observable<Field>,
+  beforeFieldSelect?: (field: Field) => Observable<any>,
 
   afterFieldDuplicated?: (field: Field) => Observable<any>,
   afterFieldRemoved?: (field: Field) => Observable<any>,

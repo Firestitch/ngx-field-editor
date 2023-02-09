@@ -176,7 +176,7 @@ export class FieldHeaderComponent
       data: {},
     };
 
-    this.fieldEditor.config.beforeFieldDuplicated(copiedField)
+    this.fieldEditor.config.beforeFieldDuplicate(copiedField)
       .pipe(
         takeUntil(this._destory$),
         switchMap((field) => this.fieldEditor.fieldAction(FieldAction.FieldDuplicate, field, { index })),
