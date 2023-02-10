@@ -13,6 +13,12 @@
     </button>
   </div>
 
+  <ng-container *ngIf="isSelectedField">
+    <ng-content
+      select="[fs-message-success, fs-message-warning, fs-message-info, fs-message-error]">
+    </ng-content>
+  </ng-container>
+
   <fs-field-header
     *ngIf="isSelectedField"
     [field]="field"

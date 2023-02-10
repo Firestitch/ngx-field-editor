@@ -16,6 +16,9 @@
           [field]="field"
           [fieldConfigTemplateRefs]="fieldConfigTemplateRefs"
           [fieldRenderTemplateRefs]="fieldRenderTemplateRefs">
+          <ng-content
+            select="[fs-message-success, fs-message-warning, fs-message-info, fs-message-error]">
+          </ng-content>
         </fs-field-editor-item>
       </ng-container>
     </div>
