@@ -30,6 +30,7 @@ import { FieldEditorService, FieldRendererService } from '../../../services';
 import { clickOutsideElement } from '../../../helpers/click-outside-element';
 import { FieldEditorToolbarDirective } from '../../directives/field-editor-toolbar/field-editor-toolbar.directive';
 import { FieldAction } from '../../../enums';
+import { FieldMessageDirective } from '../../directives/field-message/field-message.directive';
 
 
 @Component({
@@ -46,6 +47,9 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
 
   @ContentChild(FieldEditorToolbarDirective, { read: TemplateRef })
   public editorToolbarTpl: TemplateRef<FieldEditorToolbarDirective>
+
+  @ContentChild(FieldMessageDirective, { read: TemplateRef })
+  public fieldMessageTmp: TemplateRef<FieldMessageDirective>;
 
   @ContentChildren(FieldConfigDirective)
   public queryListFieldConfig: QueryList<FieldConfigDirective>;

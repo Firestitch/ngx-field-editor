@@ -4,6 +4,7 @@ export { FsFieldRendererModule } from './app/field-renderer/fs-field-renderer.mo
 
 export { FieldType } from './app/enums/field-type';
 
+export { FieldMessageDirective } from './app/field-editor/directives/field-message/field-message.directive';
 export { FieldConfigDirective } from './app/field-editor/directives/field-config/field-config.directive';
 export { FieldRenderDirective } from './app/field-renderer/directives/field-render/field-render.directive';
 export { FieldViewDirective } from './app/field-viewer/directives/field-view/field-view.directive';
