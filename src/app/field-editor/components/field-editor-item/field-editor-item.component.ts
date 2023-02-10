@@ -111,8 +111,11 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public toggleDescriptionNote(field): void {
     this.hasDescription = !this.hasDescription;
 
+    if (!this.hasDescription) {
+      field.config.description = null;
+    }
 
-    this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+    this.fieldEditor.fieldAction(FieldAction.FieldSave, field)
       .pipe(takeUntil(this._destroy$))
       .subscribe(() => {
         this.fieldEditor.fieldAction(FieldAction.FieldSave, field);

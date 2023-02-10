@@ -129,6 +129,7 @@ export class FieldHeaderComponent
   public toggleRequired(): void {
     this.field.config.configs.required = !this.field.config.configs.required;
     this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+    .pipe(takeUntil(this._destroy$))
     .subscribe(() => {
       this.changed();
     });
