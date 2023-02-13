@@ -1,4 +1,12 @@
-import { Component, Input, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ElementRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnInit,
+} from '@angular/core';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
@@ -21,7 +29,9 @@ import { FieldOption } from '../../../interfaces';
   styleUrls: ['field-config-options.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldConfigOptionsComponent extends FieldComponent {
+export class FieldConfigOptionsComponent
+  extends FieldComponent
+  implements OnInit {
 
   @Input() public showOther = false;
   @Input() public showOptionName = false;
@@ -37,7 +47,6 @@ export class FieldConfigOptionsComponent extends FieldComponent {
   private _newOptionFile: FsFile;
   private _newFileImagePicker: FsFileImagePickerComponent;
 
-
   constructor(
     public fieldEditor: FieldEditorService,
     private _prompt: FsPrompt,
@@ -47,7 +56,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
   }
 
   public ngOnInit(): void {
-    if(this._addOptionInput) {
+    if (this._addOptionInput) {
       forkJoin([
         this.fieldEditor.fieldCanEdit(this.field),
         this.fieldEditor.fieldCanConfig(this.field)
@@ -75,41 +84,9 @@ export class FieldConfigOptionsComponent extends FieldComponent {
 
     e.preventDefault();
 
-    if (this.newOption.length) {
+    if (this.newOption.length || this._newOptionFile) {
       if (this._newOptionFile) {
-        this.addOption()
-          .pipe(
-            switchMap((option) => {
-              const data = {
-                file: this._newOptionFile.file,
-                option,
-              };
-              
-              return this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
-              .pipe(
-                map((response) => {
-                  return {
-                    ...option,
-                    ...response.option,
-                  };
-                })
-              );
-            }),
-            tap((option) => {
-              this.field.config.options.push(option);
-              this._newOptionFile = null;
-
-              this._cdRef.markForCheck();
-            }), 
-            finalize(() => {
-              this._newFileImagePicker.cancel()
-              this._newFileImagePicker = null;
-            }),
-            takeUntil(this._destory$),
-          )
-          .subscribe(() => {
-            this.fieldEditor.fieldChange(this.field);
-          });
+        this._addOptionWithImage();
       } else {
         this.addOption()
           .subscribe((option) => {
@@ -130,7 +107,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
 
     return this.fieldEditor.fieldAction(FieldAction.OptionAdd, this.field, { option })
       .pipe(
-        tap(() => {          
+        tap(() => {
           this.newOption = '';
           this.newOptionValue = '';
           this._cdRef.markForCheck();
@@ -160,7 +137,7 @@ export class FieldConfigOptionsComponent extends FieldComponent {
       .pipe(
         catchError(() => {
           fileImagePicker.cancel();
-          
+
           return of(null);
         }),
         takeUntil(this._destory$),
@@ -181,7 +158,6 @@ export class FieldConfigOptionsComponent extends FieldComponent {
         this._cdRef.markForCheck();
       });
   }
-
 
   public removeOption(option): void {
     this._prompt.confirm({
@@ -209,5 +185,41 @@ export class FieldConfigOptionsComponent extends FieldComponent {
       .subscribe(() => {
         this.fieldEditor.fieldChange(this.field);
       });
+  }
+
+  private _addOptionWithImage(): void {
+    this.addOption()
+    .pipe(
+      switchMap((option) => {
+        const data = {
+          file: this._newOptionFile.file,
+          option,
+        };
+
+        return this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
+        .pipe(
+          map((response) => {
+            return {
+              ...option,
+              ...response.option,
+            };
+          })
+        );
+      }),
+      tap((option) => {
+        this.field.config.options.push(option);
+        this._newOptionFile = null;
+
+        this._cdRef.markForCheck();
+      }),
+      finalize(() => {
+        this._newFileImagePicker.cancel()
+        this._newFileImagePicker = null;
+      }),
+      takeUntil(this._destory$),
+    )
+    .subscribe(() => {
+      this.fieldEditor.fieldChange(this.field);
+    });
   }
 }
