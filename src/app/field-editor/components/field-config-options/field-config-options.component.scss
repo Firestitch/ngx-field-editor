@@ -7,6 +7,10 @@ mat-checkbox {
   align-items: center;
   padding: 3px 0;
 
+  &.loading {
+    opacity: 0.5;
+  }
+
   .option-data {
     display: flex;
     width: 100%;

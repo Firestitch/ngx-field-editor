@@ -10,8 +10,8 @@ import {
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
-import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { catchError, delay, filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { FsPrompt } from '@firestitch/prompt';
 import { guid } from '@firestitch/common';
@@ -40,6 +40,7 @@ export class FieldConfigOptionsComponent
 
   public newOption = '';
   public newOptionValue = '';
+  public optionLoading$ = new BehaviorSubject<boolean>(false);
 
   @ViewChild('addOptionInput')
   private _addOptionInput: ElementRef;
@@ -104,19 +105,20 @@ export class FieldConfigOptionsComponent
       name: this.newOption,
       guid: guid('xxxxxx'),
     };
+    this.optionLoading$.next(true);
 
     return this.fieldEditor.fieldAction(FieldAction.OptionAdd, this.field, { option })
       .pipe(
-        tap(() => {
-          this.newOption = '';
-          this.newOptionValue = '';
-          this._cdRef.markForCheck();
-        }),
         map((response) => {
           return {
               ...option,
               ...response.option,
             };
+        }),
+        finalize(() => {
+          this.newOption = '';
+          this.newOptionValue = '';
+          this.optionLoading$.next(false);
         }),
       );
   }
@@ -189,37 +191,37 @@ export class FieldConfigOptionsComponent
 
   private _addOptionWithImage(): void {
     this.addOption()
-    .pipe(
-      switchMap((option) => {
-        const data = {
-          file: this._newOptionFile.file,
-          option,
-        };
+      .pipe(
+        switchMap((option) => {
+          const data = {
+            file: this._newOptionFile.file,
+            option,
+          };
 
-        return this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
-        .pipe(
-          map((response) => {
-            return {
-              ...option,
-              ...response.option,
-            };
-          })
-        );
-      }),
-      tap((option) => {
-        this.field.config.options.push(option);
-        this._newOptionFile = null;
+          return this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
+          .pipe(
+            map((response) => {
+              return {
+                ...option,
+                ...response.option,
+              };
+            })
+          );
+        }),
+        tap((option) => {
+          this.field.config.options.push(option);
+          this._newOptionFile = null;
 
-        this._cdRef.markForCheck();
-      }),
-      finalize(() => {
-        this._newFileImagePicker.cancel()
-        this._newFileImagePicker = null;
-      }),
-      takeUntil(this._destory$),
-    )
-    .subscribe(() => {
-      this.fieldEditor.fieldChange(this.field);
-    });
+          this._cdRef.markForCheck();
+        }),
+        finalize(() => {
+          this._newFileImagePicker.cancel()
+          this._newFileImagePicker = null;
+        }),
+        takeUntil(this._destory$),
+      )
+      .subscribe(() => {
+        this.fieldEditor.fieldChange(this.field);
+      });
   }
 }

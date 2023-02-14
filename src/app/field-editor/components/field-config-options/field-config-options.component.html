@@ -59,7 +59,9 @@
 </div>
 
 
-<div class="option-container">
+<div
+  class="option-container"
+  [class.loading]="optionLoading$ | async">
   <button 
       button 
       mat-icon-button 
