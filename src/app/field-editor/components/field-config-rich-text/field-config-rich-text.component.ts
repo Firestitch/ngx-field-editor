@@ -22,13 +22,13 @@ export class FieldConfigRichTextComponent extends FieldComponent implements OnIn
   public ngOnInit(): void {
     this.config = {
       ...this.field.config.configs,
-      disabled: true,
+      disabled: false,
       autofocus: false,
       image: {
         upload: (file: File) => {
           return this.fieldEditor.fieldAction(FieldAction.ImageUpload, this.field)
           .subscribe(() => {
-            if(this.fieldEditor.config.imageUpload) { 
+            if (this.fieldEditor.config.imageUpload) { 
               this.fieldEditor.config.imageUpload(this.field, file);
             }
           });
