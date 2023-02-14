@@ -2,7 +2,7 @@
   "name": "@firestitch/field-editor",
   "title": "Field Editor",
   "description": "@firestitch/field-editor",
-  "version": "12.13.22",
+  "version": "12.13.23",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-field-editor"
