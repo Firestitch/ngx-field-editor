@@ -149,10 +149,20 @@ export class ExampleComponent implements OnInit {
       },
       toolbar: {
         items: [
+          {
+            label: 'Menu',
+            items: [
+              { 
+                icon: 'share',
+                label: 'Share',
+                type: 'share',
+              },
+            ]
+          },
           ...this.defaultConfig.toolbar.items,
           {
             type: FieldType.Divider,
-          },
+          },          
           { 
             icon: 'share',
             label: 'Share',

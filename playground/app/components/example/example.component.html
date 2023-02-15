@@ -2,6 +2,11 @@
 <mat-tab-group (selectedTabChange)="tabChange($event)">
   <mat-tab label="Fields Editor">
     <fs-field-editor [config]="fieldEditorConfig">
+      
+      <ng-template fsFieldContainer let-template="template" let-selected="selected">
+        <ng-container [ngTemplateOutlet]="template"></ng-container>
+      </ng-template>
+
       <ng-template fsFieldEditorToolbar let-toolbar>
         <div class="custom-wrapper">
           <ng-container *ngTemplateOutlet="toolbar"></ng-container>

@@ -10,12 +10,12 @@
 
 <mat-menu #menu="matMenu" [backdropClass]="backdropClass" [class]="menuClass">
   <ng-container *ngFor="let item of $any(items)">
-    <ng-container *ngIf="item.section else simpleItem">
+    <ng-container *ngIf="item.items else simpleItem">
       <button
           mat-menu-item
           type="button"
           [matMenuTriggerFor]="subMenu">
-        {{ item.section }}
+        {{ item.label }}
       </button>
       <mat-menu #subMenu="matMenu" [class]="subMenuClass">
         <ng-container *ngFor="let subItem of item.items">

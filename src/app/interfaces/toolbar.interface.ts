@@ -16,6 +16,6 @@ export interface ToolbarItem {
 }
 
 export interface ToolbarSection {
-  section: string;
+  label?: string;
   items: ToolbarItem[];
 }

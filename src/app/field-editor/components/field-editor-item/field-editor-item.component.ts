@@ -17,7 +17,7 @@ import { Field } from '../../../interfaces/field.interface';
 import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services/field-editor.service';
 import { FieldAction } from '../../../enums/field-action';
-import { FieldMessageDirective } from '../../directives/field-message/field-message.directive';
+import { FieldContainerDirective } from '../../directives/field-container/field-container.directive';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public fieldRenderTemplateRefs: Record<string, TemplateRef<unknown>>;
 
   @Input()
-  public fieldMessageTemplateRef: TemplateRef<FieldMessageDirective>;
+  public fieldContainerTemplateRef: TemplateRef<FieldContainerDirective>;
 
   public FieldType = FieldType;
   public canEdit = false;

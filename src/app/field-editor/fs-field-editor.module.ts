@@ -43,7 +43,7 @@ import { FieldHeaderComponent } from './components/field-header/field-header.com
 import { FieldToolbarComponent } from './components/field-toolbar/field-toolbar.component';
 import { FieldComponent } from './components/field/field.component';
 import { FieldConfigDirective } from './directives/field-config/field-config.directive';
-import { FieldMessageDirective } from './directives/field-message/field-message.directive';
+import { FieldContainerDirective } from './directives/field-container/field-container.directive';
 import { FieldType } from '../enums/field-type';
 
 import { FieldConfigOptionsComponent } from './components/field-config-options/field-config-options.component';
@@ -145,7 +145,7 @@ export function defaultConfigFactory(config) {
     FieldEditorComponent,
     FieldConfigDirective,
     FieldEditorToolbarDirective,
-    FieldMessageDirective,
+    FieldContainerDirective,
   ],
   declarations: [
     FieldEditorComponent,
@@ -164,7 +164,7 @@ export function defaultConfigFactory(config) {
     FieldConfigRichTextComponent,
     FieldConfigDirective,
     FieldEditorToolbarDirective,
-    FieldMessageDirective,
+    FieldContainerDirective,
     SettingsComponent,
     PopulateUrlComponent,
     FieldConfigVisualSelectorComponent,

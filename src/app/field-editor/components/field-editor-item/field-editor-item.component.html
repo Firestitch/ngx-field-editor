@@ -13,12 +13,15 @@
     </button>
   </div>
 
-  <ng-container *ngIf="isSelectedField && fieldMessageTemplateRef">
-    <div class="fs-message">
-      <ng-container *ngTemplateOutlet="fieldMessageTemplateRef"></ng-container>
-    </div>
+  <ng-container *ngIf="fieldContainerTemplateRef; else containerTemplate">
+    <ng-container 
+      [ngTemplateOutlet]="fieldContainerTemplateRef"
+      [ngTemplateOutletContext]="{ template: containerTemplate, selected: isSelectedField }">
+    </ng-container>    
   </ng-container>
+</div>
 
+<ng-template #containerTemplate>
   <fs-field-header
     *ngIf="isSelectedField"
     [field]="field"
@@ -233,5 +236,5 @@
 
       </ng-template>
     </div>
-  </ng-template>
-</div>
+  </ng-template>    
+</ng-template>

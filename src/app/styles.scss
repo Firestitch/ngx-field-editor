@@ -97,14 +97,3 @@ fs-field-renderer {
   display: none;
 }
 
-
-.fs-field-toolbar-menu > .mat-menu-content > .mat-menu-item-submenu-trigger {
-  padding-left: 32px;
-
-  &:after {
-    left: 16px;
-    right: 0;
-    border-width: 5px 5px 5px 0;
-    border-color: transparent currentColor transparent transparent;
-  }
-}

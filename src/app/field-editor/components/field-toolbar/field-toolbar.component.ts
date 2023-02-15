@@ -38,18 +38,14 @@ export class FieldToolbarComponent implements OnInit {
   public get items(): ToolbarItems {
     return this.fieldEditor.config.toolbar.items;
   }
-
-  public get firstItemIsSection(): boolean {
-    return this.items[0].hasOwnProperty('section');
-  }
-
+  
   public ngOnInit() {
     this._initItems(this.fieldEditor.config.toolbar.items);
   }
 
   private _initItems(items: ToolbarItems) {
-    items.forEach(item => {
-      if (item.section) {
+    items.forEach((item) => {
+      if (item.items) {
         this._initItems(item.items);
         this.withSections = true;
       } else {
