@@ -16,7 +16,7 @@
   <ng-container *ngIf="fieldContainerTemplateRef; else containerTemplate">
     <ng-container 
       [ngTemplateOutlet]="fieldContainerTemplateRef"
-      [ngTemplateOutletContext]="{ template: containerTemplate, selected: isSelectedField }">
+      [ngTemplateOutletContext]="{ template: containerTemplate, selected: isSelectedField, field: field }">
     </ng-container>    
   </ng-container>
 </div>

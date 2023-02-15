@@ -52,7 +52,6 @@ export {
   FsFieldEditorCallbackFn,
   FsFieldEditorCallbackParams,
   ToolbarItem,
-  ToolbarSection,
   Toolbar,
   ToolbarItems,
   Field,

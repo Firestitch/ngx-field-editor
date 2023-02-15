@@ -150,13 +150,18 @@ export class ExampleComponent implements OnInit {
       toolbar: {
         items: [
           {
-            label: 'Menu',
+            label: 'Menu A',
             items: [
-              { 
-                icon: 'share',
-                label: 'Share',
-                type: 'share',
-              },
+              {
+                label: 'Menu B',
+                items: [
+                  { 
+                    icon: 'share',
+                    label: 'Share',
+                    type: 'share',
+                  },
+                ]
+              }
             ]
           },
           ...this.defaultConfig.toolbar.items,
