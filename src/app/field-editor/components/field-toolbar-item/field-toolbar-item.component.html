@@ -18,7 +18,9 @@
           (cdkDragStarted)="dragStarted(item)"
           (cdkDragDropped)="dragDropped($event)">
         <div fxFlexLayout="row" fxLayoutAlign="start center">
-          <button mat-icon-button type="button"><mat-icon>{{ item.icon }}</mat-icon></button>
+          <button mat-icon-button type="button">
+            <mat-icon>{{ item.icon }}</mat-icon>
+          </button>
           <span class="label">{{ item.label }}</span>
         </div>
       </div>

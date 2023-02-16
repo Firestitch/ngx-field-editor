@@ -8,24 +8,15 @@
   <mat-icon>add</mat-icon>
 </button>
 
-<mat-menu #menu="matMenu" [backdropClass]="backdropClass" [class]="menuClass">
+<mat-menu
+  #menu="matMenu"
+  [backdropClass]="backdropClass"
+  [class]="menuClass">
   <ng-container *ngFor="let item of $any(items)">
-    <ng-container *ngIf="item.items else simpleItem">
-      <button
-          mat-menu-item
-          type="button"
-          [matMenuTriggerFor]="subMenu">
-        {{ item.label }}
-      </button>
-      <mat-menu #subMenu="matMenu" [class]="subMenuClass">
-        <ng-container *ngFor="let subItem of item.items">
-          <ng-template
-            [ngTemplateOutlet]="itemTpl"
-            [ngTemplateOutletContext]="{ $implicit: subItem }">
-          </ng-template>
-        </ng-container>
-      </mat-menu>
-    </ng-container>
+    <field-nested-toolbar-items
+      *ngIf="item.items else simpleItem"
+      [item]="item">
+    </field-nested-toolbar-items>
 
     <ng-template #simpleItem>
       <ng-template

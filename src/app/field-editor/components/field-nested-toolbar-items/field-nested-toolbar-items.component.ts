@@ -1,44 +1,32 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 
-import { ToolbarItems } from '../../../interfaces/toolbar.interface';
-import { Field } from '../../../interfaces/field.interface';
+import { ToolbarItem, ToolbarItems } from '../../../interfaces/toolbar.interface';
 import { TOOLBAR_DEFAULTS } from '../../../helpers/toolbar-defaults';
 import {
   BACKDROP_CLASS,
   TOOLBAR_MENU_CLASS,
 } from '../../../consts/backdrop-class';
-import { FieldEditorService } from '../../../services/field-editor.service';
 
 
 @Component({
-  selector: 'fs-field-toolbar',
-  templateUrl: 'field-toolbar.component.html',
-  styleUrls: [ 'field-toolbar.component.scss' ],
+  selector: 'field-nested-toolbar-items',
+  templateUrl: 'field-nested-toolbar-items.component.html',
+  styleUrls: [ 'field-nested-toolbar-items.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldToolbarComponent implements OnInit {
+export class FieldNestedToolbarItemsComponent implements OnInit {
+  @Input()
+  public item: ToolbarItem;
 
   public readonly backdropClass = BACKDROP_CLASS;
   public readonly menuClass = TOOLBAR_MENU_CLASS;
 
-  public field: Field = null;
-  public expanded = true;
   public withSections = false;
 
-  constructor(
-    public fieldEditor: FieldEditorService,
-  ) {}
-
-  public get items(): ToolbarItems {
-    return this.fieldEditor.config.toolbar.items;
-  }
+  constructor() {}
 
   public ngOnInit() {
-    this._initItems(this.fieldEditor.config.toolbar.items);
+    this._initItems(this.item.items);
   }
 
   private _initItems(items: ToolbarItems) {
