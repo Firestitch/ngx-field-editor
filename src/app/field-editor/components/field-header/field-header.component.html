@@ -2,7 +2,7 @@
   <div fxFlexLayout="row" fxLayoutAlign="start center">
     <div fxFlex>
       <mat-form-field
-          *ngIf="canLabel"
+          *ngIf="showLabel"
           floatLabel="never"
           class="label">
         <mat-label>Label</mat-label>
@@ -16,7 +16,7 @@
       </mat-form-field>
     </div>
     <button
-      *ngIf="canEdit && canRequire"
+      *ngIf="canEdit && showRequire"
       mat-icon-button
       type="button"
       (click)="toggleRequired()"
@@ -44,7 +44,7 @@
       <mat-icon>subject</mat-icon>
     </button>
     <button
-        *ngIf="canDelete"
+        *ngIf="showDelete"
         mat-icon-button
         type="button"
         (click)="delete($event)"
@@ -54,12 +54,13 @@
     <fs-menu>
       <ng-template
             fs-menu-item
-            *ngIf="canDuplicate"
+            *ngIf="showDuplicate"
             (click)="duplicate($event)">
           Duplicate
         </ng-template>
         <ng-template
             fs-menu-item
+            *ngIf="showSettings"
             (click)="settings($event)">
           Settings
         </ng-template>

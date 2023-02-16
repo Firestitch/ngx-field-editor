@@ -135,7 +135,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
         switchMap((field) => this.fieldEditor.insertNewField(
           field,
           event.currentIndex,
-          event
+          event.item.data.item
         )),
       )
         .subscribe();

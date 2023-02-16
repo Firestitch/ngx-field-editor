@@ -44,7 +44,6 @@ export class FieldToolbarItemComponent {
 
     this.field = {
       config: {
-        ...cloneDeep(this.item.config),
         guid: guid(),
         type: item.type,
         label: item.label,
@@ -66,7 +65,7 @@ export class FieldToolbarItemComponent {
   }
 
   public itemClick(item: ToolbarItem): void {
-    const field = this._prepareField(item)
+    const field = this._prepareField(item);
     this.fieldEditor.insertNewField(
       cloneDeep(field),
       undefined,
@@ -100,7 +99,6 @@ export class FieldToolbarItemComponent {
   private _prepareField(item: ToolbarItem): Field {
     return {
       config: {
-        ...this.item.config,
         guid: guid(),
         type: item.type,
         label: item.label,

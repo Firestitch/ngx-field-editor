@@ -111,16 +111,19 @@ export class ExampleComponent implements OnInit {
             map((response) => response.data.url)
           )
       },
-      fieldCanDelete: (field: Field) => {
+      fieldShowDelete: (field: Field) => {
         return of(true);
       },
-      fieldCanDuplicate: (field: Field) => {
+      fieldShowDuplicate: (field: Field) => {
         return of(true);
       },
       fieldCanEdit: (field: Field) => {
         return of(true);
       },
-      fieldCanRequire: (field: Field) => {
+      fieldShowRequire: (field: Field) => {
+        return of(true);
+      },
+      fieldShowSettings: (field: Field) => {
         return of(true);
       },
       fieldCanConfig: (field: Field) => {
@@ -199,7 +202,7 @@ export class ExampleComponent implements OnInit {
   public initFieldRenderer(): void {
     this.fieldRendererConfig = {
       fieldChanged: (field: Field) => {
-        console.log('Field Changed', field, this.fieldRenderer.fieldRenderer.fields);
+        console.log('Field Changed', field, this.fieldRenderer.fields);
         this.fieldViewerConfig = {
           fields: this.fieldRenderer.fields,
         };

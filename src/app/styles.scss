@@ -74,6 +74,7 @@ fs-field-renderer {
     background: mat.get-color-from-palette($primary);
     white-space: nowrap;
     height: auto !important;
+    width: auto !important;
 
     .label {
       margin-right: 15px;

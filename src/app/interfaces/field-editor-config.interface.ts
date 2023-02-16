@@ -20,9 +20,10 @@ export interface FieldEditorConfig {
   toolbar?: Toolbar,
 
   fieldCanEdit?: (field: Field) => Observable<boolean>,
-  fieldCanDelete?: (field: Field) => Observable<boolean>,
-  fieldCanDuplicate?: (field: Field) => Observable<boolean>,
-  fieldCanRequire?: (field: Field) => Observable<boolean>,
+  fieldShowDelete?: (field: Field) => Observable<boolean>,
+  fieldShowSettings?: (field: Field) => Observable<boolean>,
+  fieldShowDuplicate?: (field: Field) => Observable<boolean>,
+  fieldShowRequire?: (field: Field) => Observable<boolean>,
   fieldCanLabel?: (field: Field) => Observable<boolean>,
   fieldCanConfig?: (field: Field) => Observable<boolean>,
   

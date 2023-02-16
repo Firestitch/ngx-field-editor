@@ -15,6 +15,7 @@ import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
 import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
 import { FieldAction } from '../enums';
+import { ToolbarItem } from '../interfaces';
 
 
 @Injectable()
@@ -66,9 +67,9 @@ export class FieldEditorService implements OnDestroy {
     return this._scrollTargetField;
   }
 
-  public fieldCanDelete(field: Field): Observable<boolean> {
-    return this.config.fieldCanDelete ? 
-    this.config.fieldCanDelete(field) : 
+  public fieldShowDelete(field: Field): Observable<boolean> {
+    return this.config.fieldShowDelete ? 
+    this.config.fieldShowDelete(field) : 
     of(true);
   }
 
@@ -78,15 +79,21 @@ export class FieldEditorService implements OnDestroy {
     of(true);
   }
 
-  public fieldCanDuplicate(field: Field): Observable<boolean> {
-    return this.config.fieldCanDuplicate ? 
-    this.config.fieldCanDuplicate(field) : 
+  public fieldShowDuplicate(field: Field): Observable<boolean> {
+    return this.config.fieldShowDuplicate ? 
+    this.config.fieldShowDuplicate(field) : 
     of(true);
   }
 
-  public fieldCanRequire(field: Field): Observable<boolean> {
-    return this.config.fieldCanRequire ? 
-    this.config.fieldCanRequire(field) : 
+  public fieldShowSettings(field: Field): Observable<boolean> {
+    return this.config.fieldShowSettings ? 
+    this.config.fieldShowSettings(field) : 
+    of(true);
+  }
+
+  public fieldShowRequire(field: Field): Observable<boolean> {
+    return this.config.fieldShowRequire ? 
+    this.config.fieldShowRequire(field) : 
     of(field.config.hideRequired !== true);
   }
 
@@ -148,7 +155,7 @@ export class FieldEditorService implements OnDestroy {
     }
   }
 
-  public insertNewField(field: Field, index?: number, event?: CdkDragDrop<string[]>): Observable<Field> {
+  public insertNewField(field: Field, index?: number, toolbarItem?: ToolbarItem): Observable<Field> {
     field = initField(field);
 
     if (index === undefined) {
@@ -159,9 +166,9 @@ export class FieldEditorService implements OnDestroy {
       }
     }
 
-    return this.config.beforeFieldAdd(field, event?.item.data.item)
+    return this.config.beforeFieldAdd(field, toolbarItem)
       .pipe(
-        switchMap((field) => this.fieldAction(FieldAction.FieldAdd, field, { index })),
+        switchMap((field) => this.fieldAction(FieldAction.FieldAdd, field, { index, toolbarItem })),
         switchMap((response) => {
           const newField = initField(response.field);
           this.config.fields.splice(index, 0, newField);

@@ -14,11 +14,10 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 
 import { FsPrompt } from '@firestitch/prompt';
-import { guid } from '@firestitch/common';
 
 import { cloneDeep } from 'lodash-es';
 import { filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { FieldComponent } from '../field/field.component';
 import { FieldEditorService } from '../../../services/field-editor.service';
@@ -42,11 +41,12 @@ export class FieldHeaderComponent
   @ViewChild('description')
   public descriptionEl: ElementRef;
 
-  public canDelete = false;
-  public canDuplicate = false;
+  public showDelete = false;
+  public showDuplicate = false;
+  public showSettings = false;
   public canEdit = false;
-  public canRequire = false;
-  public canLabel = false;
+  public showRequire = false;
+  public showLabel = false;
   public FieldType = FieldType;
 
   @Output()
@@ -72,12 +72,12 @@ export class FieldHeaderComponent
   }
 
   public ngOnInit(): void {
-    this.fieldEditor.fieldCanDelete(this.field)
+    this.fieldEditor.fieldShowDelete(this.field)
     .pipe(
       takeUntil(this._destroy$),
     )
     .subscribe((value) => {
-      this.canDelete = value;
+      this.showDelete = value;
       this._cdRef.markForCheck();
     });
 
@@ -90,21 +90,30 @@ export class FieldHeaderComponent
       this._cdRef.markForCheck();
     });
 
-    this.fieldEditor.fieldCanDuplicate(this.field)
+    this.fieldEditor.fieldShowDuplicate(this.field)
     .pipe(
       takeUntil(this._destroy$),
     )
     .subscribe((value) => {
-      this.canDuplicate = value;
+      this.showDuplicate = value;
       this._cdRef.markForCheck();
     });
 
-    this.fieldEditor.fieldCanRequire(this.field)
+    this.fieldEditor.fieldShowSettings(this.field)
     .pipe(
       takeUntil(this._destroy$),
     )
     .subscribe((value) => {
-      this.canRequire = value;
+      this.showSettings = value;
+      this._cdRef.markForCheck();
+    });
+
+    this.fieldEditor.fieldShowRequire(this.field)
+    .pipe(
+      takeUntil(this._destroy$),
+    )
+    .subscribe((value) => {
+      this.showRequire = value;
       this._cdRef.markForCheck();
     });
 
@@ -113,7 +122,7 @@ export class FieldHeaderComponent
       takeUntil(this._destroy$),
     )
     .subscribe((value) => {
-      this.canLabel = value;
+      this.showLabel = value;
       this._cdRef.markForCheck();
     });
   }

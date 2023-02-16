@@ -12,6 +12,6 @@ export interface ToolbarItem {
   type?: FieldType | string;
   divide?: boolean;
   disabled?: boolean;
-  config?: Record<string, unknown>;
   items?: ToolbarItem[];
+  data?: any;
 }

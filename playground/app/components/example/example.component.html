@@ -58,7 +58,8 @@
   </mat-tab>
   <mat-tab label="Rendered Fields">
     <form (fsForm)="save()">
-      <fs-field-renderer [config]="fieldRendererConfig">
+      <fs-field-renderer 
+          [config]="fieldRendererConfig">
         <ng-template fsFieldRender type="share" let-field="field">
           <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
           <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
