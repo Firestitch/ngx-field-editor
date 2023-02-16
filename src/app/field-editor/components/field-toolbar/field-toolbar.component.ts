@@ -1,10 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Input,
   OnInit,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 
-import { ToolbarItems } from '../../../interfaces/toolbar.interface';
+import { ToolbarItem, ToolbarItems } from '../../../interfaces/toolbar.interface';
 import { Field } from '../../../interfaces/field.interface';
 import { TOOLBAR_DEFAULTS } from '../../../helpers/toolbar-defaults';
 import {
@@ -12,6 +15,7 @@ import {
   TOOLBAR_MENU_CLASS,
 } from '../../../consts/backdrop-class';
 import { FieldEditorService } from '../../../services/field-editor.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 
 @Component({
@@ -21,7 +25,17 @@ import { FieldEditorService } from '../../../services/field-editor.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldToolbarComponent implements OnInit {
+  @Input()
+  public toolbarItems: ToolbarItems = [];
+  @Input()
+  public nestedItem: ToolbarItem;
+  @Input()
+  public rootTriggerRef: MatMenuTrigger;
 
+  @ViewChild('trigger', { static: false })
+  public triggerRef: MatMenuTrigger;
+
+  public items: ToolbarItems = [];
   public readonly backdropClass = BACKDROP_CLASS;
   public readonly menuClass = TOOLBAR_MENU_CLASS;
 
@@ -33,12 +47,14 @@ export class FieldToolbarComponent implements OnInit {
     public fieldEditor: FieldEditorService,
   ) {}
 
-  public get items(): ToolbarItems {
-    return this.fieldEditor.config.toolbar.items;
-  }
-
   public ngOnInit() {
-    this._initItems(this.fieldEditor.config.toolbar.items);
+    if (!this.nestedItem) {
+      this.items = this.toolbarItems;
+      this._initItems(this.toolbarItems);
+    } else {
+      this.items = this.nestedItem.items;
+      this._initItems(this.nestedItem.items);
+    }
   }
 
   private _initItems(items: ToolbarItems) {

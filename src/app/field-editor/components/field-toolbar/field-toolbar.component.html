@@ -1,4 +1,5 @@
-<button 
+<button
+    *ngIf="!nestedItem; else nestedTrigger"
     mat-mini-fab
     type="button"
     color="primary"
@@ -8,15 +9,27 @@
   <mat-icon>add</mat-icon>
 </button>
 
+<ng-template #nestedTrigger>
+  <button
+      mat-menu-item
+      type="button"
+      [matMenuTriggerFor]="menu"
+      #subTrigger="matMenuTrigger">
+    {{ nestedItem.label }}
+  </button>
+</ng-template>
+
 <mat-menu
   #menu="matMenu"
+  xPosition="before"
   [backdropClass]="backdropClass"
   [class]="menuClass">
   <ng-container *ngFor="let item of $any(items)">
-    <field-nested-toolbar-items
+    <fs-field-toolbar
       *ngIf="item.items else simpleItem"
-      [item]="item">
-    </field-nested-toolbar-items>
+      [nestedItem]="item"
+      [rootTriggerRef]="triggerRef ? triggerRef : rootTriggerRef">
+    </fs-field-toolbar>
 
     <ng-template #simpleItem>
       <ng-template
@@ -30,7 +43,7 @@
 
 <ng-template let-item #itemTpl>
   <fs-field-toolbar-item
-    [menuTrigger]="trigger"
+    [menuTrigger]="triggerRef ? triggerRef : rootTriggerRef"
     [item]="item">
   </fs-field-toolbar-item>
 </ng-template>

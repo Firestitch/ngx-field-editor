@@ -62,7 +62,6 @@ import { FieldEditorConfig } from '../interfaces/field-editor-config.interface';
 import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
 import { FsFieldRendererModule } from '../field-renderer/fs-field-renderer.module';
 import { FieldConfigVisualSelectorComponent, PopulateUrlComponent, SettingsComponent } from './components';
-import { FieldNestedToolbarItemsComponent } from './components/field-nested-toolbar-items/field-nested-toolbar-items.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FsDialogModule } from '@firestitch/dialog';
 
@@ -169,7 +168,6 @@ export function defaultConfigFactory(config) {
     SettingsComponent,
     PopulateUrlComponent,
     FieldConfigVisualSelectorComponent,
-    FieldNestedToolbarItemsComponent,
   ],
 })
 
