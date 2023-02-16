@@ -16,6 +16,7 @@ import { FieldViewComponent } from './components/field-view/field-view.component
 
 import { FieldViewHeadingComponent } from './components/field-view-heading/field-view-heading.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FieldViewOptionsComponent } from './components/field-view-options';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FieldViewComponent,
     FieldViewDirective,
     FieldViewGalleryComponent,
+    FieldViewOptionsComponent,
   ],
 })
 

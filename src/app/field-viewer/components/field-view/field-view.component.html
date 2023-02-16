@@ -79,9 +79,7 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Gender">
-        <ng-container *ngFor="let gender of field.config.configs.genders">
-          <span *ngIf="field.data.value===gender.value">{{gender.name}}</span>
-        </ng-container>
+        <fs-field-view-options [field]="field"></fs-field-view-options>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Address">
@@ -96,35 +94,19 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Choice">
-        <ng-container *ngFor="let option of field.config.configs?.options || []">
-          <span *ngIf="field.data.value?.selected===option.guid">{{option.name}}</span>
-        </ng-container>
-        <span *ngIf="field.data.value?.selected==='other'">{{field.data.value?.other}}</span>
+        <fs-field-view-options [field]="field"></fs-field-view-options>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Dropdown">
-        <span *ngIf="field.data.value === OtherOption; else dropdownValue">
-          {{field.data.other}}
-        </span>
-        <ng-template #dropdownValue>
-          <ng-container *ngFor="let option of field.config.configs?.options || []">
-            <span *ngIf="field.data.value===option.guid">{{option.name}}</span>
-          </ng-container>
-        </ng-template>
+        <fs-field-view-options [field]="field"></fs-field-view-options>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Checkbox">
-        <ng-container *ngFor="let option of field.config.configs?.options || []">
-          <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
-        </ng-container>
-        <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span>
+        <fs-field-view-options [field]="field"></fs-field-view-options>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.VisualSelector">
-        <ng-container *ngFor="let option of field.config.configs?.options || []">
-          <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
-        </ng-container>
-        <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span>
+        <fs-field-view-options [field]="field"></fs-field-view-options>
       </ng-container>
 
     </ng-container>

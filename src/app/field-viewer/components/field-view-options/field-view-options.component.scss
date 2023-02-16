@@ -1,0 +1,7 @@
+.option + .option:before {
+  content: ", ";
+}
+
+.option + .option:last-child:before {
+  content: " and ";
+}

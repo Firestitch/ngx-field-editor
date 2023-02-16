@@ -2,14 +2,6 @@
   content: ", ";
 }
 
-.option + .option:before {
-  content: ", ";
-}
-
-.option + .option:last-child:before {
-  content: " and ";
-}
-
 .not-specified {
   color: rgb(116, 116, 116);
 }
