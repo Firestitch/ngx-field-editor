@@ -18,6 +18,7 @@ export type FsFieldEditorCallbackFn = (data: FsFieldEditorCallbackParams) => voi
 export interface FieldEditorConfig {
   fields?: (Field | FieldOption)[],
   toolbar?: Toolbar,
+  fieldMenu?: FieldMenu,
 
   fieldCanEdit?: (field: Field) => Observable<boolean>,
   fieldShowDelete?: (field: Field) => Observable<boolean>,
@@ -42,4 +43,15 @@ export interface FieldEditorConfig {
 
   imageUpload?: (field: Field, file: File) => Observable<string>,
   fieldAction: (action: FieldAction, field: Field, data: any) => Observable<Field>,
+
+}
+
+export interface FieldMenu {
+  items?: FieldMenuItem[],
+}
+
+export interface FieldMenuItem {
+  label?: string,
+  click?: (field: Field) => void,
+  show?: (field: Field) => Observable<boolean>,
 }

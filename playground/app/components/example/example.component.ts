@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
 
 import { DialogExampleComponent } from '../dialog-example';
 import { FieldEditorService } from '../../../../src/app/services/field-editor.service';
+import { boolean } from '@firestitch/common';
 
 
 @Component({
@@ -221,6 +222,19 @@ export class ExampleComponent implements OnInit {
               },
             },
           },
+        ]
+      },
+      fieldMenu: {
+        items: [
+          {
+            label: 'Edit',
+            click: (field: Field) => {
+              console.log('Field Menu Click', field);
+            },
+            show: (field: Field): Observable<boolean> => {
+              return of(true);
+            },
+          }
         ]
       },
       fields: this.getFields(),

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 
 import { guid } from '@firestitch/common';
 
-import { Field, FieldOption } from '../../../interfaces';
+import { Field } from '../../../interfaces';
 import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services';
 import { FieldAction } from '../../../enums';

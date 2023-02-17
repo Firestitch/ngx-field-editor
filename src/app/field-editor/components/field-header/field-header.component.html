@@ -51,20 +51,10 @@
         matTooltip="Delete">
       <mat-icon>delete</mat-icon>
     </button>
-    <fs-menu>
-      <ng-template
-          fs-menu-item
-          *ngIf="showDuplicate"
-          (click)="duplicate($event)">
-        Duplicate
-      </ng-template>
-      <ng-template
-          fs-menu-item
-          *ngIf="showSettings"
-          (click)="settings($event)">
-        Settings
-      </ng-template>
-    </fs-menu>
+    <fs-field-header-menu
+      [field]="field"
+      (fieldChanged)="changed()">
+    </fs-field-header-menu>
   </div>
 
   <mat-form-field *ngIf="hasDescription" class="description">

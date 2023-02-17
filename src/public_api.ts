@@ -57,6 +57,8 @@ export {
   Field,
   FieldOption,
   FieldConfig,
+  FieldMenu,
+  FieldMenuItem,
 } from './app/interfaces';
 
 
