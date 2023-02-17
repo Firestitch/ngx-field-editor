@@ -138,7 +138,7 @@ export class ExampleComponent implements OnInit {
                 case FieldAction.OptionImageUpload:
                   return { 
                     option: {
-                      ...data.option,                  
+                      ...data.option,
                       image: {
                         preview: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/B875/production/_102512274_gettyimages-518360318.jpg'
                       },
@@ -153,12 +153,12 @@ export class ExampleComponent implements OnInit {
       toolbar: {
         items: [
           {
-            label: 'Menu A',
+            label: 'Menu 1',
             items: [
               {
-                label: 'Menu B',
+                label: 'Menu A',
                 items: [
-                  { 
+                  {
                     icon: 'share',
                     label: 'Share',
                     type: 'share',
@@ -167,11 +167,36 @@ export class ExampleComponent implements OnInit {
               }
             ]
           },
+          {
+            label: 'Menu 2',
+            items: [
+              {
+                label: 'Menu 2A',
+                items: [
+                  {
+                    label: 'Menu 2A2',
+                    items: [
+                      {
+                        icon: 'share',
+                        label: 'Share',
+                        type: 'share',
+                      },
+                    ],
+                  },
+                  {
+                    label: 'Menu 2B2',
+                    icon: 'share',
+                    type: 'share',
+                  }
+                ]
+              }
+            ]
+          },
           ...this.defaultConfig.toolbar.items,
           {
             type: FieldType.Divider,
-          },          
-          { 
+          },
+          {
             icon: 'share',
             label: 'Share',
             type: 'share',
@@ -189,7 +214,7 @@ export class ExampleComponent implements OnInit {
             type: 'terms',
             config: {
               configs: {
-                label: 'I have read and accepted the terms & conditions.',                
+                label: 'I have read and accepted the terms & conditions.',
               },
             },
           },

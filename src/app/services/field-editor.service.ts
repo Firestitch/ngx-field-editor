@@ -13,9 +13,10 @@ import {
 } from '../interfaces/field.interface';
 import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
+import { TOOLBAR_DEFAULTS } from '../helpers/toolbar-defaults';
 import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
 import { FieldAction } from '../enums';
-import { ToolbarItem } from '../interfaces';
+import { ToolbarItem, ToolbarItems } from '../interfaces';
 
 
 @Injectable()
