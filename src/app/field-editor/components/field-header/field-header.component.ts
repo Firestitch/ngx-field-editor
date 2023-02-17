@@ -45,7 +45,8 @@ export class FieldHeaderComponent
   public showDuplicate = false;
   public showSettings = false;
   public canEdit = false;
-  public showRequire = false;
+  public showRequired = false;
+  public showDescription = false;
   public showLabel = false;
   public FieldType = FieldType;
 
@@ -108,12 +109,21 @@ export class FieldHeaderComponent
       this._cdRef.markForCheck();
     });
 
-    this.fieldEditor.fieldShowRequire(this.field)
+    this.fieldEditor.fieldShowRequired(this.field)
     .pipe(
       takeUntil(this._destroy$),
     )
     .subscribe((value) => {
-      this.showRequire = value;
+      this.showRequired = value;
+      this._cdRef.markForCheck();
+    });
+
+    this.fieldEditor.fieldShowDescription(this.field)
+    .pipe(
+      takeUntil(this._destroy$),
+    )
+    .subscribe((value) => {
+      this.showDescription = value;
       this._cdRef.markForCheck();
     });
 

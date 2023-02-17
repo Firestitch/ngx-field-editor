@@ -120,7 +120,10 @@ export class ExampleComponent implements OnInit {
       fieldCanEdit: (field: Field) => {
         return of(true);
       },
-      fieldShowRequire: (field: Field) => {
+      fieldShowRequired: (field: Field) => {
+        return of(true);
+      },
+      fieldShowDescription: (field: Field) => {
         return of(true);
       },
       fieldShowSettings: (field: Field) => {

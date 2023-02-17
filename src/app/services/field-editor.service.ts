@@ -92,10 +92,16 @@ export class FieldEditorService implements OnDestroy {
     of(true);
   }
 
-  public fieldShowRequire(field: Field): Observable<boolean> {
-    return this.config.fieldShowRequire ? 
-    this.config.fieldShowRequire(field) : 
+  public fieldShowRequired(field: Field): Observable<boolean> {
+    return this.config.fieldShowRequired ? 
+    this.config.fieldShowRequired(field) : 
     of(field.config.hideRequired !== true);
+  }
+
+  public fieldShowDescription(field: Field): Observable<boolean> {
+    return this.config.fieldShowDescription ? 
+    this.config.fieldShowDescription(field) : 
+    of(field.config.hideDescription !== true);
   }
 
   public fieldCanLabel(field: Field): Observable<boolean> {

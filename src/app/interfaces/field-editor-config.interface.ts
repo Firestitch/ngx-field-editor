@@ -23,7 +23,8 @@ export interface FieldEditorConfig {
   fieldShowDelete?: (field: Field) => Observable<boolean>,
   fieldShowSettings?: (field: Field) => Observable<boolean>,
   fieldShowDuplicate?: (field: Field) => Observable<boolean>,
-  fieldShowRequire?: (field: Field) => Observable<boolean>,
+  fieldShowRequired?: (field: Field) => Observable<boolean>,
+  fieldShowDescription?: (field: Field) => Observable<boolean>,
   fieldCanLabel?: (field: Field) => Observable<boolean>,
   fieldCanConfig?: (field: Field) => Observable<boolean>,
   

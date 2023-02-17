@@ -16,7 +16,7 @@
       </mat-form-field>
     </div>
     <button
-      *ngIf="canEdit && showRequire"
+      *ngIf="canEdit && showRequired"
       mat-icon-button
       type="button"
       (click)="toggleRequired()"
@@ -35,7 +35,7 @@
         </svg>
     </button>
     <button
-        *ngIf="canEdit && field.config.hideDescription !== true"
+        *ngIf="canEdit && showDescription"
         mat-icon-button
         type="button"
         (click)="toggleDescriptionNote($event)"
@@ -53,17 +53,17 @@
     </button>
     <fs-menu>
       <ng-template
-            fs-menu-item
-            *ngIf="showDuplicate"
-            (click)="duplicate($event)">
-          Duplicate
-        </ng-template>
-        <ng-template
-            fs-menu-item
-            *ngIf="showSettings"
-            (click)="settings($event)">
-          Settings
-        </ng-template>
+          fs-menu-item
+          *ngIf="showDuplicate"
+          (click)="duplicate($event)">
+        Duplicate
+      </ng-template>
+      <ng-template
+          fs-menu-item
+          *ngIf="showSettings"
+          (click)="settings($event)">
+        Settings
+      </ng-template>
     </fs-menu>
   </div>
 
