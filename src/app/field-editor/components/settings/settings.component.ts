@@ -6,7 +6,7 @@ import { format } from '@firestitch/date';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { FieldAction, FieldType, VisualSelectorFormat } from '../../../enums';
+import { EditorAction, FieldType, VisualSelectorFormat } from '../../../enums';
 import { FieldOption } from '../../../interfaces';
 import { FieldEditorService } from '../../../services';
 
@@ -33,7 +33,7 @@ export class SettingsComponent implements OnInit {
     this.field = this._data.field;
     this.fieldEditor = this._data.fieldEditor;
 
-    if(this.field.config.type === FieldType.Date) {
+    if(this.field.type === FieldType.Date) {
       this.populateValue =  format(new Date(),'yyyy-MM-dd');
     } else {
       this.populateValue = 'PopulatedValue';
@@ -41,15 +41,15 @@ export class SettingsComponent implements OnInit {
   }
 
   public get type(): FieldType|string {
-    return this.field.config.type;
+    return this.field.type;
   }
 
   public get configs() {
-    return this.field.config.configs;
+    return this.field.configs;
   }
 
   public save = (): Observable<any> => {
-    return this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+    return this.fieldEditor.action(EditorAction.FieldSave, this.field)
     .pipe(
       tap(() => this._dialogRef.close(this.field)),
     );

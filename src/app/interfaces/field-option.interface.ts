@@ -1,7 +1,5 @@
-import { Field, FieldConfig } from '.';
+import { Field } from '.';
 
 export interface FieldOption extends Field {
-  config?: FieldConfig & {
-    options?: any[],
-  },
+  options?: any[],
 }

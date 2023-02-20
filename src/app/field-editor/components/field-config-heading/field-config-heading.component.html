@@ -2,7 +2,7 @@
     <mat-label>Heading Type</mat-label>
     <mat-select
         matInput
-        [(ngModel)]="field.config.configs.type"
+        [(ngModel)]="field.configs.type"
         name="type"
         [ngModelOptions]="{ updateOn: 'blur' }"
         (ngModelChange)="fieldSave()">

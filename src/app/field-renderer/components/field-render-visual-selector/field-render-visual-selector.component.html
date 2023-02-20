@@ -1,18 +1,18 @@
 <fs-label-field class="fs-form-wrapper">
   <fs-label 
       class="fs-form-label" 
-      *ngIf="field.config.label">
-    {{field.config.label}}
+      *ngIf="field.label">
+    {{field.label}}
   </fs-label>
   <fs-field-render-visual-selector-model
-    [required]="field.config.configs.required"
+    [required]="field.configs.required"
     (changed)="changed.emit(field)"
     name="{{name}}VisualSelector"
     [field]="field"
     [(ngModel)]="field">
   </fs-field-render-visual-selector-model>
   <fs-label-message class="fs-form-message">
-    <div class="fs-form-hint">{{ field.config.description }}</div>
+    <div class="fs-form-hint">{{ field.description }}</div>
   </fs-label-message>
 </fs-label-field>
 

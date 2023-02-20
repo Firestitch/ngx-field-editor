@@ -1,6 +1,6 @@
 <div
     class="field-container"
-    [ngClass]="['field-' + field.config.type]"
+    [ngClass]="['field-' + field.type]"
     cdkDrag
     cdkDragLockAxis="y"
     (cdkDragStarted)="dragStarted()">
@@ -39,7 +39,7 @@
       </ng-container>
 
       <ng-template #configStandardField>
-        <ng-container [ngSwitch]="field.config.type">
+        <ng-container [ngSwitch]="field.type">
           <ng-container *ngSwitchCase="FieldType.Choice">
             <fs-field-config-options
               [field]="field"
@@ -126,7 +126,7 @@
       </ng-container>
 
       <ng-template #renderStandardField>
-        <ng-container [ngSwitch]="field.config.type">
+        <ng-container [ngSwitch]="field.type">
           <ng-container *ngSwitchCase="FieldType.ShortText">
             <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
           </ng-container>
@@ -191,30 +191,30 @@
 
           <ng-container *ngSwitchCase="FieldType.Content">
             <fs-label-field>
-              <fs-label>{{field.config.label}}</fs-label>
+              <fs-label>{{field.label}}</fs-label>
 
               <fs-html-editor
                 [config]="{ autofocus: false, disabled: true }"
-                [ngModel]="field.config.configs.content">
+                [ngModel]="field.configs.content">
               </fs-html-editor>
 
-              <fs-label-message *ngIf="field.config.description">
-                {{ field.config.description }}
+              <fs-label-message *ngIf="field.description">
+                {{ field.description }}
               </fs-label-message>
             </fs-label-field>
           </ng-container>
 
           <ng-container *ngSwitchCase="FieldType.RichText">
             <fs-label-field>
-              <fs-label *ngIf="field.config.label">{{field.config.label}}</fs-label>
+              <fs-label *ngIf="field.label">{{field.label}}</fs-label>
 
               <fs-html-editor
                 [config]="{ autofocus: false, disabled: true }"
-                [ngModel]="field.config.configs.default">
+                [ngModel]="field.configs.default">
               </fs-html-editor>
 
-              <fs-label-message *ngIf="field.config.description">
-                {{ field.config.description }}
+              <fs-label-message *ngIf="field.description">
+                {{ field.description }}
               </fs-label-message>
             </fs-label-field>
           </ng-container>

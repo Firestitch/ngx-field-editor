@@ -1,4 +1,4 @@
-<div *ngIf="(fieldEditor.selectedField$ | async).config.guid === field.config.guid; else selectedElse">
+<div *ngIf="(fieldEditor.selectedField$ | async).guid === field.guid; else selectedElse">
   <div fxFlexLayout="row" fxLayoutAlign="start center">
     <div fxFlex>
       <mat-form-field
@@ -8,11 +8,11 @@
         <mat-label>Label</mat-label>
         <input
           matInput
-          [(ngModel)]="field.config.label"
+          [(ngModel)]="field.label"
           name="label"
           [disabled]="!canEdit"
           [ngModelOptions]="{ updateOn: 'blur' }"
-          (ngModelChange)="fieldActionConfig()">
+          (ngModelChange)="actionConfig()">
       </mat-form-field>
     </div>
     <button
@@ -22,7 +22,7 @@
       (click)="toggleRequired()"
       matTooltip="Required Response"
       class="require-button"
-      [ngClass]="{ disabled: !field.config.configs.required }">
+      [ngClass]="{ disabled: !field.configs.required }">
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
         <g>
@@ -63,18 +63,18 @@
       matInput
       #description
       [matTextareaAutosize]="true"
-      [(ngModel)]="field.config.description"
+      [(ngModel)]="field.description"
       name="description"
       [disabled]="!canEdit"
       [ngModelOptions]="{ updateOn: 'blur' }"
-      (ngModelChange)="fieldActionConfig()">
+      (ngModelChange)="actionConfig()">
     </textarea>
   </mat-form-field>
 </div>
 
 <ng-template #selectedElse>
   <div class="view">
-    <div class="label">{{field.config.label}}</div>
-    <div class="description">{{field.config.description}}</div>
+    <div class="label">{{field.label}}</div>
+    <div class="description">{{field.description}}</div>
   </div>
 </ng-template>

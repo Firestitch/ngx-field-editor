@@ -34,7 +34,7 @@ export class FieldViewerComponent implements AfterContentInit {
       .map((field) => {
         const value = field.data?.value;
         let hasValue = false;
-        switch(field.config.type) {
+        switch(field.type) {
           case FieldType.Content:
           case FieldType.Heading:
             hasValue = true;

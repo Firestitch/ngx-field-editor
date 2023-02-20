@@ -1,33 +1,33 @@
 <div class="options">
   <div fxFlexLayout="row" fxLayoutAlign="start center">
-    <mat-checkbox color="primary" [(ngModel)]="field.config.configs.firstName.display" (ngModelChange)="fieldSave()"></mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="field.configs.firstName.display" (ngModelChange)="fieldSave()"></mat-checkbox>
 
     <mat-form-field floatLabel="never" fxFlex>
       <mat-label>Label</mat-label>
       <input
         matInput
-        [(ngModel)]="field.config.configs.firstName.label"
-        [disabled]="!field.config.configs.firstName.display"
+        [(ngModel)]="field.configs.firstName.label"
+        [disabled]="!field.configs.firstName.display"
         name="firstName"
         [ngModelOptions]="{ updateOn: 'blur' }"
         (ngModelChange)="fieldSave()">
-      <div matPrefix>{{field.config.label}}&nbsp;</div>
+      <div matPrefix>{{field.label}}&nbsp;</div>
     </mat-form-field>
   </div>
 
   <div fxFlexLayout="row" fxLayoutAlign="start center">
-    <mat-checkbox color="primary" [(ngModel)]="field.config.configs.lastName.display" (ngModelChange)="fieldSave()"></mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="field.configs.lastName.display" (ngModelChange)="fieldSave()"></mat-checkbox>
 
     <mat-form-field floatLabel="never" fxFlex>
       <mat-label>Label</mat-label>
       <input
         matInput
-        [(ngModel)]="field.config.configs.lastName.label"
-        [disabled]="!field.config.configs.lastName.display"
+        [(ngModel)]="field.configs.lastName.label"
+        [disabled]="!field.configs.lastName.display"
         name="lastName"
         [ngModelOptions]="{ updateOn: 'blur' }"
         (ngModelChange)="fieldSave()">
-      <div matPrefix>{{field.config.label}}&nbsp;</div>
+      <div matPrefix>{{field.label}}&nbsp;</div>
     </mat-form-field>
   </div>
 </div>

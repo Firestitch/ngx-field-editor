@@ -1,14 +1,13 @@
-<div class="field-container" [ngClass]="['field-' + field.config.type]">
+<div class="field-container" [ngClass]="['field-' + field.type]">
 
-  <ng-container *ngIf="fieldRenderTemplateRefs[field.config.type]; else standardField">
+  <ng-container *ngIf="fieldRenderTemplateRefs[field.type]; else standardField">
     <ng-template
-      *ngTemplateOutlet="fieldRenderTemplateRefs[field.config.type]; context: { fieldRenderer: fieldRenderer, field: field }">
+      *ngTemplateOutlet="fieldRenderTemplateRefs[field.type]; context: { fieldRenderer: fieldRenderer, field: field }">
     </ng-template>
   </ng-container>
 
   <ng-template #standardField>
-
-    <ng-container [ngSwitch]="field.config.type">
+    <ng-container [ngSwitch]="field.type">
       <ng-container *ngSwitchCase="fieldType.ShortText">
         <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
       </ng-container>

@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 import { FsHtmlEditorConfig } from '@firestitch/html-editor';
 
 import { FieldComponent } from '../field/field.component';
-import { FieldAction } from '../../../enums';
+import { EditorAction } from '../../../enums';
 
 
 @Component({
@@ -20,16 +20,11 @@ export class FieldConfigContentComponent extends FieldComponent implements OnIni
 
   public ngOnInit() {
     this.config = {
-      ...this.field.config.configs,
+      ...this.field.configs,
       autofocus: false,
       image: {
-        upload: (file: File) => {
-          return this.fieldEditor.fieldAction(FieldAction.ImageUpload, this.field)
-          .subscribe(() => {
-            if(this.fieldEditor.config.imageUpload) { 
-              this.fieldEditor.config.imageUpload(this.field, file);
-            }
-          });
+        upload: (file: File): Observable<string> => {
+          return this.fieldEditor.action(EditorAction.ImageUpload, this.field, { file })
         }
       }
     };

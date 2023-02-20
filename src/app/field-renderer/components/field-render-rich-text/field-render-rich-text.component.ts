@@ -1,11 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Optional } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
+
+import { Observable } from 'rxjs';
 
 import { FsHtmlEditorConfig } from '@firestitch/html-editor';
 import { controlContainerFactory } from '@firestitch/core';
 
-import { FieldEditorService } from '../../../services/field-editor.service';
 import { FieldComponent } from '../field/field.component';
+import { FieldRendererService } from '../../../services';
+import { RendererAction } from '../../../enums';
 
 
 @Component({
@@ -23,10 +26,34 @@ import { FieldComponent } from '../field/field.component';
 })
 export class FieldRenderRichTextComponent extends FieldComponent implements OnInit {
 
-  public editorConfig: FsHtmlEditorConfig = { autofocus: false };
+  public editorConfig: FsHtmlEditorConfig;
 
-  constructor(public fieldEditor: FieldEditorService) {
+  constructor(
+    private _fieldRenderer: FieldRendererService,
+    private _cdRef: ChangeDetectorRef,
+  ) {
     super();
   }
 
+  public ngOnInit(): void {
+    super.ngOnInit();
+
+    this._fieldRenderer.allowImageUpload(this.field)
+      .subscribe((allowImageUpload) => {
+        this.editorConfig = {
+          autofocus: false,
+          disabled: this.disabled,
+        };
+
+        if(allowImageUpload) {
+          this.editorConfig.image = {
+            upload: (file: File): Observable<string> => {
+              return this._fieldRenderer.action(RendererAction.ImageUpload, this.field, { file });
+            }
+          }
+        }
+
+        this._cdRef.markForCheck();
+      });
+  }
 }

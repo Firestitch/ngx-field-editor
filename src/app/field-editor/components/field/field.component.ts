@@ -7,7 +7,7 @@ import { guid } from '@firestitch/common';
 import { Field } from '../../../interfaces';
 import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services';
-import { FieldAction } from '../../../enums';
+import { EditorAction } from '../../../enums';
 
 
 @Component({
@@ -36,7 +36,7 @@ export class FieldComponent implements OnDestroy {
   }
 
   public fieldSave() {
-    this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+    this.fieldEditor.action(EditorAction.FieldSave, this.field)
     .subscribe(() => {
       this.fieldEditor.fieldChange(this.field);
     });

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 
 import { FsHtmlEditorComponent, FsHtmlEditorConfig } from '@firestitch/html-editor';
+import { Observable } from 'rxjs';
 
-import { FieldAction } from '../../../enums';
+import { EditorAction } from '../../../enums';
 import { FieldComponent } from '../field/field.component';
 
 
@@ -21,17 +22,12 @@ export class FieldConfigRichTextComponent extends FieldComponent implements OnIn
 
   public ngOnInit(): void {
     this.config = {
-      ...this.field.config.configs,
+      ...this.field.configs,
       disabled: false,
       autofocus: false,
       image: {
-        upload: (file: File) => {
-          return this.fieldEditor.fieldAction(FieldAction.ImageUpload, this.field)
-          .subscribe(() => {
-            if (this.fieldEditor.config.imageUpload) { 
-              this.fieldEditor.config.imageUpload(this.field, file);
-            }
-          });
+        upload: (file: File): Observable<string> => {
+          return this.fieldEditor.action(EditorAction.ImageUpload, this.field, { file });
         }
       }
     };

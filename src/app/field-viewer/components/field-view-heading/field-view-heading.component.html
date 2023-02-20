@@ -1,18 +1,18 @@
-<ng-container [ngSwitch]="field.config.configs.type">
+<ng-container [ngSwitch]="field.configs.type">
   <ng-container *ngSwitchCase="1">
-    <h1>{{field.config.label}}</h1>
+    <h1>{{field.label}}</h1>
   </ng-container>
   <ng-container *ngSwitchCase="2">
-    <h2>{{field.config.label}}</h2>
+    <h2>{{field.label}}</h2>
   </ng-container>
   <ng-container *ngSwitchCase="3">
-    <h3>{{field.config.label}}</h3>
+    <h3>{{field.label}}</h3>
   </ng-container>
   <ng-container *ngSwitchCase="4">
-    <h4>{{field.config.label}}</h4>
+    <h4>{{field.label}}</h4>
   </ng-container>
   <ng-container *ngSwitchCase="5">
-    <h5>{{field.config.label}}</h5>
+    <h5>{{field.label}}</h5>
   </ng-container>
 </ng-container>
 

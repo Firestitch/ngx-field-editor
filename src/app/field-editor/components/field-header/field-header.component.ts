@@ -19,7 +19,7 @@ import { Subject } from 'rxjs';
 
 import { FieldComponent } from '../field/field.component';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { FieldAction, FieldType } from '../../../enums';
+import { EditorAction, FieldType } from '../../../enums';
 import { Field } from '../../../interfaces';
 
 
@@ -122,8 +122,8 @@ export class FieldHeaderComponent
   }
 
   public toggleRequired(): void {
-    this.field.config.configs.required = !this.field.config.configs.required;
-    this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+    this.field.configs.required = !this.field.configs.required;
+    this.fieldEditor.action(EditorAction.FieldSave, this.field)
     .pipe(takeUntil(this._destroy$))
     .subscribe(() => {
       this.changed();
@@ -136,8 +136,8 @@ export class FieldHeaderComponent
     this.toggleDescription.emit(this.field);
   }
 
-  public fieldActionConfig(): void {
-    this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+  public actionConfig(): void {
+    this.fieldEditor.action(EditorAction.FieldSave, this.field)
       .subscribe(() => {
         this.changed();
       });
@@ -154,7 +154,7 @@ export class FieldHeaderComponent
         template: 'Are you sure you would like to remove this field?',
       })
       .pipe(
-        switchMap(() => this.fieldEditor.fieldAction(FieldAction.FieldDelete, this.field)),
+        switchMap(() => this.fieldEditor.action(EditorAction.FieldDelete, this.field)),
         finalize(() => this.fieldEditor.inDeletionMode = false),
         takeUntil(this._destory$),
       )

@@ -1,11 +1,11 @@
 <fs-label-field>
-  <fs-label>{{field.config.label}}</fs-label>
+  <fs-label>{{field.label}}</fs-label>
 
   <fs-html-renderer
-    [html]="field.config.configs.content">
+    [html]="field.configs.content">
   </fs-html-renderer>
 
-  <fs-label-message *ngIf="field.config.description">
-    {{ field.config.description }}
+  <fs-label-message *ngIf="field.description">
+    {{ field.description }}
   </fs-label-message>
 </fs-label-field>

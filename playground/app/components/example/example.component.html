@@ -23,14 +23,14 @@
       </ng-template>
 
       <ng-template fsFieldRender type="share" let-field="field">
-        <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
-        <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
+        <img src="/assets/google-logo.svg" height="50" *ngIf="field.configs['google']">
+        <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.configs['facebook']">
       </ng-template>
 
       <ng-template fsFieldConfig type="share" let-field="field" let-fieldEditor="fieldEditor">
         <div fxLayout="column">
-          <mat-checkbox [(ngModel)]="field.config.configs['facebook']" name="facebook" (click)="fieldEditor.fieldChange(field)">Enable Facebook</mat-checkbox>
-          <mat-checkbox [(ngModel)]="field.config.configs['google']" name="google" (click)="fieldEditor.fieldChange(field)">Enable Google</mat-checkbox>
+          <mat-checkbox [(ngModel)]="field.configs['facebook']" name="facebook" (click)="fieldEditor.fieldChange(field)">Enable Facebook</mat-checkbox>
+          <mat-checkbox [(ngModel)]="field.configs['google']" name="google" (click)="fieldEditor.fieldChange(field)">Enable Google</mat-checkbox>
         </div>
       </ng-template>
 
@@ -61,8 +61,8 @@
       <fs-field-renderer 
           [config]="fieldRendererConfig">
         <ng-template fsFieldRender type="share" let-field="field">
-          <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
-          <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
+          <img src="/assets/google-logo.svg" height="50" *ngIf="field.configs['google']">
+          <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.configs['facebook']">
         </ng-template>
 
         <ng-template fsFieldRender type="signature" let-field="field" let-fieldEditor="fieldEditor">
@@ -90,8 +90,8 @@
       <ng-template fsFieldView type="share" let-field="field">
         <fs-label-field>
           <fs-label>Share</fs-label>
-          <img src="/assets/google-logo.svg" height="50" *ngIf="field.config.configs['google']">
-          <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.config.configs['facebook']">
+          <img src="/assets/google-logo.svg" height="50" *ngIf="field.configs['google']">
+          <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.configs['facebook']">
         </fs-label-field>
       </ng-template>
 

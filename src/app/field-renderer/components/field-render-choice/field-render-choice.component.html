@@ -2,21 +2,21 @@
     #radiobuttons
     [(ngModel)]="field.data.value.selected"
     (ngModelChange)="radioChange()"
-    [label]="field.config.label"
+    [label]="field.label"
     [name]="'choices' + name"
     [fsFormFunction]="validate"
-    [attr.validation-required]="this.field.config.configs.required"
+    [attr.validation-required]="this.field.configs.required"
     [disabled]="disabled"
     messageSelector=".fs-form-message"
     orientation="vertical">
   <mat-radio-button
-      *ngFor="let item of field.config.options"
+      *ngFor="let item of field.options"
       [disabled]="disabled"
       [value]="item.guid">
     {{ item.name }}
   </mat-radio-button>
   <mat-radio-button
-      *ngIf="field.config.configs.other"
+      *ngIf="field.configs.other"
       value="other"
       [name]="'otherChoice' + name"
       [disabled]="disabled"
@@ -32,5 +32,5 @@
         [disabled]="disabled">
     </mat-form-field>
   </mat-radio-button>
-  <mat-hint>{{field.config.description}}</mat-hint>
+  <mat-hint>{{field.description}}</mat-hint>
 </fs-radio-group>

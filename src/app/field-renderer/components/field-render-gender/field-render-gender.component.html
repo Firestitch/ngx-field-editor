@@ -1,14 +1,15 @@
 <fs-radio-group
     [(ngModel)]="field.data.value"
-    [label]="field.config.label"
+    [label]="field.label"
     [name]="'gender' + name"
     [disabled]="disabled"
     (ngModelChange)="changed.emit(field)"
-    [required]="field.config.configs.required===true"
+    [required]="field.configs.required===true"
     orientation="vertical">
   <mat-radio-button
-    *ngFor="let gender of field.config.options"
-    [value]="gender.guid">{{gender.name}}
+      *ngFor="let gender of field.options"
+      [value]="gender.guid">
+    {{gender.name}}
   </mat-radio-button>
-  <mat-hint>{{field.config.description}}</mat-hint>
+  <mat-hint>{{field.description}}</mat-hint>
 </fs-radio-group>

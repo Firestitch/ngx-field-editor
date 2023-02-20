@@ -42,7 +42,7 @@ export class FieldComponent implements OnDestroy, OnInit {
   }
 
   public get configs() {
-   return this.field.config.configs;
+   return this.field.configs;
   }
 
   public initField(field) {

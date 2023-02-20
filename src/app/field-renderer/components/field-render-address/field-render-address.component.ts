@@ -29,45 +29,45 @@ export class FieldRenderAddressComponent extends FieldComponent implements OnIni
     super.ngOnInit();
 
     this.config = {
-      label: this.field.config.label,
+      label: this.field.label,
       name: {
         visible: false,
       },
       street: {
-        visible: this.field.config.configs.street.enabled,
-        required: this.field.config.configs.street.required,
+        visible: this.field.configs.street.enabled,
+        required: this.field.configs.street.required,
         disabled: this.disabled,
-        placeholder: this.field.config.configs.street.label,
+        placeholder: this.field.configs.street.label,
       },
       address2: {
-        visible: this.field.config.configs.address2.enabled,
-        required: this.field.config.configs.address2.required,
+        visible: this.field.configs.address2.enabled,
+        required: this.field.configs.address2.required,
         disabled: this.disabled,
-        placeholder: this.field.config.configs.address2.label,
+        placeholder: this.field.configs.address2.label,
       },
       city: {
-        visible: this.field.config.configs.city.enabled,
-        required: this.field.config.configs.city.required,
+        visible: this.field.configs.city.enabled,
+        required: this.field.configs.city.required,
         disabled: this.disabled,
-        placeholder: this.field.config.configs.city.label,
+        placeholder: this.field.configs.city.label,
       },
       region: {
-        visible: this.field.config.configs.region.enabled,
-        required: this.field.config.configs.region.required,
+        visible: this.field.configs.region.enabled,
+        required: this.field.configs.region.required,
         disabled: this.disabled,
-        placeholder: this.field.config.configs.region.label,
+        placeholder: this.field.configs.region.label,
       },
       zip: {
-        visible: this.field.config.configs.zip.enabled,
-        required: this.field.config.configs.zip.required,
+        visible: this.field.configs.zip.enabled,
+        required: this.field.configs.zip.required,
         disabled: this.disabled,
-        placeholder: this.field.config.configs.zip.label,
+        placeholder: this.field.configs.zip.label,
       },
       country: {
-        visible: this.field.config.configs.country.enabled,
-        required: this.field.config.configs.country.required,
+        visible: this.field.configs.country.enabled,
+        required: this.field.configs.country.required,
         disabled: this.disabled,
-        placeholder: this.field.config.configs.country.label,
+        placeholder: this.field.configs.country.label,
       }
     };
   }

@@ -15,7 +15,7 @@ import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
 import { TOOLBAR_DEFAULTS } from '../helpers/toolbar-defaults';
 import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
-import { FieldAction } from '../enums';
+import { EditorAction } from '../enums';
 import { ToolbarItem, ToolbarItems } from '../interfaces';
 
 
@@ -95,13 +95,13 @@ export class FieldEditorService implements OnDestroy {
   public fieldShowRequired(field: Field): Observable<boolean> {
     return this.config.fieldShowRequired ? 
     this.config.fieldShowRequired(field) : 
-    of(field.config.hideRequired !== true);
+    of(field.hideRequired !== true);
   }
 
   public fieldShowDescription(field: Field): Observable<boolean> {
     return this.config.fieldShowDescription ? 
     this.config.fieldShowDescription(field) : 
-    of(field.config.hideDescription !== true);
+    of(field.hideDescription !== true);
   }
 
   public fieldCanLabel(field: Field): Observable<boolean> {
@@ -175,7 +175,7 @@ export class FieldEditorService implements OnDestroy {
 
     return this.config.beforeFieldAdd(field, toolbarItem)
       .pipe(
-        switchMap((field) => this.fieldAction(FieldAction.FieldAdd, field, { index, toolbarItem })),
+        switchMap((field) => this.action(EditorAction.FieldAdd, field, { index, toolbarItem })),
         switchMap((response) => {
           const newField = initField(response.field);
           this.config.fields.splice(index, 0, newField);
@@ -191,7 +191,7 @@ export class FieldEditorService implements OnDestroy {
   public fieldChange(field: Field): void {
     this.config.fields = this.config.fields
       .map((_field) => {
-        return _field.config.guid === field.config.guid ? field : _field;
+        return _field.guid === field.guid ? field : _field;
       });
 
     if (this.config.fieldChanged) {
@@ -201,10 +201,10 @@ export class FieldEditorService implements OnDestroy {
     }
   }
 
-  public fieldAction(action: FieldAction, field: Field = null, data: any = {}): Observable<any> {
+  public action(action: EditorAction, field: Field = null, data: any = {}): Observable<any> {
     return (
-      this.config.fieldAction ?
-      this.config.fieldAction(action, field, data) :
+      this.config.action ?
+      this.config.action(action, field, data) :
       of(field)
     )
     .pipe(

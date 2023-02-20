@@ -1,7 +1,7 @@
 <ng-container *ngFor="let field of fields">
   <div>
-    <ng-container *ngIf="fieldViewTemplateRefs[field.config.type]; else standardField">
-      <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.config.type]; context: { field: field }"></ng-template>
+    <ng-container *ngIf="fieldViewTemplateRefs[field.type]; else standardField">
+      <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.type]; context: { field: field }"></ng-template>
     </ng-container>
 
     <ng-template #standardField>

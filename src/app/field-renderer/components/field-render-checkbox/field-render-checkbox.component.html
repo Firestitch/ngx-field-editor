@@ -6,18 +6,18 @@
     [compareWith]="compareWith"
     (ngModelChange)="changed.emit(field)"
     orientation="vertical"
-    [label]="field.config.label"
+    [label]="field.label"
     [fsFormFunction]="validate"
-    [attr.validation-required]="this.field.config.configs.required"
+    [attr.validation-required]="this.field.configs.required"
     messageSelector=".fs-form-message">
   <mat-checkbox
-      *ngFor="let item of this.field.config.options"
+      *ngFor="let item of this.field.options"
       [value]="item.guid"
       [disabled]="disabled">
     {{ item.name }}
   </mat-checkbox>
   <mat-checkbox
-      *ngIf="field.config.configs.other"
+      *ngIf="field.configs.other"
       value="other"
       [name]="'checkboxOther' + name"
       [disabled]="disabled"
@@ -33,5 +33,5 @@
         [disabled]="disabled">
     </mat-form-field>
   </mat-checkbox>
-  <mat-hint>{{field.config.description}}</mat-hint>
+  <mat-hint>{{field.description}}</mat-hint>
 </fs-checkbox-group>

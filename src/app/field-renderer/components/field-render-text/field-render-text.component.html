@@ -1,18 +1,18 @@
-<ng-container [ngSwitch]="field.config.type">
+<ng-container [ngSwitch]="field.type">
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.ShortText">
-    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
+    <mat-label *ngIf="field.label">{{field.label}}</mat-label>
     <input
       matInput
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
       [name]="name"
       [disabled]="disabled"
-      [required]="field.config.configs.required===true">
-    <mat-hint>{{field.config.description}}</mat-hint>
+      [required]="field.configs.required===true">
+    <mat-hint>{{field.description}}</mat-hint>
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.LongText">
-    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
+    <mat-label *ngIf="field.label">{{field.label}}</mat-label>
     <textarea
       matInput
       [matTextareaAutosize]="true"
@@ -21,13 +21,13 @@
       (ngModelChange)="changed.emit(field)"
       [name]="name"
       [disabled]="disabled"
-      [required]="field.config.configs.required===true">
+      [required]="field.configs.required===true">
     </textarea>
-    <mat-hint>{{field.config.description}}</mat-hint>
+    <mat-hint>{{field.description}}</mat-hint>
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Date">
-    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
+    <mat-label *ngIf="field.label">{{field.label}}</mat-label>
     <input
       matInput
       fsDatePicker
@@ -35,12 +35,12 @@
       (ngModelChange)="changed.emit(field)"
       [name]="name"
       [disabled]="disabled"
-      [required]="field.config.configs.required===true">
-    <mat-hint>{{field.config.description}}</mat-hint>
+      [required]="field.configs.required===true">
+    <mat-hint>{{field.description}}</mat-hint>
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Birthday">
-    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
+    <mat-label *ngIf="field.label">{{field.label}}</mat-label>
     <input
       matInput
       fsDatePickerBirthday
@@ -48,12 +48,12 @@
       (ngModelChange)="changed.emit(field)"
       [name]="name"
       [disabled]="disabled"
-      [required]="field.config.configs.required===true">
-    <mat-hint>{{field.config.description}}</mat-hint>
+      [required]="field.configs.required===true">
+    <mat-hint>{{field.description}}</mat-hint>
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Time">
-    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
+    <mat-label *ngIf="field.label">{{field.label}}</mat-label>
     <input
       matInput
       fsDatePickerTime
@@ -61,12 +61,12 @@
       (ngModelChange)="changed.emit(field)"
       [name]="name"
       [disabled]="disabled"
-      [required]="field.config.configs.required===true">
-    <mat-hint>{{field.config.description}}</mat-hint>
+      [required]="field.configs.required===true">
+    <mat-hint>{{field.description}}</mat-hint>
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Phone">
-    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
+    <mat-label *ngIf="field.label">{{field.label}}</mat-label>
     <input
       matInput
       fsPhone
@@ -75,12 +75,12 @@
       fsFormPhone
       [name]="name"
       [disabled]="disabled"
-      [required]="field.config.configs.required===true">
-    <mat-hint>{{field.config.description}}</mat-hint>
+      [required]="field.configs.required===true">
+    <mat-hint>{{field.description}}</mat-hint>
   </mat-form-field>
 
   <mat-form-field class="form-field-multiline-subscript" *ngSwitchCase="fieldType.Email">
-    <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
+    <mat-label *ngIf="field.label">{{field.label}}</mat-label>
     <input
       matInput
       [fsFormEmail]="true"
@@ -88,8 +88,8 @@
       (ngModelChange)="changed.emit(field)"
       [name]="name"
       [disabled]="disabled"
-      [required]="field.config.configs.required===true">
-    <mat-hint>{{field.config.description}}</mat-hint>
+      [required]="field.configs.required===true">
+    <mat-hint>{{field.description}}</mat-hint>
   </mat-form-field>
 
 </ng-container>

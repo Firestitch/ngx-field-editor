@@ -14,11 +14,11 @@ export class FieldConfigFileComponent extends FieldComponent implements OnInit {
   public imageQuality;
 
   public ngOnInit(): void {
-    this.imageQuality = this.field.config.configs.imageQuality * 100;
+    this.imageQuality = this.field.configs.imageQuality * 100;
   }
 
   public imageQualityChange(value): void {
-    this.field.config.configs.imageQuality = value / 100;
+    this.field.configs.imageQuality = value / 100;
     this.fieldSave();
   }
 

@@ -42,7 +42,7 @@ export class FieldRenderCheckboxComponent extends FieldComponent {
   }
 
   public validate = () => {
-    if (this.field.config.configs.required === true && !this.field.data.value.selected.length) {
+    if (this.field.configs.required === true && !this.field.data.value.selected.length) {
       throw 'This field is required';
     }
   }

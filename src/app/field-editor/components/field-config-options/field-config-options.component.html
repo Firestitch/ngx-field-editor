@@ -1,5 +1,5 @@
 <div cdkDropList class="options" (cdkDropListDropped)="drop($event)">
-  <div *ngFor="let option of field.config.options; index as idx" cdkDrag cdkDragLockAxis="y" class="fs-field-option">
+  <div *ngFor="let option of field.options; index as idx" cdkDrag cdkDragLockAxis="y" class="fs-field-option">
     <div class="option-container">
       <div class="option-drag" cdkDragHandle>
         <button button mat-icon-button type="button" class="drag-button option-drag-button"><mat-icon>drag_indicator</mat-icon></button>
@@ -30,7 +30,7 @@
           </div>
         </ng-container>
 
-        <ng-container *ngIf="field.config.configs.showValues">
+        <ng-container *ngIf="field.configs.showValues">
           <div class="option-value">
             <mat-form-field          
                 floatLabel="never"
@@ -60,17 +60,18 @@
 
 
 <div
-  class="option-container"
-  [class.loading]="optionLoading$ | async">
-  <button
-      button
-      mat-icon-button 
-      type="button" 
-      class="option-drag-placeholder"
-      *ngIf="field.config.options.length">
-    <mat-icon></mat-icon>
-  </button>
-  <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
+    class="option-container option-add-new"
+    [class.loading]="optionLoading$ | async">
+  <ng-container *ngIf="field.options.length">
+    <button
+        button
+        mat-icon-button 
+        type="button" 
+        class="option-drag-placeholder">
+      <mat-icon></mat-icon>
+    </button>
+    <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
+  </ng-container>
 
   <div class="option-data">
     <ng-container *ngIf="showOptionImage">
@@ -90,13 +91,13 @@
             #addOptionInput
             [(ngModel)]="newOption"
             name="newOption"
-            (keydown)="addOptionKeydown($event, !this.field.config.configs.showValues)">
+            (keydown)="addOptionKeydown($event, !this.field.configs.showValues)">
         </mat-form-field>
       </div>
     </ng-container>
     
     <div class="option-value">
-      <ng-container *ngIf="field.config.configs.showValues">
+      <ng-container *ngIf="field.configs.showValues">
         <mat-form-field          
             floatLabel="never">
           <mat-label>Value</mat-label>
@@ -109,9 +110,9 @@
       </ng-container>
     </div>
 
-    <ng-container *ngIf="showOther && field.config.options.length && !field.config.configs.other">
+    <ng-container *ngIf="showOther && field.options.length && !field.configs.other">
       <span class="or">Or</span> <button mat-button type="button" color="primary" (click)="otherToggle()">
-        {{ field.config.configs.other ? 'Remove' : 'Add' }} "Other" Option</button>
+        {{ field.configs.other ? 'Remove' : 'Add' }} "Other" Option</button>
     </ng-container>
   </div>
   <button 
@@ -123,7 +124,7 @@
   </button>
 </div>
 
-<div *ngIf="showOther && field.config.configs.other" fxFlexLayout="row" fxLayoutAlign="start center">
+<div *ngIf="showOther && field.configs.other" fxFlexLayout="row" fxLayoutAlign="start center">
   <button
       button
       mat-icon-button
@@ -153,7 +154,7 @@
 </div>
 
 <ng-template #disabledPlaceholder>
-  <ng-container [ngSwitch]="field.config.type">
+  <ng-container [ngSwitch]="field.type">
     <mat-checkbox *ngSwitchCase="FieldType.Checkbox" disabled="true"></mat-checkbox>
     <mat-radio-button   
       *ngSwitchCase="FieldType.Choice" 

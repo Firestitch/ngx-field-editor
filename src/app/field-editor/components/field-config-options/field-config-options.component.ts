@@ -19,7 +19,7 @@ import { FsFile, FsFileImagePickerComponent } from '@firestitch/file';
 
 import { FieldComponent } from '../field/field.component';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { FieldAction } from '../../../enums';
+import { EditorAction } from '../../../enums';
 import { FieldOption } from '../../../interfaces';
 
 
@@ -72,7 +72,7 @@ export class FieldConfigOptionsComponent
   }
 
   public optionSave(option) {
-    this.fieldEditor.fieldAction(FieldAction.OptionSave, this.field, { option })
+    this.fieldEditor.action(EditorAction.OptionSave, this.field, { option })
     .subscribe(() => {
       this.fieldEditor.fieldChange(this.field);
     });
@@ -91,7 +91,7 @@ export class FieldConfigOptionsComponent
       } else {
         this.addOption()
           .subscribe((option) => {
-            this.field.config.options.push(option);
+            this.field.options.push(option);
             this._cdRef.markForCheck();
             this.fieldEditor.fieldChange(this.field);
           });
@@ -107,7 +107,7 @@ export class FieldConfigOptionsComponent
     };
     this.optionLoading$.next(true);
 
-    return this.fieldEditor.fieldAction(FieldAction.OptionAdd, this.field, { option })
+    return this.fieldEditor.action(EditorAction.OptionAdd, this.field, { option })
       .pipe(
         map((response) => {
           return {
@@ -135,7 +135,7 @@ export class FieldConfigOptionsComponent
       option,
     };
 
-    this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
+    this.fieldEditor.action(EditorAction.OptionImageUpload, this.field, data)
       .pipe(
         catchError(() => {
           fileImagePicker.cancel();
@@ -150,8 +150,8 @@ export class FieldConfigOptionsComponent
   }
 
   public otherToggle(): void {
-    this.field.config.configs.other = !this.field.config.configs.other;
-    this.fieldEditor.fieldAction(FieldAction.OptionOther, this.field)
+    this.field.configs.other = !this.field.configs.other;
+    this.fieldEditor.action(EditorAction.OptionOther, this.field)
     .pipe(
       takeUntil(this._destory$),
     )
@@ -167,9 +167,9 @@ export class FieldConfigOptionsComponent
       template: 'Are you sure you would like to remove this option?',
     })
       .pipe(
-        switchMap(() => this.fieldEditor.fieldAction(FieldAction.OptionDelete, this.field, { option })),
+        switchMap(() => this.fieldEditor.action(EditorAction.OptionDelete, this.field, { option })),
         tap(() => {
-          this.field.config.options = this.field.config.options
+          this.field.options = this.field.options
           .filter((item) => item !== option);
         }),
         takeUntil(this._destory$),
@@ -181,9 +181,9 @@ export class FieldConfigOptionsComponent
   }
 
   public drop(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.field.config.options, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.field.options, event.previousIndex, event.currentIndex);
 
-    this.fieldEditor.fieldAction(FieldAction.OptionReorder, this.field)
+    this.fieldEditor.action(EditorAction.OptionReorder, this.field)
       .subscribe(() => {
         this.fieldEditor.fieldChange(this.field);
       });
@@ -198,7 +198,7 @@ export class FieldConfigOptionsComponent
             option,
           };
 
-          return this.fieldEditor.fieldAction(FieldAction.OptionImageUpload, this.field, data)
+          return this.fieldEditor.action(EditorAction.OptionImageUpload, this.field, data)
           .pipe(
             map((response) => {
               return {
@@ -209,7 +209,7 @@ export class FieldConfigOptionsComponent
           );
         }),
         tap((option) => {
-          this.field.config.options.push(option);
+          this.field.options.push(option);
           this._newOptionFile = null;
 
           this._cdRef.markForCheck();

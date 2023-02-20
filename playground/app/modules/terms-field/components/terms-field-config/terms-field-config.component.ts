@@ -143,7 +143,7 @@ export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit {
 
   public writeValue(field: Field | undefined): void {
     this._field = field;
-    this.terms = field?.config?.configs?.terms || [];
+    this.terms = field?.configs?.terms || [];
     if(this.list) {
       this.list.reload();
     }
@@ -156,7 +156,7 @@ export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit {
   }
 
   public termsChange(terms): void {
-    this.field.config.configs.terms = terms;
+    this.field.configs.terms = terms;
     this.fieldChange(this.field);    
   }
 

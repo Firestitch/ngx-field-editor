@@ -1,4 +1,4 @@
-export enum FieldAction {
+export enum EditorAction {
   OptionImageUpload = 'optionImageUpload',
   OptionAdd = 'optionAdd',
   OptionSave = 'optionSave',

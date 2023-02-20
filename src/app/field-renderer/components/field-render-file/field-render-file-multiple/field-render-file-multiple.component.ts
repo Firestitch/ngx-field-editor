@@ -10,13 +10,14 @@ import { controlContainerFactory } from '@firestitch/core';
 import { FsGalleryItem } from '@firestitch/gallery';
 import { FsFile } from '@firestitch/file';
 
-import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { forkJoin, Subject } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 import { Field } from '../../../../interfaces/field.interface';
 import { FileRenderFile } from '../../../../classes/file-render-file';
 import { FieldRendererService } from '../../../../services';
 import { FieldViewGalleryComponent } from '../../../../field-viewer/components/field-view-gallery/field-view-gallery.component';
+import { RendererAction } from '../../../../enums';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   @ViewChild(FieldViewGalleryComponent)
   public fieldViewGallery: FieldViewGalleryComponent;
 
-  public actions = [];
+  public actions;
 
   @Input() public field: Field;
   @Input() public disabled = false;
@@ -63,9 +64,8 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   public selectFile(files: any) {
     this.onTouched();
 
-    if (this._fieldRenderer.config.fileUpload) {
-      files.forEach((fsFile: FsFile) => {
-        this._fieldRenderer.config.fileUpload(this.field, fsFile.file)
+    files.forEach((fsFile: FsFile) => {
+      this._fieldRenderer.action(RendererAction.FileUpload, this.field, { file: fsFile.file }) 
         .pipe(
           takeUntil(this._destroy$)
         )
@@ -78,8 +78,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
           this.fieldViewGallery.reload();
           this._cdRef.markForCheck();
         });
-      });
-    }
+    });
   }
 
   public writeValue(data: any): void {
@@ -95,44 +94,53 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   }
 
   public ngOnInit() {
-    if (this._fieldRenderer.config && this._fieldRenderer.config.fileDownload) {
-      this.actions.push({
-        label: 'Download',
-        click: (item) => {
-          this._fieldRenderer.config.fileDownload(this.field, item);
+    forkJoin({
+      fileDownload: this._fieldRenderer.allowFileDownload(this.field),
+      fileRemove: this._fieldRenderer.allowFileRemove(this.field),
+    })
+      .subscribe((response) => {
+        this.actions = [];
+        this._cdRef.markForCheck();
+
+        if(response.fileDownload) {
+          this.actions.push({
+            label: 'Download',
+            click: (file) => {
+              this._fieldRenderer.action(RendererAction.FileDownload, this.field, file);
+            }
+          });
         }
-      });
-    }
 
-    if (this._fieldRenderer.config?.fileRemove) {
-      this.actions.push({
-        label: 'Remove',
-        click: (item: FsGalleryItem) => {
-          this._prompt.confirm({
-            title: 'Confirm',
-            template: 'Are you sure you would like to remove this file?',
-          })
-          .pipe(
-            switchMap(() => {
-              return this._fieldRenderer.config.fileRemove(this.field, item.data);
-            })
-          )
-          .subscribe(() => {
-            const idx = this.files.indexOf(item.data);
-
-            if (idx >= 0) {
-              this.files.splice(idx, 1);
-              this.fieldViewGallery.reload();
-              this.onChange(this.files);
-
-              if (this._fieldRenderer.config.afterFileRemoved) {
-                this._fieldRenderer.config.afterFileRemoved(this.field, item.data);
-              }
+        if(response.fileRemove) {
+          this.actions.push({
+            label: 'Remove',
+            click: (item: FsGalleryItem) => {
+              this._prompt.confirm({
+                title: 'Confirm',
+                template: 'Are you sure you would like to remove this file?',
+              })
+              .pipe(
+                switchMap(() => {
+                  return this._fieldRenderer.action(RendererAction.FileDelete, this.field, item.data);
+                }),
+              )
+              .subscribe(() => {
+                const idx = this.files.indexOf(item.data);
+    
+                if (idx >= 0) {
+                  this.files.splice(idx, 1);
+                  this.fieldViewGallery.reload();
+                  this.onChange(this.files);
+    
+                  if (this._fieldRenderer.config.afterFileRemoved) {
+                    this._fieldRenderer.config.afterFileRemoved(this.field, item.data);
+                  }
+                }
+              });
             }
           });
         }
       });
-    }
   }
 
   public ngOnDestroy(): void {

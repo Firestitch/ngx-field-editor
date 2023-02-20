@@ -98,7 +98,7 @@ export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestro
     // if (!this.disabled) {
     //   if (this.checked) {
     //     this.field.data.agree = {};
-    //   } else if (this.field.config.configs.signature) {
+    //   } else if (this.field.configs.signature) {
     //     event.preventDefault();
 
     //     const dialogRef = this._dialog.open(SignatureDialogComponent, {
@@ -145,7 +145,7 @@ export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestro
         field.data = {};
       }
 
-      this.terms = field?.config?.configs?.terms || [];  
+      this.terms = field?.configs?.terms || [];  
 
       field.data.terms = field?.data?.terms || {};
 

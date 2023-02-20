@@ -16,7 +16,7 @@ import { forkJoin, of, Subject } from 'rxjs';
 
 import { FieldEditorService } from '../../../services/field-editor.service';
 import { SettingsComponent } from '../settings';
-import { FieldAction } from '../../../enums';
+import { EditorAction } from '../../../enums';
 import { Field, FieldMenuItem } from '../../../interfaces';
 
 
@@ -114,8 +114,8 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
       });
   }
 
-  public fieldActionConfig(): void {
-    this.fieldEditor.fieldAction(FieldAction.FieldSave, this.field)
+  public actionConfig(): void {
+    this.fieldEditor.action(EditorAction.FieldSave, this.field)
       .subscribe(() => {
         this.fieldChanged.emit(this.field);
       });
@@ -134,7 +134,7 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
     this.fieldEditor.config.beforeFieldDuplicate(copiedField)
       .pipe(
         takeUntil(this._destroy$),
-        switchMap((field) => this.fieldEditor.fieldAction(FieldAction.FieldDuplicate, field, { index })),
+        switchMap((field) => this.fieldEditor.action(EditorAction.FieldDuplicate, field, { index })),
         map((response) => response.field),
         switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
         tap((field) =>  {

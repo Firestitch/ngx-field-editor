@@ -1,7 +1,7 @@
 
-<ng-container [ngSwitch]="field.config.type">
+<ng-container [ngSwitch]="field.type">
   <ng-container *ngSwitchCase="fieldType.Choice">
-    <ng-container *ngFor="let option of field.config.options || []">
+    <ng-container *ngFor="let option of field.options || []">
       <span *ngIf="field.data.value?.selected===option.guid">{{option.name}}</span>
     </ng-container>
     <span *ngIf="field.data.value?.selected==='other'">{{field.data.value?.other}}</span>
@@ -12,21 +12,21 @@
       {{field.data.other}}
     </span>
     <ng-template #dropdownValue>
-      <ng-container *ngFor="let option of field.config.options || []">
+      <ng-container *ngFor="let option of field.options || []">
         <span *ngIf="field.data.value===option.guid">{{option.name}}</span>
       </ng-container>
     </ng-template>
   </ng-container>
 
   <ng-container *ngSwitchCase="fieldType.Checkbox">
-    <ng-container *ngFor="let option of field.config.options || []">
+    <ng-container *ngFor="let option of field.options || []">
       <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
     </ng-container>
     <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span>
   </ng-container>
 
   <ng-container *ngSwitchCase="fieldType.VisualSelector">
-    <ng-container *ngFor="let option of field.config.options || []">
+    <ng-container *ngFor="let option of field.options || []">
       <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
     </ng-container>
     <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span>

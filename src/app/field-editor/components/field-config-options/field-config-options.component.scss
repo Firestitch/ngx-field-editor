@@ -31,6 +31,12 @@ mat-checkbox {
   }
 }
 
+.option-add-new ::ng-deep {
+  .mat-radio-button {
+    visibility: hidden;
+  }
+}
+
 .or {
   margin: 0 10px 0 20px;
 }

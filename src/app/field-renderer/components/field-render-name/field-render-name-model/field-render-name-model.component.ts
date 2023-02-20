@@ -50,7 +50,7 @@ export class FieldRenderNameModelComponent extends FieldComponent implements Con
 
   validate(control: AbstractControl): ValidationErrors | null {
     const errors = [];
-    if(this.field.config.configs.required) {
+    if(this.field.configs.required) {
       if(!this.field.data.value.firstName) {
         errors.push('first name');
       }

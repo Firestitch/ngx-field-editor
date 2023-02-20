@@ -1,5 +1,5 @@
 <mat-form-field class="form-field-multiline-subscript">
-  <mat-label *ngIf="field.config.label">{{field.config.label}}</mat-label>
+  <mat-label *ngIf="field.label">{{field.label}}</mat-label>
   <input
     matInput
     fsDatePickerBirthday
@@ -7,6 +7,6 @@
     (ngModelChange)="changed.emit(field)"
     [maxDate]="curentDay"
     [name]="name"
-    [required]="field.config.configs.required===true">
-  <mat-hint>{{field.config.description}}</mat-hint>
+    [required]="field.configs.required===true">
+  <mat-hint>{{field.description}}</mat-hint>
 </mat-form-field>

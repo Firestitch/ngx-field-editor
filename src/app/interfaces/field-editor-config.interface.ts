@@ -3,7 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Toolbar, ToolbarItem } from './toolbar.interface';
 
 import { Field } from './field.interface';
-import { FieldAction } from '../enums';
+import { EditorAction } from '../enums';
 import { FieldOption } from './field-option.interface';
 
 export interface FsFieldEditorCallbackParams {
@@ -41,9 +41,7 @@ export interface FieldEditorConfig {
   afterFieldUnselected?: (field: Field) => Observable<any>,
   afterFieldDropped?: (field: Field, index: number) => Observable<any>,
 
-  imageUpload?: (field: Field, file: File) => Observable<string>,
-  fieldAction: (action: FieldAction, field: Field, data: any) => Observable<Field>,
-
+  action: (action: EditorAction, field: Field, data: any) => Observable<Field>,
 }
 
 export interface FieldMenu {

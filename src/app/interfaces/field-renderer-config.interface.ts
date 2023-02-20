@@ -1,16 +1,20 @@
 import { Observable } from 'rxjs';
+import { RendererAction } from '../enums';
+
 import { Field } from './field.interface';
 
 
 export interface FieldRendererConfig {
   fields?: Field[],
+
   fieldChanged?: (field?: Field) => void,
-  
   afterFileRemoved?: (field: Field, data: any) => void,
-  
-  imageUpload?: (field: Field, file: File) => Observable<string>,
-  fileUpload?: (field: Field, file: File) => Observable<{ name: string, url: string }>,
-  fileRemove?: (field: Field, data: any) => Observable<any>,
-  
-  fileDownload?: (field: Field, data: any) => void,
+
+  allowFileRemove?: (field: Field) => Observable<boolean>,
+  allowFileDownload?: (field: Field) => Observable<boolean>,
+  allowImageUpload?: (field: Field) => Observable<boolean>,
+
+  showField?: (field: Field) => Observable<boolean>,
+
+  action?: (action: RendererAction, field: Field, data: any) => Observable<any>,
 }

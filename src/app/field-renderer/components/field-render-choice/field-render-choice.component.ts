@@ -34,7 +34,7 @@ export class FieldRenderChoiceComponent extends FieldComponent {
   }
 
   public validate = () => {
-    if (this.field.config.configs.required === true && !this.radiobuttons.value) {
+    if (this.field.configs.required === true && !this.radiobuttons.value) {
       throw 'This field is required';
     }
   }

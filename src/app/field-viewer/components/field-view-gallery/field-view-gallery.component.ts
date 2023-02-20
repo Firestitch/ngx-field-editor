@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 
 import { FsGalleryComponent, FsGalleryConfig, FsGalleryItem, GalleryLayout, GalleryThumbnailSize, mime } from '@firestitch/gallery';
+import { FsGalleryInfoConfig } from '@firestitch/gallery/app/interfaces';
 
 import { Observable, of } from 'rxjs';
 
@@ -45,8 +46,8 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
   }
 
   private _initGalleryConfig(): void {
-    let info: any = {
-      icon: true,
+    let info: FsGalleryInfoConfig = {
+      icon: false,
     };
 
     if (this.actions.length) {

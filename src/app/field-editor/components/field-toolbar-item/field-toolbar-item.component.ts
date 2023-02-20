@@ -43,12 +43,10 @@ export class FieldToolbarItemComponent {
     this.fieldEditor.unselectField();
 
     this.field = {
-      config: {
-        guid: guid(),
-        type: item.type,
-        label: item.label,
-        description: '',
-      },
+      guid: guid(),
+      type: item.type,
+      label: item.label,
+      description: '',
       data: {
         value: null,
         guid: guid()
@@ -98,12 +96,10 @@ export class FieldToolbarItemComponent {
 
   private _prepareField(item: ToolbarItem): Field {
     return {
-      config: {
-        guid: guid(),
-        type: item.type,
-        label: item.label,
-        description: '',
-      },
+      guid: guid(),
+      type: item.type,
+      label: item.label,
+      description: '',
       data: {
         value: null,
         guid: guid()

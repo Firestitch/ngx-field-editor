@@ -1,16 +1,16 @@
-<div class="field-container" [ngClass]="['field-' + field.config.type]">
+<div class="field-container" [ngClass]="['field-' + field.type]">
   <ng-container *ngIf="showLabel; else content">
-    <ng-container [ngSwitch]="field.config.type">
+    <ng-container [ngSwitch]="field.type">
       <ng-container *ngSwitchCase="fieldType.Heading">
         <ng-container *ngTemplateOutlet="content"></ng-container>
       </ng-container>
       <ng-container *ngSwitchDefault>
         <fs-label-field>
           <fs-label>
-            <div class="label-container" [ngClass]="{ tooltip: !!field.config.description }">
-              {{field.config.label}}
-              <ng-container *ngIf="field.config.description">
-                <mat-icon [matTooltip]="field.config.description">info</mat-icon>
+            <div class="label-container" [ngClass]="{ tooltip: !!field.description }">
+              {{field.label}}
+              <ng-container *ngIf="field.description">
+                <mat-icon [matTooltip]="field.description">info</mat-icon>
               </ng-container>
             </div>            
           </fs-label>
@@ -23,7 +23,7 @@
 
 <ng-template #content>
   <ng-container *ngIf="field.hasValue; else elseHasValue">
-    <ng-container [ngSwitch]="field.config.type">
+    <ng-container [ngSwitch]="field.type">
       <ng-container *ngSwitchCase="fieldType.Heading">
         <fs-field-view-heading [field]="field"></fs-field-view-heading>
       </ng-container>
@@ -42,7 +42,7 @@
 
       <ng-container *ngSwitchCase="fieldType.Content">
         <fs-html-renderer
-          [html]="field.config.configs.content">
+          [html]="field.configs.content">
         </fs-html-renderer>
       </ng-container>
 

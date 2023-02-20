@@ -1,11 +1,11 @@
 <fs-file
     (select)="selectFile($event)"
-    [imageQuality]="field.config.configs.imageQuality"
-    [imageWidth]="field.config.configs.maxWidth"
-    [imageHeight]="field.config.configs.maxHeight"
+    [imageQuality]="field.configs.imageQuality"
+    [imageWidth]="field.configs.maxWidth"
+    [imageHeight]="field.configs.maxHeight"
     [accept]="accept"
     [disabled]="disabled"
-    [multiple]="field.config.configs.allowMultiple">
+    [multiple]="field.configs.allowMultiple">
   <button
       [disabled]="disabled"
       mat-raised-button
@@ -16,10 +16,11 @@
   </button>
 </fs-file>
 
-<div class="files-preview" [hidden]="!field.data?.value?.length">
-  <fs-field-view-gallery
-    [actions]="actions"
-    [field]="field">
-  </fs-field-view-gallery>
-</div>
-
+<ng-container *ngIf="actions">
+  <div class="files-preview" [hidden]="!field.data?.value?.length">
+    <fs-field-view-gallery
+      [actions]="actions"
+      [field]="field">
+    </fs-field-view-gallery>
+  </div>
+</ng-container>

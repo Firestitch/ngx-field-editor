@@ -1,7 +1,9 @@
 <div *ngFor="let field of fieldRenderer.config.fields; trackBy: trackByGuid">
-  <fs-field-render
-    [attr.data-guid]="field.config.guid"
-    [field]="field"
-    [fieldRenders]="fieldRenders.toArray()">
-  </fs-field-render>
+  <ng-container *ngIf="showField(field) | async">
+    <fs-field-render
+      [attr.data-guid]="field.guid"
+      [field]="field"
+      [fieldRenders]="fieldRenders.toArray()">
+    </fs-field-render>
+  </ng-container>
 </div>

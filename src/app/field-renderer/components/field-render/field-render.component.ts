@@ -26,7 +26,7 @@ import { FieldType } from '../../../enums/field-type';
 export class FieldRenderComponent implements AfterContentInit {
 
   public fieldRenderTemplateRefs = {};
-  public field: Field = { config: {} };
+  public field: Field = {};
   public fieldType = FieldType;
 
   @Input()

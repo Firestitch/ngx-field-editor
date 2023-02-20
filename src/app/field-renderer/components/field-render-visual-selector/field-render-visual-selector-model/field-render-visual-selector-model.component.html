@@ -1,6 +1,6 @@
 <div class="options">
   <ng-container 
-    *ngFor="let option of field.config.options; let index = index">
+    *ngFor="let option of field.options; let index = index">
     <div class="option" [ngClass]="{ selected: selected[option.guid] }" (click)="select(option)">
       <div class="option-container">  
         <ng-container *ngIf="configs.format === VisualSelectorFormat.Image || configs.format === VisualSelectorFormat.ImageName">

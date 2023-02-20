@@ -59,7 +59,7 @@ export class FieldRenderVisualSelectorModelComponent extends FieldComponent impl
   }
 
   public validate(control: AbstractControl): ValidationErrors | null {
-    if (this.field.config.configs.required === true && !this.field.data.value.selected.length) {
+    if (this.field.configs.required === true && !this.field.data.value.selected.length) {
       return { required: 'This field is required' };
     }
 

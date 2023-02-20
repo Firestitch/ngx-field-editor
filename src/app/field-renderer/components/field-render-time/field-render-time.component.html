@@ -1,11 +1,11 @@
 <mat-form-field class="form-field-multiline-subscript">
-  <mat-label>{{field.config.label}}</mat-label>
+  <mat-label>{{field.label}}</mat-label>
   <input
     matInput
     fsTimePicker
     [(ngModel)]="field.data.value"
     (ngModelChange)="changed.emit(field)"
     [name]="name"
-    [required]="field.config.configs.required===true">
-  <mat-hint>{{field.config.description}}</mat-hint>
+    [required]="field.configs.required===true">
+  <mat-hint>{{field.description}}</mat-hint>
 </mat-form-field>

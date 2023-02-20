@@ -29,7 +29,7 @@ import { FieldRenderDirective } from '../../../field-renderer/directives/field-r
 import { FieldEditorService, FieldRendererService } from '../../../services';
 import { clickOutsideElement } from '../../../helpers/click-outside-element';
 import { FieldEditorToolbarDirective } from '../../directives/field-editor-toolbar/field-editor-toolbar.directive';
-import { FieldAction } from '../../../enums';
+import { EditorAction } from '../../../enums';
 import { FieldContainerDirective } from '../../directives/field-container/field-container.directive';
 
 
@@ -122,7 +122,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
       const field = this.fieldEditor.config.fields[event.previousIndex];
 
       this.fieldEditor
-        .fieldAction(FieldAction.FieldReorder, field, { 
+        .action(EditorAction.FieldReorder, field, { 
           fields: this.fieldEditor.config.fields, 
           previousIndex: event.previousIndex,  
           currentIndex: event.currentIndex,  

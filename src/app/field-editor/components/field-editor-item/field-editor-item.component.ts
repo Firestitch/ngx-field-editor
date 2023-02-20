@@ -16,7 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Field } from '../../../interfaces/field.interface';
 import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { FieldAction } from '../../../enums/field-action';
+import { EditorAction } from '../../../enums/editor-action';
 import { FieldContainerDirective } from '../../directives/field-container/field-container.directive';
 
 
@@ -57,11 +57,11 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public isSelectedField = false;
 
   public get fieldConfigTemplateRef(): TemplateRef<unknown> | false {
-    return this.fieldConfigTemplateRefs && this.fieldConfigTemplateRefs[this.field.config.type];
+    return this.fieldConfigTemplateRefs && this.fieldConfigTemplateRefs[this.field.type];
   }
 
   public get fieldRenderTemplateRef(): TemplateRef<unknown> | false {
-    return this.fieldRenderTemplateRefs && this.fieldRenderTemplateRefs[this.field.config.type];
+    return this.fieldRenderTemplateRefs && this.fieldRenderTemplateRefs[this.field.type];
   }
 
   public fieldChange(field: Field) {
@@ -70,7 +70,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.hasDescription = !!this.field.config.description;
+    this.hasDescription = !!this.field.description;
 
     this.fieldEditor.fieldCanEdit(this.field)
       .pipe(
@@ -107,7 +107,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$)
       )
       .subscribe((field) => {
-        this.isSelectedField = field?.config?.guid === this.field.config.guid;
+        this.isSelectedField = field?.guid === this.field.guid;
         this._cdRef.markForCheck();
       });
   }
@@ -116,13 +116,13 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
     this.hasDescription = !this.hasDescription;
 
     if (!this.hasDescription) {
-      field.config.description = null;
+      field.description = null;
     }
 
-    this.fieldEditor.fieldAction(FieldAction.FieldSave, field)
+    this.fieldEditor.action(EditorAction.FieldSave, field)
       .pipe(takeUntil(this._destroy$))
       .subscribe(() => {
-        this.fieldEditor.fieldAction(FieldAction.FieldSave, field);
+        this.fieldEditor.action(EditorAction.FieldSave, field);
       });
   }
 

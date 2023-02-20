@@ -63,6 +63,7 @@ export {
 
 
 export { 
-  FieldAction, 
+  EditorAction,   
+  RendererAction,  
   VisualSelectorFormat,
 } from './app/enums';

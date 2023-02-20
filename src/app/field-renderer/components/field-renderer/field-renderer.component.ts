@@ -14,6 +14,7 @@ import { Field } from './../../../interfaces/field.interface';
 import { FieldRendererConfig } from './../../../interfaces/field-renderer-config.interface';
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
 import { FieldRendererService } from '../../../services';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
@@ -44,13 +45,21 @@ export class FieldRendererComponent {
     this.fieldRenderer.setConfig(config);
   }
 
-  public trackByGuid(index: number, item: Field) {
-    return item.config.guid;
+  public trackByGuid(index: number, field: Field) {
+    return field.guid;
   }
 
   public get fields(): Field[] {
     return [
       ...this.fieldRenderer.config.fields,
     ];
+  }
+
+  public showField(field: Field): Observable<boolean> {
+    if(!this.fieldRenderer.config.showField) {
+      return of(true);
+    }
+
+    return this.fieldRenderer.config.showField(field);
   }
 }

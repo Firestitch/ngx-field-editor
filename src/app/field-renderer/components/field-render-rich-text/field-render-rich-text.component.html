@@ -1,15 +1,17 @@
 <fs-label-field>
-  <fs-label *ngIf="field.config.label">{{ field.config.label }}</fs-label>
+  <fs-label *ngIf="field.label">{{ field.label }}</fs-label>
 
-  <fs-html-editor
-    [(ngModel)]="field.data.value"
-    [config]="editorConfig"
-    [required]="field.config.configs.required"
-    [name]="name"
-    (ngModelChange)="changed.emit(field)">
-  </fs-html-editor>
+  <ng-container *ngIf="editorConfig">
+    <fs-html-editor
+      [(ngModel)]="field.data.value"
+      [config]="editorConfig"
+      [required]="field.configs.required"
+      [name]="name"
+      (ngModelChange)="changed.emit(field)">
+    </fs-html-editor>
+  </ng-container>
 
-  <fs-label-message *ngIf="field.config.description">
-    {{ field.config.description }}
+  <fs-label-message *ngIf="field.description">
+    {{ field.description }}
   </fs-label-message>
 </fs-label-field>

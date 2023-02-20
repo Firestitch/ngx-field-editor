@@ -13,26 +13,26 @@ export function initField(field: Field | FieldOption): Field {
     field = {};
   }
 
-  if (!field.config) {
-    field.config = {};
+  if (!field) {
+    field = {};
   }
 
   if (!field.data) {
     field.data = {};
   }
 
-  if (!field.config.configs) {
-    field.config.configs = {};
+  if (!field.configs) {
+    field.configs = {};
   }
 
-  switch (field.config.type) {
+  switch (field.type) {
     case FieldType.Heading:
-      field.config.hideDescription = true;
-      field.config.hideRequired = true;
+      field.hideDescription = true;
+      field.hideRequired = true;
       break;
 
     case FieldType.Content:
-      field.config.hideRequired = true;
+      field.hideRequired = true;
       break;
 
     case FieldType.Checkbox:
@@ -46,30 +46,30 @@ export function initField(field: Field | FieldOption): Field {
     break;
 
     case FieldType.Name:
-      if (!field.config.configs.firstName) {
-        field.config.configs.firstName = { display: true, label: 'First Name' };
+      if (!field.configs.firstName) {
+        field.configs.firstName = { display: true, label: 'First Name' };
       }
 
-      if (!field.config.configs.lastName) {
-        field.config.configs.lastName = { display: true, label: 'Last Name' };
+      if (!field.configs.lastName) {
+        field.configs.lastName = { display: true, label: 'Last Name' };
       }
       break;
 
     case FieldType.File:
-      if (field.config.configs.maxWidth === undefined ) {
-        field.config.configs.maxWidth = 1024;
+      if (field.configs.maxWidth === undefined ) {
+        field.configs.maxWidth = 1024;
       }
 
-      if (field.config.configs.maxHeight === undefined ) {
-        field.config.configs.maxHeight = 768;
+      if (field.configs.maxHeight === undefined ) {
+        field.configs.maxHeight = 768;
       }
 
-      if (field.config.configs.imageQuality === undefined ) {
-        field.config.configs.imageQuality = .8;
+      if (field.configs.imageQuality === undefined ) {
+        field.configs.imageQuality = .8;
       }
 
-      if (field.config.configs.allowedFileTypes === undefined ) {
-        field.config.configs.allowedFileTypes = {
+      if (field.configs.allowedFileTypes === undefined ) {
+        field.configs.allowedFileTypes = {
           image: true,
           video: true,
           pdf: true,
@@ -77,39 +77,39 @@ export function initField(field: Field | FieldOption): Field {
         };
       }
 
-      if (field.config.configs.allowMultiple === undefined ) {
-        field.config.configs.allowMultiple = true;
+      if (field.configs.allowMultiple === undefined ) {
+        field.configs.allowMultiple = true;
       }
       break;
 
     case FieldType.Address:
-      field.config.hideRequired = true;
+      field.hideRequired = true;
       if (!isObject(field.data.value)) {
         field.data.value = {};
       }
 
-      if (!field.config.configs.street) {
-        field.config.configs.street = { enabled: true, label: 'Street' };
+      if (!field.configs.street) {
+        field.configs.street = { enabled: true, label: 'Street' };
       }
 
-      if (!field.config.configs.address2) {
-        field.config.configs.address2 = { enabled: false, label: 'Address 2' };
+      if (!field.configs.address2) {
+        field.configs.address2 = { enabled: false, label: 'Address 2' };
       }
 
-      if (!field.config.configs.city) {
-        field.config.configs.city = { enabled: true, label: 'City' };
+      if (!field.configs.city) {
+        field.configs.city = { enabled: true, label: 'City' };
       }
 
-      if (!field.config.configs.region) {
-        field.config.configs.region = { enabled: true, label: 'State/Province' };
+      if (!field.configs.region) {
+        field.configs.region = { enabled: true, label: 'State/Province' };
       }
 
-      if (!field.config.configs.zip) {
-        field.config.configs.zip = { enabled: true, label: 'Zip/Postal Code' };
+      if (!field.configs.zip) {
+        field.configs.zip = { enabled: true, label: 'Zip/Postal Code' };
       }
 
-      if (!field.config.configs.country) {
-        field.config.configs.country = { enabled: true, label: 'Country' };
+      if (!field.configs.country) {
+        field.configs.country = { enabled: true, label: 'Country' };
       }
 
       break;
@@ -129,7 +129,7 @@ export function initField(field: Field | FieldOption): Field {
       
     case FieldType.RichText:
       if(!('value' in field.data)) {
-        field.data.value = field.config.configs.default;
+        field.data.value = field.configs.default;
       }
     
       break;
@@ -140,7 +140,7 @@ export function initField(field: Field | FieldOption): Field {
         '' : 
         String(field.data.value);
 
-      if(field.config.configs.populate) {
+      if(field.configs.populate) {
         const value = getPopulateFieldValue(field);
         if(value !== null) {
           field.data.value = value
@@ -154,8 +154,8 @@ export function initField(field: Field | FieldOption): Field {
       field.data.guid = guid();
     }
 
-    if (field.config.type === FieldType.Heading && !field.config.configs.type) {
-      field.config.configs.type = 1;
+    if (field.type === FieldType.Heading && !field.configs.type) {
+      field.configs.type = 1;
     }
 
     return field;
@@ -163,25 +163,25 @@ export function initField(field: Field | FieldOption): Field {
 
 
   function initOption(field: FieldOption) {
-    if(field.config.type === FieldType.Gender) {
-      if (!field.config.options) {
-        field.config.options = [
+    if(field.type === FieldType.Gender) {
+      if (!field.options) {
+        field.options = [
           { name: 'Male', value: 'male', guid: guid() },
           { name: 'Female', value: 'female', guid: guid() },
         ];
       }
     } else {
-      if (!field.config.options) {
-        field.config.options = [];
+      if (!field.options) {
+        field.options = [];
       }
     }
 
     if (
-      field.config.type === FieldType.Checkbox ||
-      field.config.type === FieldType.Choice ||
-      field.config.type === FieldType.Gender
+      field.type === FieldType.Checkbox ||
+      field.type === FieldType.Choice ||
+      field.type === FieldType.Gender
     ) {
-      const selected = field.config.type === FieldType.Checkbox ? [] : null;
+      const selected = field.type === FieldType.Checkbox ? [] : null;
 
       if (!isObject(field.data.value)) {
         field.data.value = { selected: selected };
@@ -189,18 +189,18 @@ export function initField(field: Field | FieldOption): Field {
 
       const value = getPopulateFieldValue(field); 
       if(value !==null) {
-        if(field.config.type === FieldType.Checkbox) {
+        if(field.type === FieldType.Checkbox) {
           field.data.value.selected = value.split(',');
         } else {
           field.data.value.selected = value;
         }
       }
-    } else if (field.config.type === FieldType.Dropdown) {
+    } else if (field.type === FieldType.Dropdown) {
       if (isObject(field.data.value)) {
         field.data.value = null;
       }
-    } else if (field.config.type === FieldType.VisualSelector) {
-      const configs = field.config.configs;
+    } else if (field.type === FieldType.VisualSelector) {
+      const configs = field.configs;
       if (!configs.previewWidth) {
         configs.previewWidth = 150;
       }

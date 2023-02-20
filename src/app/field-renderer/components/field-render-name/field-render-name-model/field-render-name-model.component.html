@@ -2,8 +2,8 @@
   <div class="row">
     <mat-form-field
       class="form-field-padless-bottom"
-        *ngIf="field.config.configs.firstName?.display">
-      <mat-label>{{field.config.label + ' ' + field.config.configs.firstName.label}}</mat-label>
+        *ngIf="field.configs.firstName?.display">
+      <mat-label>{{field.label + ' ' + field.configs.firstName.label}}</mat-label>
       <input
         matInput
         [name]="name + 'firstName'"
@@ -13,8 +13,8 @@
     </mat-form-field>
     <mat-form-field
         class="form-field-padless-bottom"
-        *ngIf="field.config.configs.lastName?.display">
-      <mat-label>{{field.config.label + ' ' + field.config.configs.lastName.label}}</mat-label>
+        *ngIf="field.configs.lastName?.display">
+      <mat-label>{{field.label + ' ' + field.configs.lastName.label}}</mat-label>
       <input
         matInput
         [name]="name + 'lastName'"
@@ -24,7 +24,7 @@
     </mat-form-field>
   </div>
 
-  <fs-label-message class="fs-form-message" *ngIf="field.config.description">
-    <div class="fs-form-hint">{{ field.config.description }}</div>
+  <fs-label-message class="fs-form-message" *ngIf="field.description">
+    <div class="fs-form-hint">{{ field.description }}</div>
   </fs-label-message>
 </fs-label-field>

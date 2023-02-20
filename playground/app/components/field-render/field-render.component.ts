@@ -9,21 +9,19 @@ import { Field } from '@firestitch/field-editor';
 export class FieldRenderComponent {
 
   public field: Field = {
-      config: {
-        type: 'dropdown',
-        label: 'Custom Dropdown',
-        configs: {
-          options: [
-            {
-              value: 'A',
-              name: 'Option A'
-            },
-            {
-              value: 'B',
-              name: 'Option B'
-            }
-          ]
-        }
+      type: 'dropdown',
+      label: 'Custom Dropdown',
+      configs: {
+        options: [
+          {
+            value: 'A',
+            name: 'Option A'
+          },
+          {
+            value: 'B',
+            name: 'Option B'
+          }
+        ]
       }
     }
 }

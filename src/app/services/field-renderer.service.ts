@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { cloneDeep } from 'lodash-es';
 
 import { Field, FieldRendererConfig } from '../interfaces';
+import { RendererAction } from '../enums';
 
 
 @Injectable()
@@ -26,20 +27,47 @@ export class FieldRendererService implements OnDestroy {
   }
 
   public fieldChanged(field: Field): void {
-    // this.config.fields = this.config.fields
-    //   .map((_field) => {
-    //     return _field.config.guid === field.config.guid ? field : _field;
-    //   });
+    this.action(RendererAction.FieldChange, field);
 
     if (this.config.fieldChanged) {
-      //field = this._prepareItem(field);
-
       this.config.fieldChanged(field);
     }
   }
 
   public get fields(): Field[] {
     return cloneDeep(this.config.fields);
+  }
+
+  public action(action: RendererAction, field: Field, data: any = {}): Observable<any> {
+    if(this.config.action) {
+      return this.config.action(action, field, data);
+    }
+
+    return of({});
+  }
+
+  public allowFileDownload(field: Field): Observable<boolean> {
+    if(!this.config?.allowFileDownload) {
+      return of(false);
+    }
+
+    return this.config.allowFileDownload(field);
+  }
+
+  public allowFileRemove(field: Field): Observable<boolean> {
+    if(!this.config?.allowFileRemove) {
+      return of(false);
+    }
+
+    return this.config.allowFileRemove(field);
+  }
+
+  public allowImageUpload(field: Field): Observable<boolean> {
+    if(!this.config?.allowImageUpload) {
+      return of(true);
+    }
+
+    return this.config.allowImageUpload(field);
   }
 
   public set fields(fields: Field[]) {
