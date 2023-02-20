@@ -54,7 +54,7 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
       info = {
         ...info,
         menu: {
-          actions: this.actions,
+          //actions: this.actions,
         },
       };
     }
@@ -84,9 +84,9 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
             name: item.name,
             mime: item.mime || mime(item.name, item.url, '', false),
             data: item,
-          }))
+          })),
         );
       },
-    }
+    };
   }
 }
