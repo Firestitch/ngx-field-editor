@@ -1,11 +1,16 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Input,
+  OnDestroy,
   OnInit,
-  TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ToolbarItem, ToolbarItems } from '../../../interfaces/toolbar.interface';
 import { Field } from '../../../interfaces/field.interface';
@@ -15,7 +20,6 @@ import {
   TOOLBAR_MENU_CLASS,
 } from '../../../consts/backdrop-class';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { MatMenuTrigger } from '@angular/material/menu';
 
 
 @Component({
@@ -24,7 +28,9 @@ import { MatMenuTrigger } from '@angular/material/menu';
   styleUrls: [ 'field-toolbar.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldToolbarComponent implements OnInit {
+export class FieldToolbarComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @Input()
   public toolbarItems: ToolbarItems = [];
   @Input()
@@ -34,6 +40,8 @@ export class FieldToolbarComponent implements OnInit {
 
   @ViewChild('trigger', { static: false })
   public triggerRef: MatMenuTrigger;
+  @ViewChild('subTrigger', { static: false })
+  public subTrigger: MatMenuTrigger;
 
   public items: ToolbarItems = [];
   public readonly backdropClass = BACKDROP_CLASS;
@@ -42,6 +50,9 @@ export class FieldToolbarComponent implements OnInit {
   public field: Field = null;
   public expanded = true;
   public withSections = false;
+
+  private _closed = true;
+  private _destroy$ = new Subject<void>();
 
   constructor(
     public fieldEditor: FieldEditorService,
@@ -55,6 +66,27 @@ export class FieldToolbarComponent implements OnInit {
       this.items = this.nestedItem.items;
       this._initItems(this.nestedItem.items);
     }
+  }
+
+  public ngAfterViewInit(): void {
+    this.subTrigger?.menuClosed
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(() => this._closed = true);
+  }
+
+  public hadleMenuItemClick(event: Event): void {
+    event.preventDefault();
+
+    this._closed = !this._closed;
+
+    if (this._closed) {
+      this.subTrigger.closeMenu();
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   private _initItems(items: ToolbarItems) {

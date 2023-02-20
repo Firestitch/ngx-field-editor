@@ -146,7 +146,7 @@ export class ExampleComponent implements OnInit {
               reader.readAsDataURL(data.file);
             });
         }
-        
+
         return of({ field });
       },
       toolbar: {
@@ -173,7 +173,27 @@ export class ExampleComponent implements OnInit {
                 label: 'Menu 2A',
                 items: [
                   {
+                    label: 'Menu 2A1',
+                    items: [
+                      {
+                        icon: 'share',
+                        label: 'Share',
+                        type: 'share',
+                      },
+                    ],
+                  },
+                  {
                     label: 'Menu 2A2',
+                    icon: 'share',
+                    type: 'share',
+                  }
+                ]
+              },
+              {
+                label: 'Menu 2B',
+                items: [
+                  {
+                    label: 'Menu 2B1',
                     items: [
                       {
                         icon: 'share',
@@ -188,7 +208,7 @@ export class ExampleComponent implements OnInit {
                     type: 'share',
                   }
                 ]
-              }
+              },
             ]
           },
           ...this.defaultConfig.toolbar.items,
