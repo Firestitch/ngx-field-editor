@@ -7,5 +7,8 @@
     [label]="'Signature'"
     (changed)="changed($event)">
   </fs-signature>
-  <fs-label-message class="fs-form-message"></fs-label-message>
+
+  <fs-label-message class="fs-form-message" *ngIf="field.description">
+    <div class="fs-form-hint">{{ field.description }}</div>
+  </fs-label-message>
 </fs-label-field>
