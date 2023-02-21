@@ -49,13 +49,12 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
     (this.fieldEditor.config.fieldMenu?.items || [])
       .forEach((menuItem: FieldMenuItem) => {
         menuItems.push(
-          { 
+          {
             label: menuItem.label,
             click: (event: Event) => {
               event.preventDefault();
-              event.stopPropagation();
 
-              if(menuItem.click) {
+              if (menuItem.click) {
                 menuItem.click(this.field);
               }
             },
@@ -65,14 +64,14 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
       });
 
     menuItems.push(...[
-      { 
+      {
         label: 'Duplicate',
         click: (event) => {
           this.duplicate(event);
         },
         show: this.fieldEditor.fieldShowDuplicate(this.field),
       },
-      { 
+      {
         label: 'Settings',
         click:  (event) => {
           this.settings(event);
@@ -123,7 +122,7 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
 
   public duplicate(event: Event): void {
     event.preventDefault();
-    event.stopPropagation();
+
     const index = this.fieldEditor.config.fields.indexOf(this.field) + 1;
 
     const copiedField = {
