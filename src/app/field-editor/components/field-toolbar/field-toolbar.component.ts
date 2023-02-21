@@ -45,7 +45,7 @@ export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public rootTriggerRef: MatMenuTrigger;
 
   @Output()
-  public closeChildItemsEvent = new EventEmitter<string>();
+  public itemClick = new EventEmitter<string>();
 
   @ViewChild('trigger')
   public triggerRef: MatMenuTrigger;
@@ -103,7 +103,7 @@ export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.toggleMenuItem();
 
-    this.closeChildItemsEvent.emit(this.uuid);
+    this.itemClick.emit(this.uuid);
   }
 
   public toggleMenuItem(): void {

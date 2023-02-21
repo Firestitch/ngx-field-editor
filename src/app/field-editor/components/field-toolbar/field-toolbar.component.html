@@ -31,7 +31,7 @@
       <fs-field-toolbar
         [parentItem]="item"
         [rootTriggerRef]="triggerRef ? triggerRef : rootTriggerRef"
-        (closeChildItemsEvent)="closeChildItems($event)">
+        (itemClick)="closeChildItems($event)">
       </fs-field-toolbar>
     </ng-container>
 
