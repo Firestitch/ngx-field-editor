@@ -88,6 +88,12 @@ export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => this._closed = true);
   }
 
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   public closeChildItems(uuid: string): void {
     const childComponents = this.childrenToolbarItems.toArray();
 
@@ -110,7 +116,7 @@ export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this._closed = !this._closed;
 
     if (this._closed) {
-      this.childTrigger.closeMenu();
+      this.closeMenu();
     }
   }
 
@@ -118,11 +124,6 @@ export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this._closed = true;
 
     this.childTrigger.closeMenu();
-  }
-
-  public ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
   }
 
   private _initItems(items: ToolbarItems): void {
