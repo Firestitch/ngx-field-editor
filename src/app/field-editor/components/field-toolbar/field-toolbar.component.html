@@ -1,22 +1,23 @@
-<button
-    *ngIf="!nestedItem; else nestedTrigger"
-    mat-mini-fab
-    type="button"
-    color="primary"
-    [matMenuTriggerFor]="menu"
-    #trigger="matMenuTrigger"
-    class="toolbar-button">
-  <mat-icon>add</mat-icon>
-</button>
+<ng-container *ngIf="!parentItem; else nestedTrigger">
+  <button
+      mat-mini-fab
+      type="button"
+      color="primary"
+      [matMenuTriggerFor]="menu"
+      #trigger="matMenuTrigger"
+      class="toolbar-button">
+    <mat-icon>add</mat-icon>
+  </button>
+</ng-container>
 
 <ng-template #nestedTrigger>
   <button
       mat-menu-item
       type="button"
       [matMenuTriggerFor]="menu"
-      (click)="hadleMenuItemClick($event)"
-      #subTrigger="matMenuTrigger">
-    {{ nestedItem.label }}
+      (click)="handleMenuItemClick($event)"
+      #childTrigger="matMenuTrigger">
+    {{ parentItem.label }}
   </button>
 </ng-template>
 
@@ -26,11 +27,13 @@
   [backdropClass]="backdropClass"
   [class]="menuClass">
   <ng-container *ngFor="let item of $any(items)">
-    <fs-field-toolbar
-      *ngIf="item.items else simpleItem"
-      [nestedItem]="item"
-      [rootTriggerRef]="triggerRef ? triggerRef : rootTriggerRef">
-    </fs-field-toolbar>
+    <ng-container *ngIf="item.items else simpleItem">
+      <fs-field-toolbar
+        [parentItem]="item"
+        [rootTriggerRef]="triggerRef ? triggerRef : rootTriggerRef"
+        (closeChildItemsEvent)="closeChildItems($event)">
+      </fs-field-toolbar>
+    </ng-container>
 
     <ng-template #simpleItem>
       <ng-template
