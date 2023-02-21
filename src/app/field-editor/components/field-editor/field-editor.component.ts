@@ -45,8 +45,13 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   @Input()
   public scrollContainer: string | HTMLElement = null;
 
+  @Input()
+  public set config(config: FieldEditorConfig) {
+    this.fieldEditor.setConfig(config);
+  }
+
   @ContentChild(FieldEditorToolbarDirective, { read: TemplateRef })
-  public editorToolbarTpl: TemplateRef<FieldEditorToolbarDirective>
+  public editorToolbarTpl: TemplateRef<FieldEditorToolbarDirective>;
 
   @ContentChild(FieldContainerDirective, { read: TemplateRef })
   public fieldContainerTemplateRef: TemplateRef<FieldContainerDirective>;
@@ -56,11 +61,6 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
 
   @ContentChildren(FieldRenderDirective)
   public queryListFieldRender: QueryList<FieldRenderDirective>;
-
-  @HostListener('document:keydown.escape', ['$event'])
-  public onKeydownHandler(event: KeyboardEvent) {
-    this.fieldEditor.unselectField();
-  }
 
   public fieldConfigTemplateRefs = {};
   public fieldRenderTemplateRefs = {};
@@ -73,16 +73,22 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     public fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
     private _elRef: ElementRef,
-  ) {}
+  ) { }
 
-  @Input()
-  public set config(config: FieldEditorConfig) {
-    this.fieldEditor.setConfig(config);
+  @HostListener('document:keydown.escape', ['$event'])
+  public onKeydownHandler(event: KeyboardEvent) {
+    this.fieldEditor.unselectField();
   }
 
   public ngOnInit(): void {
     this._listenClickOutside();
     this._listenFieldAdded();
+  }
+
+  public get fields(): Field[] {
+    return [
+      ...this.fieldEditor.config.fields,
+    ];
   }
 
   public ngAfterContentInit() {
@@ -122,35 +128,35 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
       const field = this.fieldEditor.config.fields[event.previousIndex];
 
       this.fieldEditor
-        .action(EditorAction.FieldReorder, field, { 
-          fields: this.fieldEditor.config.fields, 
-          previousIndex: event.previousIndex,  
-          currentIndex: event.currentIndex,  
+        .action(EditorAction.FieldReorder, field, {
+          fields: this.fieldEditor.config.fields,
+          previousIndex: event.previousIndex,
+          currentIndex: event.currentIndex,
         })
         .subscribe();
 
     } else {
       this.fieldEditor.config.afterFieldDropped(event.item.data.field, event.currentIndex)
-      .pipe(
-        switchMap((field) => this.fieldEditor.insertNewField(
-          field,
-          event.currentIndex,
-          event.item.data.item
-        )),
-      )
+        .pipe(
+          switchMap((field) => this.fieldEditor.insertNewField(
+            field,
+            event.currentIndex,
+            event.item.data.item,
+          )),
+        )
         .subscribe();
     }
   }
 
   private _listenFieldAdded(): void {
     this.fieldEditor.fieldAdded$
-    .pipe(
-      delay(100),
-      takeUntil(this._destroy$),
-    )
-    .subscribe((field) => {
-      this.fieldEditor.selectField(field);
-    });
+      .pipe(
+        delay(100),
+        takeUntil(this._destroy$),
+      )
+      .subscribe((field) => {
+        this.fieldEditor.selectField(field);
+      });
   }
 
   private _listenClickOutside(): void {
@@ -167,12 +173,6 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
         this.fieldEditor.unselectField();
         this._cdRef.markForCheck();
       });
-  }
-
-  public get fields(): Field[] {
-    return [
-      ...this.fieldEditor.config.fields,
-    ];
   }
 }
 

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { MatMenuTrigger } from '@angular/material/menu';
-
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 import { guid } from '@firestitch/common';
@@ -17,7 +16,7 @@ import { FieldEditorService } from '../../../services/field-editor.service';
 @Component({
   selector: 'fs-field-toolbar-item',
   templateUrl: 'field-toolbar-item.component.html',
-  styleUrls: [ 'field-toolbar-item.component.scss' ],
+  styleUrls: ['field-toolbar-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldToolbarItemComponent {
@@ -32,7 +31,7 @@ export class FieldToolbarItemComponent {
 
   constructor(
     public fieldEditor: FieldEditorService,
-  ) {}
+  ) { }
 
   private get _backdrop(): Element {
     return document.getElementsByClassName(BACKDROP_CLASS).item(0);
@@ -49,8 +48,8 @@ export class FieldToolbarItemComponent {
       description: '',
       data: {
         value: null,
-        guid: guid()
-      }
+        guid: guid(),
+      },
     };
   }
 
@@ -67,22 +66,16 @@ export class FieldToolbarItemComponent {
     this.fieldEditor.insertNewField(
       cloneDeep(field),
       undefined,
-      {
-        item: {
-          data: {
-            item: this.item,
-          }
-        }
-      } as any
+      item,
     )
-     .subscribe();
+      .subscribe();
   }
 
   private _hideMenuBackdrop(): void {
     const backdropEl = this._backdrop;
 
     if (backdropEl) {
-      backdropEl.classList.add(BACKDROP_HIDDEN_CLASS)
+      backdropEl.classList.add(BACKDROP_HIDDEN_CLASS);
     }
   }
 
@@ -90,7 +83,7 @@ export class FieldToolbarItemComponent {
     const backdropEl = this._backdrop;
 
     if (backdropEl) {
-      backdropEl.classList.remove(BACKDROP_HIDDEN_CLASS)
+      backdropEl.classList.remove(BACKDROP_HIDDEN_CLASS);
     }
   }
 
@@ -102,8 +95,8 @@ export class FieldToolbarItemComponent {
       description: '',
       data: {
         value: null,
-        guid: guid()
-      }
+        guid: guid(),
+      },
     };
   }
 }

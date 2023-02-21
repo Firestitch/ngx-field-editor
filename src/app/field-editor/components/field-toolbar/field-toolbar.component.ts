@@ -11,12 +11,14 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
+
 import { MatMenuTrigger } from '@angular/material/menu';
+
+import { guid } from '@firestitch/common';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { guid } from '@firestitch/common';
 
 import { ToolbarItem, ToolbarItems } from '../../../interfaces/toolbar.interface';
 import { Field } from '../../../interfaces/field.interface';
@@ -30,8 +32,8 @@ import { FieldEditorService } from '../../../services/field-editor.service';
 
 @Component({
   selector: 'fs-field-toolbar',
-  templateUrl: 'field-toolbar.component.html',
-  styleUrls: [ 'field-toolbar.component.scss' ],
+  templateUrl: './field-toolbar.component.html',
+  styleUrls: ['./field-toolbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -70,7 +72,7 @@ export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     public fieldEditor: FieldEditorService,
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     if (!this.parentItem) {

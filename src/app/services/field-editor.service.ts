@@ -1,4 +1,5 @@
 import { Injectable, Inject, OnDestroy } from '@angular/core';
+
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 import { guid } from '@firestitch/common';
@@ -23,7 +24,7 @@ import { ToolbarItem, ToolbarItems } from '../interfaces';
 export class FieldEditorService implements OnDestroy {
 
   public config: FieldEditorConfig;
-  public editorId = 'fs-fields-' + guid();
+  public editorId = `fs-fields-${guid()}`;
 
   public inDeletionMode = false;
 
@@ -34,7 +35,7 @@ export class FieldEditorService implements OnDestroy {
 
   constructor(
     @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig: FieldEditorConfig,
-  ) {}
+  ) { }
 
   public get fieldAdded$(): Observable<Field> {
     return this._fieldAdded$.asObservable();
@@ -69,51 +70,51 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public fieldShowDelete(field: Field): Observable<boolean> {
-    return this.config.fieldShowDelete ? 
-    this.config.fieldShowDelete(field) : 
-    of(true);
+    return this.config.fieldShowDelete ?
+      this.config.fieldShowDelete(field) :
+      of(true);
   }
 
   public fieldCanEdit(field: Field): Observable<boolean> {
-    return this.config.fieldCanEdit ? 
-    this.config.fieldCanEdit(field) : 
-    of(true);
+    return this.config.fieldCanEdit ?
+      this.config.fieldCanEdit(field) :
+      of(true);
   }
 
   public fieldShowDuplicate(field: Field): Observable<boolean> {
-    return this.config.fieldShowDuplicate ? 
-    this.config.fieldShowDuplicate(field) : 
-    of(true);
+    return this.config.fieldShowDuplicate ?
+      this.config.fieldShowDuplicate(field) :
+      of(true);
   }
 
   public fieldShowSettings(field: Field): Observable<boolean> {
-    return this.config.fieldShowSettings ? 
-    this.config.fieldShowSettings(field) : 
-    of(true);
+    return this.config.fieldShowSettings ?
+      this.config.fieldShowSettings(field) :
+      of(true);
   }
 
   public fieldShowRequired(field: Field): Observable<boolean> {
-    return this.config.fieldShowRequired ? 
-    this.config.fieldShowRequired(field) : 
-    of(field.hideRequired !== true);
+    return this.config.fieldShowRequired ?
+      this.config.fieldShowRequired(field) :
+      of(!field.hideRequired);
   }
 
   public fieldShowDescription(field: Field): Observable<boolean> {
-    return this.config.fieldShowDescription ? 
-    this.config.fieldShowDescription(field) : 
-    of(field.hideDescription !== true);
+    return this.config.fieldShowDescription ?
+      this.config.fieldShowDescription(field) :
+      of(!field.hideDescription);
   }
 
   public fieldCanLabel(field: Field): Observable<boolean> {
-    return this.config.fieldCanLabel ? 
-    this.config.fieldCanLabel(field) : 
-    of(true);
+    return this.config.fieldCanLabel ?
+      this.config.fieldCanLabel(field) :
+      of(true);
   }
 
   public fieldCanConfig(field: Field): Observable<boolean> {
-    return this.config.fieldCanConfig ? 
-    this.config.fieldCanConfig(field) : 
-    of(true);
+    return this.config.fieldCanConfig ?
+      this.config.fieldCanConfig(field) :
+      of(true);
   }
 
   public ngOnDestroy(): void {
@@ -132,27 +133,41 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public unselectField() {
-    if(this.selectedField) {
+    if (this.selectedField) {
       this.config.afterFieldUnselected(this.selectedField);
       this._selectedField$.next(null);
     }
   }
 
   public setConfig(config: FieldEditorConfig) {
-    this.config = { 
-      ...this._defaultConfig, 
+    this.config = {
+      ...this._defaultConfig,
       ...config,
     };
 
-    this.config = { 
+    this.config = {
       ...config,
-      afterFieldUnselected: config.afterFieldUnselected ? config.afterFieldUnselected : (field: Field) => { return of(field); },      
-      afterFieldDuplicated: config.afterFieldDuplicated ? config.afterFieldDuplicated : (field: Field) => { return of(field); },
-      afterFieldDropped: config.afterFieldDropped ? config.afterFieldDropped : (field: Field) => { return of(field); },
-      afterFieldAdded: config.afterFieldAdded ? config.afterFieldAdded : (field: Field) => { return of(field); },
-      beforeFieldAdd: config.beforeFieldAdd ? config.beforeFieldAdd : (field: Field) => { return of(field); },
-      beforeFieldSelect: config.beforeFieldSelect ? config.beforeFieldSelect : (field: Field) => { return of(field); },
-      beforeFieldDuplicate: config.beforeFieldDuplicate ? config.beforeFieldDuplicate : (field: Field) => { return of(field); },
+      afterFieldUnselected: config.afterFieldUnselected ? config.afterFieldUnselected : (field: Field) => {
+        return of(field);
+      },
+      afterFieldDuplicated: config.afterFieldDuplicated ? config.afterFieldDuplicated : (field: Field) => {
+        return of(field);
+      },
+      afterFieldDropped: config.afterFieldDropped ? config.afterFieldDropped : (field: Field) => {
+        return of(field);
+      },
+      afterFieldAdded: config.afterFieldAdded ? config.afterFieldAdded : (field: Field) => {
+        return of(field);
+      },
+      beforeFieldAdd: config.beforeFieldAdd ? config.beforeFieldAdd : (field: Field) => {
+        return of(field);
+      },
+      beforeFieldSelect: config.beforeFieldSelect ? config.beforeFieldSelect : (field: Field) => {
+        return of(field);
+      },
+      beforeFieldDuplicate: config.beforeFieldDuplicate ? config.beforeFieldDuplicate : (field: Field) => {
+        return of(field);
+      },
     };
 
     if (this.config.fields) {
@@ -166,11 +181,7 @@ export class FieldEditorService implements OnDestroy {
     field = initField(field);
 
     if (index === undefined) {
-      if (this.selectedField) {
-        index = this.config.fields.indexOf(this.selectedField) + 1;
-      } else {
-        index = this.numberOfFields;
-      }
+      index = this.selectedField ? this.config.fields.indexOf(this.selectedField) + 1 : this.numberOfFields;
     }
 
     return this.config.beforeFieldAdd(field, toolbarItem)
@@ -204,14 +215,14 @@ export class FieldEditorService implements OnDestroy {
   public action(action: EditorAction, field: Field = null, data: any = {}): Observable<any> {
     return (
       this.config.action ?
-      this.config.action(action, field, data) :
-      of(field)
+        this.config.action(action, field, data) :
+        of(field)
     )
-    .pipe(
-      tap((field) => {
-   
-      }),
-    );
+      .pipe(
+        tap((field) => {
+
+        }),
+      );
   }
 
   public resetScrollTarget(): void {
