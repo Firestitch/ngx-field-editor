@@ -73,18 +73,21 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
       zoom: false,
       info,
       fetch: (query?: any, item?: FsGalleryItem): Observable<FsGalleryItem[]> => {
-        const items = Array.isArray(this.field.data?.value) ?
-          this.field.data.value :
-          [];
+        const files = (this.field.data?.files || []) as any[];
 
         return of(
-          items.map((item) => ({
-            url: item.url,
-            preview: item.url,
-            name: item.name,
-            mime: item.mime || mime(item.name, item.url, '', false),
-            data: item,
-          })),
+          files
+            .map<FsGalleryItem>((file) => {
+              const galleryItem: FsGalleryItem = {
+                url: file.url,
+                preview: file.url,
+                name: file.name,
+                mime: file.mime || mime(file.name, file.url, '', false),
+                data: file,
+              };
+
+              return galleryItem;
+            }),
         );
       },
     };

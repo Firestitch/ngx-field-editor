@@ -22,10 +22,10 @@ import { FieldEditorService } from '../../../../src/app/services/field-editor.se
 })
 export class ExampleComponent implements OnInit {
 
-  @ViewChild(FieldEditorComponent) 
+  @ViewChild(FieldEditorComponent)
   public fieldEditor: FieldEditorComponent;
 
-  @ViewChild(FieldRendererComponent) 
+  @ViewChild(FieldRendererComponent)
   public fieldRenderer: FieldRendererComponent;
 
   public fieldEditorConfig: FieldEditorConfig;
@@ -61,6 +61,7 @@ export class ExampleComponent implements OnInit {
       },
       afterFieldDropped: (field: Field) => {
         console.log('Field Dropped', field);
+
         return of(field);
       },
       beforeFieldAdd: (field: Field, toolbar: ToolbarItem) => {
@@ -80,26 +81,32 @@ export class ExampleComponent implements OnInit {
       },
       afterFieldAdded: (field: Field) => {
         console.log('After Field Added', field);
+
         return of(field);
       },
       beforeFieldDuplicate: (field: Field) => {
         console.log('Before Field Duplicated', field);
+
         return of(field);
       },
       afterFieldDuplicated: (field: Field) => {
         console.log('After Field Duplicated', field);
+
         return of(field);
       },
       beforeFieldSelect: (field: Field) => {
         console.log('Before Field Selected', field);
+
         return of(field);
       },
       afterFieldUnselected: (field: Field) => {
         console.log('After Field Unselected', field);
+
         return of(field);
       },
       afterFieldRemoved: (field: Field) => {
         console.log('After Field Removed', field);
+
         return of(field);
       },
       fieldShowDelete: (field: Field) => {
@@ -125,15 +132,15 @@ export class ExampleComponent implements OnInit {
       },
       action: (action: EditorAction, field: Field, data: any): Observable<any> => {
         console.log('Field Action', action, field, data);
-        switch(action) {
+        switch (action) {
           case EditorAction.OptionImageUpload:
-            return of({ 
+            return of({
               option: {
                 ...data.option,
                 image: {
-                  preview: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/B875/production/_102512274_gettyimages-518360318.jpg'
+                  preview: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/B875/production/_102512274_gettyimages-518360318.jpg',
                 },
-              }
+              },
             });
 
           case EditorAction.ImageUpload:
@@ -162,9 +169,9 @@ export class ExampleComponent implements OnInit {
                     label: 'Share',
                     type: 'share',
                   },
-                ]
-              }
-            ]
+                ],
+              },
+            ],
           },
           {
             label: 'Menu 2',
@@ -186,8 +193,8 @@ export class ExampleComponent implements OnInit {
                     label: 'Menu 2A2',
                     icon: 'share',
                     type: 'share',
-                  }
-                ]
+                  },
+                ],
               },
               {
                 label: 'Menu 2B',
@@ -206,10 +213,10 @@ export class ExampleComponent implements OnInit {
                     label: 'Menu 2B2',
                     icon: 'share',
                     type: 'share',
-                  }
-                ]
+                  },
+                ],
               },
-            ]
+            ],
           },
           ...this.defaultConfig.toolbar.items,
           {
@@ -219,7 +226,7 @@ export class ExampleComponent implements OnInit {
             icon: 'share',
             label: 'Share',
             type: 'share',
-            config: { id: 99 }
+            config: { id: 99 },
           },
           {
             icon: 'edit',
@@ -237,7 +244,7 @@ export class ExampleComponent implements OnInit {
               },
             },
           },
-        ]
+        ],
       },
       fieldMenu: {
         items: [
@@ -249,8 +256,8 @@ export class ExampleComponent implements OnInit {
             show: (field: Field): Observable<boolean> => {
               return of(true);
             },
-          }
-        ]
+          },
+        ],
       },
       fields: this.getFields(),
     };
@@ -269,20 +276,20 @@ export class ExampleComponent implements OnInit {
       action: (action: RendererAction, field, data: any): Observable<any> => {
         console.log('Field Renderer Action', action, field, data);
 
-        switch(action) {
+        switch (action) {
           case RendererAction.FileUpload:
             return new Observable((observer) => {
               const reader = new FileReader();
               reader.onloadend = () => {
                 observer.next({
                   name: data.name,
-                  url: reader.result as any
+                  url: reader.result as any,
                 });
                 observer.complete();
               };
               reader.readAsDataURL(data.file);
             });
-      
+
           case RendererAction.ImageUpload:
             return new Observable((observer) => {
               const reader = new FileReader();
@@ -295,13 +302,13 @@ export class ExampleComponent implements OnInit {
         }
 
         return of(field);
-      },   
+      },
       afterFileRemoved: (field, data) => {
         console.log('After File Removed', field, data);
-      },  
+      },
       showField: (field: Field) => {
         return of(true);
-      }
+      },
     };
   }
 
@@ -322,7 +329,7 @@ export class ExampleComponent implements OnInit {
   public openDialog(): void {
     this._dialog.open(DialogExampleComponent, {
       width: '600px',
-      data: { config: this.fieldEditorConfig}
+      data: { config: this.fieldEditorConfig },
     });
   }
 
@@ -350,8 +357,8 @@ export class ExampleComponent implements OnInit {
             value: '22',
             name: 'Option B',
             guid: '345refsd',
-          }
-        ]
+          },
+        ],
       },
       {
         data: {},
@@ -362,7 +369,7 @@ export class ExampleComponent implements OnInit {
         configs: {
           identifier: 'shortText',
           populate: true,
-        }
+        },
       },
       {
         guid: '233',
@@ -370,8 +377,8 @@ export class ExampleComponent implements OnInit {
         label: 'Content',
         description: 'Content Description',
         configs: {
-          content: this._getTerms()
-        }
+          content: this._getTerms(),
+        },
       },
       {
         guid: '3122',
@@ -421,17 +428,17 @@ export class ExampleComponent implements OnInit {
             },
             guid: '3243465t',
           },
-        ],          
+        ],
         data: {
           value: {
-            selected: ['2314rewf']
-          }
+            selected: ['2314rewf'],
+          },
         },
       },
       {
         guid: '444',
         type: FieldType.RichText,
-        label: 'Rich Text'
+        label: 'Rich Text',
       },
       {
         data: {
@@ -443,33 +450,33 @@ export class ExampleComponent implements OnInit {
         configs: {
           first_name: {
             display: true,
-            label: 'test'
-          }
-        }
+            label: 'test',
+          },
+        },
       },
       {
         data: {},
         guid: '3',
         type: FieldType.LongText,
-        label: 'Long Text Question'
+        label: 'Long Text Question',
       },
       {
         data: {},
         guid: '6',
         type: FieldType.Phone,
-        label: 'Phone Question'
+        label: 'Phone Question',
       },
       {
         data: {},
         guid: '7',
         type: FieldType.Email,
-        label: 'Email Question'
+        label: 'Email Question',
       },
       {
         data: {},
         guid: '333',
         type: FieldType.Address,
-        label: 'Address'
+        label: 'Address',
       },
       {
         data: {
@@ -520,14 +527,14 @@ export class ExampleComponent implements OnInit {
             value: '88',
             name: 'Option C',
             guid: 'gsdfdsdf',
-          }
-        ]
+          },
+        ],
       },
       {
         data: {},
         guid: '8',
         type: FieldType.Time,
-        label: 'Time Question'
+        label: 'Time Question',
       },
       {
         data: {
@@ -539,7 +546,7 @@ export class ExampleComponent implements OnInit {
         configs: {
           identifier: 'date',
           populate: true,
-        }          
+        },
       },
       {
         data: {},
@@ -566,8 +573,8 @@ export class ExampleComponent implements OnInit {
             value: '222',
             name: 'Option C',
             guid: '345435',
-          }
-        ]
+          },
+        ],
       },
       {
         data: {
@@ -586,15 +593,15 @@ export class ExampleComponent implements OnInit {
               content: this._getTerms(),
               contentLabel: 'terms & conditions',
               contentTitle: 'Terms & Conditions',
-            }
-          ]
+            },
+          ],
         },
       },
       {
         guid: '111',
         type: 'signature',
         label: 'Signature',
-        configs: { 
+        configs: {
           required: true,
         },
         data: {
@@ -607,17 +614,17 @@ export class ExampleComponent implements OnInit {
         label: 'File Upload',
         configs: {
           basic: true,
-          allowMultiple: true
+          allowMultiple: true,
         },
         data: {
-          value: [
+          files: [
             {
               id: 99999,
               url: 'http://picsum.photos/id/275/500/300.jpg',
               name: 'adorable-animal-blur-406014.jpg',
-            }
-          ]
-        }
+            },
+          ],
+        },
       },
     ];
   }

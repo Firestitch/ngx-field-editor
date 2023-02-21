@@ -9,7 +9,7 @@
       (ngModelChange)="change($event)"
       [disabled]="disabled"
       [accept]="accept"
-      [ngModel]="field.data.value">
+      [ngModel]="field.data.files">
     </app-field-render-file-multiple>
   </ng-container>
   <ng-container *ngIf="!field.configs.allowMultiple">
@@ -20,7 +20,7 @@
       (ngModelChange)="change($event)"
       [disabled]="disabled"
       [accept]="accept"
-      [ngModel]="field.data.value">
+      [ngModel]="field.data.files[0]">
     </app-field-render-file-single>
   </ng-container>  
   <fs-label-message class="fs-form-message">

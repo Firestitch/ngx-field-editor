@@ -17,7 +17,7 @@
 </fs-file>
 
 <ng-container *ngIf="actions">
-  <div class="files-preview" [hidden]="!field.data?.value?.length">
+  <div class="files-preview" [hidden]="!files.length">
     <fs-field-view-gallery
       [actions]="actions"
       [field]="field">

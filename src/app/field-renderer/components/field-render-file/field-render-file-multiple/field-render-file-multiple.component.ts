@@ -1,5 +1,7 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef,
-  OnInit, OnDestroy, forwardRef, Optional, ViewChild, } from '@angular/core';
+import {
+  Component, Input, ChangeDetectionStrategy, ChangeDetectorRef,
+  OnInit, OnDestroy, forwardRef, Optional, ViewChild,
+} from '@angular/core';
 import {
   ControlContainer, ControlValueAccessor,
   NgForm, NG_VALUE_ACCESSOR,
@@ -11,7 +13,7 @@ import { FsGalleryItem } from '@firestitch/gallery';
 import { FsFile } from '@firestitch/file';
 
 import { forkJoin, Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { Field } from '../../../../interfaces/field.interface';
 import { FileRenderFile } from '../../../../classes/file-render-file';
@@ -22,8 +24,8 @@ import { RendererAction } from '../../../../enums';
 
 @Component({
   selector: 'app-field-render-file-multiple',
-  templateUrl: 'field-render-file-multiple.component.html',
-  styleUrls: ['field-render-file-multiple.component.scss'],
+  templateUrl: './field-render-file-multiple.component.html',
+  styleUrls: ['./field-render-file-multiple.component.scss'],
   providers: [
     {
       provide: ControlContainer,
@@ -39,35 +41,35 @@ import { RendererAction } from '../../../../enums';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  
-  @ViewChild(FieldViewGalleryComponent)
-  public fieldViewGallery: FieldViewGalleryComponent;
-
-  public actions;
 
   @Input() public field: Field;
   @Input() public disabled = false;
   @Input() public accept;
 
-  public onChange = (data: any) => {};
-  public onTouched = () => {};
+  @ViewChild(FieldViewGalleryComponent)
+  public fieldViewGallery: FieldViewGalleryComponent;
+
+  public actions;
   public files = [];
 
   private _destroy$ = new Subject();
 
-  public constructor(
+  constructor(
     private _fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
     private _prompt: FsPrompt,
-  ) {}
+  ) { }
+
+  public onChange = (data: any) => { };
+  public onTouched = () => { };
 
   public selectFile(files: any) {
     this.onTouched();
 
     files.forEach((fsFile: FsFile) => {
-      this._fieldRenderer.action(RendererAction.FileUpload, this.field, { file: fsFile.file }) 
+      this._fieldRenderer.action(RendererAction.FileUpload, this.field, { file: fsFile.file })
         .pipe(
-          takeUntil(this._destroy$)
+          takeUntil(this._destroy$),
         )
         .subscribe((response: any) => {
           const file = new FileRenderFile(response.url, response.name);
@@ -83,6 +85,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
 
   public writeValue(data: any): void {
     this.files = data || [];
+    this._cdRef.markForCheck();
   }
 
   public registerOnChange(fn: (data: any) => void): void {
@@ -102,16 +105,16 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
         this.actions = [];
         this._cdRef.markForCheck();
 
-        if(response.fileDownload) {
+        if (response.fileDownload) {
           this.actions.push({
             label: 'Download',
             click: (file) => {
               this._fieldRenderer.action(RendererAction.FileDownload, this.field, file);
-            }
+            },
           });
         }
 
-        if(response.fileRemove) {
+        if (response.fileRemove) {
           this.actions.push({
             label: 'Remove',
             click: (item: FsGalleryItem) => {
@@ -119,25 +122,25 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
                 title: 'Confirm',
                 template: 'Are you sure you would like to remove this file?',
               })
-              .pipe(
-                switchMap(() => {
-                  return this._fieldRenderer.action(RendererAction.FileDelete, this.field, item.data);
-                }),
-              )
-              .subscribe(() => {
-                const idx = this.files.indexOf(item.data);
-    
-                if (idx >= 0) {
-                  this.files.splice(idx, 1);
-                  this.fieldViewGallery.reload();
-                  this.onChange(this.files);
-    
-                  if (this._fieldRenderer.config.afterFileRemoved) {
-                    this._fieldRenderer.config.afterFileRemoved(this.field, item.data);
+                .pipe(
+                  switchMap(() => {
+                    return this._fieldRenderer.action(RendererAction.FileDelete, this.field, item.data);
+                  }),
+                )
+                .subscribe(() => {
+                  const idx = this.files.indexOf(item.data);
+
+                  if (idx >= 0) {
+                    this.files.splice(idx, 1);
+                    this.fieldViewGallery.reload();
+                    this.onChange(this.files);
+
+                    if (this._fieldRenderer.config.afterFileRemoved) {
+                      this._fieldRenderer.config.afterFileRemoved(this.field, item.data);
+                    }
                   }
-                }
-              });
-            }
+                });
+            },
           });
         }
       });

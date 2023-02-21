@@ -1,3 +1,9 @@
 .files-preview {
   margin-top: 10px;
 }
+
+:host ::ng-deep {
+  fs-gallery fs-filter {
+    display: none !important;
+  }
+}
