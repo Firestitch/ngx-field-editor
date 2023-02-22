@@ -1,3 +1,5 @@
+
+
 <ng-container *ngIf="!parentItem; else nestedTrigger">
   <button
       mat-mini-fab
@@ -22,11 +24,11 @@
 </ng-template>
 
 <mat-menu
-  #menu="matMenu"
-  xPosition="before"
-  [backdropClass]="backdropClass"
-  [class]="menuClass">
-  <ng-container *ngFor="let item of $any(items)">
+    #menu="matMenu"
+    xPosition="before"
+    [backdropClass]="backdropClass"
+    [class]="menuClass">
+  <ng-container *ngFor="let item of items">
     <ng-container *ngIf="item.items else simpleItem">
       <fs-field-toolbar
         [parentItem]="item"

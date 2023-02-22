@@ -26,7 +26,7 @@
     <div #spacer></div>
     <div class="toolbar">
       <ng-container
-        *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl} ">
+        *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl, template: toolbarTpl } ">
       </ng-container>
       <ng-template #toolbarTpl>
         <fs-field-toolbar

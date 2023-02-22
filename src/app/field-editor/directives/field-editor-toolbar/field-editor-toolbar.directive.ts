@@ -2,6 +2,6 @@ import { Directive } from '@angular/core';
 
 
 @Directive({
-  selector: '[fsFieldEditorToolbar]'
+  selector: '[fsFieldEditorToolbar]',
 })
-export class FieldEditorToolbarDirective {}
+export class FieldEditorToolbarDirective { }
