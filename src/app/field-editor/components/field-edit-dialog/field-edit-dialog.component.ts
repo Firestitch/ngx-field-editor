@@ -56,8 +56,6 @@ export class FieldEditDialogComponent implements OnInit, OnDestroy {
 
     this._fieldEditor.config = this.config;
     this._fieldEditor.selectField(this.field);
-
-    this.beforeClose();
   }
 
   public ngOnDestroy(): void {
@@ -65,19 +63,11 @@ export class FieldEditDialogComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public beforeClose(): void {
-    this._dialogRef.beforeClosed()
-      .pipe(takeUntil(this._destroy$))
-      .subscribe(() => {
-        this._fieldEditor.config = this.data.config;
-      });
-  }
-
   public save(): void {
     from(this.actions)
       .pipe(
+        concatMap((action: IEditDialogAction) => this.data.config.action(action.action, action.field, action.data)),
         takeUntil(this._destroy$),
-        concatMap((action: IEditDialogAction) => this.data.config.action(action.action, action.field, action.data))
       )
       .subscribe();
 

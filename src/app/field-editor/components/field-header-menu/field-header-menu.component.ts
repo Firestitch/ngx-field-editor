@@ -56,7 +56,7 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
               event.preventDefault();
               event.stopPropagation();
 
-              if(menuItem.click) {
+              if (menuItem.click) {
                 menuItem.click(this.field);
               }
             },
@@ -172,7 +172,6 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
 
     this.fieldEditor.config.beforeFieldDuplicate(copiedField)
       .pipe(
-        takeUntil(this._destroy$),
         switchMap((field) => this.fieldEditor.action(EditorAction.FieldDuplicate, field, { index })),
         map((response) => response.field),
         switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
@@ -180,6 +179,7 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
           this.fieldEditor.config.fields.splice(index, 0, field);
           this.fieldEditor.selectField(field);
         }),
+        takeUntil(this._destroy$),
       )
     .subscribe();
   }
