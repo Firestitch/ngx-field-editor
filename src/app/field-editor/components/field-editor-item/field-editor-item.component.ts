@@ -113,11 +113,13 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
 
     this.fieldEditor.fieldChanged()
       .pipe(
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
       )
       .subscribe((field: Field) => {
-        this.headerFieldChanged(field);
-      })
+        if (field.guid === this.field.guid) {
+          this.headerFieldChanged(field);
+        }
+      });
   }
 
   public toggleDescriptionNote(field): void {

@@ -178,14 +178,14 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     const dialogRef = this._dialog.open(FieldEditDialogComponent, {
       width: '600px',
       data: {
-        field: field,
+        field,
         config: this.fieldEditor.config,
       },
-    })
+    });
 
     return dialogRef.afterClosed()
       .pipe(
-        filter((field: Field | null) => !!field),
+        filter((dialogField: Field | null) => !!dialogField),
       );
   }
 
