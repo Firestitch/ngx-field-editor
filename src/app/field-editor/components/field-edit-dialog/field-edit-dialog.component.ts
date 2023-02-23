@@ -65,11 +65,16 @@ export class FieldEditDialogComponent implements OnInit, OnDestroy {
   public save(): void {
     from(this.actions)
       .pipe(
-        concatMap((action: IEditDialogAction) => this.data.config.action(action.action, action.field, action.data)),
+        concatMap(
+          (action: IEditDialogAction) => {
+            return this.data.config.action(action.action, action.field, action.data);
+          },
+        ),
         takeUntil(this._destroy$),
       )
-      .subscribe();
+      .subscribe(() => {
+        this._dialogRef.close(this.field);
+      });
 
-    this._dialogRef.close(this.field);
   }
 }
