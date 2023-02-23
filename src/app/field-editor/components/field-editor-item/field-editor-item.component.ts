@@ -110,6 +110,14 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
         this.isSelectedField = field?.guid === this.field.guid;
         this._cdRef.markForCheck();
       });
+
+    this.fieldEditor.fieldChanged()
+      .pipe(
+        takeUntil(this._destroy$)
+      )
+      .subscribe((field: Field) => {
+        this.headerFieldChanged(field);
+      })
   }
 
   public toggleDescriptionNote(field): void {

@@ -5,3 +5,4 @@ export * from './field-renderer-config.interface';
 export * from './toolbar.interface';
 export * from './field-option.interface';
 export * from './field-config.interface';
+export * from './field-edit-dialog.interface';

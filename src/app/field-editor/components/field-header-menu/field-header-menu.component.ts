@@ -18,7 +18,6 @@ import { FieldEditorService } from '../../../services/field-editor.service';
 import { SettingsComponent } from '../settings';
 import { EditorAction } from '../../../enums';
 import { Field, FieldMenuItem } from '../../../interfaces';
-import { FieldEditDialogComponent } from '../field-edit-dialog';
 
 
 @Component({
@@ -140,24 +139,7 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
     event.preventDefault();
     event.stopPropagation();
 
-    const dialogRef = this._dialog.open(FieldEditDialogComponent, {
-      width: '600px',
-      data: {
-        field: this.field,
-        config: this.fieldEditor.config,
-      },
-    })
-
-    dialogRef.afterClosed()
-      .pipe(
-        filter((field) => !!field),
-        takeUntil(this._destroy$),
-      )
-      .subscribe((field) => {
-        this.field = field;
-        this._cdRef.markForCheck();
-        this.fieldChanged.emit(this.field);
-      });
+    this.fieldEditor.openEditDialog(this.field);
   }
 
   public duplicate(event: Event): void {

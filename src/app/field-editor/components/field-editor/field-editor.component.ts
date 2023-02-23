@@ -18,10 +18,11 @@ import { DOCUMENT } from '@angular/common';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
-import { fromEvent, Subject } from 'rxjs';
+import { fromEvent, Observable, Subject } from 'rxjs';
 import { delay, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 
+import { MatDialog } from '@angular/material/dialog';
 import { FieldEditorConfig } from '../../../interfaces/field-editor-config.interface';
 import { Field } from '../../../interfaces/field.interface';
 import { FieldConfigDirective } from '../../directives/field-config/field-config.directive';
@@ -31,6 +32,7 @@ import { clickOutsideElement } from '../../../helpers/click-outside-element';
 import { FieldEditorToolbarDirective } from '../../directives/field-editor-toolbar/field-editor-toolbar.directive';
 import { EditorAction } from '../../../enums';
 import { FieldContainerDirective } from '../../directives/field-container/field-container.directive';
+import { FieldEditDialogComponent } from '../field-edit-dialog/field-edit-dialog.component';
 
 
 @Component({
@@ -73,6 +75,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     public fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
     private _elRef: ElementRef,
+    private _dialog: MatDialog,
   ) { }
 
   @HostListener('document:keydown.escape', ['$event'])
@@ -83,6 +86,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   public ngOnInit(): void {
     this._listenClickOutside();
     this._listenFieldAdded();
+    this._listenOpeningEditDialog();
   }
 
   public get fields(): Field[] {
@@ -157,6 +161,32 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
       .subscribe((field) => {
         this.fieldEditor.selectField(field);
       });
+  }
+
+  private _listenOpeningEditDialog(): void {
+    this.fieldEditor.isOpenedEditDialog()
+      .pipe(
+        switchMap((field) => this._openEditDialog(field)),
+        takeUntil(this._destroy$),
+      )
+      .subscribe((field: Field) => {
+        this.fieldEditor.fieldChange(field);
+      });
+  }
+
+  private _openEditDialog(field: Field): Observable<any> {
+    const dialogRef = this._dialog.open(FieldEditDialogComponent, {
+      width: '600px',
+      data: {
+        field: field,
+        config: this.fieldEditor.config,
+      },
+    })
+
+    return dialogRef.afterClosed()
+      .pipe(
+        filter((field: Field | null) => !!field),
+      );
   }
 
   private _listenClickOutside(): void {
