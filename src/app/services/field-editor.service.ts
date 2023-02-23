@@ -89,9 +89,9 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public fieldShowEditAction(field: Field): Observable<boolean> {
-      return this.config.fieldShowEditAction ?
-        this.config.fieldShowEditAction(field) :
-        of(false);
+    return this.config.fieldShowEditAction ?
+      this.config.fieldShowEditAction(field) :
+      of(false);
   }
 
   public fieldShowDuplicate(field: Field): Observable<boolean> {
