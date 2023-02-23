@@ -52,6 +52,7 @@
       <mat-icon>delete</mat-icon>
     </button>
     <fs-field-header-menu
+      *ngIf="showActions"
       [field]="field"
       (fieldChanged)="changed()">
     </fs-field-header-menu>

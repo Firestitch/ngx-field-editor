@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { FsCommonModule } from '@firestitch/common';
 import { FsPromptModule } from '@firestitch/prompt';
@@ -32,6 +33,7 @@ import { FsPopoverModule } from '@firestitch/popover';
 import { FsRadioGroupModule } from '@firestitch/radiogroup';
 import { FsAddressModule } from '@firestitch/address';
 import { FsHtmlEditorModule, FsHtmlRendererModule } from '@firestitch/html-editor';
+import { FsDialogModule } from '@firestitch/dialog';
 
 import { AngularStickyThingsModule } from '@w11k/angular-sticky-things';
 
@@ -61,9 +63,9 @@ import { FieldEditorToolbarDirective } from './directives/field-editor-toolbar/f
 import { FieldEditorConfig } from '../interfaces/field-editor-config.interface';
 import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
 import { FsFieldRendererModule } from '../field-renderer/fs-field-renderer.module';
+import { FieldEditDialogComponent } from './components/field-edit-dialog';
 import { FieldConfigVisualSelectorComponent, FieldHeaderMenuComponent, PopulateUrlComponent, SettingsComponent } from './components';
-import { MatDialogModule } from '@angular/material/dialog';
-import { FsDialogModule } from '@firestitch/dialog';
+
 
 
 export function defaultConfigFactory(config) {
@@ -169,6 +171,7 @@ export function defaultConfigFactory(config) {
     PopulateUrlComponent,
     FieldConfigVisualSelectorComponent,
     FieldHeaderMenuComponent,
+    FieldEditDialogComponent,
   ],
 })
 

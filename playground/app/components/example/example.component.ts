@@ -2,13 +2,15 @@ import { Component, OnInit, Inject, ViewChild, ChangeDetectionStrategy, ChangeDe
 
 import { MatDialog } from '@angular/material/dialog';
 
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
 import {
   FS_FIELD_EDITOR_CONFIG, FieldEditorComponent, FieldEditorConfig,
   FieldType, Field, ToolbarItem, FieldRendererConfig, FieldRendererComponent,
   EditorAction, VisualSelectorFormat, FieldViewerConfig, FieldOption, RendererAction,
 } from '@firestitch/field-editor';
-
-import { Observable, of } from 'rxjs';
+import { FsMessage } from '@firestitch/message';
 
 import { DialogExampleComponent } from '../dialog-example';
 import { FieldEditorService } from '../../../../src/app/services/field-editor.service';
@@ -37,6 +39,7 @@ export class ExampleComponent implements OnInit {
     @Inject(FS_FIELD_EDITOR_CONFIG) private defaultConfig,
     private _dialog: MatDialog,
     private _cdRef: ChangeDetectorRef,
+    private _message: FsMessage,
   ) { }
 
   public ngOnInit(): void {
@@ -115,6 +118,9 @@ export class ExampleComponent implements OnInit {
       fieldShowDuplicate: (field: Field) => {
         return of(true);
       },
+      fieldShowEditAction: (field: Field) => {
+        return of(true);
+      },
       fieldCanEdit: (field: Field) => {
         return of(true);
       },
@@ -154,7 +160,10 @@ export class ExampleComponent implements OnInit {
             });
         }
 
-        return of({ field });
+        return of({ field })
+          .pipe(
+            tap(() => this._message.success('Saved Changes')),
+          );
       },
       toolbar: {
         items: [
@@ -249,7 +258,7 @@ export class ExampleComponent implements OnInit {
       fieldMenu: {
         items: [
           {
-            label: 'Edit',
+            label: 'Custom action',
             click: (field: Field) => {
               console.log('Field Menu Click', field);
             },

@@ -43,6 +43,7 @@ export class FieldHeaderComponent
   public showRequired = false;
   public showDescription = false;
   public showLabel = false;
+  public showActions = false;
   public FieldType = FieldType;
 
   @Output()
@@ -61,56 +62,8 @@ export class FieldHeaderComponent
     super(fieldEditor);
   }
 
-  public changed(): void {
-    this.fieldChanged.emit(this.field);
-    this.fieldEditor.fieldChange(this.field);
-  }
-
   public ngOnInit(): void {
-    this.fieldEditor.fieldShowDelete(this.field)
-    .pipe(
-      takeUntil(this._destroy$),
-    )
-    .subscribe((value) => {
-      this.showDelete = value;
-      this._cdRef.markForCheck();
-    });
-
-    this.fieldEditor.fieldCanEdit(this.field)
-    .pipe(
-      takeUntil(this._destroy$),
-    )
-    .subscribe((value) => {
-      this.canEdit = value;
-      this._cdRef.markForCheck();
-    });
-
-    this.fieldEditor.fieldShowRequired(this.field)
-    .pipe(
-      takeUntil(this._destroy$),
-    )
-    .subscribe((value) => {
-      this.showRequired = value;
-      this._cdRef.markForCheck();
-    });
-
-    this.fieldEditor.fieldShowDescription(this.field)
-    .pipe(
-      takeUntil(this._destroy$),
-    )
-    .subscribe((value) => {
-      this.showDescription = value;
-      this._cdRef.markForCheck();
-    });
-
-    this.fieldEditor.fieldCanLabel(this.field)
-    .pipe(
-      takeUntil(this._destroy$),
-    )
-    .subscribe((value) => {
-      this.showLabel = value;
-      this._cdRef.markForCheck();
-    });
+    this._initHeaderConfig();
   }
 
   public ngOnChanges(changes: any): void {
@@ -119,6 +72,16 @@ export class FieldHeaderComponent
         this.descriptionEl?.nativeElement?.focus();
       });
     }
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
+  public changed(): void {
+    this.fieldChanged.emit(this.field);
+    this.fieldEditor.fieldChange(this.field);
   }
 
   public toggleRequired(): void {
@@ -165,9 +128,79 @@ export class FieldHeaderComponent
       });
   }
 
-  public ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
+  private _initHeaderConfig(): void {
+    this._checkShowDelete();
+    this._checkFieldCanEdit();
+    this._checkFieldShowRequired();
+    this._checkFieldShowDescription();
+    this._checkFieldCanLabel();
+    this._checkFieldShowActions();
+
   }
 
+  private _checkShowDelete(): void {
+    this.fieldEditor.fieldShowDelete(this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.showDelete = value;
+        this._cdRef.markForCheck();
+      });
+  }
+
+  private _checkFieldCanEdit(): void {
+    this.fieldEditor.fieldCanEdit(this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.canEdit = value;
+        this._cdRef.markForCheck();
+      });
+  }
+
+  private _checkFieldShowRequired(): void {
+    this.fieldEditor.fieldShowRequired(this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.showRequired = value;
+        this._cdRef.markForCheck();
+      });
+  }
+
+  private _checkFieldShowDescription(): void {
+    this.fieldEditor.fieldShowDescription(this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.showDescription = value;
+        this._cdRef.markForCheck();
+      });
+  }
+
+  private _checkFieldCanLabel(): void {
+    this.fieldEditor.fieldCanLabel(this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.showLabel = value;
+        this._cdRef.markForCheck();
+      });
+  }
+
+  private _checkFieldShowActions(): void {
+    this.fieldEditor.fieldShowActions(this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value: boolean) => {
+        this.showActions = value;
+        this._cdRef.markForCheck();
+      });
+  }
 }

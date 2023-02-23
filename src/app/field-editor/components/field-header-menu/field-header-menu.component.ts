@@ -18,6 +18,7 @@ import { FieldEditorService } from '../../../services/field-editor.service';
 import { SettingsComponent } from '../settings';
 import { EditorAction } from '../../../enums';
 import { Field, FieldMenuItem } from '../../../interfaces';
+import { FieldEditDialogComponent } from '../field-edit-dialog';
 
 
 @Component({
@@ -49,13 +50,13 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
     (this.fieldEditor.config.fieldMenu?.items || [])
       .forEach((menuItem: FieldMenuItem) => {
         menuItems.push(
-          { 
+          {
             label: menuItem.label,
             click: (event: Event) => {
               event.preventDefault();
               event.stopPropagation();
 
-              if(menuItem.click) {
+              if (menuItem.click) {
                 menuItem.click(this.field);
               }
             },
@@ -63,16 +64,22 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
           },
         );
       });
-
     menuItems.push(...[
-      { 
+      {
+        label: 'Edit',
+        click: (event) => {
+          this.openEditDialog(event);
+        },
+        show: this.fieldEditor.fieldShowEditAction(this.field),
+      },
+      {
         label: 'Duplicate',
         click: (event) => {
           this.duplicate(event);
         },
         show: this.fieldEditor.fieldShowDuplicate(this.field),
       },
-      { 
+      {
         label: 'Settings',
         click:  (event) => {
           this.settings(event);
@@ -93,6 +100,11 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
 
       this._cdRef.markForCheck();
     });
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public settings(event: Event): void {
@@ -116,7 +128,34 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
 
   public actionConfig(): void {
     this.fieldEditor.action(EditorAction.FieldSave, this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
       .subscribe(() => {
+        this.fieldChanged.emit(this.field);
+      });
+  }
+
+  public openEditDialog(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const dialogRef = this._dialog.open(FieldEditDialogComponent, {
+      width: '600px',
+      data: {
+        field: this.field,
+        config: this.fieldEditor.config,
+      },
+    })
+
+    dialogRef.afterClosed()
+      .pipe(
+        filter((field) => !!field),
+        takeUntil(this._destroy$),
+      )
+      .subscribe((field) => {
+        this.field = field;
+        this._cdRef.markForCheck();
         this.fieldChanged.emit(this.field);
       });
   }
@@ -133,7 +172,6 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
 
     this.fieldEditor.config.beforeFieldDuplicate(copiedField)
       .pipe(
-        takeUntil(this._destroy$),
         switchMap((field) => this.fieldEditor.action(EditorAction.FieldDuplicate, field, { index })),
         map((response) => response.field),
         switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
@@ -141,13 +179,8 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
           this.fieldEditor.config.fields.splice(index, 0, field);
           this.fieldEditor.selectField(field);
         }),
+        takeUntil(this._destroy$),
       )
     .subscribe();
   }
-
-  public ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-  }
-
 }
