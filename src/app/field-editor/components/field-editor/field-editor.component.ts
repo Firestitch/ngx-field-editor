@@ -32,7 +32,6 @@ import { clickOutsideElement } from '../../../helpers/click-outside-element';
 import { FieldEditorToolbarDirective } from '../../directives/field-editor-toolbar/field-editor-toolbar.directive';
 import { EditorAction } from '../../../enums';
 import { FieldContainerDirective } from '../../directives/field-container/field-container.directive';
-import { FieldEditDialogComponent } from '../field-edit-dialog/field-edit-dialog.component';
 
 
 @Component({
@@ -86,7 +85,6 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   public ngOnInit(): void {
     this._listenClickOutside();
     this._listenFieldAdded();
-    this._listenOpeningEditDialog();
   }
 
   public get fields(): Field[] {
@@ -161,32 +159,6 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
       .subscribe((field) => {
         this.fieldEditor.selectField(field);
       });
-  }
-
-  private _listenOpeningEditDialog(): void {
-    this.fieldEditor.isOpenedEditDialog()
-      .pipe(
-        switchMap((field) => this._openEditDialog(field)),
-        takeUntil(this._destroy$),
-      )
-      .subscribe((field: Field) => {
-        this.fieldEditor.fieldChange(field);
-      });
-  }
-
-  private _openEditDialog(field: Field): Observable<any> {
-    const dialogRef = this._dialog.open(FieldEditDialogComponent, {
-      width: '600px',
-      data: {
-        field,
-        config: this.fieldEditor.config,
-      },
-    });
-
-    return dialogRef.afterClosed()
-      .pipe(
-        filter((dialogField: Field | null) => !!dialogField),
-      );
   }
 
   private _listenClickOutside(): void {

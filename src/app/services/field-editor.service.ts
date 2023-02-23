@@ -32,7 +32,6 @@ export class FieldEditorService implements OnDestroy {
   private _scrollTargetField: Field = null;
   private _destroy$ = new Subject<void>();
   private _fieldAdded$ = new Subject<Field>();
-  private _openEditDialogEvent$ = new Subject<Field>();
   private _fieldChanged$ = new Subject<Field>();
 
   constructor(
@@ -88,12 +87,6 @@ export class FieldEditorService implements OnDestroy {
       this.config.fieldShowActions(field) : of(true);
   }
 
-  public fieldShowEditAction(field: Field): Observable<boolean> {
-    return this.config.fieldShowEditAction ?
-      this.config.fieldShowEditAction(field) :
-      of(false);
-  }
-
   public fieldShowDuplicate(field: Field): Observable<boolean> {
     return this.config.fieldShowDuplicate ?
       this.config.fieldShowDuplicate(field) :
@@ -143,14 +136,6 @@ export class FieldEditorService implements OnDestroy {
       .subscribe(() => {
         this._selectedField$.next(field);
       });
-  }
-
-  public openEditDialog(field: Field): void {
-    this._openEditDialogEvent$.next(field);
-  }
-
-  public isOpenedEditDialog(): Observable<Field> {
-    return this._openEditDialogEvent$.asObservable();
   }
 
   public unselectField() {

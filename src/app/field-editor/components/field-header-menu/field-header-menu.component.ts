@@ -64,13 +64,7 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
         );
       });
     menuItems.push(...[
-      {
-        label: 'Edit',
-        click: (event) => {
-          this.openEditDialog(event);
-        },
-        show: this.fieldEditor.fieldShowEditAction(this.field),
-      },
+
       {
         label: 'Duplicate',
         click: (event) => {
@@ -133,13 +127,6 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.fieldChanged.emit(this.field);
       });
-  }
-
-  public openEditDialog(event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.fieldEditor.openEditDialog(this.field);
   }
 
   public duplicate(event: Event): void {

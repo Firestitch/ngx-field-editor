@@ -68,7 +68,6 @@ import {
   FieldHeaderMenuComponent,
   PopulateUrlComponent,
   SettingsComponent,
-  FieldEditDialogComponent,
 } from './components';
 
 
@@ -153,6 +152,7 @@ export function defaultConfigFactory(config) {
     FieldConfigDirective,
     FieldEditorToolbarDirective,
     FieldContainerDirective,
+    FieldEditorItemComponent,
   ],
   declarations: [
     FieldEditorComponent,
@@ -176,7 +176,6 @@ export function defaultConfigFactory(config) {
     PopulateUrlComponent,
     FieldConfigVisualSelectorComponent,
     FieldHeaderMenuComponent,
-    FieldEditDialogComponent,
   ],
 })
 

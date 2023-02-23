@@ -118,9 +118,6 @@ export class ExampleComponent implements OnInit {
       fieldShowDuplicate: (field: Field) => {
         return of(true);
       },
-      fieldShowEditAction: (field: Field) => {
-        return of(true);
-      },
       fieldCanEdit: (field: Field) => {
         return of(true);
       },

@@ -10,6 +10,7 @@ export { FieldRenderDirective } from './app/field-renderer/directives/field-rend
 export { FieldViewDirective } from './app/field-viewer/directives/field-view/field-view.directive';
 
 export { FieldEditorComponent } from './app/field-editor/components/field-editor/field-editor.component';
+export { FieldEditorItemComponent } from './app/field-editor/components/field-editor-item/field-editor-item.component';
 
 export {
   FieldViewComponent,
