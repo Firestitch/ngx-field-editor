@@ -1,5 +1,6 @@
-import { Field, FieldEditorConfig } from '../../../interfaces';
-import { EditorAction } from '../../../enums';
+import { Field } from './field.interface';
+import { FieldEditorConfig } from './field-editor-config.interface'
+import { EditorAction } from '../enums';
 
 export interface IEditDialogData {
   field: Field;

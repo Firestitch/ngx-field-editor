@@ -32,6 +32,8 @@ export class FieldEditorService implements OnDestroy {
   private _scrollTargetField: Field = null;
   private _destroy$ = new Subject<void>();
   private _fieldAdded$ = new Subject<Field>();
+  private _openEditDialogEvent$ = new Subject<Field>();
+  private _fieldChanged$ = new Subject<Field>();
 
   constructor(
     @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig: FieldEditorConfig,
@@ -143,6 +145,14 @@ export class FieldEditorService implements OnDestroy {
       });
   }
 
+  public openEditDialog(field: Field): void {
+    this._openEditDialogEvent$.next(field);
+  }
+
+  public isOpenedEditDialog(): Observable<Field> {
+    return this._openEditDialogEvent$.asObservable();
+  }
+
   public unselectField() {
     if (this.selectedField) {
       this.config.afterFieldUnselected(this.selectedField);
@@ -218,9 +228,14 @@ export class FieldEditorService implements OnDestroy {
 
     if (this.config.fieldChanged) {
       field = this._prepareItem(field);
+      this._fieldChanged$.next(field);
 
       this.config.fieldChanged(field);
     }
+  }
+
+  public fieldChanged(): Observable<Field> {
+    return this._fieldChanged$.asObservable();
   }
 
   public action(action: EditorAction, field: Field = null, data: any = {}): Observable<any> {

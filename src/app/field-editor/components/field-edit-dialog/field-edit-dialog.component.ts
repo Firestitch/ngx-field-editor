@@ -1,19 +1,18 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { from, Observable, of, Subject } from 'rxjs';
-import { concatMap, takeUntil, tap } from 'rxjs/operators';
+import { concatMap, takeUntil } from 'rxjs/operators';
 
-import { FieldEditorService } from '../../../services/field-editor.service';
-import { Field, FieldEditorConfig } from '../../../interfaces';
+import { Field, FieldEditorConfig, IEditDialogAction, IEditDialogData } from '../../../interfaces';
 import { EditorAction } from '../../../enums';
-import { IEditDialogAction, IEditDialogData } from './field-edit-dialog.interface';
+import { FieldEditorService } from '../../../services';
 
 
 @Component({
-  selector: 'fs-field-edit-dialog',
   templateUrl: './field-edit-dialog.component.html',
   styleUrls: ['./field-edit-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldEditDialogComponent implements OnInit, OnDestroy {
   public field: Field;
@@ -52,7 +51,7 @@ export class FieldEditDialogComponent implements OnInit, OnDestroy {
 
         return of({ field });
       }
-    },
+    };
 
     this._fieldEditor.config = this.config;
     this._fieldEditor.selectField(this.field);
