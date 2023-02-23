@@ -42,6 +42,18 @@ export class FieldEditDialogComponent implements OnInit, OnDestroy {
       fieldShowActions: (field: Field) => {
         return of(false);
       },
+      fieldShowRequired: (field: Field) => {
+        return of(true);
+      },
+      fieldCanConfig: (field: Field) => {
+        return of(true);
+      },
+      fieldShowDescription: (field: Field) => {
+        return of(true);
+      },
+      fieldShowSettings: (field: Field) => {
+        return of(true);
+      },
       action: (action: EditorAction, field: Field, data: any): Observable<any> => {
         this.actions.push({
           action,
