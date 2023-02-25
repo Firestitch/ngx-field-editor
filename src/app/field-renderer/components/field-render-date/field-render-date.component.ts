@@ -8,13 +8,13 @@ import { FieldComponent } from '../field/field.component';
 
 @Component({
   selector: 'fs-field-render-date',
-  templateUrl: 'field-render-date.component.html',
+  templateUrl: './field-render-date.component.html',
   viewProviders: [
     {
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -9,7 +9,7 @@ import {
 
 import { FsPrompt } from '@firestitch/prompt';
 import { controlContainerFactory } from '@firestitch/core';
-import { FsGalleryItem } from '@firestitch/gallery';
+import { FsGalleryItem, FsGalleryMenuItem } from '@firestitch/gallery';
 import { FsFile } from '@firestitch/file';
 
 import { forkJoin, Subject } from 'rxjs';
@@ -49,8 +49,10 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   @ViewChild(FieldViewGalleryComponent)
   public fieldViewGallery: FieldViewGalleryComponent;
 
-  public actions;
+  public actions: FsGalleryMenuItem[];
   public files = [];
+  public onChange: (data: any) => void;
+  public onTouched: () => void;
 
   private _destroy$ = new Subject();
 
@@ -60,11 +62,12 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
     private _prompt: FsPrompt,
   ) { }
 
-  public onChange = (data: any) => { };
-  public onTouched = () => { };
-
-  public selectFile(files: any) {
+  public selectFile(files) {
     this.onTouched();
+
+    if (!this.field.configs.allowMultiple) {
+      files = [files];
+    }
 
     files.forEach((fsFile: FsFile) => {
       this._fieldRenderer.action(RendererAction.FileUpload, this.field, { file: fsFile.file })
@@ -75,7 +78,12 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
           const file = new FileRenderFile(response.url, response.name);
           file.value = response;
 
-          this.files.push(response);
+          if (this.field.configs.allowMultiple) {
+            this.files.push(response);
+          } else {
+            this.files = [response];
+          }
+
           this.onChange(this.files);
           this.fieldViewGallery.reload();
           this._cdRef.markForCheck();
@@ -99,55 +107,62 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   public ngOnInit() {
     forkJoin({
       fileDownload: this._fieldRenderer.allowFileDownload(this.field),
-      fileRemove: this._fieldRenderer.allowFileRemove(this.field),
+      fileDelete: this._fieldRenderer.allowFileDelete(this.field),
     })
-      .subscribe((response) => {
-        this.actions = [];
-        this._cdRef.markForCheck();
-
-        if (response.fileDownload) {
-          this.actions.push({
-            label: 'Download',
-            click: (file) => {
-              this._fieldRenderer.action(RendererAction.FileDownload, this.field, file);
-            },
-          });
-        }
-
-        if (response.fileRemove) {
-          this.actions.push({
-            label: 'Remove',
-            click: (item: FsGalleryItem) => {
-              this._prompt.confirm({
-                title: 'Confirm',
-                template: 'Are you sure you would like to remove this file?',
-              })
-                .pipe(
-                  switchMap(() => {
-                    return this._fieldRenderer.action(RendererAction.FileDelete, this.field, item.data);
-                  }),
-                )
-                .subscribe(() => {
-                  const idx = this.files.indexOf(item.data);
-
-                  if (idx >= 0) {
-                    this.files.splice(idx, 1);
-                    this.fieldViewGallery.reload();
-                    this.onChange(this.files);
-
-                    if (this._fieldRenderer.config.afterFileRemoved) {
-                      this._fieldRenderer.config.afterFileRemoved(this.field, item.data);
-                    }
-                  }
-                });
-            },
-          });
-        }
+      .subscribe(({ fileDownload, fileDelete }) => {
+        this._initActions(fileDownload, fileDelete);
       });
   }
 
   public ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
+  }
+
+  private _initActions(fileDownload, fileDelete) {
+    this.actions = [];
+
+    if (fileDownload) {
+      this.actions.push({
+        label: 'Download',
+        click: (item: FsGalleryItem) => {
+          this._fieldRenderer
+            .action(RendererAction.FileDownload, this.field, { fieldFile: item.data });
+        },
+      });
+    }
+
+    if (fileDelete) {
+      this.actions.push({
+        label: 'Remove',
+        click: (item: FsGalleryItem) => {
+          this._prompt.confirm({
+            title: 'Confirm',
+            template: 'Are you sure you would like to remove this file?',
+          })
+            .pipe(
+              switchMap(() => {
+                return this._fieldRenderer
+                  .action(RendererAction.FileDelete, this.field, { fieldFile: item.data });
+              }),
+            )
+            .subscribe(() => {
+              const idx = this.files.indexOf(item.data);
+
+              if (idx >= 0) {
+                this.files.splice(idx, 1);
+                this.fieldViewGallery.reload();
+                this.onChange(this.files);
+
+                if (this._fieldRenderer.config.afterFileDeleted) {
+                  this._fieldRenderer.config.afterFileDeleted(this.field, item.data);
+                }
+              }
+            });
+        },
+      });
+    }
+
+    this._cdRef.markForCheck();
   }
 }

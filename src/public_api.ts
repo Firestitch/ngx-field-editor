@@ -28,7 +28,6 @@ export {
   FieldRenderNameModelComponent,
   FieldRenderCheckboxComponent,
   FieldRenderFileMultipleComponent,
-  FieldRenderFileSingleComponent,
   FieldRenderFileComponent,
   FieldRenderTextComponent,
   FieldRenderRichTextComponent,
@@ -63,8 +62,8 @@ export {
 } from './app/interfaces';
 
 
-export { 
-  EditorAction,   
-  RendererAction,  
+export {
+  EditorAction,
+  RendererAction,
   VisualSelectorFormat,
 } from './app/enums';

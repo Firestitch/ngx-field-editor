@@ -2,15 +2,16 @@ import { Component, OnInit, Inject, ViewChild, ChangeDetectionStrategy, ChangeDe
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
 import {
   FS_FIELD_EDITOR_CONFIG, FieldEditorComponent, FieldEditorConfig,
   FieldType, Field, ToolbarItem, FieldRendererConfig, FieldRendererComponent,
   EditorAction, VisualSelectorFormat, FieldViewerConfig, FieldOption, RendererAction,
 } from '@firestitch/field-editor';
 import { FsMessage } from '@firestitch/message';
+
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
 
 import { DialogExampleComponent } from '../dialog-example';
 import { FieldEditorService } from '../../../../src/app/services/field-editor.service';
@@ -309,10 +310,16 @@ export class ExampleComponent implements OnInit {
 
         return of(field);
       },
-      afterFileRemoved: (field, data) => {
-        console.log('After File Removed', field, data);
+      afterFileDeleted: (field, data) => {
+        console.log('After File Deleted', field, data);
       },
       showField: (field: Field) => {
+        return of(true);
+      },
+      allowFileDownload: (field: Field): Observable<boolean> => {
+        return of(true);
+      },
+      allowFileDelete: (field: Field): Observable<boolean> => {
         return of(true);
       },
     };

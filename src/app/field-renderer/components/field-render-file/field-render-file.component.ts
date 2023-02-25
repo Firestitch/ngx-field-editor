@@ -5,8 +5,8 @@ import { FieldComponent } from '../field/field.component';
 
 @Component({
   selector: 'fs-field-render-file',
-  templateUrl: 'field-render-file.component.html',
-  styleUrls: ['field-render-file.component.scss'],
+  templateUrl: './field-render-file.component.html',
+  styleUrls: ['./field-render-file.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldRenderFileComponent extends FieldComponent implements OnInit {

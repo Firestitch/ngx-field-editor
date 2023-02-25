@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
 import { Observable, of, Subject } from 'rxjs';
+
 import { cloneDeep } from 'lodash-es';
 
 import { Field, FieldRendererConfig } from '../interfaces';
@@ -13,16 +14,16 @@ export class FieldRendererService implements OnDestroy {
   public config: FieldRendererConfig;
 
   private _destroy$ = new Subject();
-  
+
   public ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
   }
-  
+
   public setConfig(config: FieldRendererConfig) {
-    this.config = { 
+    this.config = {
       ...config,
-      fieldChanged: config.fieldChanged ? config.fieldChanged : (field: Field) => {}
+      fieldChanged: config.fieldChanged ? config.fieldChanged : (field: Field) => { },
     };
   }
 
@@ -38,8 +39,12 @@ export class FieldRendererService implements OnDestroy {
     return cloneDeep(this.config.fields);
   }
 
+  public set fields(fields: Field[]) {
+    this.config.fields = fields;
+  }
+
   public action(action: RendererAction, field: Field, data: any = {}): Observable<any> {
-    if(this.config.action) {
+    if (this.config.action) {
       return this.config.action(action, field, data);
     }
 
@@ -47,30 +52,26 @@ export class FieldRendererService implements OnDestroy {
   }
 
   public allowFileDownload(field: Field): Observable<boolean> {
-    if(!this.config?.allowFileDownload) {
+    if (!this.config?.allowFileDownload) {
       return of(false);
     }
 
     return this.config.allowFileDownload(field);
   }
 
-  public allowFileRemove(field: Field): Observable<boolean> {
-    if(!this.config?.allowFileRemove) {
+  public allowFileDelete(field: Field): Observable<boolean> {
+    if (!this.config?.allowFileDelete) {
       return of(false);
     }
 
-    return this.config.allowFileRemove(field);
+    return this.config.allowFileDelete(field);
   }
 
   public allowImageUpload(field: Field): Observable<boolean> {
-    if(!this.config?.allowImageUpload) {
+    if (!this.config?.allowImageUpload) {
       return of(true);
     }
 
     return this.config.allowImageUpload(field);
-  }
-
-  public set fields(fields: Field[]) {
-    this.config.fields = fields;
   }
 }

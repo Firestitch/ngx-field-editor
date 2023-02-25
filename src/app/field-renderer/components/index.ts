@@ -5,7 +5,6 @@ export * from './field-render-checkbox/field-render-checkbox.component';
 export * from './field-render-name/field-render-name.component';
 export * from './field-render-name/field-render-name-model/field-render-name-model.component';
 export * from './field-render-file/field-render-file-multiple/field-render-file-multiple.component';
-export * from './field-render-file/field-render-file-single/field-render-file-single.component';
 export * from './field-render-rich-text/field-render-rich-text.component';
 export * from './field-render-gender/field-render-gender.component';
 export * from './field-render-rich-text/field-render-rich-text.component';

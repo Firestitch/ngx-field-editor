@@ -30,6 +30,8 @@ import { FsAddressModule } from '@firestitch/address';
 import { FsHtmlEditorModule, FsHtmlRendererModule } from '@firestitch/html-editor';
 
 
+import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
+
 import { FieldRenderTextComponent } from './components/field-render-text/field-render-text.component';
 import { FieldRenderChoiceComponent } from './components/field-render-choice/field-render-choice.component';
 import { FieldRenderDropdownComponent } from './components/field-render-dropdown/field-render-dropdown.component';
@@ -40,17 +42,14 @@ import { FieldRenderAddressComponent } from './components/field-render-address/f
 import { FieldRendererComponent } from './components/field-renderer/field-renderer.component';
 import { FieldRenderDirective } from './directives/field-render/field-render.directive';
 import { FieldRenderComponent } from './components/field-render/field-render.component';
-
 import { FieldRenderContentComponent } from './components/field-render-content/field-render-content.component';
 import { FieldRenderRichTextComponent } from './components/field-render-rich-text/field-render-rich-text.component';
 import { FieldRenderFileMultipleComponent } from './components/field-render-file/field-render-file-multiple/field-render-file-multiple.component';
-import { FieldRenderFileSingleComponent } from './components/field-render-file/field-render-file-single/field-render-file-single.component';
 import { FieldRenderNameModelComponent } from './components/field-render-name/field-render-name-model/field-render-name-model.component';
 import { FieldRenderCheckboxComponent } from './components/field-render-checkbox/field-render-checkbox.component';
 import { FieldRenderDateComponent } from './components/field-render-date/field-render-date.component';
 import { FieldRenderTimeComponent } from './components/field-render-time/field-render-time.component';
 import { FieldRenderBirthdayComponent } from './components/field-render-birthday/field-render-birthday.component';
-import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
 import { FieldRenderVisualSelectorComponent, FieldRenderVisualSelectorModelComponent } from './components';
 
 
@@ -108,7 +107,6 @@ import { FieldRenderVisualSelectorComponent, FieldRenderVisualSelectorModelCompo
     FieldRenderCheckboxComponent,
     FieldRenderDateComponent,
     FieldRenderTimeComponent,
-    FieldRenderFileSingleComponent,
     FieldRenderBirthdayComponent,
     FieldRenderVisualSelectorComponent,
     FieldRenderVisualSelectorModelComponent,
@@ -130,7 +128,6 @@ import { FieldRenderVisualSelectorComponent, FieldRenderVisualSelectorModelCompo
     FieldRenderCheckboxComponent,
     FieldRenderDateComponent,
     FieldRenderTimeComponent,
-    FieldRenderFileSingleComponent,
     FieldRenderBirthdayComponent,
     FieldRenderVisualSelectorComponent,
   ],

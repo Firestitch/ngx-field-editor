@@ -7,15 +7,15 @@ import {
 } from '@angular/core';
 
 import { FsGalleryComponent, FsGalleryConfig, FsGalleryItem, GalleryLayout, GalleryThumbnailSize, mime } from '@firestitch/gallery';
-import { FsGalleryInfoConfig } from '@firestitch/gallery/app/interfaces';
+import { FsGalleryInfoConfig, FsGalleryItemAction } from '@firestitch/gallery/app/interfaces';
 
 import { Observable, of } from 'rxjs';
 
 
 @Component({
   selector: 'fs-field-view-gallery',
-  templateUrl: 'field-view-gallery.component.html',
-  styleUrls: ['field-view-gallery.component.scss'],
+  templateUrl: './field-view-gallery.component.html',
+  styleUrls: ['./field-view-gallery.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldViewGalleryComponent implements OnInit, OnChanges {
@@ -24,7 +24,7 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
   public gallery: FsGalleryComponent;
 
   @Input() public field: any = { config: {} };
-  @Input() public actions = [];
+  @Input() public actions: FsGalleryItemAction[] = [];
 
   public galleryConfig: FsGalleryConfig;
 
@@ -54,7 +54,7 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
       info = {
         ...info,
         menu: {
-          //actions: this.actions,
+          items: this.actions,
         },
       };
     }
@@ -71,6 +71,7 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
       persist: false,
       layout: GalleryLayout.Flow,
       zoom: false,
+      preview: false,
       info,
       fetch: (query?: any, item?: FsGalleryItem): Observable<FsGalleryItem[]> => {
         const files = (this.field.data?.files || []) as any[];
