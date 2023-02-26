@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
 import { Field } from '../../../interfaces/field.interface';
 import { FieldType } from '../../../enums/field-type';
@@ -41,7 +41,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public fieldContainerTemplateRef: TemplateRef<FieldContainerDirective>;
 
   @HostBinding('class.selected')
-  public isSelectedField = false;
+  public isFieldSelected = false;
 
   public FieldType = FieldType;
   public canEdit = false;
@@ -102,12 +102,22 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
       }, 0);
     }
 
-    this.fieldEditor.selectedField$
+    this.fieldEditor.fieldSelected$
       .pipe(
         takeUntil(this._destroy$),
       )
       .subscribe((field) => {
-        this.isSelectedField = field?.guid === this.field.guid;
+        this.isFieldSelected = field?.guid === this.field.guid;
+        this._cdRef.markForCheck();
+      });
+
+    this.fieldEditor.fieldUpdated$
+      .pipe(
+        filter((field) => field.guid === this.field.guid),
+        takeUntil(this._destroy$),
+      )
+      .subscribe((field) => {
+        this.field = field;
         this._cdRef.markForCheck();
       });
 

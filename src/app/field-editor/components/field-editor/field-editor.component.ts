@@ -107,7 +107,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   }
 
   public fieldClick(field: Field) {
-    if (this.fieldEditor.selectedField !== field) {
+    if (this.fieldEditor.fieldSelected !== field) {
       this.fieldEditor.selectField(field);
     }
   }
@@ -138,11 +138,12 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     } else {
       this.fieldEditor.config.afterFieldDropped(event.item.data.field, event.currentIndex)
         .pipe(
-          switchMap((field) => this.fieldEditor.insertField(
-            field,
-            event.currentIndex,
-            event.item.data.item,
-          )),
+          switchMap((field) => this.fieldEditor
+            .insertField(
+              field,
+              event.currentIndex,
+              event.item.data.item,
+            )),
         )
         .subscribe();
     }
@@ -163,7 +164,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     fromEvent(this.document, 'mousedown')
       .pipe(
         delay(100),
-        filter(() => !!this.fieldEditor.selectedField && !this.fieldEditor.inDeletionMode),
+        filter(() => !!this.fieldEditor.fieldSelected && !this.fieldEditor.inDeletionMode),
         filter((event: Event) => {
           return clickOutsideElement(event, this._elRef.nativeElement);
         }),

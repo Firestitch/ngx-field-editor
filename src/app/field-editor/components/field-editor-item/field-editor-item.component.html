@@ -16,21 +16,21 @@
   <ng-container *ngIf="fieldContainerTemplateRef; else containerTemplate">
     <ng-container 
       [ngTemplateOutlet]="fieldContainerTemplateRef"
-      [ngTemplateOutletContext]="{ template: containerTemplate, selected: isSelectedField, field: field }">
+      [ngTemplateOutletContext]="{ template: containerTemplate, selected: isFieldSelected, field: field }">
     </ng-container>    
   </ng-container>
 </div>
 
 <ng-template #containerTemplate>
   <fs-field-header
-    *ngIf="isSelectedField"
+    *ngIf="isFieldSelected"
     [field]="field"
     [hasDescription]="hasDescription"
     (toggleDescription)="toggleDescriptionNote($event)"
     (fieldChanged)="headerFieldChanged($event)">
   </fs-field-header>
 
-  <ng-container *ngIf="isSelectedField; else renderField">
+  <ng-container *ngIf="isFieldSelected; else renderField">
     <div class="field-config" [ngClass]="{ 'disabled': !canEdit || !canConfig }">
       <ng-container *ngIf="fieldConfigTemplateRef; else configStandardField">
         <ng-template

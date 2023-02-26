@@ -2,7 +2,7 @@ import { Injectable, Inject, OnDestroy } from '@angular/core';
 
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-import { guid } from '@firestitch/common';
+import { guid as fsGuid } from '@firestitch/common';
 
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { delay, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -14,7 +14,6 @@ import {
 } from '../interfaces/field.interface';
 import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
-import { TOOLBAR_DEFAULTS } from '../helpers/toolbar-defaults';
 import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
 import { EditorAction } from '../enums';
 import { ToolbarItem, ToolbarItems } from '../interfaces';
@@ -24,11 +23,12 @@ import { ToolbarItem, ToolbarItems } from '../interfaces';
 export class FieldEditorService implements OnDestroy {
 
   public config: FieldEditorConfig;
-  public editorId = `fs-fields-${guid()}`;
+  public editorId = `fs-fields-${fsGuid()}`;
 
   public inDeletionMode = false;
 
-  private _selectedField$ = new BehaviorSubject<Field>(null);
+  private _fieldSelected$ = new BehaviorSubject<Field>(null);
+  private _fieldUpdated$ = new Subject<Field>();
   private _scrollTargetField: Field = null;
   private _destroy$ = new Subject<void>();
   private _fieldAdded$ = new Subject<Field>();
@@ -42,12 +42,16 @@ export class FieldEditorService implements OnDestroy {
     return this._fieldAdded$.asObservable();
   }
 
-  public get selectedField(): Field {
-    return this._selectedField$.getValue();
+  public get fieldSelected(): Field {
+    return this._fieldSelected$.getValue();
   }
 
-  public get selectedField$(): Observable<Field> {
-    return this._selectedField$.asObservable();
+  public get fieldSelected$(): Observable<Field> {
+    return this._fieldSelected$.asObservable();
+  }
+
+  public get fieldUpdated$(): Observable<Field> {
+    return this._fieldUpdated$.asObservable();
   }
 
   public get fields(): Field[] {
@@ -68,6 +72,39 @@ export class FieldEditorService implements OnDestroy {
 
   public get scrollTargetField(): Field {
     return this._scrollTargetField;
+  }
+
+  public updateField(field: Field): void {
+    const index = this.findFieldIndexByGuid(field.guid);
+
+    if (index !== -1) {
+      this.fields = this.fields
+        .map((_field, _index) => {
+          return index === _index ?
+            {
+              ..._field,
+              ...field,
+            } : _field;
+        });
+
+      this._fieldUpdated$.next(this.fields[index]);
+    }
+  }
+
+  public findField(func: (field: Field) => boolean): Field {
+    return this.fields.find(func);
+  }
+
+  public findFieldByGuid(guid: string): Field {
+    return this.findField((field) => field.guid === guid);
+  }
+
+  public findFieldIndex(func: (field: Field) => boolean): number {
+    return this.fields.findIndex(func);
+  }
+
+  public findFieldIndexByGuid(guid: string): number {
+    return this.findFieldIndex((field) => field.guid === guid);
   }
 
   public fieldShowDelete(field: Field): Observable<boolean> {
@@ -134,14 +171,14 @@ export class FieldEditorService implements OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe(() => {
-        this._selectedField$.next(field);
+        this._fieldSelected$.next(field);
       });
   }
 
   public unselectField() {
-    if (this.selectedField) {
-      this.config.afterFieldUnselected(this.selectedField);
-      this._selectedField$.next(null);
+    if (this.fieldSelected) {
+      this.config.afterFieldUnselected(this.fieldSelected);
+      this._fieldSelected$.next(null);
     }
   }
 
@@ -187,7 +224,7 @@ export class FieldEditorService implements OnDestroy {
     field = initField(field);
 
     if (index === undefined) {
-      index = this.selectedField ? this.config.fields.indexOf(this.selectedField) + 1 : this.numberOfFields;
+      index = this.fieldSelected ? this.config.fields.indexOf(this.fieldSelected) + 1 : this.numberOfFields;
     }
 
     return this.config.beforeFieldAdd(field, toolbarItem)
@@ -199,7 +236,7 @@ export class FieldEditorService implements OnDestroy {
           this._scrollTargetField = newField;
           this._fieldAdded$.next(newField);
 
-          return this.config.afterFieldAdded(newField);
+          return this.config.afterFieldAdded(newField, toolbarItem);
         }),
         takeUntil(this._destroy$),
       );
@@ -232,12 +269,7 @@ export class FieldEditorService implements OnDestroy {
       this.config.action ?
         this.config.action(action, field, data) :
         of(field)
-    )
-      .pipe(
-        tap((field) => {
-
-        }),
-      );
+    );
   }
 
   public resetScrollTarget(): void {

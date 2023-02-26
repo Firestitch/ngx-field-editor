@@ -1,4 +1,4 @@
-<div *ngIf="(fieldEditor.selectedField$ | async).guid === field.guid; else selectedElse">
+<div *ngIf="(fieldEditor.fieldSelected$ | async).guid === field.guid; else selectedElse">
   <div fxFlexLayout="row" fxLayoutAlign="start center">
     <div fxFlex>
       <mat-form-field
