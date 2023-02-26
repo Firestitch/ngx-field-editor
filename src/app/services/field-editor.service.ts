@@ -183,7 +183,7 @@ export class FieldEditorService implements OnDestroy {
     }
   }
 
-  public insertNewField(field: Field, index?: number, toolbarItem?: ToolbarItem): Observable<Field> {
+  public insertField(field: Field, index?: number, toolbarItem?: ToolbarItem): Observable<Field> {
     field = initField(field);
 
     if (index === undefined) {
@@ -203,6 +203,10 @@ export class FieldEditorService implements OnDestroy {
         }),
         takeUntil(this._destroy$),
       );
+  }
+
+  public appendField(field: Field, toolbarItem?: ToolbarItem): Observable<Field> {
+    return this.insertField(field, undefined, toolbarItem);
   }
 
   public fieldChange(field: Field): void {

@@ -1,4 +1,8 @@
+import { Observable } from 'rxjs';
+
 import { FieldType } from '../enums/field-type';
+
+import { Field } from './field.interface';
 
 export interface Toolbar {
   items: ToolbarItems;
@@ -14,4 +18,5 @@ export interface ToolbarItem {
   disabled?: boolean;
   items?: ToolbarItem[];
   data?: any;
+  click?: (field: Field, toolbarItem: ToolbarItem) => Observable<any>;
 }

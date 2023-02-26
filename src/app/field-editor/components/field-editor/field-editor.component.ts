@@ -138,7 +138,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     } else {
       this.fieldEditor.config.afterFieldDropped(event.item.data.field, event.currentIndex)
         .pipe(
-          switchMap((field) => this.fieldEditor.insertNewField(
+          switchMap((field) => this.fieldEditor.insertField(
             field,
             event.currentIndex,
             event.item.data.item,

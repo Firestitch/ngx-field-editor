@@ -5,6 +5,9 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 import { guid } from '@firestitch/common';
 
+import { of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { cloneDeep } from 'lodash-es';
 
 import { ToolbarItem } from '../../../interfaces/toolbar.interface';
@@ -61,13 +64,19 @@ export class FieldToolbarItemComponent {
     }
   }
 
-  public itemClick(item: ToolbarItem): void {
-    const field = this._prepareField(item);
-    this.fieldEditor.insertNewField(
-      cloneDeep(field),
-      undefined,
-      item,
-    )
+  public itemClick(toolbarItem: ToolbarItem): void {
+    of(this._prepareField(toolbarItem))
+      .pipe(
+        switchMap((field: Field) => {
+          return toolbarItem.click ? toolbarItem.click(field, toolbarItem) : of(field);
+        }),
+        switchMap((field) => {
+          return this.fieldEditor.appendField(
+            cloneDeep(field),
+            toolbarItem,
+          );
+        }),
+      )
       .subscribe();
   }
 

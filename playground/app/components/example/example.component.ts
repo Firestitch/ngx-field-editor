@@ -177,7 +177,9 @@ export class ExampleComponent implements OnInit {
                   {
                     icon: 'share',
                     label: 'Share',
-                    type: 'share',
+                    click: (field: Field, toolbarItem: ToolbarItem): Observable<Field> => {
+                      return of(field);
+                    },
                   },
                 ],
               },
