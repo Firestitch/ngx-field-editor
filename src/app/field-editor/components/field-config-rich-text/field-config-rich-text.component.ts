@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 
 import { FsHtmlEditorComponent, FsHtmlEditorConfig } from '@firestitch/html-editor';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,8 +11,8 @@ import { FieldComponent } from '../field/field.component';
 
 @Component({
   selector: 'fs-field-config-rich-text',
-  templateUrl: 'field-config-rich-text.component.html',
-  styleUrls: ['field-config-rich-text.component.scss'],
+  templateUrl: './field-config-rich-text.component.html',
+  styleUrls: ['./field-config-rich-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldConfigRichTextComponent extends FieldComponent implements OnInit {
@@ -29,11 +30,11 @@ export class FieldConfigRichTextComponent extends FieldComponent implements OnIn
       image: {
         upload: (file: File): Observable<string> => {
           return this.fieldEditor.action(EditorAction.ImageUpload, this.field, { file })
-          .pipe(
-            map((response) => response.url),
-          );
-        }
-      }
+            .pipe(
+              map((response) => response.url),
+            );
+        },
+      },
     };
   }
 }

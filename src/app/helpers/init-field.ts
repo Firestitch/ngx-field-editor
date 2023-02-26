@@ -138,7 +138,6 @@ function initRichText(field: Field) {
   if (!('value' in field.data)) {
     field.data.value = field.configs.default;
   }
-
 }
 
 function initHeading(field: Field) {

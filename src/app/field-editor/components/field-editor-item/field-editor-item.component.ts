@@ -40,6 +40,9 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   @Input()
   public fieldContainerTemplateRef: TemplateRef<FieldContainerDirective>;
 
+  @HostBinding('class.selected')
+  public isSelectedField = false;
+
   public FieldType = FieldType;
   public canEdit = false;
   public canConfig = false;
@@ -51,10 +54,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
     public fieldEditor: FieldEditorService,
     private _elRef: ElementRef,
     private _cdRef: ChangeDetectorRef,
-  ) {}
-
-  @HostBinding('class.selected')
-  public isSelectedField = false;
+  ) { }
 
   public get fieldConfigTemplateRef(): TemplateRef<unknown> | false {
     return this.fieldConfigTemplateRefs && this.fieldConfigTemplateRefs[this.field.type];
@@ -74,7 +74,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
 
     this.fieldEditor.fieldCanEdit(this.field)
       .pipe(
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
       )
       .subscribe((value) => {
         this.canEdit = value;
@@ -82,9 +82,9 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
       });
 
     this.fieldEditor
-    .fieldCanConfig(this.field)
+      .fieldCanConfig(this.field)
       .pipe(
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
       )
       .subscribe((value) => {
         this.canConfig = value;
@@ -104,7 +104,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
 
     this.fieldEditor.selectedField$
       .pipe(
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
       )
       .subscribe((field) => {
         this.isSelectedField = field?.guid === this.field.guid;

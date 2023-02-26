@@ -192,7 +192,7 @@ export class FieldEditorService implements OnDestroy {
 
     return this.config.beforeFieldAdd(field, toolbarItem)
       .pipe(
-        switchMap((field) => this.action(EditorAction.FieldAdd, field, { index, toolbarItem })),
+        switchMap((_field) => this.action(EditorAction.FieldAdd, _field, { index, toolbarItem })),
         switchMap((response) => {
           const newField = initField(response.field);
           this.config.fields.splice(index, 0, newField);

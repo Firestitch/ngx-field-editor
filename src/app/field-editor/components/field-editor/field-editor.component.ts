@@ -18,11 +18,10 @@ import { DOCUMENT } from '@angular/common';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
-import { fromEvent, Observable, Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { delay, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 
-import { MatDialog } from '@angular/material/dialog';
 import { FieldEditorConfig } from '../../../interfaces/field-editor-config.interface';
 import { Field } from '../../../interfaces/field.interface';
 import { FieldConfigDirective } from '../../directives/field-config/field-config.directive';
@@ -74,7 +73,6 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     public fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
     private _elRef: ElementRef,
-    private _dialog: MatDialog,
   ) { }
 
   @HostListener('document:keydown.escape', ['$event'])

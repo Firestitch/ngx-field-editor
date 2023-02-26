@@ -9,7 +9,7 @@
         cdkDropList
         (cdkDropListDropped)="drop($event)"
         [id]="fieldEditor.editorId">
-      <ng-container *ngFor="let field of fieldEditor.config.fields">
+      <ng-container *ngFor="let field of fields">
         <fs-field-editor-item
           class="fs-field field"
           (click)="fieldClick(field)"

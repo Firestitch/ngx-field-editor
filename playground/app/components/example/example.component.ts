@@ -8,9 +8,10 @@ import {
   EditorAction, VisualSelectorFormat, FieldViewerConfig, FieldOption, RendererAction,
 } from '@firestitch/field-editor';
 import { FsMessage } from '@firestitch/message';
+import { guid } from '@firestitch/common';
 
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { delay, tap } from 'rxjs/operators';
 
 
 import { DialogExampleComponent } from '../dialog-example';
@@ -90,6 +91,8 @@ export class ExampleComponent implements OnInit {
       },
       beforeFieldDuplicate: (field: Field) => {
         console.log('Before Field Duplicated', field);
+
+        field.guid = guid();
 
         return of(field);
       },

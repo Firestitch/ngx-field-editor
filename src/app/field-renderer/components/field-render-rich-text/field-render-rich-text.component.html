@@ -3,7 +3,7 @@
 
   <ng-container *ngIf="editorConfig">
     <fs-html-editor
-      [(ngModel)]="field.configs.default"
+      [(ngModel)]="field.data.value"
       [config]="editorConfig"
       [required]="field.configs.required"
       [name]="name"

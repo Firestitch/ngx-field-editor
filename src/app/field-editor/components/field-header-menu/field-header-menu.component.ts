@@ -8,11 +8,13 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+
 import { MatDialog } from '@angular/material/dialog';
 
-import { cloneDeep } from 'lodash-es';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { forkJoin, of, Subject } from 'rxjs';
+
+import { cloneDeep } from 'lodash-es';
 
 import { FieldEditorService } from '../../../services/field-editor.service';
 import { SettingsComponent } from '../settings';
@@ -22,8 +24,8 @@ import { Field, FieldMenuItem } from '../../../interfaces';
 
 @Component({
   selector: 'fs-field-header-menu',
-  templateUrl: 'field-header-menu.component.html',
-  styleUrls: ['field-header-menu.component.scss'],
+  templateUrl: './field-header-menu.component.html',
+  styleUrls: ['./field-header-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
@@ -36,7 +38,7 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
 
   private _destroy$ = new Subject();
 
-  public constructor(
+  constructor(
     public fieldEditor: FieldEditorService,
     private _dialog: MatDialog,
     private _cdRef: ChangeDetectorRef,
@@ -52,9 +54,6 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
           {
             label: menuItem.label,
             click: (event: Event) => {
-              event.preventDefault();
-              event.stopPropagation();
-
               if (menuItem.click) {
                 menuItem.click(this.field);
               }
@@ -74,25 +73,25 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
       },
       {
         label: 'Settings',
-        click:  (event) => {
+        click: (event) => {
           this.settings(event);
         },
         show: this.fieldEditor.fieldShowSettings(this.field),
-      }
+      },
     ]);
 
     forkJoin(
       menuItems.map((menuItem) => menuItem.show),
     )
-    .pipe(
-      takeUntil(this._destroy$),
-    )
-    .subscribe((response: any) => {
-      this.menuItems = menuItems
-        .filter((menuItem, index) => response[index]);
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((response: any) => {
+        this.menuItems = menuItems
+          .filter((menuItem, index) => response[index]);
 
-      this._cdRef.markForCheck();
-    });
+        this._cdRef.markForCheck();
+      });
   }
 
   public ngOnDestroy(): void {
@@ -130,8 +129,6 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
   }
 
   public duplicate(event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
     const index = this.fieldEditor.config.fields.indexOf(this.field) + 1;
 
     const copiedField = {
@@ -141,15 +138,16 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
 
     this.fieldEditor.config.beforeFieldDuplicate(copiedField)
       .pipe(
-        switchMap((field) => this.fieldEditor.action(EditorAction.FieldDuplicate, field, { index })),
+        switchMap((field) => this.fieldEditor
+          .action(EditorAction.FieldDuplicate, field, { index })),
         map((response) => response.field),
         switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
-        tap((field) =>  {
+        tap((field) => {
           this.fieldEditor.config.fields.splice(index, 0, field);
           this.fieldEditor.selectField(field);
         }),
         takeUntil(this._destroy$),
       )
-    .subscribe();
+      .subscribe();
   }
 }
