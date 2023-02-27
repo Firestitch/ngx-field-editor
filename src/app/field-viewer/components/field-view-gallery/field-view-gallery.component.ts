@@ -82,8 +82,8 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
               const galleryItem: FsGalleryItem = {
                 url: file.url,
                 preview: file.url,
-                name: file.name,
-                mime: file.mime || mime(file.name, file.url, '', false),
+                name: file.filename,
+                mime: file.mime || mime(file.filename, file.url, '', false),
                 data: file,
               };
 

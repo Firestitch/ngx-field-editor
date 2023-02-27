@@ -75,7 +75,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
           takeUntil(this._destroy$),
         )
         .subscribe((response: any) => {
-          const file = new FileRenderFile(response.url, response.name);
+          const file = new FileRenderFile(response.url, response.filename);
           file.value = response;
 
           if (this.field.configs.allowMultiple) {
