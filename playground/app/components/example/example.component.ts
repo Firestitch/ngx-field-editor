@@ -11,7 +11,7 @@ import { FsMessage } from '@firestitch/message';
 import { guid } from '@firestitch/common';
 
 import { Observable, of } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 
 import { DialogExampleComponent } from '../dialog-example';
@@ -20,8 +20,8 @@ import { FieldEditorService } from '../../../../src/app/services/field-editor.se
 
 @Component({
   selector: 'example',
-  templateUrl: 'example.component.html',
-  styleUrls: ['example.component.scss'],
+  templateUrl: './example.component.html',
+  styleUrls: ['./example.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExampleComponent implements OnInit {
@@ -166,98 +166,7 @@ export class ExampleComponent implements OnInit {
             tap(() => this._message.success('Saved Changes')),
           );
       },
-      toolbar: {
-        items: [
-          {
-            label: 'Menu 1',
-            items: [
-              {
-                label: 'Menu A',
-                items: [
-                  {
-                    icon: 'share',
-                    label: 'Share',
-                    click: (field: Field, toolbarItem: ToolbarItem): Observable<Field> => {
-                      return of(field);
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            label: 'Menu 2',
-            items: [
-              {
-                label: 'Menu 2A',
-                items: [
-                  {
-                    label: 'Menu 2A1',
-                    items: [
-                      {
-                        icon: 'share',
-                        label: 'Share',
-                        type: 'share',
-                      },
-                    ],
-                  },
-                  {
-                    label: 'Menu 2A2',
-                    icon: 'share',
-                    type: 'share',
-                  },
-                ],
-              },
-              {
-                label: 'Menu 2B',
-                items: [
-                  {
-                    label: 'Menu 2B1',
-                    items: [
-                      {
-                        icon: 'share',
-                        label: 'Share',
-                        type: 'share',
-                      },
-                    ],
-                  },
-                  {
-                    label: 'Menu 2B2',
-                    icon: 'share',
-                    type: 'share',
-                  },
-                ],
-              },
-            ],
-          },
-          ...this.defaultConfig.toolbar.items,
-          {
-            type: FieldType.Divider,
-          },
-          {
-            icon: 'share',
-            label: 'Share',
-            type: 'share',
-            config: { id: 99 },
-          },
-          {
-            icon: 'edit',
-            label: 'Signature',
-            type: 'signature',
-            config: {},
-          },
-          {
-            icon: 'check_box',
-            label: 'Terms & Conditions',
-            type: 'terms',
-            config: {
-              configs: {
-                label: 'I have read and accepted the terms & conditions.',
-              },
-            },
-          },
-        ],
-      },
+      toolbar: this.getToolbar(),
       fieldMenu: {
         items: [
           {
@@ -272,6 +181,101 @@ export class ExampleComponent implements OnInit {
         ],
       },
       fields: this.getFields(),
+    };
+  }
+
+  public getToolbar() {
+    return {
+      items: [
+        {
+          label: 'Menu 1',
+          items: [
+            {
+              label: 'Menu A',
+              items: [
+                {
+                  icon: 'share',
+                  label: 'Share',
+                  click: (field: Field, toolbarItem: ToolbarItem): Observable<Field> => {
+                    return of(field);
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Menu 2',
+          items: [
+            {
+              label: 'Menu 2A',
+              items: [
+                {
+                  label: 'Menu 2A1',
+                  items: [
+                    {
+                      icon: 'share',
+                      label: 'Share',
+                      type: 'share',
+                    },
+                  ],
+                },
+                {
+                  label: 'Menu 2A2',
+                  icon: 'share',
+                  type: 'share',
+                },
+              ],
+            },
+            {
+              label: 'Menu 2B',
+              items: [
+                {
+                  label: 'Menu 2B1',
+                  items: [
+                    {
+                      icon: 'share',
+                      label: 'Share',
+                      type: 'share',
+                    },
+                  ],
+                },
+                {
+                  label: 'Menu 2B2',
+                  icon: 'share',
+                  type: 'share',
+                },
+              ],
+            },
+          ],
+        },
+        ...this.defaultConfig.toolbar.items,
+        {
+          type: FieldType.Divider,
+        },
+        {
+          icon: 'share',
+          label: 'Share',
+          type: 'share',
+          config: { id: 99 },
+        },
+        {
+          icon: 'edit',
+          label: 'Signature',
+          type: 'signature',
+          config: {},
+        },
+        {
+          icon: 'check_box',
+          label: 'Terms & Conditions',
+          type: 'terms',
+          config: {
+            configs: {
+              label: 'I have read and accepted the terms & conditions.',
+            },
+          },
+        },
+      ],
     };
   }
 
@@ -638,8 +642,8 @@ export class ExampleComponent implements OnInit {
           files: [
             {
               id: 99999,
-              url: 'http://picsum.photos/id/275/500/300.jpg',
-              name: 'adorable-animal-blur-406014.jpg',
+              //url: 'http://picsum.photos/id/275/500/300.jpg',
+              filename: 'adorable-animal-blur-406014.jpg',
             },
           ],
         },
