@@ -1,8 +1,9 @@
 import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 
+import { guid } from '@firestitch/common';
+
 import { Subject } from 'rxjs';
 
-import { guid } from '@firestitch/common';
 
 import { Field } from '../../../interfaces';
 import { FieldType } from '../../../enums/field-type';
@@ -25,7 +26,7 @@ export class FieldComponent implements OnDestroy {
 
   protected _destory$ = new Subject();
 
-  public constructor(
+  constructor(
     public fieldEditor: FieldEditorService,
   ) {
   }
@@ -37,9 +38,9 @@ export class FieldComponent implements OnDestroy {
 
   public fieldSave() {
     this.fieldEditor.action(EditorAction.FieldSave, this.field)
-    .subscribe(() => {
-      this.fieldEditor.fieldChange(this.field);
-    });
+      .subscribe(() => {
+        this.fieldEditor.fieldChange(this.field);
+      });
   }
 
 }

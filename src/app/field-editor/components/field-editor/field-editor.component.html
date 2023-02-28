@@ -14,35 +14,35 @@
           class="fs-field field"
           (click)="fieldClick(field)"
           [field]="field"
-          [fieldConfigTemplateRefs]="fieldConfigTemplateRefs"
-          [fieldRenderTemplateRefs]="fieldRenderTemplateRefs"
+          [fieldConfigTemplate]="fieldConfigTemplateRefs[field.type]"
+          [fieldRenderTemplate]="fieldRenderTemplateRefs[field.type]"
           [fieldContainerTemplateRef]="fieldContainerTemplateRef">
         </fs-field-editor-item>
       </ng-container>
     </div>
   </div>
+  <ng-container *ngIf="fieldEditor.config.canAddField">
+    <div class="toolbar-container" #boundary>
+      <div #spacer></div>
+      <div class="toolbar">
+        <div
+          class="toolbar-wrapper"
+          stickyThing
+          [spacer]="spacer"
+          [scrollContainer]="scrollContainer"
+          [boundary]="scrollContainer ? null : boundary"
+          [marginTop]="50">
+          <ng-container
+            *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl, template: toolbarTpl } ">
+          </ng-container>
+          <ng-template #toolbarTpl>
+            <fs-field-toolbar
+              [toolbarItems]="fieldEditor.config.toolbar.items">
+            </fs-field-toolbar>
+          </ng-template>      
 
-  <div class="toolbar-container" #boundary>
-    <div #spacer></div>
-    <div class="toolbar">
-      <div
-        class="toolbar-wrapper"
-        stickyThing
-        [spacer]="spacer"
-        [scrollContainer]="scrollContainer"
-        [boundary]="scrollContainer ? null : boundary"
-        [marginTop]="50">
-        <ng-container
-          *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl, template: toolbarTpl } ">
-        </ng-container>
-        <ng-template #toolbarTpl>
-          <fs-field-toolbar
-            [toolbarItems]="fieldEditor.config.toolbar.items">
-          </fs-field-toolbar>
-        </ng-template>      
-
+        </div>
       </div>
     </div>
-
-  </div>
+  </ng-container>
 </div>

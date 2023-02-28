@@ -3,15 +3,18 @@
     [ngClass]="['field-' + field.type]"
     cdkDrag
     cdkDragLockAxis="y"
+    [cdkDragDisabled]="!canReorder"
     (cdkDragStarted)="dragStarted()">
-  <div class="field-drag" cdkDragHandle>
-    <button 
-        mat-icon-button 
-        type="button" 
-        class="drag-button field-drag-button">
-      <mat-icon>drag_indicator</mat-icon>
-    </button>
-  </div>
+  <ng-container *ngIf="canReorder">
+    <div class="field-drag" cdkDragHandle>
+      <button 
+          mat-icon-button 
+          type="button" 
+          class="drag-button field-drag-button">
+        <mat-icon>drag_indicator</mat-icon>
+      </button>
+    </div>
+  </ng-container>
 
   <ng-container *ngIf="fieldContainerTemplateRef; else containerTemplate">
     <ng-container 
@@ -32,9 +35,9 @@
 
   <ng-container *ngIf="isFieldSelected; else renderField">
     <div class="field-config" [ngClass]="{ 'disabled': !canEdit || !canConfig }">
-      <ng-container *ngIf="fieldConfigTemplateRef; else configStandardField">
+      <ng-container *ngIf="fieldConfigTemplate; else configStandardField">
         <ng-template
-          *ngTemplateOutlet="fieldConfigTemplateRef; context: { field: field, fieldEditor: fieldEditor }">
+          *ngTemplateOutlet="fieldConfigTemplate; context: { field: field, fieldEditor: fieldEditor }">
         </ng-template>
       </ng-container>
 
@@ -118,9 +121,9 @@
 
   <ng-template #renderField>
     <div class="field-render">
-      <ng-container *ngIf="fieldRenderTemplateRef; else renderStandardField">
+      <ng-container *ngIf="fieldRenderTemplate; else renderStandardField">
         <ng-template
-          [ngTemplateOutlet]="fieldRenderTemplateRef"
+          [ngTemplateOutlet]="fieldRenderTemplate"
           [ngTemplateOutletContext]="{field: field, fieldEditor: fieldEditor}">
         </ng-template>
       </ng-container>

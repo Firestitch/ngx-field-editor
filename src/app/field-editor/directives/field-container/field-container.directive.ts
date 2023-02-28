@@ -3,8 +3,8 @@ import { Directive, TemplateRef } from '@angular/core';
 
 
 @Directive({
-  selector: '[fsFieldContainer]'
+  selector: '[fsFieldContainer]',
 })
 export class FieldContainerDirective {
-  constructor(public templateRef: TemplateRef<any>) {}
+  constructor(public templateRef: TemplateRef<any>) { }
 }

@@ -5,12 +5,12 @@ import { Field } from '../../../interfaces/field.interface';
 
 
 @Directive({
-  selector: '[fsFieldRender]'
+  selector: '[fsFieldRender]',
 })
 export class FieldRenderDirective {
 
   @Input() type;
   @Input() field: Field;
 
-  constructor(public templateRef: TemplateRef<any>) {}
+  constructor(public templateRef: TemplateRef<any>) { }
 }

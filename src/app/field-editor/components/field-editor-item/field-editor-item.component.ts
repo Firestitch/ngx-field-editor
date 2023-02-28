@@ -8,16 +8,17 @@ import {
   ElementRef,
   ChangeDetectorRef,
   OnDestroy,
+  ContentChild,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 
 import { Field } from '../../../interfaces/field.interface';
-import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { EditorAction } from '../../../enums/editor-action';
-import { FieldContainerDirective } from '../../directives/field-container/field-container.directive';
+import { EditorAction, FieldType } from '../../../enums';
+import { FieldConfigDirective, FieldContainerDirective } from '../../directives';
+import { FieldRenderDirective } from '../../../field-renderer/directives';
 
 
 @Component({
@@ -28,14 +29,28 @@ import { FieldContainerDirective } from '../../directives/field-container/field-
 })
 export class FieldEditorItemComponent implements OnInit, OnDestroy {
 
+  @ContentChild(FieldConfigDirective, { read: TemplateRef })
+  public set contentFieldConfigTemplate(value: TemplateRef<any>) {
+    if (value) {
+      this.fieldConfigTemplate = value;
+    }
+  }
+
+  @ContentChild(FieldRenderDirective, { read: TemplateRef })
+  public set contentFieldRenderTemplate(value: TemplateRef<any>) {
+    if (value) {
+      this.fieldRenderTemplate = value;
+    }
+  }
+
   @Input()
   public field: Field;
 
   @Input()
-  public fieldConfigTemplateRefs: Record<string, TemplateRef<unknown>>;
+  public fieldConfigTemplate: TemplateRef<any>;
 
   @Input()
-  public fieldRenderTemplateRefs: Record<string, TemplateRef<unknown>>;
+  public fieldRenderTemplate: TemplateRef<any>;
 
   @Input()
   public fieldContainerTemplateRef: TemplateRef<FieldContainerDirective>;
@@ -46,6 +61,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public FieldType = FieldType;
   public canEdit = false;
   public canConfig = false;
+  public canReorder = false;
   public hasDescription = false;
 
   private _destroy$ = new Subject();
@@ -55,14 +71,6 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
     private _elRef: ElementRef,
     private _cdRef: ChangeDetectorRef,
   ) { }
-
-  public get fieldConfigTemplateRef(): TemplateRef<unknown> | false {
-    return this.fieldConfigTemplateRefs && this.fieldConfigTemplateRefs[this.field.type];
-  }
-
-  public get fieldRenderTemplateRef(): TemplateRef<unknown> | false {
-    return this.fieldRenderTemplateRefs && this.fieldRenderTemplateRefs[this.field.type];
-  }
 
   public fieldChange(field: Field) {
     this.fieldEditor.fieldChange(field);
@@ -88,6 +96,16 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
       )
       .subscribe((value) => {
         this.canConfig = value;
+        this._cdRef.markForCheck();
+      });
+
+    this.fieldEditor
+      .fieldCanReorder(this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.canReorder = value;
         this._cdRef.markForCheck();
       });
 

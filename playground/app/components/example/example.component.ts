@@ -461,6 +461,9 @@ export class ExampleComponent implements OnInit {
         guid: '444',
         type: FieldType.RichText,
         label: 'Rich Text',
+        configs: {
+          default: 'Default HTML',
+        },
       },
       {
         data: {

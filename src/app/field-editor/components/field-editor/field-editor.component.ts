@@ -92,13 +92,19 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   }
 
   public ngAfterContentInit() {
-    this.queryListFieldConfig.forEach((directive: FieldConfigDirective) => {
-      this.fieldConfigTemplateRefs[directive.type] = directive.templateRef;
-    });
+    this.queryListFieldConfig
+      .forEach((directive: FieldConfigDirective) => {
+        this.fieldConfigTemplateRefs[directive.type] = directive.templateRef;
+      });
 
-    this.queryListFieldRender.forEach((directive: FieldRenderDirective) => {
-      this.fieldRenderTemplateRefs[directive.type] = directive.templateRef;
-    });
+    this.queryListFieldRender
+      .forEach((directive: FieldRenderDirective) => {
+        this.fieldRenderTemplateRefs[directive.type] = directive.templateRef;
+      });
+
+    if (this.fieldEditor.config.selected) {
+      this.fieldEditor.selectField(this.fieldEditor.config.selected);
+    }
   }
 
   public ngOnDestroy(): void {

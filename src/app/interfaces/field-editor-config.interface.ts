@@ -21,6 +21,8 @@ export interface FieldEditorConfig {
   fields?: (Field | FieldOption)[];
   toolbar?: Toolbar;
   fieldMenu?: FieldMenu;
+  selected?: Field;
+  canAddField?: boolean;
 
   fieldCanEdit?: (field: Field) => Observable<boolean>;
   fieldShowDelete?: (field: Field) => Observable<boolean>;
@@ -31,6 +33,7 @@ export interface FieldEditorConfig {
   fieldShowDescription?: (field: Field) => Observable<boolean>;
   fieldCanLabel?: (field: Field) => Observable<boolean>;
   fieldCanConfig?: (field: Field) => Observable<boolean>;
+  fieldCanReorder?: (field: Field) => Observable<boolean>;
 
   fieldChanged?: (field?: Field) => void;
 

@@ -138,6 +138,10 @@ function initRichText(field: Field) {
   if (!('value' in field.data)) {
     field.data.value = field.configs.default;
   }
+
+  if (typeof field.data.value !== 'string') {
+    field.data.value = '';
+  }
 }
 
 function initHeading(field: Field) {

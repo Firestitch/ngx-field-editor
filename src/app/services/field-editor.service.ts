@@ -5,7 +5,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { guid as fsGuid } from '@firestitch/common';
 
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { delay, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { cloneDeep } from 'lodash-es';
 
@@ -16,7 +16,7 @@ import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { initField } from '../helpers/init-field';
 import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
 import { EditorAction } from '../enums';
-import { ToolbarItem, ToolbarItems } from '../interfaces';
+import { ToolbarItem } from '../interfaces';
 
 
 @Injectable()
@@ -160,6 +160,12 @@ export class FieldEditorService implements OnDestroy {
       of(true);
   }
 
+  public fieldCanReorder(field: Field): Observable<boolean> {
+    return this.config.fieldCanReorder ?
+      this.config.fieldCanReorder(field) :
+      of(true);
+  }
+
   public ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
@@ -190,6 +196,7 @@ export class FieldEditorService implements OnDestroy {
 
     this.config = {
       ...config,
+      canAddField: config.canAddField ?? true,
       afterFieldUnselected: config.afterFieldUnselected ? config.afterFieldUnselected : (field: Field) => {
         return of(field);
       },
