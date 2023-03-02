@@ -61,7 +61,6 @@ export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public items: ToolbarItems = [];
   public readonly backdropClass = BACKDROP_CLASS;
   public readonly menuClass = TOOLBAR_MENU_CLASS;
-
   public field: Field = null;
   public expanded = true;
   public withSections = false;

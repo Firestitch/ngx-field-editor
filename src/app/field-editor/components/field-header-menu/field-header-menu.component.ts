@@ -20,6 +20,7 @@ import { FieldEditorService } from '../../../services/field-editor.service';
 import { SettingsComponent } from '../settings';
 import { EditorAction } from '../../../enums';
 import { Field, FieldMenuItem } from '../../../interfaces';
+import { initField } from '../../../helpers';
 
 
 @Component({
@@ -140,7 +141,7 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((field) => this.fieldEditor
           .action(EditorAction.FieldDuplicate, field, { index })),
-        map((response) => response.field),
+        map((response) => initField(response.field)),
         switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
         tap((field) => {
           this.fieldEditor.config.fields.splice(index, 0, field);
