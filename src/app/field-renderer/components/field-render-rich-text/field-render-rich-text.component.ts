@@ -6,6 +6,7 @@ import { FsHtmlEditorConfig } from '@firestitch/html-editor';
 import { controlContainerFactory } from '@firestitch/core';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { FieldComponent } from '../field/field.component';
 import { FieldRendererService } from '../../../services';
@@ -39,17 +40,20 @@ export class FieldRenderRichTextComponent extends FieldComponent implements OnIn
   public ngOnInit(): void {
     super.ngOnInit();
 
-    this._fieldRenderer.allowImageUpload(this.field)
-      .subscribe((allowImageUpload) => {
+    this._fieldRenderer.canImageUpload(this.field)
+      .subscribe((canImageUpload) => {
         this.editorConfig = {
           autofocus: false,
           disabled: this.disabled,
         };
 
-        if (allowImageUpload) {
+        if (canImageUpload) {
           this.editorConfig.image = {
             upload: (file: File): Observable<string> => {
-              return this._fieldRenderer.action(RendererAction.ImageUpload, this.field, { file });
+              return this._fieldRenderer.action(RendererAction.ImageUpload, this.field, { file })
+                .pipe(
+                  map((response) => response.url),
+                );
             },
           };
         }

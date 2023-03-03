@@ -106,8 +106,8 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
 
   public ngOnInit() {
     forkJoin({
-      fileDownload: this._fieldRenderer.allowFileDownload(this.field),
-      fileDelete: this._fieldRenderer.allowFileDelete(this.field),
+      fileDownload: this._fieldRenderer.canFileDownload(this.field),
+      fileDelete: this._fieldRenderer.canFileDelete(this.field),
     })
       .subscribe(({ fileDownload, fileDelete }) => {
         this._initActions(fileDownload, fileDelete);

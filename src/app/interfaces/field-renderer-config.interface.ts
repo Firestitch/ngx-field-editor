@@ -11,9 +11,9 @@ export interface FieldRendererConfig {
   fieldChanged?: (field?: Field) => void;
   afterFileDeleted?: (field: Field, data: any) => void;
 
-  allowFileDelete?: (field: Field) => Observable<boolean>;
-  allowFileDownload?: (field: Field) => Observable<boolean>;
-  allowImageUpload?: (field: Field) => Observable<boolean>;
+  canFileDelete?: (field: Field) => Observable<boolean>;
+  canFileDownload?: (field: Field) => Observable<boolean>;
+  canImageUpload?: (field: Field) => Observable<boolean>;
 
   showField?: (field: Field) => Observable<boolean>;
 

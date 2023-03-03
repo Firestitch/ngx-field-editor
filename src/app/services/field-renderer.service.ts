@@ -51,27 +51,27 @@ export class FieldRendererService implements OnDestroy {
     return of({});
   }
 
-  public allowFileDownload(field: Field): Observable<boolean> {
-    if (!this.config?.allowFileDownload) {
+  public canFileDownload(field: Field): Observable<boolean> {
+    if (!this.config?.canFileDownload) {
       return of(false);
     }
 
-    return this.config.allowFileDownload(field);
+    return this.config.canFileDownload(field);
   }
 
-  public allowFileDelete(field: Field): Observable<boolean> {
-    if (!this.config?.allowFileDelete) {
+  public canFileDelete(field: Field): Observable<boolean> {
+    if (!this.config?.canFileDelete) {
       return of(false);
     }
 
-    return this.config.allowFileDelete(field);
+    return this.config.canFileDelete(field);
   }
 
-  public allowImageUpload(field: Field): Observable<boolean> {
-    if (!this.config?.allowImageUpload) {
+  public canImageUpload(field: Field): Observable<boolean> {
+    if (!this.config?.canImageUpload) {
       return of(true);
     }
 
-    return this.config.allowImageUpload(field);
+    return this.config.canImageUpload(field);
   }
 }

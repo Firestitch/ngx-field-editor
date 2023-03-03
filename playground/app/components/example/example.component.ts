@@ -325,10 +325,10 @@ export class ExampleComponent implements OnInit {
       showField: (field: Field) => {
         return of(true);
       },
-      allowFileDownload: (field: Field): Observable<boolean> => {
+      canFileDownload: (field: Field): Observable<boolean> => {
         return of(true);
       },
-      allowFileDelete: (field: Field): Observable<boolean> => {
+      canFileDelete: (field: Field): Observable<boolean> => {
         return of(true);
       },
     };
