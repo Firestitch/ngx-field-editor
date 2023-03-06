@@ -197,7 +197,7 @@
               <fs-label>{{field.label}}</fs-label>
 
               <fs-html-editor
-                [config]="{ autofocus: false, disabled: true }"
+                [config]="foralaRenderEditorConfig"
                 [ngModel]="field.configs.content">
               </fs-html-editor>
 
@@ -212,7 +212,7 @@
               <fs-label *ngIf="field.label">{{field.label}}</fs-label>
 
               <fs-html-editor
-                [config]="{ autofocus: false, disabled: true }"
+                [config]="foralaRenderEditorConfig"
                 [ngModel]="field.configs.default">
               </fs-html-editor>
 

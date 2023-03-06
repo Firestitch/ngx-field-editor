@@ -280,6 +280,8 @@ export class ExampleComponent implements OnInit {
   }
 
   public initFieldRenderer(): void {
+    const fields = this.getFields();
+
     this.fieldRendererConfig = {
       fields: this.getFields(),
       fieldChanged: (field: Field) => {
@@ -394,12 +396,26 @@ export class ExampleComponent implements OnInit {
         },
       },
       {
+        guid: '444',
+        type: FieldType.RichText,
+        label: 'Rich Text',
+        configs: {
+          default: 'Default HTML',
+          froalaConfig: {
+            toolbarSticky: false,
+          },
+        },
+      },
+      {
         guid: '233',
         type: FieldType.Content,
         label: 'Content',
         description: 'Content Description',
         configs: {
           content: this._getTerms(),
+          froalaConfig: {
+            toolbarSticky: true,
+          },
         },
       },
       {
@@ -455,14 +471,6 @@ export class ExampleComponent implements OnInit {
           value: {
             selected: ['2314rewf'],
           },
-        },
-      },
-      {
-        guid: '444',
-        type: FieldType.RichText,
-        label: 'Rich Text',
-        configs: {
-          default: 'Default HTML',
         },
       },
       {

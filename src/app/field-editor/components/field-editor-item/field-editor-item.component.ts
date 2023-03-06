@@ -64,6 +64,14 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public canReorder = false;
   public hasDescription = false;
 
+  public get foralaRenderEditorConfig(): any {
+    return {
+      autofocus: false,
+      disabled: true,
+      froalaConfig: this.field.configs.froalaConfig,
+    };
+  }
+
   private _destroy$ = new Subject();
 
   constructor(
