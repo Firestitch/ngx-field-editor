@@ -280,8 +280,6 @@ export class ExampleComponent implements OnInit {
   }
 
   public initFieldRenderer(): void {
-    const fields = this.getFields();
-
     this.fieldRendererConfig = {
       fields: this.getFields(),
       fieldChanged: (field: Field) => {
