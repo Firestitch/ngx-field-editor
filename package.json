@@ -55,6 +55,7 @@
     "@firestitch/chip": "^12.0.0",
     "@firestitch/clear": "^12.0.0",
     "@firestitch/common": "^12.5.1",
+    "@firestitch/component-tools": "^12.0.8",
     "@firestitch/core": "^12.0.3",
     "@firestitch/country": "^12.0.0",
     "@firestitch/date": "^12.3.1",
@@ -65,8 +66,8 @@
     "@firestitch/exif-js": "^2.3.0",
     "@firestitch/file": "^12.10.1",
     "@firestitch/filter": "^12.2.1",
-    "@firestitch/froala": "^1.2.0",
     "@firestitch/form": "^12.0.1",
+    "@firestitch/froala": "^1.2.0",
     "@firestitch/gallery": "^12.9.11",
     "@firestitch/html-editor": "^12.5.2",
     "@firestitch/iframe": "^12.0.0",
@@ -117,8 +118,7 @@
     "tributejs": "^5.1.3",
     "tsmodels": "^0.4.7",
     "typescript": "4.3.5",
-    "zone.js": "~0.11.4",
-    "@firestitch/component-tools": "^12.0.6"
+    "zone.js": "~0.11.4"
   },
   "peerDependencies": {
     "@firestitch/address": ">=12.1.3",
