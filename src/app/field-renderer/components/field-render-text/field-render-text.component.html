@@ -15,8 +15,8 @@
     <mat-label *ngIf="field.label">{{field.label}}</mat-label>
     <textarea
       matInput
-      [matTextareaAutosize]="true"
-      [matAutosizeMinRows]="1"
+      [cdkTextareaAutosize]="true"
+      [cdkAutosizeMinRows]="1"
       [(ngModel)]="field.data.value"
       (ngModelChange)="changed.emit(field)"
       [name]="name"
