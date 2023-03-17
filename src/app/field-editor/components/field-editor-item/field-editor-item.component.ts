@@ -11,6 +11,8 @@ import {
   ContentChild,
 } from '@angular/core';
 
+import { FsHtmlEditorConfig } from '@firestitch/html-editor';
+
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 
@@ -63,6 +65,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public canConfig = false;
   public canReorder = false;
   public hasDescription = false;
+  public froalaRenderEditorConfig: FsHtmlEditorConfig = null;
 
   private _destroy$ = new Subject();
 
@@ -148,6 +151,12 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
           this.headerFieldChanged(field);
         }
       });
+
+    this.froalaRenderEditorConfig = {
+      autofocus: false,
+      disabled: true,
+      froalaConfig: this.field.configs.froalaConfig,
+    };
   }
 
   public toggleDescriptionNote(field): void {
