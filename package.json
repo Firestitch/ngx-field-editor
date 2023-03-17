@@ -69,7 +69,7 @@
     "@firestitch/form": "^12.0.1",
     "@firestitch/froala": "^1.2.0",
     "@firestitch/gallery": "^12.9.11",
-    "@firestitch/html-editor": "^12.5.2",
+    "@firestitch/html-editor": "^12.5.5",
     "@firestitch/iframe": "^12.0.0",
     "@firestitch/label": "^12.0.0",
     "@firestitch/lint": "^12.0.13",
