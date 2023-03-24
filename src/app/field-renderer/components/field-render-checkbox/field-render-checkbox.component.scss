@@ -43,10 +43,11 @@
   }
 }
 
-:host {
-  ::ng-deep {
-    .mat-checkbox-label {
-      word-break: break-all;
-    }
-  }
-}
+// :host {
+//   ::ng-deep {
+//     .mat-checkbox-label {
+//       // TU-T4875 wrong word breaking
+//       word-break: break-all;
+//     }
+//   }
+// }
