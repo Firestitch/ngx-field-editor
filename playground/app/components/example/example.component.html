@@ -90,22 +90,24 @@
     </form>
   </mat-tab>
   <mat-tab label="View Fields">
-    <fs-field-viewer [config]="fieldViewerConfig">
-      <ng-template fsFieldView type="share" let-field="field">
-        <fs-label-field>
-          <fs-label>Share</fs-label>
-          <img src="/assets/google-logo.svg" height="50" *ngIf="field.configs['google']">
-          <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.configs['facebook']">
-        </fs-label-field>
-      </ng-template>
+    <ng-template matTabContent>
+      <fs-field-viewer [config]="fieldViewerConfig">
+        <ng-template fsFieldView type="share" let-field="field">
+          <fs-label-field>
+            <fs-label>Share</fs-label>
+            <img src="/assets/google-logo.svg" height="50" *ngIf="field.configs['google']">
+            <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.configs['facebook']">
+          </fs-label-field>
+        </ng-template>
 
-      <ng-template fsFieldView type="signature" let-field="field">
-        <fs-label-field>
-          <fs-label>Signature</fs-label>
-          <img [src]="field.data.value">
-        </fs-label-field>
-      </ng-template>
-    </fs-field-viewer>
+        <ng-template fsFieldView type="signature" let-field="field">
+          <fs-label-field>
+            <fs-label>Signature</fs-label>
+            <img [src]="field.data.value">
+          </fs-label-field>
+        </ng-template>
+      </fs-field-viewer>
+    </ng-template>
   </mat-tab>
-  </mat-tab-group>
+</mat-tab-group>
 

@@ -1,20 +1,31 @@
 <fs-checkbox-group
     #checkboxes
-    [(ngModel)]="this.field.data.value.selected"
+    [(ngModel)]="field.data.value.selected"
     [name]="'checkboxes' + name"
     [disabled]="disabled"
-    [compareWith]="compareWith"
     (ngModelChange)="changed.emit(field)"
     orientation="vertical"
     [label]="field.label"
     [fsFormFunction]="validate"
-    [attr.validation-required]="this.field.configs.required"
+    [attr.validation-required]="field.configs.required"
     messageSelector=".fs-form-message">
   <mat-checkbox
-      *ngFor="let item of this.field.options"
-      [value]="item.guid"
-      [disabled]="disabled">
-    {{ item.name }}
+      *ngFor="let option of field.options; let index = index"
+      [value]="option.guid"
+      [disabled]="disabled"
+      (change)="checkboxChange($event, notes)">
+    {{ option.name }}
+    <mat-form-field 
+        [floatLabel]="'never'" 
+        class="notes"
+        [ngClass]="{ show: option.notes && field.data.value.selected.includes(option.guid) }">
+      <input
+        #notes
+        placeholder="Notes"
+        matInput
+        [(ngModel)]="field.data.value.notes[option.guid]"
+        [name]="'notes-' + option.guid">
+    </mat-form-field>
   </mat-checkbox>
   <mat-checkbox
       *ngIf="field.configs.other"

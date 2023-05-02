@@ -9,45 +9,37 @@
     display: contents;
   }
 
+  .notes {
+    &:not(.show) {
+      display: none;
+    }
+  }
+
+  .mat-checkbox {
+    margin: 10px 0 !important;
+  }
+
   .other {
     max-width: 100%;
 
-    ::ng-deep .mat-checkbox-layout {
+    .mat-checkbox-layout {
       display: flex;
+
       .mat-checkbox-label {
         flex-grow: 1;
       }
     }
 
-    mat-form-field {
-      width: 100%;
-      margin-top: -3px;
-    }
-
     .mat-form-field-infix {
       border-top: 0;
     }
-
-    &.choice {
-      mat-form-field {
-        margin-top: -3px;
-      }
-    }
+  }
+  
+  .mat-form-field {
+    margin-top: -3px;
+    width: 300px;
+    max-width: 100%;
+    display: block;
   }
 }
 
-.other {
-  .stub {
-    visibility: hidden;
-    width: 0px;
-  }
-}
-
-// :host {
-//   ::ng-deep {
-//     .mat-checkbox-label {
-//       // TU-T4875 wrong word breaking
-//       word-break: break-all;
-//     }
-//   }
-// }

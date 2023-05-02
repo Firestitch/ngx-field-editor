@@ -10,12 +10,13 @@ import {
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
-import { catchError, delay, filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { FsPrompt } from '@firestitch/prompt';
 import { guid } from '@firestitch/common';
 import { FsFile, FsFileImagePickerComponent } from '@firestitch/file';
+
+import { catchError, delay, filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 
 import { FieldComponent } from '../field/field.component';
 import { FieldEditorService } from '../../../services/field-editor.service';
@@ -29,9 +30,7 @@ import { FieldOption } from '../../../interfaces';
   styleUrls: ['field-config-options.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldConfigOptionsComponent
-  extends FieldComponent
-  implements OnInit {
+export class FieldConfigOptionsComponent extends FieldComponent implements OnInit {
 
   @Input() public showOther = false;
   @Input() public showOptionName = false;
@@ -60,22 +59,22 @@ export class FieldConfigOptionsComponent
     if (this._addOptionInput) {
       forkJoin([
         this.fieldEditor.fieldCanEdit(this.field),
-        this.fieldEditor.fieldCanConfig(this.field)
+        this.fieldEditor.fieldCanConfig(this.field),
       ])
-      .pipe(
-        filter((response) => response[0] && response[1]),
-      )
-      .subscribe(() => {
-        this._addOptionInput.nativeElement.focus();
-      });
+        .pipe(
+          filter((response) => response[0] && response[1]),
+        )
+        .subscribe(() => {
+          this._addOptionInput.nativeElement.focus();
+        });
     }
   }
 
   public optionSave(option) {
     this.fieldEditor.action(EditorAction.OptionSave, this.field, { option })
-    .subscribe(() => {
-      this.fieldEditor.fieldChange(this.field);
-    });
+      .subscribe(() => {
+        this.fieldEditor.fieldChange(this.field);
+      });
   }
 
   public addOptionKeydown(e, listenTab): void {
@@ -111,9 +110,9 @@ export class FieldConfigOptionsComponent
       .pipe(
         map((response) => {
           return {
-              ...option,
-              ...response.option,
-            };
+            ...option,
+            ...response.option,
+          };
         }),
         finalize(() => {
           this.newOption = '';
@@ -152,13 +151,18 @@ export class FieldConfigOptionsComponent
   public otherToggle(): void {
     this.field.configs.other = !this.field.configs.other;
     this.fieldEditor.action(EditorAction.OptionOther, this.field)
-    .pipe(
-      takeUntil(this._destory$),
-    )
+      .pipe(
+        takeUntil(this._destory$),
+      )
       .subscribe(() => {
         this.fieldEditor.fieldChange(this.field);
         this._cdRef.markForCheck();
       });
+  }
+
+  public toggleOptionNotes(option): void {
+    option.notes = !option.notes;
+    this.fieldEditor.fieldChange(this.field);
   }
 
   public removeOption(option): void {
@@ -170,7 +174,7 @@ export class FieldConfigOptionsComponent
         switchMap(() => this.fieldEditor.action(EditorAction.OptionDelete, this.field, { option })),
         tap(() => {
           this.field.options = this.field.options
-          .filter((item) => item !== option);
+            .filter((item) => item !== option);
         }),
         takeUntil(this._destory$),
       )
@@ -199,14 +203,14 @@ export class FieldConfigOptionsComponent
           };
 
           return this.fieldEditor.action(EditorAction.OptionImageUpload, this.field, data)
-          .pipe(
-            map((response) => {
-              return {
-                ...option,
-                ...response.option,
-              };
-            })
-          );
+            .pipe(
+              map((response) => {
+                return {
+                  ...option,
+                  ...response.option,
+                };
+              }),
+            );
         }),
         tap((option) => {
           this.field.options.push(option);
@@ -215,7 +219,7 @@ export class FieldConfigOptionsComponent
           this._cdRef.markForCheck();
         }),
         finalize(() => {
-          this._newFileImagePicker.cancel()
+          this._newFileImagePicker.cancel();
           this._newFileImagePicker = null;
         }),
         takeUntil(this._destory$),

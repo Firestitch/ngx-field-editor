@@ -1,6 +1,8 @@
 import { Component, ViewChild, ChangeDetectionStrategy, Optional } from '@angular/core';
 import { ControlContainer, NgForm, NgModel } from '@angular/forms';
 
+import { MatRadioChange } from '@angular/material/radio';
+
 import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldComponent } from '../field/field.component';
@@ -15,7 +17,7 @@ import { FieldComponent } from '../field/field.component';
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -29,13 +31,19 @@ export class FieldRenderChoiceComponent extends FieldComponent {
     this.changed.emit(this.field);
   }
 
-  public radioChange() {
+  public radiosChange() {
     this.changed.emit(this.field);
+  }
+
+  public radioChange(input) {
+    setTimeout(() => {
+      input.focus();
+    });
   }
 
   public validate = () => {
     if (this.field.configs.required === true && !this.radiobuttons.value) {
-      throw 'This field is required';
+      throw new Error('This field is required');
     }
-  }
+  };
 }

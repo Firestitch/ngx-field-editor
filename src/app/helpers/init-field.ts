@@ -105,6 +105,10 @@ function initOption(field: FieldOption) {
         field.data.value.selected = field.type === FieldType.Checkbox ? value.split(',') : value;
       }
 
+      if (!isObject(field.data.value.notes)) {
+        field.data.value.notes = {};
+      }
+
       break;
     }
     case FieldType.Dropdown: {

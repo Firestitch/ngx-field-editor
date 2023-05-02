@@ -1,7 +1,7 @@
 <fs-radio-group
     #radiobuttons
     [(ngModel)]="field.data.value.selected"
-    (ngModelChange)="radioChange()"
+    (ngModelChange)="radiosChange()"
     [label]="field.label"
     [name]="'choices' + name"
     [fsFormFunction]="validate"
@@ -10,10 +10,22 @@
     messageSelector=".fs-form-message"
     orientation="vertical">
   <mat-radio-button
-      *ngFor="let item of field.options"
+      *ngFor="let option of field.options; let index = index"
       [disabled]="disabled"
-      [value]="item.guid">
-    {{ item.name }}
+      [value]="option.guid"
+      (change)="radioChange(notes)">
+    {{ option.name }}
+    <mat-form-field 
+        [ngClass]="{ show: option.notes && field.data.value.selected === option.guid }"
+        [floatLabel]="'never'" 
+        class="notes">
+      <input
+        #notes
+        placeholder="Notes"
+        matInput
+        [(ngModel)]="field.data.value.notes[option.guid]"
+        [name]="'notes' + index">
+    </mat-form-field>
   </mat-radio-button>
   <mat-radio-button
       *ngIf="field.configs.other"

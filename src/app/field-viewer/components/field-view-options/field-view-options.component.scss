@@ -1,7 +1,11 @@
-.option + .option:before {
-  content: ", ";
-}
+.option {
+  display: inline-flex;
 
-.option + .option:last-child:before {
-  content: " and ";
+  + .option:before {
+    content: ',\00a0';
+  }
+
+  + .option:last-child:before {
+    content: '\00a0 and\00a0';
+  }
 }

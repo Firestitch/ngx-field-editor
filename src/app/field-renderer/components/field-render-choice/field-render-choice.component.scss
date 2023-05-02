@@ -14,6 +14,12 @@
         width: 100%;
       }
     }
+      
+    .notes {
+      &:not(.show) {
+        display: none;
+      }
+    }
   }
 
   fs-label-field {
@@ -28,28 +34,15 @@
   .other {
     max-width: 100%;
 
-    mat-form-field {
-      width: 100%;
-      margin-top: -3px;
-    }
-
     .mat-form-field-infix {
       border-top: 0;
     }
-
-    &.choice {
-
-
-      mat-form-field {
-        margin-top: -3px;
-      }
-    }
   }
-}
 
-.other {
-  .stub {
-    visibility: hidden;
-    width: 0px;
+  .mat-form-field {
+    margin-top: -3px;
+    width: 300px;
+    max-width: 100%;
+    display: block;
   }
 }
