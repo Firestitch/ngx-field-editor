@@ -162,7 +162,11 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
 
   public toggleOptionNotes(option): void {
     option.notes = !option.notes;
-    this.fieldEditor.fieldChange(this.field);
+
+    this.fieldEditor.action(EditorAction.OptionSave, this.field, { option })
+      .subscribe(() => {
+        this.fieldEditor.fieldChange(this.field);
+      });
   }
 
   public removeOption(option): void {
