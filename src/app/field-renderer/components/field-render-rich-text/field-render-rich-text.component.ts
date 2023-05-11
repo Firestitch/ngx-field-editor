@@ -45,6 +45,7 @@ export class FieldRenderRichTextComponent extends FieldComponent implements OnIn
         this.editorConfig = {
           autofocus: false,
           disabled: this.disabled,
+          label: this.field.label,
         };
 
         if (canImageUpload) {
