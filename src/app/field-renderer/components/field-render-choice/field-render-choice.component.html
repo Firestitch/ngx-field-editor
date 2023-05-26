@@ -21,7 +21,7 @@
         class="notes">
       <input
         #notes
-        placeholder="Notes"
+        [placeholder]="option.notesLabel || 'Notes'"
         matInput
         [(ngModel)]="field.data.value.notes[option.guid]"
         [name]="'notes' + index">

@@ -1,48 +1,68 @@
 <div cdkDropList class="options" (cdkDropListDropped)="drop($event)">
-  <div *ngFor="let option of field.options; index as idx" cdkDrag cdkDragLockAxis="y" class="fs-field-option">
-    <div class="option-container">
+  <div  
+      *ngFor="let option of field.options; index as idx" 
+      cdkDrag 
+      cdkDragLockAxis="y" 
+      class="fs-field-option">
+    <div class="option-container" [ngClass]="{ 'has-notes': option.notes }">
       <div class="option-drag" cdkDragHandle>
         <button button mat-icon-button type="button" class="drag-button option-drag-button"><mat-icon>drag_indicator</mat-icon></button>
       </div>
 
       <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
-      <div class="option-data">
-        <ng-container *ngIf="showOptionImage">
-          <fs-file-image-picker
-            #fileImagePicker
-            [url]="option.image?.preview"
-            (select)="selectOptionImage($event, option, fileImagePicker)"
-            [previewDiameter]="60">
-          </fs-file-image-picker>
-        </ng-container>
+      <div class="option-data-container">
+        <div class="option-data">
+          <ng-container *ngIf="showOptionImage">
+            <fs-file-image-picker
+              #fileImagePicker
+              [url]="option.image?.preview"
+              (select)="selectOptionImage($event, option, fileImagePicker)"
+              [previewDiameter]="60">
+            </fs-file-image-picker>
+          </ng-container>
+          <ng-container *ngIf="showOptionName">
+            <div class="option-label">
+              <mat-form-field class="form-field-padless" floatLabel="never">
+                <mat-label>Label</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="option.name"
+                  [name]="'label' + idx"
+                  [ngModelOptions]="{ updateOn: 'blur' }"
+                  (ngModelChange)="optionSave(option)">
+              </mat-form-field>
+            </div>
+          </ng-container>
 
-        <ng-container *ngIf="showOptionName">
-          <div class="option-label">
-            <mat-form-field class="form-field-padless" floatLabel="never">
-              <mat-label>Label</mat-label>
-              <input
-                matInput
-                [(ngModel)]="option.name"
-                [name]="'label' + idx"
-                [ngModelOptions]="{ updateOn: 'blur' }"
-                (ngModelChange)="optionSave(option)">
-            </mat-form-field>
-          </div>
-        </ng-container>
-
-        <ng-container *ngIf="field.configs.showValues">
-          <div class="option-value">
+          <ng-container *ngIf="field.configs.showValues">
+            <div class="option-value">
+              <mat-form-field          
+                  floatLabel="never"
+                  class="form-field-padless">
+                <mat-label>Value</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="option.value"
+                  [name]="'option-value-' + idx"
+                  [ngModelOptions]="{ updateOn: 'blur' }"
+                  (ngModelChange)="optionSave(option)">
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="option.notes">
+          <div class="option-note">
             <mat-form-field          
-                floatLabel="never"
-                class="form-field-padless">
-              <mat-label>Value</mat-label>
-              <input
-                matInput
-                [(ngModel)]="option.value"
-                [name]="'guid' + idx"
-                [ngModelOptions]="{ updateOn: 'blur' }"
-                (ngModelChange)="optionSave(option)">
-            </mat-form-field>
+              floatLabel="never"
+              class="form-field-padless">
+            <input
+              matInput
+              placeholder="Notes"
+              [(ngModel)]="option.notesLabel"
+              [name]="'notes-label' + idx"
+              [ngModelOptions]="{ updateOn: 'blur' }"
+              (ngModelChange)="optionSave(option)">
+          </mat-form-field>
           </div>
         </ng-container>
       </div>
@@ -89,19 +109,17 @@
       </fs-file-image-picker>
     </ng-container>
 
-    <ng-container *ngIf="showOptionName">
-      <div class="option-label">
-        <mat-form-field floatLabel="never" class="new-option" fxFlex>
-          <mat-label>Add New Option</mat-label>
-          <input
-            matInput
-            #addOptionInput
-            [(ngModel)]="newOption"
-            name="newOption"
-            (keydown)="addOptionKeydown($event, !this.field.configs.showValues)">
-        </mat-form-field>
-      </div>
-    </ng-container>
+    <div class="option-label" [ngClass]="{ hide: !showOptionName}">
+      <mat-form-field floatLabel="never" class="new-option" fxFlex>
+        <mat-label>Add New Option</mat-label>
+        <input
+          matInput
+          #addOptionInput
+          [(ngModel)]="newOption"
+          name="newOption"
+          (keydown)="addOptionKeydown($event, !this.field.configs.showValues)">
+      </mat-form-field>
+    </div>
     
     <div class="option-value">
       <ng-container *ngIf="field.configs.showValues">
@@ -131,38 +149,42 @@
   </button>
 </div>
 
-<div *ngIf="showOther && field.configs.other" fxFlexLayout="row" fxLayoutAlign="start center">
-  <button
-      button
-      mat-icon-button
-      type="button"
-      [ngStyle]="{'visibility': 'hidden'}">
-    <mat-icon>drag_indicator</mat-icon>
-  </button>
-  <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
+<ng-container *ngIf="showOther && field.configs.other">
+  <div class="other">
+    <button
+        button
+        mat-icon-button
+        type="button"
+        [ngStyle]="{'visibility': 'hidden'}">
+      <mat-icon>drag_indicator</mat-icon>
+    </button>
+    <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
 
-  <mat-form-field
-      floatLabel="never"
-      fxFlex>
-    <mat-label>Label</mat-label>
-    <input
-      matInput
-      disabled="true"
-      name="label"
-      value="Other">
-  </mat-form-field>
+    <mat-form-field
+        floatLabel="never">
+      <mat-label>Label</mat-label>
+      <input
+        matInput
+        disabled="true"
+        name="label"
+        value="Other">
+    </mat-form-field>
 
-  <button
-      mat-icon-button
-      type="button"
-      (click)="otherToggle()">
-    <mat-icon>delete</mat-icon>
-  </button>
-</div>
+    <button
+        mat-icon-button
+        type="button"
+        (click)="otherToggle()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</ng-container>
 
 <ng-template #disabledPlaceholder>
   <ng-container [ngSwitch]="field.type">
-    <mat-checkbox *ngSwitchCase="FieldType.Checkbox" disabled="true"></mat-checkbox>
+    <mat-checkbox 
+      *ngSwitchCase="FieldType.Checkbox" 
+      disabled="true">
+    </mat-checkbox>
     <mat-radio-button   
       *ngSwitchCase="FieldType.Choice" 
       [disabled]="true">

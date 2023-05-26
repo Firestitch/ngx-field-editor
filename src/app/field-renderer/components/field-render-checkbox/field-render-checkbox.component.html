@@ -21,10 +21,10 @@
         [ngClass]="{ show: option.notes && field.data.value.selected.includes(option.guid) }">
       <input
         #notes
-        placeholder="Notes"
+        [placeholder]="option.notesLabel || 'Notes'"
         matInput
         [(ngModel)]="field.data.value.notes[option.guid]"
-        [name]="'notes-' + option.guid">
+        [name]="'notes-' + field.guid + option.guid">
     </mat-form-field>
   </mat-checkbox>
   <mat-checkbox

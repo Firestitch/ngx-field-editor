@@ -26,11 +26,14 @@ import { FieldOption } from '../../../interfaces';
 
 @Component({
   selector: 'fs-field-config-options',
-  templateUrl: 'field-config-options.component.html',
-  styleUrls: ['field-config-options.component.scss'],
+  templateUrl: './field-config-options.component.html',
+  styleUrls: ['./field-config-options.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldConfigOptionsComponent extends FieldComponent implements OnInit {
+
+  @ViewChild('addOptionInput', { static: true })
+  public addOptionInput: ElementRef;
 
   @Input() public showOther = false;
   @Input() public showOptionName = false;
@@ -40,9 +43,6 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
   public newOption = '';
   public newOptionValue = '';
   public optionLoading$ = new BehaviorSubject<boolean>(false);
-
-  @ViewChild('addOptionInput')
-  private _addOptionInput: ElementRef;
 
   private _newOptionFile: FsFile;
   private _newFileImagePicker: FsFileImagePickerComponent;
@@ -56,18 +56,20 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
   }
 
   public ngOnInit(): void {
-    if (this._addOptionInput) {
-      forkJoin([
-        this.fieldEditor.fieldCanEdit(this.field),
-        this.fieldEditor.fieldCanConfig(this.field),
-      ])
-        .pipe(
-          filter((response) => response[0] && response[1]),
-        )
-        .subscribe(() => {
-          this._addOptionInput.nativeElement.focus();
-        });
-    }
+    forkJoin([
+      this.fieldEditor.fieldCanEdit(this.field),
+      this.fieldEditor.fieldCanConfig(this.field),
+    ])
+      .pipe(
+        filter((response) => response[0] && response[1]),
+      )
+      .subscribe(() => {
+        this.addOptionFocus();
+      });
+  }
+
+  public addOptionFocus(): void {
+    this.addOptionInput.nativeElement.focus();
   }
 
   public optionSave(option) {
@@ -77,22 +79,29 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
       });
   }
 
-  public addOptionKeydown(e, listenTab): void {
+  public addOptionKeydown(e: KeyboardEvent, listenTab): void {
     if (!(e.key === 'Enter' || (e.key === 'Tab' && listenTab))) {
       return;
     }
 
     e.preventDefault();
+    e.stopPropagation();
 
     if (this.newOption.length || this._newOptionFile) {
       if (this._newOptionFile) {
         this._addOptionWithImage();
       } else {
         this.addOption()
-          .subscribe((option) => {
-            this.field.options.push(option);
-            this._cdRef.markForCheck();
-            this.fieldEditor.fieldChange(this.field);
+          .pipe(
+            tap((option) => {
+              this.field.options.push(option);
+              this._cdRef.markForCheck();
+              this.fieldEditor.fieldChange(this.field);
+            }),
+            delay(1000),
+          )
+          .subscribe(() => {
+            this.addOptionFocus();
           });
       }
     }
@@ -125,7 +134,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
   public selectNewOptionImage(fsFile: FsFile, fileImagePicker: FsFileImagePickerComponent): void {
     this._newOptionFile = fsFile;
     this._newFileImagePicker = fileImagePicker;
-    this._addOptionInput.nativeElement.focus();
+    this.addOptionFocus();
   }
 
   public selectOptionImage(fsFile: FsFile, option, fileImagePicker: FsFileImagePickerComponent): void {

@@ -26,7 +26,6 @@ export class FieldRenderCheckboxComponent extends FieldComponent {
   @ViewChild('checkboxes', { read: NgModel }) public checkboxes: NgModel;
 
   public otherInputClick(event: MouseEvent) {
-
     if (this.field.data.value.selected.indexOf('other') === -1) {
       this.field.data.value.selected = [...this.field.data.value.selected, 'other'];
     }

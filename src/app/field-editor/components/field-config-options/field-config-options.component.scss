@@ -7,12 +7,21 @@ mat-checkbox {
   align-items: center;
   padding: 3px 0;
 
+  &.has-notes {
+    padding-bottom: 30px;
+  }
+
   .notes:not(.enabled) {
     color: #ccc;
   }
 
   &.loading {
     opacity: 0.5;
+  }
+
+  .option-data-container {
+    width: 100%;
+    position: relative;
   }
 
   .option-data {
@@ -28,18 +37,28 @@ mat-checkbox {
 
     .option-label {
       flex: 1;
+
+      &.hide {
+        display: none;
+      }
+      
       mat-form-field {
         width: 100%;
       }
     }
   }
-}
 
-.option-add-new ::ng-deep {
-  .mat-radio-button {
-    visibility: hidden;
+  .option-note {
+    width: 100%;
+    position: absolute;
+    
+    mat-form-field {
+      width: 100%;
+      margin: 10px 0 0 10px;
+    }
   }
 }
+
 
 .or {
   margin: 0 10px 0 20px;
@@ -47,4 +66,13 @@ mat-checkbox {
 
 .option-drag-placeholder {
   visibility: hidden;
+}
+
+.other {
+  display: flex;
+  align-items: center;
+
+  ::ng-deep .mat-form-field {
+    width: 100%;
+  }
 }
