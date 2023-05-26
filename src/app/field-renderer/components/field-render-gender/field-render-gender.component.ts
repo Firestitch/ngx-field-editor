@@ -8,14 +8,14 @@ import { FieldComponent } from '../field/field.component';
 
 @Component({
   selector: 'fs-field-render-gender',
-  styleUrls: ['field-render-gender.component.scss'],
-  templateUrl: 'field-render-gender.component.html',
+  styleUrls: ['./field-render-gender.component.scss'],
+  templateUrl: './field-render-gender.component.html',
   viewProviders: [
     {
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

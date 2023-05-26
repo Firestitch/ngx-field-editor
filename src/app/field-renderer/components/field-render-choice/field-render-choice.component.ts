@@ -1,8 +1,6 @@
 import { Component, ViewChild, ChangeDetectionStrategy, Optional } from '@angular/core';
 import { ControlContainer, NgForm, NgModel } from '@angular/forms';
 
-import { MatRadioChange } from '@angular/material/radio';
-
 import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldComponent } from '../field/field.component';
@@ -10,8 +8,8 @@ import { FieldComponent } from '../field/field.component';
 
 @Component({
   selector: 'fs-field-render-choice',
-  templateUrl: 'field-render-choice.component.html',
-  styleUrls: ['field-render-choice.component.scss'],
+  templateUrl: './field-render-choice.component.html',
+  styleUrls: ['./field-render-choice.component.scss'],
   viewProviders: [
     {
       provide: ControlContainer,
