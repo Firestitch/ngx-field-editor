@@ -536,7 +536,6 @@ export class ExampleComponent implements OnInit {
       {
         data: {
           value: {
-            selected: 'other',
             other: 'Some text',
           },
         },

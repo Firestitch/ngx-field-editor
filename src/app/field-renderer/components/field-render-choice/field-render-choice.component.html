@@ -1,7 +1,7 @@
 <fs-radio-group
     #radiobuttons
     [(ngModel)]="field.data.value.selected"
-    (ngModelChange)="radiosChange()"
+    (ngModelChange)="radiosChange($event)"
     [label]="field.label"
     [name]="'choices' + name"
     [fsFormFunction]="validate"

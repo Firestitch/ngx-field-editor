@@ -29,6 +29,10 @@ export class FieldRenderChoiceComponent extends FieldComponent implements OnInit
   public ngOnInit(): void {
     super.ngOnInit();
     this.otherValue = this.field.data.value.other;
+
+    if(this.otherValue) {
+      this.field.data.value.selected = 'other';
+    }
   }
 
   public otherInputClick() {
@@ -42,7 +46,11 @@ export class FieldRenderChoiceComponent extends FieldComponent implements OnInit
     this.changed.emit(this.field);
   }
 
-  public radiosChange() {
+  public radiosChange(value) {
+    if(value !== 'other') {
+      this.field.data.value.other = '';
+    }
+
     this.changed.emit(this.field);
   }
 
