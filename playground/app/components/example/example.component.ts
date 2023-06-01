@@ -534,7 +534,12 @@ export class ExampleComponent implements OnInit {
         ],
       },
       {
-        data: {},
+        data: {
+          value: {
+            selected: 'other',
+            other: 'Some text',
+          },
+        },
         guid: '5',
         type: FieldType.Choice,
         label: 'Choice Question',
@@ -580,7 +585,8 @@ export class ExampleComponent implements OnInit {
         },
       },
       {
-        data: {},
+        data: {
+        },
         guid: '10',
         type: FieldType.Checkbox,
         label: 'Checkboxes Question',
