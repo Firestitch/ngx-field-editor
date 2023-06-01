@@ -26,17 +26,17 @@ export class FieldRenderCheckboxComponent extends FieldComponent implements OnIn
   @ViewChild('checkboxes', { read: NgModel }) public checkboxes: NgModel;
 
   public other = false;
+  public otherValue = '';
 
   public ngOnInit(): void {
     super.ngOnInit();
-    this.other = this.field.data.value.selected.indexOf('other') !== -1;
+    this.other = !!this.field.data.value.other;
+    this.otherValue = this.field.data.value.other;
   }
 
   public otherInputClick(event: MouseEvent) {
-    if (this.field.data.value.selected.indexOf('other') === -1) {
-      this.field.data.value.selected = [...this.field.data.value.selected, 'other'];
-      this.other = true;
-    }
+    this.other = true;
+    this.field.data.value.other = true;
 
     this.checkboxes.control.updateValueAndValidity();
   }
@@ -44,10 +44,14 @@ export class FieldRenderCheckboxComponent extends FieldComponent implements OnIn
   public otherChange(value) {
     this.other = value;
 
-    if(!this.other) {
-      this.field.data.value.selected = this.field.data.value.selected
-        .filter((item) => item !== 'other');
+    if(!value) {
+      this.field.data.value.other = '';
     }
+  }
+
+  public otherInputChange(value) {
+    this.field.data.value.other = value;
+    this.changed.emit(this.field);
   }
 
   public otherCheckboxClick(event: KeyboardEvent) {

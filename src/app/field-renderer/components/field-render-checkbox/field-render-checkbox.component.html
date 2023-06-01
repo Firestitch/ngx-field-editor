@@ -40,8 +40,8 @@
       <input
         matInput
         (click)="otherInputClick($event)"
-        [(ngModel)]="field.data.value.other"
-        (ngModelChange)="changed.emit(field)"
+        [(ngModel)]="otherValue"
+        (ngModelChange)="otherInputChange($event)"
         [name]="'otherInput' + name"
         [disabled]="disabled">
     </mat-form-field>
