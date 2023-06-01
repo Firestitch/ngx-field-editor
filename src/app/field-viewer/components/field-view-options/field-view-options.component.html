@@ -32,7 +32,7 @@
         </ng-container>
       </span>
     </ng-container>
-    <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span>
+    <span class="option" *ngIf="field.data.value?.other">{{field.data.value?.other}}</span>
   </ng-container>
 
   <ng-container *ngSwitchCase="fieldType.VisualSelector">

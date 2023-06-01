@@ -36,14 +36,11 @@ export class FieldRenderCheckboxComponent extends FieldComponent implements OnIn
 
   public otherInputClick(event: MouseEvent) {
     this.other = true;
-    this.field.data.value.other = true;
-
+    this.field.data.value.other = this.otherValue;
     this.checkboxes.control.updateValueAndValidity();
   }
 
   public otherChange(value) {
-    this.other = value;
-
     if(!value) {
       this.field.data.value.other = '';
     }

@@ -30,16 +30,18 @@
   <mat-radio-button
       *ngIf="field.configs.other"
       value="other"
+      [(ngModel)]="other"
       [name]="'otherChoice' + name"
       [disabled]="disabled"
+      (ngModelChange)="otherChange($event)"
       class="other choice">
     <mat-form-field floatLabel="never" class="form-field-padless">
       <mat-label>Other</mat-label>
       <input
         matInput
         (click)="otherInputClick()"
-        (ngModelChange)="changed.emit(field)"
-        [(ngModel)]="field.data.value.other"
+        (ngModelChange)="otherInputChange($event)"
+        [(ngModel)]="otherValue"
         [name]="'otherInput' + name"
         [disabled]="disabled">
     </mat-form-field>

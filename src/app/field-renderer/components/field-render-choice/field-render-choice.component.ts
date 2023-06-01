@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy, Optional } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, Optional, OnInit } from '@angular/core';
 import { ControlContainer, NgForm, NgModel } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
@@ -19,14 +19,36 @@ import { FieldComponent } from '../field/field.component';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderChoiceComponent extends FieldComponent {
+export class FieldRenderChoiceComponent extends FieldComponent implements OnInit {
 
   @ViewChild('radiobuttons', { read: NgModel })
   public radiobuttons: NgModel;
 
+  public other = false;
+  public otherValue = '';
+
+  public ngOnInit(): void {
+    super.ngOnInit();
+    this.other = !!this.field.data.value.other;
+    this.otherValue = this.field.data.value.other;
+  }
+
   public otherInputClick() {
     this.field.data.value.selected = 'other';
+    this.other = true;
+    this.field.data.value.other = this.otherValue;
     this.changed.emit(this.field);
+  }
+
+  public otherInputChange(value) {
+    this.field.data.value.other = value;
+    this.changed.emit(this.field);
+  }
+
+  public otherChange(value) {
+    if(!value) {
+      this.field.data.value.other = '';
+    }
   }
 
   public radiosChange() {
