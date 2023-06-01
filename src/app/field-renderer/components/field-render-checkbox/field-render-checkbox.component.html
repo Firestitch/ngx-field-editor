@@ -30,7 +30,9 @@
   <mat-checkbox
       *ngIf="field.configs.other"
       value="other"
+      [(ngModel)]="other"
       [name]="'checkboxOther' + name"
+      (ngModelChange)="otherChange($event)"
       [disabled]="disabled"
       class="other checkbox">
     <mat-form-field floatLabel="never" class="form-field-padless">

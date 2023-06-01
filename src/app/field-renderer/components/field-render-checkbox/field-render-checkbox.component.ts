@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, Optional, OnInit } from '@angular/core';
 import { ControlContainer, NgForm, NgModel } from '@angular/forms';
 
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -21,16 +21,33 @@ import { FieldComponent } from '../field/field.component';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderCheckboxComponent extends FieldComponent {
+export class FieldRenderCheckboxComponent extends FieldComponent implements OnInit {
 
   @ViewChild('checkboxes', { read: NgModel }) public checkboxes: NgModel;
+
+  public other = false;
+
+  public ngOnInit(): void {
+    super.ngOnInit();
+    this.other = this.field.data.value.selected.indexOf('other') !== -1;
+  }
 
   public otherInputClick(event: MouseEvent) {
     if (this.field.data.value.selected.indexOf('other') === -1) {
       this.field.data.value.selected = [...this.field.data.value.selected, 'other'];
+      this.other = true;
     }
 
     this.checkboxes.control.updateValueAndValidity();
+  }
+
+  public otherChange(value) {
+    this.other = value;
+
+    if(!this.other) {
+      this.field.data.value.selected = this.field.data.value.selected
+        .filter((item) => item !== 'other');
+    }
   }
 
   public otherCheckboxClick(event: KeyboardEvent) {
