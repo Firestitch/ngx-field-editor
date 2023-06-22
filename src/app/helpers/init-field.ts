@@ -124,12 +124,13 @@ function initOption(field: FieldOption) {
 }
 
 function initOptionDefault(field: FieldOption) {
-  if(field.configs.default !== undefined) {
+  if(typeof field.configs.default === 'string') {
+    const _default = field.configs.default.toLowerCase();
     const option = field.options
       .find((item) =>
-        String(item.name).toLowerCase() === String(field.configs.default).toLowerCase() ||
-        item.value === field.configs.default ||
-        item.guid === field.configs.default);
+        String(item.name).toLowerCase() === _default ||
+        String(item.value).toLowerCase() === _default ||
+        String(item.guid).toLowerCase() === _default);
 
     if(option) {
       switch (field.type) {
