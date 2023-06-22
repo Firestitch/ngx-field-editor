@@ -368,6 +368,7 @@ export class ExampleComponent implements OnInit {
         label: 'Dropdown Question',
         configs: {
           required: true,
+          default: 'Option A',
         },
         options: [
           {
@@ -536,7 +537,8 @@ export class ExampleComponent implements OnInit {
       {
         data: {
           value: {
-            other: 'Some text',
+            //other: 'Some text',
+            selected: 'gsdfdsdf',
           },
         },
         guid: '5',
@@ -546,6 +548,7 @@ export class ExampleComponent implements OnInit {
           other: true,
           identifier: 'choice',
           populate: true,
+          default: '2343w346',
         },
         options: [
           {

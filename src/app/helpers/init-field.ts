@@ -62,12 +62,9 @@ export function initField(field: Field | FieldOption): Field {
       initDateTime(field);
       break;
 
-    case FieldType.RichText:
-      initRichText(field);
-      break;
-
     case FieldType.ShortText:
     case FieldType.LongText:
+    case FieldType.RichText:
       initText(field);
       break;
   }
@@ -84,10 +81,8 @@ function initOption(field: FieldOption) {
         { name: 'Female', value: 'female', guid: guid() },
       ];
     }
-  } else {
-    if (!field.options) {
-      field.options = [];
-    }
+  } else if (!field.options) {
+    field.options = [];
   }
 
   switch (field.type) {
@@ -123,7 +118,34 @@ function initOption(field: FieldOption) {
 
       break;
     }
-    // No default
+  }
+
+  initOptionDefault(field);
+}
+
+function initOptionDefault(field: FieldOption) {
+  if(field.configs.default !== undefined) {
+    const option = field.options
+      .find((item) => String(item.name).toLowerCase() === field.configs.default ||
+        item.value === field.configs.default ||
+        item.guid === field.configs.default);
+
+    if(option) {
+      switch (field.type) {
+        case FieldType.Choice:
+          if(!field.data.value.selected) {
+            field.data.value.selected = option.guid;
+          }
+
+          break;
+        case FieldType.Dropdown:
+          if(!field.data.value) {
+            field.data.value = option.guid;
+          }
+
+          break;
+      }
+    }
   }
 }
 
@@ -135,16 +157,6 @@ function initDateTime(field: Field) {
     if (value !== null) {
       field.data.value = value;
     }
-  }
-}
-
-function initRichText(field: Field) {
-  if (!('value' in field.data)) {
-    field.data.value = field.configs.default;
-  }
-
-  if (typeof field.data.value !== 'string') {
-    field.data.value = '';
   }
 }
 
@@ -192,6 +204,10 @@ function initOptionVisualSelector(field: FieldOption) {
 }
 
 function initText(field: Field) {
+  if (!('value' in field.data)) {
+    field.data.value = field.configs.default;
+  }
+
   field.data.value = field.data.value === null || field.data.value === undefined ?
     '' :
     String(field.data.value);
@@ -231,7 +247,6 @@ function initFile(field: Field) {
 
   field.data.files = field.data.files || [];
 }
-
 
 function initAddress(field: Field) {
   field.hideRequired = true;
