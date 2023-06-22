@@ -126,7 +126,8 @@ function initOption(field: FieldOption) {
 function initOptionDefault(field: FieldOption) {
   if(field.configs.default !== undefined) {
     const option = field.options
-      .find((item) => String(item.name).toLowerCase() === field.configs.default ||
+      .find((item) =>
+        String(item.name).toLowerCase() === String(field.configs.default).toLowerCase() ||
         item.value === field.configs.default ||
         item.guid === field.configs.default);
 
