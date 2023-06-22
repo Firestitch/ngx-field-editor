@@ -1,4 +1,4 @@
-import { guid } from '@firestitch/common';
+import { guid, toString } from '@firestitch/common';
 import { parseLocal } from '@firestitch/date';
 
 import { isObject } from 'lodash-es';
@@ -124,8 +124,8 @@ function initOption(field: FieldOption) {
 }
 
 function initOptionDefault(field: FieldOption) {
-  if(typeof field.configs.default === 'string') {
-    const _default = field.configs.default.toLowerCase();
+  const _default = toString(field.configs.default).toLowerCase();
+  if(_default.length) {
     const option = field.options
       .find((item) =>
         String(item.name).toLowerCase() === _default ||
