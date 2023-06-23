@@ -3,11 +3,11 @@ import { Directive, TemplateRef, Input } from '@angular/core';
 
 
 @Directive({
-  selector: '[fsFieldConfig]'
+  selector: '[fsFieldConfig]',
 })
 export class FieldConfigDirective {
 
-  @Input() type;
+  @Input() public type;
 
   constructor(public templateRef: TemplateRef<any>) {}
 }

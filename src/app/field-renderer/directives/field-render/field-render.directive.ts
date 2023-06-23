@@ -9,8 +9,8 @@ import { Field } from '../../../interfaces/field.interface';
 })
 export class FieldRenderDirective {
 
-  @Input() type;
-  @Input() field: Field;
+  @Input() public type;
+  @Input() public field: Field;
 
   constructor(public templateRef: TemplateRef<any>) { }
 }

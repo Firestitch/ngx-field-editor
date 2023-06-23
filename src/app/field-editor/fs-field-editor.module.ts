@@ -1,10 +1,9 @@
-import { FieldEditorService } from '../services/field-editor.service';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -37,17 +36,20 @@ import { FsDialogModule } from '@firestitch/dialog';
 
 import { AngularStickyThingsModule } from '@w11k/angular-sticky-things';
 
+import { FieldEditorService } from '../services/field-editor.service';
 import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
 import { FS_FIELD_EDITOR_ORIGINAL_CONFIG } from '../injectors/fs-field-editor-original.providers';
+import { FieldType } from '../enums/field-type';
+import { FieldEditorConfig } from '../interfaces/field-editor-config.interface';
+import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
+import { FsFieldRendererModule } from '../field-renderer/fs-field-renderer.module';
+import { FieldRenderDirective } from '../field-renderer/directives';
 
-import { FieldEditorComponent } from './components/field-editor/field-editor.component';
 import { FieldHeaderComponent } from './components/field-header/field-header.component';
 import { FieldToolbarComponent } from './components/field-toolbar/field-toolbar.component';
 import { FieldComponent } from './components/field/field.component';
 import { FieldConfigDirective } from './directives/field-config/field-config.directive';
 import { FieldContainerDirective } from './directives/field-container/field-container.directive';
-import { FieldType } from '../enums/field-type';
-
 import { FieldConfigOptionsComponent } from './components/field-config-options/field-config-options.component';
 import { FieldConfigNameComponent } from './components/field-config-name/field-config-name.component';
 import { FieldConfigFileComponent } from './components/field-config-file/field-config-file.component';
@@ -56,21 +58,16 @@ import { FieldConfigAddressComponent } from './components/field-config-address/f
 import { FieldConfigRichTextComponent } from './components/field-config-rich-text/field-config-rich-text.component';
 import { FieldConfigHeadingComponent } from './components/field-config-heading/field-config-heading.component';
 import { FieldConfigContentComponent } from './components/field-config-content/field-config-content.component';
-
 import { FieldToolbarItemComponent } from './components/field-toolbar-item/field-toolbar-item.component';
 import { FieldEditorItemComponent } from './components/field-editor-item/field-editor-item.component';
 import { FieldEditorToolbarDirective } from './directives/field-editor-toolbar/field-editor-toolbar.directive';
-import { FieldEditorConfig } from '../interfaces/field-editor-config.interface';
-import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
-import { FsFieldRendererModule } from '../field-renderer/fs-field-renderer.module';
+import { FieldEditorComponent } from './components/field-editor/field-editor.component';
 import {
   FieldConfigVisualSelectorComponent,
   FieldHeaderMenuComponent,
   PopulateUrlComponent,
   SettingsComponent,
 } from './components';
-
-
 
 export function defaultConfigFactory(config) {
   return Object.assign(config || {},
@@ -98,9 +95,9 @@ export function defaultConfigFactory(config) {
           { type: FieldType.Birthday },
           { type: FieldType.Divider },
           { type: FieldType.File },
-        ]
-      }
-  });
+        ],
+      },
+    });
 }
 
 @NgModule({
@@ -147,13 +144,6 @@ export function defaultConfigFactory(config) {
     FsFieldRendererModule,
     FsDialogModule,
   ],
-  exports: [
-    FieldEditorComponent,
-    FieldConfigDirective,
-    FieldEditorToolbarDirective,
-    FieldContainerDirective,
-    FieldEditorItemComponent,
-  ],
   declarations: [
     FieldEditorComponent,
     FieldEditorItemComponent,
@@ -177,10 +167,20 @@ export function defaultConfigFactory(config) {
     FieldConfigVisualSelectorComponent,
     FieldHeaderMenuComponent,
   ],
+  exports: [
+    FieldEditorComponent,
+    FieldConfigDirective,
+    FieldEditorToolbarDirective,
+    FieldContainerDirective,
+    FieldEditorItemComponent,
+    FieldRenderDirective,
+  ],
 })
 
 export class FsFieldEditorModule {
-  static forRoot(config: FieldEditorConfig = null): ModuleWithProviders<FsFieldEditorModule> {
+  public static forRoot(
+    config: FieldEditorConfig = null,
+  ): ModuleWithProviders<FsFieldEditorModule> {
     return {
       ngModule: FsFieldEditorModule,
       providers: [
@@ -189,9 +189,9 @@ export class FsFieldEditorModule {
         {
           provide: FS_FIELD_EDITOR_CONFIG,
           useFactory: defaultConfigFactory,
-          deps: [FS_FIELD_EDITOR_ORIGINAL_CONFIG]
+          deps: [FS_FIELD_EDITOR_ORIGINAL_CONFIG],
         },
-      ]
+      ],
     };
   }
 }

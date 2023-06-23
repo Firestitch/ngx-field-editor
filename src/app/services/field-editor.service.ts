@@ -1,7 +1,5 @@
 import { Injectable, Inject, OnDestroy } from '@angular/core';
 
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-
 import { guid as fsGuid } from '@firestitch/common';
 
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';

@@ -23,7 +23,8 @@ import { FieldComponent } from '../field/field.component';
 })
 export class FieldRenderCheckboxComponent extends FieldComponent implements OnInit {
 
-  @ViewChild('checkboxes', { read: NgModel }) public checkboxes: NgModel;
+  @ViewChild('checkboxes', { read: NgModel })
+  public checkboxes: NgModel;
 
   public other = false;
   public otherValue = '';
