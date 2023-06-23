@@ -5,32 +5,33 @@ import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
 import { initField } from '../../../helpers/init-field';
-import { Field, FieldRendererConfig } from './../../../interfaces';
 import { FieldRendererService } from '../../../services';
 import { FieldType } from '../../../enums/field-type';
+
+import { Field } from './../../../interfaces';
 
 
 @Component({
   selector: 'fs-field-render',
-  styleUrls: ['field-render.component.scss'],
-  templateUrl: 'field-render.component.html',
+  styleUrls: ['./field-render.component.scss'],
+  templateUrl: './field-render.component.html',
   viewProviders: [
     {
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldRenderComponent implements AfterContentInit {
 
+  @Input()
+  public fieldRenders: FieldRenderDirective[] = [];
+
   public fieldRenderTemplateRefs = {};
   public field: Field = {};
   public fieldType = FieldType;
-
-  @Input()
-  public fieldRenders: FieldRenderDirective[] = [];
 
   constructor(
     @Optional() public fieldRenderer: FieldRendererService,

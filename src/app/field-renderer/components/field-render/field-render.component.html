@@ -2,7 +2,8 @@
 
   <ng-container *ngIf="fieldRenderTemplateRefs[field.type]; else standardField">
     <ng-template
-      *ngTemplateOutlet="fieldRenderTemplateRefs[field.type]; context: { fieldRenderer: fieldRenderer, field: field }">
+      [ngTemplateOutlet]="fieldRenderTemplateRefs[field.type]"
+      [ngTemplateOutletContext]="{ fieldRenderer: fieldRenderer, field: field }">
     </ng-template>
   </ng-container>
 
@@ -79,11 +80,11 @@
       <ng-container *ngSwitchCase="fieldType.VisualSelector">
         <fs-field-render-visual-selector [field]="field" (changed)="fieldRenderer.fieldChanged($event)"></fs-field-render-visual-selector>
       </ng-container>
-
-      <ng-template #fsFieldText>
-        <fs-field-render-text [field]="field" (changed)="fieldRenderer.fieldChanged($event)"></fs-field-render-text>
-      </ng-template>
     </ng-container>
+
+    <ng-template #fsFieldText>
+      <fs-field-render-text [field]="field" (changed)="fieldRenderer.fieldChanged($event)"></fs-field-render-text>
+    </ng-template>
 
   </ng-template>
 </div>

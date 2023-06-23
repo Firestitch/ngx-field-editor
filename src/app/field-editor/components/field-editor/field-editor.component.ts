@@ -35,8 +35,8 @@ import { FieldContainerDirective } from '../../directives/field-container/field-
 
 @Component({
   selector: 'fs-field-editor',
-  templateUrl: 'field-editor.component.html',
-  styleUrls: ['field-editor.component.scss'],
+  templateUrl: './field-editor.component.html',
+  styleUrls: ['./field-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [FieldEditorService, FieldRendererService],
 })
