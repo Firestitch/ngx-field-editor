@@ -61,6 +61,9 @@ export {
   FieldMenuItem,
 } from './app/interfaces';
 
+export {
+  initField,
+} from './app/helpers';
 
 export {
   EditorAction,

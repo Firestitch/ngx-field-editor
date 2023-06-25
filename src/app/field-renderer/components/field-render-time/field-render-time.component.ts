@@ -8,16 +8,16 @@ import { FieldComponent } from '../field/field.component';
 
 @Component({
   selector: 'fs-field-render-time',
-  templateUrl: 'field-render-time.component.html',
+  templateUrl: './field-render-time.component.html',
   viewProviders: [
     {
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderTimeComponent extends FieldComponent implements OnInit {
+export class FieldRenderTimeComponent extends FieldComponent {
 
 }

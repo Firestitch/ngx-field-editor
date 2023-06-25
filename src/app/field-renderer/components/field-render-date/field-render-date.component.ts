@@ -18,6 +18,6 @@ import { FieldComponent } from '../field/field.component';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderDateComponent extends FieldComponent implements OnInit {
+export class FieldRenderDateComponent extends FieldComponent {
 
 }

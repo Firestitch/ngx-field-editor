@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Optional } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldComponent } from '../field/field.component';
+import { FieldOption } from '../../../interfaces';
 
 
 @Component({
@@ -14,11 +15,13 @@ import { FieldComponent } from '../field/field.component';
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderBirthdayComponent extends FieldComponent implements OnInit {
+export class FieldRenderBirthdayComponent extends FieldComponent {
+
+  @Input() public field: FieldOption;
 
   public curentDay = new Date();
 

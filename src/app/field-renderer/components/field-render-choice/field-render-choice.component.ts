@@ -1,8 +1,9 @@
-import { Component, ViewChild, ChangeDetectionStrategy, Optional, OnInit } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, Optional, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm, NgModel } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
+import { FieldOption } from '../../../interfaces';
 import { FieldComponent } from '../field/field.component';
 
 
@@ -21,13 +22,14 @@ import { FieldComponent } from '../field/field.component';
 })
 export class FieldRenderChoiceComponent extends FieldComponent implements OnInit {
 
+  @Input() public field: FieldOption;
+
   @ViewChild('radiobuttons', { read: NgModel })
   public radiobuttons: NgModel;
 
   public otherValue = '';
 
   public ngOnInit(): void {
-    super.ngOnInit();
     this.otherValue = this.field.data.value.other;
 
     if(this.otherValue) {

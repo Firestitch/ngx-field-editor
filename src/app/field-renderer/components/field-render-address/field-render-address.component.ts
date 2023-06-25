@@ -7,11 +7,10 @@ import { controlContainerFactory } from '@firestitch/core';
 import { FieldComponent } from '../field/field.component';
 
 
-
 @Component({
   selector: 'fs-field-render-address',
-  styleUrls: ['field-render-address.component.scss'],
-  templateUrl: 'field-render-address.component.html',
+  styleUrls: ['./field-render-address.component.scss'],
+  templateUrl: './field-render-address.component.html',
   viewProviders: [
     {
       provide: ControlContainer,
@@ -26,8 +25,6 @@ export class FieldRenderAddressComponent extends FieldComponent implements OnIni
   public config: IFsAddressConfig;
 
   public ngOnInit(): void {
-    super.ngOnInit();
-
     this.config = {
       label: this.field.label,
       name: {
@@ -68,7 +65,7 @@ export class FieldRenderAddressComponent extends FieldComponent implements OnIni
         required: this.field.configs.country.required,
         disabled: this.disabled,
         placeholder: this.field.configs.country.label,
-      }
+      },
     };
   }
 

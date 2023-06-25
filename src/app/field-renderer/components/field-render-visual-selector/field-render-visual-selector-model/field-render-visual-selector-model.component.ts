@@ -1,51 +1,50 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Optional } from '@angular/core';
-import { AbstractControl, ControlContainer, ControlValueAccessor, NgForm, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
-
-import { controlContainerFactory } from '@firestitch/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit, Optional } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NgForm, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 import { VisualSelectorFormat } from '../../../../enums';
 import { FieldComponent } from '../../field';
+import { FieldOption } from '../../../../interfaces';
 
 
 @Component({
   selector: 'fs-field-render-visual-selector-model',
-  templateUrl: 'field-render-visual-selector-model.component.html',
-  styleUrls: [ 'field-render-visual-selector-model.component.scss' ],
-  providers: [ 
+  templateUrl: './field-render-visual-selector-model.component.html',
+  styleUrls: ['./field-render-visual-selector-model.component.scss'],
+  providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => FieldRenderVisualSelectorModelComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: FieldRenderVisualSelectorModelComponent,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderVisualSelectorModelComponent extends FieldComponent implements ControlValueAccessor, Validator {
-  
+export class FieldRenderVisualSelectorModelComponent extends FieldComponent implements ControlValueAccessor, OnInit, Validator {
+
+  @Input() public field: FieldOption;
+
   public selected = {};
   public VisualSelectorFormat = VisualSelectorFormat;
 
   private _onChange: (value: unknown) => void;
   private _onTouch: (value: unknown) => void;
-  
-  public ngOnInit(): void {
-    super.ngOnInit();
 
+  public ngOnInit(): void {
     this.selected = this.field.data.value.selected
-    .reduce((accum, guid) => {
-      return {
-        ...accum,
-        [guid]: true,
-      }
-    }, {});
+      .reduce((accum, guid) => {
+        return {
+          ...accum,
+          [guid]: true,
+        };
+      }, {});
   }
 
-  
+
   public writeValue(value: number): void {
     //this.value = value;
   }
@@ -70,18 +69,18 @@ export class FieldRenderVisualSelectorModelComponent extends FieldComponent impl
     const selected = !this.selected[option.guid];
 
     if(!this.configs.multipleSelection) {
-      this.selected = {};  
+      this.selected = {};
     }
 
     this.selected[option.guid] = selected;
     this.field.data.value.selected = Object.keys(this.selected)
-    .reduce((accum, name) => {
-      if(this.selected[name]) {
-        accum.push(name);
-      }
+      .reduce((accum, name) => {
+        if(this.selected[name]) {
+          accum.push(name);
+        }
 
-      return accum;
-    }, []);
+        return accum;
+      }, []);
 
     this.changed.emit(this.field);
     this._onChange(this.field);

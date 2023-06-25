@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Optional } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldComponent } from '../field/field.component';
+import { FieldOption } from '../../../interfaces';
 
 
 @Component({
@@ -20,5 +21,7 @@ import { FieldComponent } from '../field/field.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldRenderGenderComponent extends FieldComponent {
+
+  @Input() public field: FieldOption;
 
 }

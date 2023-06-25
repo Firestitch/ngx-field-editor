@@ -4,30 +4,32 @@ import {
   QueryList,
   ChangeDetectionStrategy,
   Input,
-  Optional
+  Optional,
 } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
-import { Field } from './../../../interfaces/field.interface';
-import { FieldRendererConfig } from './../../../interfaces/field-renderer-config.interface';
+import { Observable, of } from 'rxjs';
+
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
 import { FieldRendererService } from '../../../services';
-import { Observable, of } from 'rxjs';
+
+import { Field } from './../../../interfaces/field.interface';
+import { FieldRendererConfig } from './../../../interfaces/field-renderer-config.interface';
 
 
 @Component({
   selector: 'fs-field-renderer',
-  templateUrl: 'field-renderer.component.html',
-  styleUrls: ['field-renderer.component.scss'],
+  templateUrl: './field-renderer.component.html',
+  styleUrls: ['./field-renderer.component.scss'],
   providers: [FieldRendererService],
   viewProviders: [
     {
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -18,7 +18,6 @@ export class FieldRenderFileComponent extends FieldComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    super.ngOnInit();
     const config = this.field?.configs?.allowedFileTypes || {};
     const types = this._getAllowedTypes(config);
     this.accept = types.length ? types.join(',') : '*';

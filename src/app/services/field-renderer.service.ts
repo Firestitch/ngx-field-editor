@@ -4,6 +4,7 @@ import { Observable, of, Subject } from 'rxjs';
 
 import { cloneDeep } from 'lodash-es';
 
+import { initField } from '../helpers';
 import { Field, FieldRendererConfig } from '../interfaces';
 import { RendererAction } from '../enums';
 
@@ -23,8 +24,9 @@ export class FieldRendererService implements OnDestroy {
   public setConfig(config: FieldRendererConfig) {
     this.config = {
       ...config,
-      fieldChanged: config.fieldChanged ? config.fieldChanged : (field: Field) => { },
     };
+
+    this.fields = this.config.fields;
   }
 
   public fieldChanged(field: Field): void {
@@ -36,11 +38,17 @@ export class FieldRendererService implements OnDestroy {
   }
 
   public get fields(): Field[] {
-    return cloneDeep(this.config.fields);
+    return this.config.fields;
   }
 
   public set fields(fields: Field[]) {
-    this.config.fields = fields;
+    this.config.fields = this.initFields(cloneDeep(fields));
+  }
+
+  public initFields(fields: Field[]): Field[] {
+    return fields.map((field) => {
+      return this.config.initField ? this.config.initField(field) : initField(field);
+    });
   }
 
   public action(action: RendererAction, field: Field, data: any = {}): Observable<any> {

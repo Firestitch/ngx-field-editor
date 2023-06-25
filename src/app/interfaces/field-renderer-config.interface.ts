@@ -6,6 +6,7 @@ import { Field } from './field.interface';
 
 
 export interface FieldRendererConfig {
+
   fields?: Field[];
 
   fieldChanged?: (field?: Field) => void;
@@ -16,6 +17,8 @@ export interface FieldRendererConfig {
   canImageUpload?: (field: Field) => Observable<boolean>;
 
   showField?: (field: Field) => Observable<boolean>;
+
+  initField?: (field: Field) => Field;
 
   action?: (action: RendererAction, field: Field, data: any) => Observable<any>;
 }
