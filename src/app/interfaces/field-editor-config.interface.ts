@@ -48,6 +48,8 @@ export interface FieldEditorConfig {
   afterFieldDropped?: (field: Field, index: number) => Observable<any>;
 
   action: (action: EditorAction, field: Field, data: any) => Observable<Field>;
+
+  initField?: (field: Field) => Field;
 }
 
 export interface FieldMenu {

@@ -47,8 +47,16 @@ export class FieldRendererService implements OnDestroy {
 
   public initFields(fields: Field[]): Field[] {
     return fields.map((field) => {
-      return this.config.initField ? this.config.initField(field) : initField(field);
+      return this.initField(field);
     });
+  }
+
+  public initField(field: Field) {
+    field = initField(field);
+
+    return {
+      ...(this.config.initField ? this.config.initField(field) : field),
+    };
   }
 
   public action(action: RendererAction, field: Field, data: any = {}): Observable<any> {

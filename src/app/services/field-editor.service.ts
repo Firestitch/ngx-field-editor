@@ -57,7 +57,10 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public set fields(fields: Field[]) {
-    this.config.fields = fields;
+    this.config.fields = fields
+      .map((field) => {
+        return this.initField(field);
+      });
   }
 
   public get hasFields(): boolean {
@@ -219,14 +222,20 @@ export class FieldEditorService implements OnDestroy {
     };
 
     if (this.config.fields) {
-      this.config.fields = this.config.fields.map((field) => {
-        return initField(field);
-      });
+      this.fields = this.config.fields;
     }
   }
 
-  public insertField(field: Field, index?: number, toolbarItem?: ToolbarItem): Observable<Field> {
+  public initField(field: Field) {
     field = initField(field);
+
+    return {
+      ...(this.config.initField ? this.config.initField(field) : field),
+    };
+  }
+
+  public insertField(field: Field, index?: number, toolbarItem?: ToolbarItem): Observable<Field> {
+    field = this.initField(field);
 
     if (index === undefined) {
       index = this.fieldSelected ? this.config.fields.indexOf(this.fieldSelected) + 1 : this.numberOfFields;
@@ -236,7 +245,7 @@ export class FieldEditorService implements OnDestroy {
       .pipe(
         switchMap((_field) => this.action(EditorAction.FieldAdd, _field, { index, toolbarItem })),
         switchMap((response) => {
-          const newField = initField(response.field);
+          const newField = this.initField(response.field);
           this.config.fields.splice(index, 0, newField);
           this._scrollTargetField = newField;
           this._fieldAdded$.next(newField);
@@ -252,7 +261,7 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public fieldChange(field: Field): void {
-    this.config.fields = this.config.fields
+    this.fields = this.config.fields
       .map((_field) => {
         return _field.guid === field.guid ? field : _field;
       });

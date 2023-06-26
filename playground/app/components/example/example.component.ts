@@ -331,6 +331,9 @@ export class ExampleComponent implements OnInit {
       canFileDelete: (field: Field): Observable<boolean> => {
         return of(true);
       },
+      initField: (field: Field) => {
+        return field;
+      },
     };
   }
 
