@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { format } from '@firestitch/date';
 
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { EditorAction, FieldType, VisualSelectorFormat } from '../../../enums';
 import { FieldOption } from '../../../interfaces';
@@ -33,11 +34,7 @@ export class SettingsComponent implements OnInit {
     this.field = this._data.field;
     this.fieldEditor = this._data.fieldEditor;
 
-    if(this.field.type === FieldType.Date) {
-      this.populateValue =  format(new Date(),'yyyy-MM-dd');
-    } else {
-      this.populateValue = 'PopulatedValue';
-    }
+    this.populateValue = this.field.type === FieldType.Date ? format(new Date(),'yyyy-MM-dd') : 'PopulatedValue';
   }
 
   public get type(): FieldType|string {
@@ -49,11 +46,11 @@ export class SettingsComponent implements OnInit {
   }
 
   public save = (): Observable<any> => {
-    return this.fieldEditor.action(EditorAction.FieldSave, this.field)
-    .pipe(
-      tap(() => this._dialogRef.close(this.field)),
-    );
-  }
+    this.fieldEditor.fieldChange(this.field);
+    this._dialogRef.close(this.field);
+
+    return of(null);
+  };
 
 
 }

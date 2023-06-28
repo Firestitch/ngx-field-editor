@@ -40,7 +40,7 @@ export {
   FieldRenderVisualSelectorComponent,
 } from './app/field-renderer/components';
 
-export { FieldEditorService } from './app/services/field-editor.service';
+export { FieldRendererService, FieldEditorService } from './app/services';
 
 export { FieldEditorToolbarDirective } from './app/field-editor/directives/field-editor-toolbar/field-editor-toolbar.directive';
 export { FS_FIELD_EDITOR_CONFIG } from './app/injectors/fs-field-editor.providers';

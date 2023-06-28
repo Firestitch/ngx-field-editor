@@ -5,7 +5,7 @@ export enum EditorAction {
   OptionReorder = 'optionReorder',
   OptionOther = 'optionOther',
   OptionDelete = 'optionDelete',
-  FieldSave = 'fieldSave',
+  FieldChange = 'fieldChange',
   FieldAdd = 'fieldAdd',
   FieldDuplicate = 'fieldDuplicate',
   FieldDelete = 'fieldDelete',

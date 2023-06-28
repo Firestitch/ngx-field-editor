@@ -26,7 +26,7 @@
           [disabled]="true"
           name="signature"
           [ngModel]="field"
-          (ngModelChange)="fieldChange(fieldEditor, field)">
+          (ngModelChange)="fieldEditor.fieldChange(field)">
         </app-signature-field-render>
       </ng-template>
 
@@ -46,7 +46,7 @@
         <app-terms-field-config
           name="terms-{{ field?.data?.guid }}"
           [ngModel]="field"
-          (ngModelChange)="fieldChange(fieldEditor, field)">
+          (ngModelChange)="fieldEditor.fieldChange(field)">
         </app-terms-field-config>
       </ng-template>
 
@@ -55,7 +55,7 @@
           name="terms"
           [disabled]="true"
           [ngModel]="field"
-          (ngModelChange)="fieldChange(fieldEditor, field)">
+          (ngModelChange)="fieldEditor.fieldChange(field)">
         </app-terms-field-render>
       </ng-template>
     </fs-field-editor>
@@ -73,7 +73,7 @@
           <app-signature-field-render
             name="signature"
             [ngModel]="field"
-            (ngModelChange)="fieldChange(fieldEditor, field)">
+            (ngModelChange)="fieldEditor.fieldChange(fieldEditor, field)">
           </app-signature-field-render>
         </ng-template>
 
@@ -81,7 +81,7 @@
           <app-terms-field-render
             name="terms"
             [ngModel]="field"
-            (ngModelChange)="fieldChange(fieldEditor, field)">
+            (ngModelChange)="fieldEditor.fieldChange(field)">
           </app-terms-field-render>
         </ng-template>
       </fs-field-renderer>

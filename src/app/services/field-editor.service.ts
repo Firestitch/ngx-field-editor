@@ -261,17 +261,21 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public fieldChange(field: Field): void {
+    field = this._prepareItem(field);
+
     this.fields = this.config.fields
       .map((_field) => {
         return _field.guid === field.guid ? field : _field;
       });
 
-    if (this.config.fieldChanged) {
-      field = this._prepareItem(field);
-      this._fieldChanged$.next(field);
+    this.action(EditorAction.FieldChange, field)
+      .subscribe(() => {
+        this._fieldChanged$.next(field);
 
-      this.config.fieldChanged(field);
-    }
+        if (this.config.fieldChanged) {
+          this.config.fieldChanged(field);
+        }
+      });
   }
 
   public fieldChanged(): Observable<Field> {

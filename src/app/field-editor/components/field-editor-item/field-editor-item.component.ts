@@ -166,11 +166,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
       field.description = null;
     }
 
-    this.fieldEditor.action(EditorAction.FieldSave, field)
-      .pipe(takeUntil(this._destroy$))
-      .subscribe(() => {
-        this.fieldEditor.action(EditorAction.FieldSave, field);
-      });
+    this.fieldEditor.fieldChange(field);
   }
 
   public dragStarted(): void {

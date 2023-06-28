@@ -9,7 +9,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 
 import { FsPrompt } from '@firestitch/prompt';
@@ -54,7 +54,7 @@ export class FieldHeaderComponent
 
   private _destroy$ = new Subject();
 
-  public constructor(
+  constructor(
     public fieldEditor: FieldEditorService,
     private _prompt: FsPrompt,
     private _cdRef: ChangeDetectorRef,
@@ -86,11 +86,7 @@ export class FieldHeaderComponent
 
   public toggleRequired(): void {
     this.field.configs.required = !this.field.configs.required;
-    this.fieldEditor.action(EditorAction.FieldSave, this.field)
-    .pipe(takeUntil(this._destroy$))
-    .subscribe(() => {
-      this.changed();
-    });
+    this.changed();
   }
 
   public toggleDescriptionNote(event: Event): void {
@@ -100,10 +96,7 @@ export class FieldHeaderComponent
   }
 
   public actionConfig(): void {
-    this.fieldEditor.action(EditorAction.FieldSave, this.field)
-      .subscribe(() => {
-        this.changed();
-      });
+    this.changed();
   }
 
   public delete(event: Event): void {

@@ -29,12 +29,8 @@ export class FieldRendererService implements OnDestroy {
     this.fields = this.config.fields;
   }
 
-  public fieldChanged(field: Field): void {
-    this.action(RendererAction.FieldChange, field);
-
-    if (this.config.fieldChanged) {
-      this.config.fieldChanged(field);
-    }
+  public fieldChange(field: Field, data: any = null): void {
+    this.action(RendererAction.FieldChange, field, data);
   }
 
   public get fields(): Field[] {

@@ -343,10 +343,6 @@ export class ExampleComponent implements OnInit {
     };
   }
 
-  public fieldChange(editor: FieldEditorService, field: Field): void {
-    editor.action(EditorAction.FieldSave, field);
-  }
-
   public save() {
     console.log('Saved');
   }

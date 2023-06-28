@@ -120,13 +120,8 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
   }
 
   public actionConfig(): void {
-    this.fieldEditor.action(EditorAction.FieldSave, this.field)
-      .pipe(
-        takeUntil(this._destroy$),
-      )
-      .subscribe(() => {
-        this.fieldChanged.emit(this.field);
-      });
+    this.fieldEditor.fieldChange(this.field);
+    this.fieldChanged.emit(this.field);
   }
 
   public duplicate(event: Event): void {

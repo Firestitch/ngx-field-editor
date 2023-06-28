@@ -37,10 +37,7 @@ export class FieldComponent implements OnDestroy {
   }
 
   public fieldSave() {
-    this.fieldEditor.action(EditorAction.FieldSave, this.field)
-      .subscribe(() => {
-        this.fieldEditor.fieldChange(this.field);
-      });
+    this.fieldEditor.fieldChange(this.field);
   }
 
 }
