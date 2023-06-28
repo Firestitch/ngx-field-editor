@@ -3,7 +3,7 @@ import { Injectable, Inject, OnDestroy } from '@angular/core';
 import { guid as fsGuid } from '@firestitch/common';
 
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { cloneDeep } from 'lodash-es';
 
@@ -53,7 +53,7 @@ export class FieldEditorService implements OnDestroy {
   }
 
   public get fields(): Field[] {
-    return cloneDeep(this.config.fields);
+    return this.config.fields;
   }
 
   public set fields(fields: Field[]) {
@@ -262,11 +262,6 @@ export class FieldEditorService implements OnDestroy {
 
   public fieldChange(field: Field): void {
     field = this._prepareItem(field);
-
-    this.fields = this.config.fields
-      .map((_field) => {
-        return _field.guid === field.guid ? field : _field;
-      });
 
     this.action(EditorAction.FieldChange, field)
       .subscribe(() => {
