@@ -653,6 +653,7 @@ export class ExampleComponent implements OnInit {
         configs: {
           basic: true,
           allowMultiple: true,
+          allowedFileTypes: { image: true },
         },
         data: {
           files: [

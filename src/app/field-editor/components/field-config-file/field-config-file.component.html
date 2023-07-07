@@ -6,31 +6,22 @@
     </fs-label-field>
 
     <fs-label-field>
-      <fs-label>Allow file types</fs-label>
+      <fs-label>Only allow file types</fs-label>
       <div fxFlexLayout="column" fxLayoutGap="20px">
         <mat-checkbox
             color="primary"
-            [(ngModel)]="field.configs.allowedFileTypes.other"
-            (ngModelChange)="fieldSave()">
-          Any
-        </mat-checkbox>
-        <mat-checkbox
-            color="primary"
-            *ngIf="!field.configs.allowedFileTypes.other"
             [(ngModel)]="field.configs.allowedFileTypes.image"
             (ngModelChange)="fieldSave()">
           Image
         </mat-checkbox>
         <mat-checkbox
             color="primary"
-            *ngIf="!field.configs.allowedFileTypes.other"
             [(ngModel)]="field.configs.allowedFileTypes.video"
             (ngModelChange)="fieldSave()">
             Video
         </mat-checkbox>
         <mat-checkbox
             color="primary"
-            *ngIf="!field.configs.allowedFileTypes.other"
             [(ngModel)]="field.configs.allowedFileTypes.pdf"
             (ngModelChange)="fieldSave()">
           PDF

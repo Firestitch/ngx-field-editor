@@ -235,12 +235,7 @@ function initFile(field: Field) {
   }
 
   if (field.configs.allowedFileTypes === undefined) {
-    field.configs.allowedFileTypes = {
-      image: true,
-      video: true,
-      pdf: true,
-      other: true,
-    };
+    field.configs.allowedFileTypes = {};
   }
 
   if (field.configs.allowMultiple === undefined) {

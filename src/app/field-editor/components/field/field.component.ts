@@ -8,7 +8,6 @@ import { Subject } from 'rxjs';
 import { Field } from '../../../interfaces';
 import { FieldType } from '../../../enums/field-type';
 import { FieldEditorService } from '../../../services';
-import { EditorAction } from '../../../enums';
 
 
 @Component({

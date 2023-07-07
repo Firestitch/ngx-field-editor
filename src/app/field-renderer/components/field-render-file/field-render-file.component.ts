@@ -19,25 +19,23 @@ export class FieldRenderFileComponent extends FieldComponent implements OnInit {
 
   public ngOnInit(): void {
     const config = this.field?.configs?.allowedFileTypes || {};
-    const types = this._getAllowedTypes(config);
-    this.accept = types.length ? types.join(',') : '*';
+    const allowedTypes = this._getAllowedTypes(config);
+    this.accept = allowedTypes.length ? allowedTypes.join(',') : '*';
   }
 
   private _getAllowedTypes(allowedTypes) {
     const allowed = [];
 
-    if (!allowedTypes.other) {
-      if (allowedTypes.image) {
-        allowed.push('image/*');
-      }
+    if (allowedTypes.image) {
+      allowed.push('image/*');
+    }
 
-      if (allowedTypes.video) {
-        allowed.push('video/*');
-      }
+    if (allowedTypes.video) {
+      allowed.push('video/*');
+    }
 
-      if (allowedTypes.pdf) {
-        allowed.push('application/pdf');
-      }
+    if (allowedTypes.pdf) {
+      allowed.push('application/pdf');
     }
 
     return allowed;
