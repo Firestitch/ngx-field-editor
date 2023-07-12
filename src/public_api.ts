@@ -8,6 +8,7 @@ export { FieldContainerDirective } from './app/field-editor/directives';
 export { FieldConfigDirective } from './app/field-editor/directives/field-config/field-config.directive';
 export { FieldRenderDirective } from './app/field-renderer/directives/field-render/field-render.directive';
 export { FieldViewDirective } from './app/field-viewer/directives/field-view/field-view.directive';
+export { ScrollableHandlerDirective } from './app/field-editor/directives/scrollable/scrollable-handler.directive';
 
 export { FieldEditorComponent } from './app/field-editor/components/field-editor/field-editor.component';
 export { FieldEditorItemComponent } from './app/field-editor/components/field-editor-item/field-editor-item.component';

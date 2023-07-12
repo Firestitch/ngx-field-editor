@@ -50,6 +50,7 @@ import { FieldToolbarComponent } from './components/field-toolbar/field-toolbar.
 import { FieldComponent } from './components/field/field.component';
 import { FieldConfigDirective } from './directives/field-config/field-config.directive';
 import { FieldContainerDirective } from './directives/field-container/field-container.directive';
+import { ScrollableHandlerDirective } from './directives/scrollable/scrollable-handler.directive';
 import { FieldConfigOptionsComponent } from './components/field-config-options/field-config-options.component';
 import { FieldConfigNameComponent } from './components/field-config-name/field-config-name.component';
 import { FieldConfigFileComponent } from './components/field-config-file/field-config-file.component';
@@ -166,6 +167,7 @@ export function defaultConfigFactory(config) {
     PopulateUrlComponent,
     FieldConfigVisualSelectorComponent,
     FieldHeaderMenuComponent,
+    ScrollableHandlerDirective,
   ],
   exports: [
     FieldEditorComponent,
@@ -174,6 +176,7 @@ export function defaultConfigFactory(config) {
     FieldContainerDirective,
     FieldEditorItemComponent,
     FieldRenderDirective,
+    ScrollableHandlerDirective,
   ],
 })
 

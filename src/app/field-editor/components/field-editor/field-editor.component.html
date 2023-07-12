@@ -1,6 +1,7 @@
-<div 
-    class="field-editor-container" 
-    [ngClass]="{ 
+<div
+    class="field-editor-container"
+    scrollableHandler
+    [ngClass]="{
       'has-fields': fieldEditor.hasFields,
       'field-selected': !!(fieldEditor.fieldSelected$ | async)
     }">
@@ -39,7 +40,7 @@
             <fs-field-toolbar
               [toolbarItems]="fieldEditor.config.toolbar.items">
             </fs-field-toolbar>
-          </ng-template>      
+          </ng-template>
 
         </div>
       </div>
