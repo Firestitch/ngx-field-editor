@@ -18,7 +18,7 @@ import { takeUntil, filter } from 'rxjs/operators';
 
 import { Field } from '../../../interfaces/field.interface';
 import { FieldEditorService } from '../../../services/field-editor.service';
-import { EditorAction, FieldType } from '../../../enums';
+import { FieldType } from '../../../enums';
 import { FieldConfigDirective, FieldContainerDirective } from '../../directives';
 import { FieldRenderDirective } from '../../../field-renderer/directives';
 

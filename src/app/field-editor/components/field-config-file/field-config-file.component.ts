@@ -55,6 +55,7 @@ export class FieldConfigFileComponent extends FieldComponent implements OnInit {
       this.field.configs.allowedFileTypes.pdf = true;
     }
 
+    this.fieldSave();
   }
 
   public get allowFileImage(): boolean {
