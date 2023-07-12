@@ -1,5 +1,5 @@
 <fs-field-config-options
   [field]="field"
-  [showOptionName]="field.configs.format == VisualSelectorFormat.ImageName || field.configs.format == VisualSelectorFormat.Name"
-  [showOptionImage]="field.configs.format == VisualSelectorFormat.ImageName || field.configs.format == VisualSelectorFormat.Image">
+  [showOptionName]="field.configs.format === VisualSelectorFormat.ImageName || field.configs.format === VisualSelectorFormat.Name"
+  [showOptionImage]="field.configs.format === VisualSelectorFormat.ImageName || field.configs.format === VisualSelectorFormat.Image">
 </fs-field-config-options>

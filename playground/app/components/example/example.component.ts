@@ -15,7 +15,6 @@ import { tap } from 'rxjs/operators';
 
 
 import { DialogExampleComponent } from '../dialog-example';
-import { FieldEditorService } from '../../../../src/app/services/field-editor.service';
 
 
 @Component({

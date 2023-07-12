@@ -152,8 +152,27 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
         }),
         takeUntil(this._destory$),
       )
-      .subscribe(() => {
+      .subscribe((response) => {
+        const options = this.field.options
+          .map((item) => {
+            if(response.option.guid === item.guid) {
+              item = {
+                ...item,
+                ...response.option,
+              };
+            }
+
+            return item;
+          });
+
+        this.field = {
+          ...this.field,
+          options,
+        };
+
+
         this.fieldEditor.fieldChange(this.field);
+        this._cdRef.markForCheck();
       });
   }
 
