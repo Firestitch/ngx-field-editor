@@ -137,7 +137,11 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
     this.addOptionFocus();
   }
 
-  public selectOptionImage(fsFile: FsFile, option, fileImagePicker: FsFileImagePickerComponent): void {
+  public selectOptionImage(
+    fsFile: FsFile,
+    option,
+    fileImagePicker: FsFileImagePickerComponent,
+  ): void {
     const data = {
       file: fsFile.file,
       option,

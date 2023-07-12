@@ -50,7 +50,7 @@
             </div>
           </ng-container>
         </div>
-        <ng-container *ngIf="option.notes">
+        <ng-container *ngIf="option.notes && showOptionName">
           <div class="option-note">
             <mat-form-field          
               floatLabel="never"
@@ -110,7 +110,7 @@
     </ng-container>
 
     <div class="option-label" [ngClass]="{ hide: !showOptionName}">
-      <mat-form-field floatLabel="never" class="new-option" fxFlex>
+      <mat-form-field floatLabel="never" class="new-option">
         <mat-label>Add New Option</mat-label>
         <input
           matInput
