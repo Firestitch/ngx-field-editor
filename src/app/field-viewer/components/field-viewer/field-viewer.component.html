@@ -1,11 +1,11 @@
 <ng-container *ngFor="let field of fields">
-  <div>
+  <div *ngIf="field.show | async">
     <ng-container *ngIf="fieldViewTemplateRefs[field.type]; else standardField">
       <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.type]; context: { field: field }"></ng-template>
     </ng-container>
 
     <ng-template #standardField>
-      <fs-field-view 
+      <fs-field-view
         [field]="field">
       </fs-field-view>
     </ng-template>
