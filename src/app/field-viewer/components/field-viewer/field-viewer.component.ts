@@ -4,7 +4,7 @@ import {
   QueryList,
   AfterContentInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
 } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
@@ -33,7 +33,7 @@ export class FieldViewerComponent implements AfterContentInit {
   private _config: FieldViewerConfig;
 
   @Input('config')
-  set setConfig(config: FieldViewerConfig) {
+  public set setConfig(config: FieldViewerConfig) {
     this._initWithConfig(config);
   }
 
@@ -44,7 +44,7 @@ export class FieldViewerComponent implements AfterContentInit {
   }
 
   public showField(field: Field): Observable<boolean> {
-    if(!this._config.showField) {
+    if (!this._config.showField) {
       return of(true);
     }
 
@@ -52,8 +52,8 @@ export class FieldViewerComponent implements AfterContentInit {
   }
 
   private _initWithConfig(config: FieldViewerConfig): void {
-    this._initFields(config?.fields);
     this._config = config;
+    this._initFields(config?.fields);
   }
 
   private _initFields(fields: (Field | FieldOption)[]): void {
@@ -61,7 +61,7 @@ export class FieldViewerComponent implements AfterContentInit {
       .map((field) => {
         const value = field.data?.value;
         let hasValue = false;
-        switch(field.type) {
+        switch (field.type) {
           case FieldType.Content:
           case FieldType.Heading:
             hasValue = true;
