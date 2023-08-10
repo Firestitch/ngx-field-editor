@@ -16,14 +16,14 @@ import { Field } from '../../../interfaces/field.interface';
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldRenderNameComponent extends FieldComponent {
 
   @Input('field')
-  set _field(field: Field) {
+  public set _field(field: Field) {
     this.field = field;
 
     if (!field.data || !field.data.guid || !field.data.value) {
@@ -31,8 +31,8 @@ export class FieldRenderNameComponent extends FieldComponent {
         value: {
           firstName: null,
           middleName: null,
-          lastName: null
-        }
+          lastName: null,
+        },
       };
     }
   }

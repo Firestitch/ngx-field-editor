@@ -1,8 +1,6 @@
-<fs-label-field class="fs-form-wrapper">
-  <div class="row">
-    <mat-form-field
-      class="form-field-padless-bottom"
-        *ngIf="field.configs.firstName?.display">
+<div class="row">
+  <ng-container *ngIf="field.configs.firstName?.display">
+    <mat-form-field>
       <mat-label>{{field.label + ' ' + field.configs.firstName.label}}</mat-label>
       <input
         matInput
@@ -10,10 +8,11 @@
         [disabled]="disabled"
         (ngModelChange)="change($event,'firstName')"
         [(ngModel)]="field.data.value.firstName">
+      <mat-hint>{{field.description}}</mat-hint>
     </mat-form-field>
-    <mat-form-field
-        class="form-field-padless-bottom"
-        *ngIf="field.configs.lastName?.display">
+  </ng-container>
+  <ng-container *ngIf="field.configs.lastName?.display">
+    <mat-form-field>
       <mat-label>{{field.label + ' ' + field.configs.lastName.label}}</mat-label>
       <input
         matInput
@@ -21,10 +20,9 @@
         [disabled]="disabled"
         (ngModelChange)="change($event,'lastName')"
         [(ngModel)]="field.data.value.lastName">
+      <ng-container *ngIf="!field.configs.firstName?.display">
+        <mat-hint>{{field.description }}</mat-hint>
+      </ng-container>
     </mat-form-field>
-  </div>
-
-  <fs-label-message class="fs-form-message" *ngIf="field.description">
-    <div class="fs-form-hint">{{ field.description }}</div>
-  </fs-label-message>
-</fs-label-field>
+  </ng-container>
+</div>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, forwardRef, Input} from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 import { FieldComponent } from '../../field/field.component';
@@ -11,13 +11,13 @@ import { FieldComponent } from '../../field/field.component';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => FieldRenderNameModelComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: FieldRenderNameModelComponent,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -26,47 +26,47 @@ export class FieldRenderNameModelComponent extends FieldComponent implements Con
   @Input() public field;
   @Input() public disabled = false;
 
-  value;
+  public value;
 
-  onChange: (_: any) => void = (_: any) => {};
-  onTouched: () => void = () => {};
+  public onChange: (_: any) => void = (_: any) => { };
+  public onTouched: () => void = () => { };
 
-  change(event, name) {
+  public change(event, name) {
     this.field.data.value[name] = event;
     this.onChange(this.field.data.value);
   }
 
-  writeValue(value: number): void {
+  public writeValue(value: number): void {
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
+  public validate(control: AbstractControl): ValidationErrors | null {
     const errors = [];
-    if(this.field.configs.required) {
-      if(!this.field.data.value.firstName) {
+    if (this.field.configs.required) {
+      if (!this.field.data.value.firstName) {
         errors.push('first name');
       }
 
-      if(!this.field.data.value.lastName) {
+      if (!this.field.data.value.lastName) {
         errors.push('last name');
       }
     }
 
-    if(errors.length) {
-      let message =  `${errors.join(' and ')} ${errors.length > 1 ? 'are' : 'is'} required`;
+    if (errors.length) {
+      let message = `${errors.join(' and ')} ${errors.length > 1 ? 'are' : 'is'} required`;
       message = message.charAt(0).toUpperCase() + message.slice(1);
 
-      return { 'firstLastName': message };
+      return { firstLastName: message };
     }
-     
+
     return null;
   }
 }
