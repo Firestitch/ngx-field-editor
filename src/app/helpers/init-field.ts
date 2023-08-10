@@ -125,23 +125,23 @@ function initOption(field: FieldOption) {
 
 function initOptionDefault(field: FieldOption) {
   const _default = toString(field.configs.default).toLowerCase();
-  if(_default.length) {
+  if (_default.length) {
     const option = field.options
       .find((item) =>
         String(item.name).toLowerCase() === _default ||
         String(item.value).toLowerCase() === _default ||
         String(item.guid).toLowerCase() === _default);
 
-    if(option) {
+    if (option) {
       switch (field.type) {
         case FieldType.Choice:
-          if(!field.data.value.selected) {
+          if (!field.data.value.selected) {
             field.data.value.selected = option.guid;
           }
 
           break;
         case FieldType.Dropdown:
-          if(!field.data.value) {
+          if (!field.data.value) {
             field.data.value = option.guid;
           }
 
@@ -179,6 +179,10 @@ function initName(field: Field) {
 
   if (!field.configs.lastName) {
     field.configs.lastName = { display: true, label: 'Last Name' };
+  }
+
+  if (!field.data.value) {
+    field.data.value = {};
   }
 }
 

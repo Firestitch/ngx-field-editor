@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, OnInit, OnDestroy, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, EventEmitter, OnDestroy, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { guid } from '@firestitch/common';
 
