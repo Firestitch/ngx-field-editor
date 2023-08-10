@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Optional } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnChanges,
+  OnInit,
+  Optional,
+  SimpleChanges
+} from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 
@@ -26,7 +34,7 @@ import { RendererAction } from '../../../enums';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderRichTextComponent extends FieldComponent implements OnInit {
+export class FieldRenderRichTextComponent extends FieldComponent implements OnInit, OnChanges {
 
   public editorConfig: FsHtmlEditorConfig;
 
@@ -59,5 +67,13 @@ export class FieldRenderRichTextComponent extends FieldComponent implements OnIn
 
         this._cdRef.markForCheck();
       });
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.field && changes.field.currentValue !== changes.field.previousValue) {
+      if (!this.field.data.value && !!this.field.configs.default) {
+        this.field.data.value = this.field.configs.default;
+      }
+    }
   }
 }
