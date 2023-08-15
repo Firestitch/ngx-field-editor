@@ -8,7 +8,7 @@ mat-checkbox {
   padding: 3px 0;
 
   &.has-notes {
-    padding-bottom: 30px;
+    padding-bottom: 40px;
   }
 
   .notes:not(.enabled) {
@@ -30,7 +30,7 @@ mat-checkbox {
     align-items: center;
 
     .option-value:not(:first-child),
-    .option-label:not(:first-child), 
+    .option-label:not(:first-child),
     .option-image:not(:first-child) {
       margin-left: 15px;
     }
@@ -41,7 +41,7 @@ mat-checkbox {
       &.hide {
         display: none;
       }
-      
+
       mat-form-field {
         width: 100%;
       }
@@ -51,7 +51,7 @@ mat-checkbox {
   .option-note {
     width: 100%;
     position: absolute;
-    
+
     mat-form-field {
       width: 100%;
       margin: 10px 0 0 10px;
