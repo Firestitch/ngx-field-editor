@@ -12,7 +12,7 @@
               <ng-container *ngIf="field.description">
                 <mat-icon [matTooltip]="field.description">info</mat-icon>
               </ng-container>
-            </div>            
+            </div>
           </fs-label>
           <ng-container *ngTemplateOutlet="content"></ng-container>
         </fs-label-field>
@@ -73,7 +73,7 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.File">
-        <ng-container *ngIf="field.data.value?.length">
+        <ng-container *ngIf="field.data.files?.length">
           <fs-field-view-gallery [field]="field"></fs-field-view-gallery>
         </ng-container>
       </ng-container>
