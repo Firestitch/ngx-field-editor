@@ -1,20 +1,26 @@
-import { Component, OnInit, Inject, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
+import { guid } from '@firestitch/common';
 import {
-  FS_FIELD_EDITOR_CONFIG, FieldEditorComponent, FieldEditorConfig,
-  FieldType, Field, ToolbarItem, FieldRendererConfig, FieldRendererComponent,
-  EditorAction, VisualSelectorFormat, FieldViewerConfig, FieldOption, RendererAction,
+  EditorAction,
+  FS_FIELD_EDITOR_CONFIG,
+  Field,
+  FieldEditorComponent, FieldEditorConfig,
+  FieldOption,
+  FieldRendererComponent,
+  FieldRendererConfig,
+  FieldType,
+  FieldViewerConfig,
+  RendererAction,
+  ToolbarItem,
+  VisualSelectorFormat,
 } from '@firestitch/field-editor';
 import { FsMessage } from '@firestitch/message';
-import { guid } from '@firestitch/common';
 
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
-
-import { DialogExampleComponent } from '../dialog-example';
 
 
 @Component({
@@ -345,10 +351,10 @@ export class ExampleComponent implements OnInit {
   }
 
   public openDialog(): void {
-    this._dialog.open(DialogExampleComponent, {
-      width: '600px',
-      data: { config: this.fieldEditorConfig },
-    });
+    // this._dialog.open(DialogExampleComponent, {
+    //   width: '600px',
+    //   data: { config: this.fieldEditorConfig },
+    // });
   }
 
   public tabChange(event) {

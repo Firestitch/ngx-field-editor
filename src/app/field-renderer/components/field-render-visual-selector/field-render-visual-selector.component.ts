@@ -8,8 +8,8 @@ import { FieldComponent } from '../field/field.component';
 
 @Component({
   selector: 'fs-field-render-visual-selector',
-  templateUrl: 'field-render-visual-selector.component.html',
-  styleUrls: [ 'field-render-visual-selector.component.scss' ],
+  templateUrl: './field-render-visual-selector.component.html',
+  styleUrls: ['./field-render-visual-selector.component.scss'],
   viewProviders: [
     {
       provide: ControlContainer,

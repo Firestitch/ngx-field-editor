@@ -12,7 +12,7 @@ export class FieldViewComponent {
   public field = {
     data: {
       value: {
-        selected: ['A','B', 'other'],
+        selected: ['A', 'B', 'other'],
         other: 'Another One',
       },
     },
