@@ -1,27 +1,29 @@
 import {
-  Component,
-  Input,
-  ViewChild,
-  ElementRef,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
-import { FsPrompt } from '@firestitch/prompt';
 import { guid } from '@firestitch/common';
 import { FsFile, FsFileImagePickerComponent } from '@firestitch/file';
+import { FsPrompt } from '@firestitch/prompt';
 
-import { catchError, delay, filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
+import {
+  catchError, delay, filter, finalize, map, switchMap, takeUntil, tap,
+} from 'rxjs/operators';
 
-import { FieldComponent } from '../field/field.component';
-import { FieldEditorService } from '../../../services/field-editor.service';
 import { EditorAction } from '../../../enums';
 import { FieldOption } from '../../../interfaces';
+import { FieldEditorService } from '../../../services/field-editor.service';
+import { FieldComponent } from '../field/field.component';
 
 
 @Component({
@@ -42,7 +44,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
 
   public newOption = '';
   public newOptionValue = '';
-  public optionLoading$ = new BehaviorSubject<boolean>(false);
+  private _optionLoading$ = new BehaviorSubject<boolean>(false);
 
   private _newOptionFile: FsFile;
   private _newFileImagePicker: FsFileImagePickerComponent;
@@ -66,6 +68,10 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
       .subscribe(() => {
         this.addOptionFocus();
       });
+  }
+
+  public get optionLoading$(): Observable<any> {
+    return this._optionLoading$.asObservable();
   }
 
   public addOptionFocus(): void {
@@ -113,7 +119,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
       name: this.newOption,
       guid: guid('xxxxxx'),
     };
-    this.optionLoading$.next(true);
+    this._optionLoading$.next(true);
 
     return this.fieldEditor.action(EditorAction.OptionAdd, this.field, { option })
       .pipe(
@@ -126,7 +132,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
         finalize(() => {
           this.newOption = '';
           this.newOptionValue = '';
-          this.optionLoading$.next(false);
+          this._optionLoading$.next(false);
         }),
       );
   }
@@ -159,7 +165,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
       .subscribe((response) => {
         const options = this.field.options
           .map((item) => {
-            if(response.option.guid === item.guid) {
+            if (response.option.guid === item.guid) {
               item = {
                 ...item,
                 ...response.option,
@@ -173,7 +179,6 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
           ...this.field,
           options,
         };
-
 
         this.fieldEditor.fieldChange(this.field);
         this._cdRef.markForCheck();

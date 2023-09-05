@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit, Optional } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NgForm, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit } from '@angular/core';
+import {
+  AbstractControl, ControlValueAccessor, NG_VALIDATORS,
+  NG_VALUE_ACCESSOR, ValidationErrors, Validator,
+} from '@angular/forms';
 
 import { VisualSelectorFormat } from '../../../../enums';
-import { FieldComponent } from '../../field';
 import { FieldOption } from '../../../../interfaces';
+import { FieldComponent } from '../../field';
 
 
 @Component({
@@ -24,7 +27,8 @@ import { FieldOption } from '../../../../interfaces';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldRenderVisualSelectorModelComponent extends FieldComponent implements ControlValueAccessor, OnInit, Validator {
+export class FieldRenderVisualSelectorModelComponent
+  extends FieldComponent implements ControlValueAccessor, OnInit, Validator {
 
   @Input() public field: FieldOption;
 
@@ -46,7 +50,7 @@ export class FieldRenderVisualSelectorModelComponent extends FieldComponent impl
 
 
   public writeValue(value: number): void {
-    //this.value = value;
+    //
   }
 
   public registerOnChange(fn: any): void {
@@ -68,14 +72,14 @@ export class FieldRenderVisualSelectorModelComponent extends FieldComponent impl
   public select(option): void {
     const selected = !this.selected[option.guid];
 
-    if(!this.configs.multipleSelection) {
+    if (!this.configs.multipleSelection) {
       this.selected = {};
     }
 
     this.selected[option.guid] = selected;
     this.field.data.value.selected = Object.keys(this.selected)
       .reduce((accum, name) => {
-        if(this.selected[name]) {
+        if (this.selected[name]) {
           accum.push(name);
         }
 

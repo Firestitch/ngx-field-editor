@@ -21,7 +21,7 @@ import {
 import { FsMessage } from '@firestitch/message';
 
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { mapTo, tap } from 'rxjs/operators';
 
 
 @Component({
@@ -146,14 +146,17 @@ export class ExampleComponent implements OnInit {
         console.log('Field Action', action, field, data);
         switch (action) {
           case EditorAction.OptionImageUpload:
-            return of({
-              option: {
-                ...data.option,
-                image: {
-                  preview: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/B875/production/_102512274_gettyimages-518360318.jpg',
-                },
-              },
-            });
+            return of(null)
+              .pipe(
+                mapTo({
+                  option: {
+                    ...data.option,
+                    image: {
+                      preview: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/B875/production/_102512274_gettyimages-518360318.jpg',
+                    },
+                  },
+                }),
+              );
 
           case EditorAction.ImageUpload:
             return new Observable((observer) => {
