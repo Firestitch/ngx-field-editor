@@ -1,13 +1,39 @@
 <ng-container *ngFor="let field of fields">
   <div *ngIf="field.show | async">
-    <ng-container *ngIf="fieldViewTemplateRefs[field.type]; else standardField">
-      <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.type]; context: { field: field }"></ng-template>
+    <ng-container [ngSwitch]="field.type">
+      <ng-container *ngSwitchCase="FieldType.Heading">
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <fs-label-field>
+          <fs-label>
+            <div class="label-container" [ngClass]="{ tooltip: !!field.description }">
+              {{field.label}}
+              <ng-container *ngIf="field.description">
+                <mat-icon [matTooltip]="field.description">info</mat-icon>
+              </ng-container>
+            </div>            
+          </fs-label>
+          <ng-container *ngTemplateOutlet="content"></ng-container>
+        </fs-label-field>
+      </ng-container>
     </ng-container>
 
-    <ng-template #standardField>
-      <fs-field-view
-        [field]="field">
-      </fs-field-view>
+    <ng-template #content>
+      <ng-container *ngIf="fieldViewTemplateRefs[field.type]; else standardField">
+        <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.type]; context: { field: field }"></ng-template>
+      </ng-container>
+
+      <ng-template #standardField>
+        <ng-container *ngIf="field.hasValue; else elseHasValue">
+          <fs-field-view
+            [field]="field">
+          </fs-field-view>
+        </ng-container>
+      
+        <ng-template #elseHasValue>
+          <span class="not-specified">Not Specified</span>
+        </ng-template>
+      </ng-template>
     </ng-template>
   </div>
 </ng-container>

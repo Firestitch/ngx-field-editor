@@ -16,8 +16,8 @@ import { FieldType } from '../../../enums';
 
 @Component({
   selector: 'fs-field-viewer',
-  templateUrl: 'field-viewer.component.html',
-  styleUrls: ['field-viewer.component.scss'],
+  templateUrl: './field-viewer.component.html',
+  styleUrls: ['./field-viewer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldViewerComponent implements AfterContentInit {
@@ -28,6 +28,7 @@ export class FieldViewerComponent implements AfterContentInit {
   @Input() public hideNotSpecified = false;
 
   public fieldViewTemplateRefs = {};
+  public FieldType = FieldType;
   public fields: (Field & { hasValue?: boolean; show?: Observable<boolean> })[] = [];
 
   private _config: FieldViewerConfig;
@@ -44,7 +45,7 @@ export class FieldViewerComponent implements AfterContentInit {
   }
 
   public showField(field: Field): Observable<boolean> {
-    if (!this._config.showField) {
+    if (!this._config?.showField) {
       return of(true);
     }
 
@@ -52,8 +53,8 @@ export class FieldViewerComponent implements AfterContentInit {
   }
 
   private _initWithConfig(config: FieldViewerConfig): void {
-    this._config = config;
     this._initFields(config?.fields);
+    this._config = config;
   }
 
   private _initFields(fields: (Field | FieldOption)[]): void {
