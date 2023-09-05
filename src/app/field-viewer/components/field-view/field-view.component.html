@@ -50,7 +50,7 @@
   </ng-container>
 
   <ng-container *ngSwitchCase="FieldType.File">
-    <ng-container *ngIf="field.data.value?.length">
+    <ng-container *ngIf="field.data.files?.length">
       <fs-field-view-gallery [field]="field"></fs-field-view-gallery>
     </ng-container>
   </ng-container>

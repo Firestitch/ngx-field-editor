@@ -14,7 +14,7 @@ export class FieldRenderFileComponent extends FieldComponent implements OnInit {
   public accept;
 
   public change(files: any) {
-    this.field.data.value = files;
+    this.field.data.files = files;
   }
 
   public ngOnInit(): void {
