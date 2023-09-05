@@ -9,7 +9,6 @@ export interface FieldRendererConfig {
 
   fields?: Field[];
 
-  fieldChanged?: (field?: Field) => void;
   afterFileDeleted?: (field: Field, data: any) => void;
 
   canFileDelete?: (field: Field) => Observable<boolean>;

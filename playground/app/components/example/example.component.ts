@@ -281,13 +281,6 @@ export class ExampleComponent implements OnInit {
   public initFieldRenderer(): void {
     this.fieldRendererConfig = {
       fields: this.getFields(),
-      fieldChanged: (field: Field) => {
-        console.log('Field Changed', field, this.fieldRenderer.fields);
-        this.fieldViewerConfig = {
-          fields: this.fieldRenderer.fields,
-        };
-        this._cdRef.markForCheck();
-      },
       action: (action: RendererAction, field, data: any): Observable<any> => {
         console.log('Field Renderer Action', action, field, data);
 
@@ -314,6 +307,11 @@ export class ExampleComponent implements OnInit {
               };
               reader.readAsDataURL(data.file);
             });
+
+          default:
+            this.fieldViewerConfig = {
+              fields: this.fieldRenderer.fields,
+            };
         }
 
         return of(field);
