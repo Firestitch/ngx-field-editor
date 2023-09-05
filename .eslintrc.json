@@ -4,6 +4,6 @@
     "projects/**/*"
   ],
   "extends": [
-    "./node_modules/@firestitch/lint/.eslintrc.json"
+    "./node_modules/@firestitch/lint/.eslintrc-component.json"
   ]
 }

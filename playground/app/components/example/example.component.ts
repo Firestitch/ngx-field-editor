@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild,
+} from '@angular/core';
 
-import { MatDialog } from '@angular/material/dialog';
 
 import { guid } from '@firestitch/common';
 import {
@@ -24,7 +25,7 @@ import { tap } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'example',
+  selector: 'app-example',
   templateUrl: './example.component.html',
   styleUrls: ['./example.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,8 +44,7 @@ export class ExampleComponent implements OnInit {
   public selectedIndex = 0;
 
   constructor(
-    @Inject(FS_FIELD_EDITOR_CONFIG) private defaultConfig,
-    private _dialog: MatDialog,
+    @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig,
     private _cdRef: ChangeDetectorRef,
     private _message: FsMessage,
   ) { }
@@ -254,7 +254,7 @@ export class ExampleComponent implements OnInit {
             },
           ],
         },
-        ...this.defaultConfig.toolbar.items,
+        ...this._defaultConfig.toolbar.items,
         {
           type: FieldType.Divider,
         },
