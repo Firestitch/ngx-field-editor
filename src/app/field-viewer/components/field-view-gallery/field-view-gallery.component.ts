@@ -63,6 +63,7 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
       thumbnail: {
         width: 200,
         size: GalleryThumbnailSize.Contain,
+        heightScale: this.field.configs.showFilename === false ? 1 : .6,
       },
       showChangeSize: false,
       showChangeView: false,
@@ -81,7 +82,7 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
               const galleryItem: FsGalleryItem = {
                 url: file.url,
                 preview: file.url,
-                name: file.filename,
+                name: this.field.configs.showFilename === false ? '' : file.filename,
                 mime: file.mime || mime(file.filename, file.url, '', false),
                 data: file,
               };

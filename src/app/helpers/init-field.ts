@@ -3,10 +3,10 @@ import { parseLocal } from '@firestitch/date';
 
 import { isObject } from 'lodash-es';
 
-import { FieldType } from '../enums/field-type';
-import { Field } from '../interfaces/field.interface';
 import { VisualSelectorFormat } from '../enums';
+import { FieldType } from '../enums/field-type';
 import { FieldOption } from '../interfaces';
+import { Field } from '../interfaces/field.interface';
 
 import { getPopulateFieldValue } from './get-populate-field-value';
 
@@ -245,6 +245,8 @@ function initFile(field: Field) {
   if (field.configs.allowMultiple === undefined) {
     field.configs.allowMultiple = true;
   }
+
+  field.configs.showFilename = field.configs.showFilename ?? true;
 
   field.data.files = field.data.files || [];
 }

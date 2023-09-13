@@ -1,25 +1,31 @@
 import {
-  Component, Input, ChangeDetectionStrategy, ChangeDetectorRef,
-  OnInit, OnDestroy, forwardRef, Optional, ViewChild,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional, ViewChild,
 } from '@angular/core';
 import {
   ControlContainer, ControlValueAccessor,
-  NgForm, NG_VALUE_ACCESSOR,
+  NG_VALUE_ACCESSOR,
+  NgForm,
 } from '@angular/forms';
 
-import { FsPrompt } from '@firestitch/prompt';
 import { controlContainerFactory } from '@firestitch/core';
-import { FsGalleryItem, FsGalleryMenuItem } from '@firestitch/gallery';
 import { FsFile } from '@firestitch/file';
+import { FsGalleryItem, FsGalleryMenuItem } from '@firestitch/gallery';
+import { FsPrompt } from '@firestitch/prompt';
 
 import { forkJoin, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
-import { Field } from '../../../../interfaces/field.interface';
 import { FileRenderFile } from '../../../../classes/file-render-file';
-import { FieldRendererService } from '../../../../services';
-import { FieldViewGalleryComponent } from '../../../../field-viewer/components/field-view-gallery/field-view-gallery.component';
 import { RendererAction } from '../../../../enums';
+import { FieldViewGalleryComponent } from '../../../../field-viewer/components/field-view-gallery/field-view-gallery.component';
+import { Field } from '../../../../interfaces/field.interface';
+import { FieldRendererService } from '../../../../services';
 
 
 @Component({

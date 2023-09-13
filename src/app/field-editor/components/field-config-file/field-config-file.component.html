@@ -1,10 +1,5 @@
 <div class="options">
   <div class="row-allow">
-    <fs-label-field>
-      <fs-label>Allow Multiple</fs-label>
-      <mat-checkbox color="primary" [(ngModel)]="field.configs.allowMultiple" (ngModelChange)="fieldSave()"></mat-checkbox>
-    </fs-label-field>
-
     <mat-form-field [floatLabel]="'always'">
       <mat-label>Allow file types</mat-label>
       <mat-select
@@ -54,5 +49,15 @@
           </span>
       </mat-form-field>
     </ng-container>
+    
+    <fs-label-field>
+      <fs-label>Allow Multiple</fs-label>
+      <mat-checkbox color="primary" [(ngModel)]="field.configs.allowMultiple" (ngModelChange)="fieldSave()"></mat-checkbox>
+    </fs-label-field>
+    
+    <fs-label-field>
+      <fs-label>Show Filename</fs-label>
+      <mat-checkbox color="primary" [(ngModel)]="field.configs.showFilename" (ngModelChange)="fieldSave()"></mat-checkbox>
+    </fs-label-field>
   </div>
 </div>

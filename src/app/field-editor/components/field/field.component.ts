@@ -1,12 +1,12 @@
-import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 
 import { guid } from '@firestitch/common';
 
 import { Subject } from 'rxjs';
 
 
-import { Field } from '../../../interfaces';
 import { FieldType } from '../../../enums/field-type';
+import { Field } from '../../../interfaces';
 import { FieldEditorService } from '../../../services';
 
 
