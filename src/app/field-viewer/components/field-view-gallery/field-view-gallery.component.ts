@@ -63,7 +63,7 @@ export class FieldViewGalleryComponent implements OnInit, OnChanges {
       thumbnail: {
         width: 200,
         size: GalleryThumbnailSize.Contain,
-        heightScale: this.field.configs.showFilename === false ? 1 : .6,
+        heightScale: !this.actions.length && this.field.configs.showFilename === false ? 1 : .6,
       },
       showChangeSize: false,
       showChangeView: false,
