@@ -1,7 +1,5 @@
-import { guid, toString } from '@firestitch/common';
+import { guid, isObject, toString } from '@firestitch/common';
 import { parseLocal } from '@firestitch/date';
-
-import { isObject } from 'lodash-es';
 
 import { VisualSelectorFormat } from '../enums';
 import { FieldType } from '../enums/field-type';
