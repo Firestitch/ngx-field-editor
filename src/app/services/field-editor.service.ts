@@ -237,8 +237,18 @@ export class FieldEditorService implements OnDestroy {
   public insertField(field: Field, index?: number, toolbarItem?: ToolbarItem): Observable<Field> {
     field = this.initField(field);
 
-    if (index === undefined) {
-      index = this.fieldSelected ? this.config.fields.indexOf(this.fieldSelected) + 1 : this.numberOfFields;
+    if (index === undefined && this.fieldSelected) {
+      if (this.fieldSelected) {
+        index = this.findFieldIndexByGuid(this.fieldSelected.guid);
+
+        if (index !== -1) {
+          index += 1;
+        }
+      }
+
+      if (index === undefined || index === -1) {
+        index = this.numberOfFields;
+      }
     }
 
     return this.config.beforeFieldAdd(field, toolbarItem)
