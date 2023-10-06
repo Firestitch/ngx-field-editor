@@ -21,7 +21,7 @@ import {
 import { FsMessage } from '@firestitch/message';
 
 import { Observable, of } from 'rxjs';
-import { mapTo, tap } from 'rxjs/operators';
+import { delay, mapTo, tap, timeout } from 'rxjs/operators';
 
 
 @Component({
@@ -290,6 +290,9 @@ export class ExampleComponent implements OnInit {
   public initFieldRenderer(): void {
     this.fieldRendererConfig = {
       fields: this.getFields(),
+      disableField: (field) => {
+        return of(false).pipe(delay(1000));
+      },
       action: (action: RendererAction, field, data: any): Observable<any> => {
         console.log('Field Renderer Action', action, field, data);
 

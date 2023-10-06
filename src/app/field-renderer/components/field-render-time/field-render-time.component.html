@@ -5,6 +5,7 @@
     fsTimePicker
     [(ngModel)]="field.data.value"
     (ngModelChange)="changed.emit(field)"
+    [disabled]="disabled"
     [name]="name"
     [required]="field.configs.required===true">
   <mat-hint>{{field.description}}</mat-hint>

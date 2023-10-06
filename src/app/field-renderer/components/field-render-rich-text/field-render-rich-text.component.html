@@ -3,6 +3,7 @@
     <fs-html-editor
       [(ngModel)]="field.data.value"
       [config]="editorConfig"
+      [disabled]="disabled"
       [required]="field.configs.required"
       [name]="name"
       [hint]="field.description"

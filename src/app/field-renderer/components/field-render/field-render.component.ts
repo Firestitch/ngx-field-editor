@@ -1,6 +1,9 @@
 import { Component, Input, AfterContentInit, ChangeDetectionStrategy, Optional } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
+import { Observable, of, ReplaySubject } from 'rxjs';
+import { startWith, switchMap } from 'rxjs/operators';
+
 import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
@@ -33,6 +36,19 @@ export class FieldRenderComponent implements AfterContentInit {
   public field: Field = {};
   public fieldType = FieldType;
 
+  protected _disabledState = new ReplaySubject(1);
+  protected _disabled$ = this._disabledState
+    .pipe(
+      switchMap(() => {
+        if (!!this.fieldRenderer?.config.disableField) {
+          return this.fieldRenderer.config.disableField(this.field)
+            .pipe(startWith(true));
+        } else {
+          return of(false);
+        }
+      }),
+    );
+
   constructor(
     @Optional() public fieldRenderer: FieldRendererService,
   ) {}
@@ -40,6 +56,11 @@ export class FieldRenderComponent implements AfterContentInit {
   @Input('field')
   public set setField(field) {
     this.field = initField(field);
+    this._disabledState.next();
+  }
+
+  public get disabled$(): Observable<boolean> {
+    return this._disabled$;
   }
 
   public ngAfterContentInit(): void {

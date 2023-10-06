@@ -3,7 +3,7 @@
   <fs-signature
     [ngModel]="signature"
     [required]="field?.configs.required"
-    [disabled]="disabled"
+    [readonly]="disabled"
     [label]="'Signature'"
     (changed)="changed($event)">
   </fs-signature>

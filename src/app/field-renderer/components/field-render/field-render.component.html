@@ -3,7 +3,7 @@
   <ng-container *ngIf="fieldRenderTemplateRefs[field.type]; else standardField">
     <ng-template
       [ngTemplateOutlet]="fieldRenderTemplateRefs[field.type]"
-      [ngTemplateOutletContext]="{ fieldRenderer: fieldRenderer, field: field }">
+      [ngTemplateOutletContext]="{ fieldRenderer: fieldRenderer, field: field, disabled: disabled$ | async }">
     </ng-template>
   </ng-container>
 
@@ -26,64 +26,93 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Date">
-        <fs-field-render-date [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-date>
+        <fs-field-render-date [field]="field"
+                              [disabled]="disabled$ | async"
+                              (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-date>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Birthday">
-        <fs-field-render-birthday [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-birthday>
+        <fs-field-render-birthday [field]="field"
+                                  [disabled]="disabled$ | async"
+                                  (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-birthday>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Time">
-        <fs-field-render-time [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-time>
+        <fs-field-render-time [field]="field"
+                              [disabled]="disabled$ | async"
+                              (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-time>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Choice">
-        <fs-field-render-choice [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-choice>
+        <fs-field-render-choice [field]="field"
+                                [disabled]="disabled$ | async"
+                                (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-choice>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Dropdown">
-        <fs-field-render-dropdown [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-dropdown>
+        <fs-field-render-dropdown [field]="field"
+                                  [disabled]="disabled$ | async"
+                                  (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-dropdown>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Checkbox">
-        <fs-field-render-checkbox [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-checkbox>
+        <fs-field-render-checkbox [field]="field"
+                                  [disabled]="disabled$ | async"
+                                  (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-checkbox>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Name">
-        <fs-field-render-name [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-name>
+        <fs-field-render-name [field]="field"
+                              [disabled]="disabled$ | async"
+                              (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-name>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Heading">
-        <fs-field-view-heading [field]="field"></fs-field-view-heading>
+        <fs-field-view-heading [field]="field">
+        </fs-field-view-heading>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.File">
-        <fs-field-render-file [field]="field"></fs-field-render-file>
+        <fs-field-render-file [field]="field"
+                              [disabled]="disabled$ | async">
+        </fs-field-render-file>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Gender">
-        <fs-field-render-gender [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-gender>
+        <fs-field-render-gender [field]="field"
+                                [disabled]="disabled$ | async"
+                                (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-gender>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Address">
-        <fs-field-render-address [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-address>
+        <fs-field-render-address [field]="field"
+                                 [disabled]="disabled$ | async"
+                                 (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-address>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.Content">
-        <fs-field-render-content [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-content>
+        <fs-field-render-content [field]="field"
+                                 [disabled]="disabled$ | async"
+                                 (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-content>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.RichText">
-        <fs-field-render-rich-text [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-rich-text>
+        <fs-field-render-rich-text [field]="field"
+                                   [disabled]="disabled$ | async"
+                                   (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-rich-text>
       </ng-container>
 
       <ng-container *ngSwitchCase="fieldType.VisualSelector">
-        <fs-field-render-visual-selector [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-visual-selector>
+        <fs-field-render-visual-selector [field]="field"
+                                         [disabled]="disabled$ | async"
+                                         (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-visual-selector>
       </ng-container>
     </ng-container>
 
     <ng-template #fsFieldText>
-      <fs-field-render-text [field]="field" (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-text>
+      <fs-field-render-text [field]="field"
+                            [disabled]="disabled$ | async"
+                            (changed)="fieldRenderer.fieldChange($event)"></fs-field-render-text>
     </ng-template>
 
   </ng-template>

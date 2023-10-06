@@ -75,5 +75,9 @@ export class FieldRenderRichTextComponent extends FieldComponent implements OnIn
         this.field.data.value = this.field.configs.default;
       }
     }
+
+    if (changes.disabled && changes.disabled.currentValue !== changes.disabled.previousValue) {
+      this.editorConfig = {...this.editorConfig, disabled: this.disabled};
+    }
   }
 }

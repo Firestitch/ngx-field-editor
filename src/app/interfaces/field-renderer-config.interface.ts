@@ -16,6 +16,7 @@ export interface FieldRendererConfig {
   canImageUpload?: (field: Field) => Observable<boolean>;
 
   showField?: (field: Field) => Observable<boolean>;
+  disableField?: (field: Field) => Observable<boolean>;
 
   initField?: (field: Field) => Field;
 
