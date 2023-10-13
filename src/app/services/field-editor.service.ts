@@ -1,4 +1,4 @@
-import { Injectable, Inject, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 
 import { guid as fsGuid } from '@firestitch/common';
 
@@ -7,14 +7,14 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { cloneDeep } from 'lodash-es';
 
+import { EditorAction } from '../enums';
+import { initField } from '../helpers/init-field';
+import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
+import { ToolbarItem } from '../interfaces';
+import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
 import {
   Field,
 } from '../interfaces/field.interface';
-import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
-import { initField } from '../helpers/init-field';
-import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
-import { EditorAction } from '../enums';
-import { ToolbarItem } from '../interfaces';
 
 
 @Injectable()
@@ -237,7 +237,7 @@ export class FieldEditorService implements OnDestroy {
   public insertField(field: Field, index?: number, toolbarItem?: ToolbarItem): Observable<Field> {
     field = this.initField(field);
 
-    if (index === undefined && this.fieldSelected) {
+    if (index === undefined) {
       if (this.fieldSelected) {
         index = this.findFieldIndexByGuid(this.fieldSelected.guid);
 
