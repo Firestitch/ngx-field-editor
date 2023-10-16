@@ -115,7 +115,9 @@ export class FieldHeaderComponent
         takeUntil(this._destory$),
       )
       .subscribe(() => {
-        this.fieldEditor.config.fields.splice(this.fieldEditor.config.fields.indexOf(this.field), 1);
+        const field = this.fieldEditor.findFieldByGuid(this.field.guid);
+        const fieldIndex = this.fieldEditor.config.fields.indexOf(field);
+        this.fieldEditor.config.fields.splice(fieldIndex, 1);
         this.fieldEditor.unselectField();
         this._cdRef.markForCheck();
       });
