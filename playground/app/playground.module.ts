@@ -26,7 +26,6 @@ import {
   ExampleComponent,
   ExamplesComponent,
   FieldRenderComponent,
-  FieldViewComponent,
 } from './components';
 import { AppMaterialModule } from './material.module';
 import { SignatureFieldModule } from './modules/signature-field';
@@ -67,9 +66,7 @@ const routes: Routes = [
     AppComponent,
     ExamplesComponent,
     ExampleComponent,
-    //DialogExampleComponent,
     FieldRenderComponent,
-    FieldViewComponent,
   ],
   providers: [
     {

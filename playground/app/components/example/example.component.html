@@ -1,7 +1,8 @@
 
 <mat-tab-group (selectedTabChange)="tabChange($event)">
   <mat-tab label="Fields Editor">
-    <fs-field-editor [config]="fieldEditorConfig">
+    <ng-template matTabContent>
+      <fs-field-editor [config]="fieldEditorConfig">
       
       <ng-template fsFieldContainer let-template="template" let-selected="selected">
         <ng-container [ngTemplateOutlet]="template"></ng-container>
@@ -58,36 +59,39 @@
           (ngModelChange)="fieldEditor.fieldChange(field)">
         </app-terms-field-render>
       </ng-template>
-    </fs-field-editor>
+      </fs-field-editor>
+    </ng-template>
   </mat-tab>
   <mat-tab label="Rendered Fields">
-    <form (fsForm)="save()">
-      <fs-field-renderer 
-          [config]="fieldRendererConfig">
-        <ng-template fsFieldRender type="share" let-field="field">
-          <img src="/assets/google-logo.svg" height="50" *ngIf="field.configs['google']">
-          <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.configs['facebook']">
-        </ng-template>
+    <ng-template matTabContent>
+      <form (fsForm)="save()">
+        <fs-field-renderer 
+            [config]="fieldRendererConfig">
+          <ng-template fsFieldRender type="share" let-field="field">
+            <img src="/assets/google-logo.svg" height="50" *ngIf="field.configs['google']">
+            <img src="/assets/facebook-logo.svg" height="50" *ngIf="field.configs['facebook']">
+          </ng-template>
 
-        <ng-template fsFieldRender type="signature" let-field="field" let-fieldEditor="fieldEditor">
-          <app-signature-field-render
-            name="signature"
-            [ngModel]="field"
-            (ngModelChange)="fieldEditor.fieldChange(fieldEditor, field)">
-          </app-signature-field-render>
-        </ng-template>
+          <ng-template fsFieldRender type="signature" let-field="field" let-fieldEditor="fieldEditor">
+            <app-signature-field-render
+              name="signature"
+              [ngModel]="field"
+              (ngModelChange)="fieldEditor.fieldChange(fieldEditor, field)">
+            </app-signature-field-render>
+          </ng-template>
 
-        <ng-template fsFieldRender type="terms" let-field="field" let-fieldEditor="fieldEditor">
-          <app-terms-field-render
-            name="terms"
-            [ngModel]="field"
-            (ngModelChange)="fieldEditor.fieldChange(field)">
-          </app-terms-field-render>
-        </ng-template>
-      </fs-field-renderer>
+          <ng-template fsFieldRender type="terms" let-field="field" let-fieldEditor="fieldEditor">
+            <app-terms-field-render
+              name="terms"
+              [ngModel]="field"
+              (ngModelChange)="fieldEditor.fieldChange(field)">
+            </app-terms-field-render>
+          </ng-template>
+        </fs-field-renderer>
 
-      <button mat-raised-button color="primary" type="submit">Save</button>
-    </form>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+      </form>
+    </ng-template>
   </mat-tab>
   <mat-tab label="View Fields">
     <ng-template matTabContent>

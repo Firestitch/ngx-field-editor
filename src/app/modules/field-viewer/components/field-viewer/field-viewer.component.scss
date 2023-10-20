@@ -1,0 +1,16 @@
+.option:not(:first-child):before {
+  content: ", ";
+}
+
+.label-container.tooltip {
+  position: relative;
+
+  mat-icon {
+    transform: scale(.7);
+    position: absolute;
+    top: -50%;
+    cursor: pointer;
+    position: absolute;
+    color: #29B7FF;
+  }
+}

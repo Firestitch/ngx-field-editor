@@ -1,0 +1,7 @@
+.address span:not(:first-child):before {
+  content: ", ";
+}
+
+.not-specified {
+  color: rgb(116, 116, 116);
+}

@@ -1,73 +1,50 @@
-export { FsFieldEditorModule } from './app/field-editor/fs-field-editor.module';
-export { FsFieldViewerModule } from './app/field-viewer/fs-field-viewer.module';
-export { FsFieldRendererModule } from './app/field-renderer/fs-field-renderer.module';
+export { FsFieldEditorModule } from './app/modules/field-editor/fs-field-editor.module';
+export { FsFieldRendererModule } from './app/modules/field-renderer/fs-field-renderer.module';
+export { FsFieldViewerModule } from './app/modules/field-viewer/fs-field-viewer.module';
 
 export { FieldType } from './app/enums/field-type';
 
-export { FieldContainerDirective } from './app/field-editor/directives';
-export { FieldConfigDirective } from './app/field-editor/directives/field-config/field-config.directive';
-export { FieldRenderDirective } from './app/field-renderer/directives/field-render/field-render.directive';
-export { FieldViewDirective } from './app/field-viewer/directives/field-view/field-view.directive';
-export { ScrollableHandlerDirective } from './app/field-editor/directives/scrollable/scrollable-handler.directive';
+export { FieldContainerDirective } from './app/modules/field-editor/directives';
+export { FieldConfigDirective } from './app/modules/field-editor/directives/field-config/field-config.directive';
+export { ScrollableHandlerDirective } from './app/modules/field-editor/directives/scrollable/scrollable-handler.directive';
+export { FieldRenderDirective } from './app/modules/field-renderer/directives/field-render/field-render.directive';
+export { FieldViewDirective } from './app/modules/field-viewer/directives/field-view/field-view.directive';
 
-export { FieldEditorComponent } from './app/field-editor/components/field-editor/field-editor.component';
-export { FieldEditorItemComponent } from './app/field-editor/components/field-editor-item/field-editor-item.component';
-
-export {
-  FieldViewComponent,
-  FieldViewerComponent,
-  FieldViewHeadingComponent,
-  FieldViewGalleryComponent,
-} from './app/field-viewer/components';
+export { FieldEditorItemComponent } from './app/modules/field-editor/components/field-editor-item/field-editor-item.component';
+export { FieldEditorComponent } from './app/modules/field-editor/components/field-editor/field-editor.component';
 
 export {
-  FieldRendererComponent,
-  FieldRenderComponent,
-  FieldRenderTimeComponent,
-  FieldRenderDateComponent,
-  FieldRenderNameComponent,
-  FieldRenderNameModelComponent,
-  FieldRenderCheckboxComponent,
-  FieldRenderFileMultipleComponent,
-  FieldRenderFileComponent,
-  FieldRenderTextComponent,
-  FieldRenderRichTextComponent,
-  FieldRenderGenderComponent,
-  FieldRenderAddressComponent,
-  FieldRenderDropdownComponent,
-  FieldRenderContentComponent,
-  FieldRenderChoiceComponent,
-  FieldRenderBirthdayComponent,
-  FieldRenderVisualSelectorComponent,
-} from './app/field-renderer/components';
+  FieldViewComponent, FieldViewHeadingComponent, FieldViewerComponent
+} from './app/modules/field-viewer/components';
 
-export { FieldRendererService, FieldEditorService } from './app/services';
+export {
+  FieldRenderAddressComponent, FieldRenderBirthdayComponent, FieldRenderCheckboxComponent, FieldRenderChoiceComponent, FieldRenderComponent,
+  FieldRenderContentComponent, FieldRenderDateComponent, FieldRenderDropdownComponent, FieldRenderFileComponent, FieldRenderFileMultipleComponent,
+  FieldRenderGenderComponent, FieldRenderNameComponent, FieldRenderNameModelComponent, FieldRenderRichTextComponent, FieldRenderTextComponent,
+  FieldRenderTimeComponent, FieldRenderVisualSelectorComponent, FieldRendererComponent
+} from './app/modules/field-renderer/components';
 
-export { FieldEditorToolbarDirective } from './app/field-editor/directives/field-editor-toolbar/field-editor-toolbar.directive';
+export { FieldEditorService, FieldRendererService } from './app/services';
+
 export { FS_FIELD_EDITOR_CONFIG } from './app/injectors/fs-field-editor.providers';
+export { FieldEditorToolbarDirective } from './app/modules/field-editor/directives/field-editor-toolbar/field-editor-toolbar.directive';
 
 export {
-  FieldEditorConfig,
-  FieldRendererConfig,
+  Field, FieldConfig, FieldEditorConfig, FieldMenu,
+  FieldMenuItem, FieldOption, FieldRendererConfig,
   FieldViewerConfig,
   FsFieldEditorCallbackFn,
-  FsFieldEditorCallbackParams,
-  ToolbarItem,
-  Toolbar,
-  ToolbarItems,
-  Field,
-  FieldOption,
-  FieldConfig,
-  FieldMenu,
-  FieldMenuItem,
+  FsFieldEditorCallbackParams, Toolbar, ToolbarItem, ToolbarItems,
+  ViewField
 } from './app/interfaces';
 
 export {
-  initField,
+  initField
 } from './app/helpers';
 
 export {
   EditorAction,
   RendererAction,
-  VisualSelectorFormat,
+  VisualSelectorFormat
 } from './app/enums';
+

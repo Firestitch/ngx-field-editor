@@ -21,7 +21,9 @@ import {
 import { FsMessage } from '@firestitch/message';
 
 import { Observable, of } from 'rxjs';
-import { delay, mapTo, tap, timeout } from 'rxjs/operators';
+import { delay, mapTo, tap } from 'rxjs/operators';
+
+import { ViewerAction } from 'src/app/enums';
 
 
 @Component({
@@ -349,18 +351,17 @@ export class ExampleComponent implements OnInit {
   public initFieldViewer(): void {
     this.fieldViewerConfig = {
       fields: this.getFields(),
+      canFileDownload: (field: Field) => of(true),
+      action: (viewerAction: ViewerAction, field: Field, data: any) => {
+        console.log('Viewer Action', viewerAction, field, data);
+
+        return of(true);
+      },
     };
   }
 
   public save() {
     console.log('Saved');
-  }
-
-  public openDialog(): void {
-    // this._dialog.open(DialogExampleComponent, {
-    //   width: '600px',
-    //   data: { config: this.fieldEditorConfig },
-    // });
   }
 
   public tabChange(event) {
