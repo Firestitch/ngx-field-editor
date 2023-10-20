@@ -2,8 +2,6 @@ export { FsFieldEditorModule } from './app/modules/field-editor/fs-field-editor.
 export { FsFieldRendererModule } from './app/modules/field-renderer/fs-field-renderer.module';
 export { FsFieldViewerModule } from './app/modules/field-viewer/fs-field-viewer.module';
 
-export { FieldType } from './app/enums/field-type';
-
 export { FieldContainerDirective } from './app/modules/field-editor/directives';
 export { FieldConfigDirective } from './app/modules/field-editor/directives/field-config/field-config.directive';
 export { ScrollableHandlerDirective } from './app/modules/field-editor/directives/scrollable/scrollable-handler.directive';
@@ -43,7 +41,6 @@ export {
 } from './app/helpers';
 
 export {
-  EditorAction,
-  RendererAction, ViewerAction, VisualSelectorFormat
+  EditorAction, FieldType, RendererAction, ViewerAction, VisualSelectorFormat
 } from './app/enums';
 
