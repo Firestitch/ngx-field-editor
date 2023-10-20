@@ -44,7 +44,6 @@ export {
 
 export {
   EditorAction,
-  RendererAction,
-  VisualSelectorFormat
+  RendererAction, ViewerAction, VisualSelectorFormat
 } from './app/enums';
 
