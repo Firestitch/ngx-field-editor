@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { FsGalleryMenuItem } from '@firestitch/gallery';
+import { FsGalleryItem, FsGalleryMenuItem } from '@firestitch/gallery';
 
 import { ViewerAction } from '../../../../enums';
 import { Field } from '../../../../interfaces';
@@ -30,8 +30,8 @@ export class FieldViewGalleryComponent implements OnInit {
     private _cdRef: ChangeDetectorRef,
   ) { }
 
-  public fileDownload(): void {
-    this._fieldViewerService.action(ViewerAction.FileDownload, this.field, {})
+  public fileDownload(data): void {
+    this._fieldViewerService.action(ViewerAction.FileDownload, this.field, data)
       .subscribe();
   }
 
@@ -41,8 +41,8 @@ export class FieldViewGalleryComponent implements OnInit {
         this.menuItems = canFileDownload ? [
           {
             label: 'Download',
-            click: () => {
-              this.fileDownload();
+            click: (galleryItem: FsGalleryItem) => {
+              this.fileDownload({ fieldFile: galleryItem.data });
             },
           },
         ] : [];
