@@ -2,6 +2,8 @@
   <div *ngIf="field.show | async">
     <ng-container [ngSwitch]="field.type">
       <ng-container *ngSwitchCase="FieldType.Heading">
+        <fs-field-view-heading [field]="field">
+        </fs-field-view-heading>
       </ng-container>
       <ng-container *ngSwitchDefault>
         <fs-label-field>

@@ -30,6 +30,7 @@ import { FsPromptModule } from '@firestitch/prompt';
 import { FsRadioGroupModule } from '@firestitch/radiogroup';
 
 
+import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
 import { FsFieldCommonModule } from '../field-common/fs-field-common.module';
 
 import {
@@ -91,6 +92,7 @@ import { FieldRenderDirective } from './directives/field-render/field-render.dir
     FsMenuModule,
     FsAddressModule,
     FsFieldCommonModule,
+    FsFieldViewerModule,
   ],
   declarations: [
     FieldRendererComponent,
