@@ -46,7 +46,7 @@ export class ExampleComponent implements OnInit {
   public selectedIndex = 0;
 
   constructor(
-    @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig,
+    @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig: FieldEditorConfig,
     private _cdRef: ChangeDetectorRef,
     private _message: FsMessage,
   ) { }
@@ -334,7 +334,7 @@ export class ExampleComponent implements OnInit {
         console.log('After File Deleted', field, data);
       },
       showField: (field: Field) => {
-        return of(true);
+        return of(false);
       },
       canFileDownload: (field: Field): Observable<boolean> => {
         return of(true);

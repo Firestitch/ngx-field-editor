@@ -1,5 +1,5 @@
 import {
-  AfterContentInit, ChangeDetectionStrategy, Component, Input, Optional,
+  AfterContentInit, ChangeDetectionStrategy, Component, Input, Optional, QueryList,
 } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
@@ -33,14 +33,14 @@ import { Field } from './../../../../interfaces';
 export class FieldRenderComponent implements AfterContentInit {
 
   @Input()
-  public fieldRenders: FieldRenderDirective[] = [];
+  public fieldRenders = new QueryList<FieldRenderDirective>();
 
   public fieldRenderTemplateRefs = {};
   public field: Field = {};
   public fieldType = FieldType;
 
-  protected _disabledState = new ReplaySubject(1);
-  protected _disabled$ = this._disabledState
+  private _disabledState = new ReplaySubject(1);
+  private _disabled$ = this._disabledState
     .pipe(
       switchMap(() => {
         if (!!this.fieldRenderer?.config.disableField) {
@@ -65,6 +65,14 @@ export class FieldRenderComponent implements AfterContentInit {
 
   public get disabled$(): Observable<boolean> {
     return this._disabled$;
+  }
+
+  public get show$(): Observable<boolean> {
+    if (this.fieldRenderer?.config?.showField) {
+      return this.fieldRenderer.config.showField(this.field);
+    }
+
+    return of(true);
   }
 
   public ngAfterContentInit(): void {

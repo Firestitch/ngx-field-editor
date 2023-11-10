@@ -4,9 +4,9 @@ import { Observable, of, Subject } from 'rxjs';
 
 import { cloneDeep } from 'lodash-es';
 
+import { RendererAction } from '../enums';
 import { initField } from '../helpers';
 import { Field, FieldRendererConfig } from '../interfaces';
-import { RendererAction } from '../enums';
 
 
 @Injectable()

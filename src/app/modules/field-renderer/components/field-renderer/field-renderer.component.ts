@@ -10,7 +10,6 @@ import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
-import { Observable, of } from 'rxjs';
 
 import { FieldRendererService } from '../../../../services';
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
@@ -54,13 +53,5 @@ export class FieldRendererComponent {
     return [
       ...this.fieldRenderer.config.fields,
     ];
-  }
-
-  public showField(field: Field): Observable<boolean> {
-    if (!this.fieldRenderer.config.showField) {
-      return of(true);
-    }
-
-    return this.fieldRenderer.config.showField(field);
   }
 }
