@@ -334,7 +334,7 @@ export class ExampleComponent implements OnInit {
         console.log('After File Deleted', field, data);
       },
       showField: (field: Field) => {
-        return of(false);
+        return of(true);
       },
       canFileDownload: (field: Field): Observable<boolean> => {
         return of(true);
