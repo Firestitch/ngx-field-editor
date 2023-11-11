@@ -361,7 +361,7 @@ export class ExampleComponent implements OnInit {
   }
 
   public save() {
-    console.log('Saved');
+    console.log('Saved', this.fieldRenderer.fields);
   }
 
   public tabChange(event) {
