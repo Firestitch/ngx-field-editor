@@ -80,9 +80,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
 
   public optionSave(option) {
     this.fieldEditor.action(EditorAction.OptionSave, this.field, { option })
-      .subscribe(() => {
-        this.fieldEditor.fieldChange(this.field);
-      });
+      .subscribe();
   }
 
   public addOptionKeydown(e: KeyboardEvent, listenTab): void {
@@ -102,7 +100,6 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
             tap((option) => {
               this.field.options.push(option);
               this._cdRef.markForCheck();
-              this.fieldEditor.fieldChange(this.field);
             }),
             delay(1000),
           )
@@ -180,7 +177,6 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
           options,
         };
 
-        this.fieldEditor.fieldChange(this.field);
         this._cdRef.markForCheck();
       });
   }
@@ -191,19 +187,14 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
       .pipe(
         takeUntil(this._destory$),
       )
-      .subscribe(() => {
-        this.fieldEditor.fieldChange(this.field);
-        this._cdRef.markForCheck();
-      });
+      .subscribe();
   }
 
   public toggleOptionNotes(option): void {
     option.notes = !option.notes;
 
     this.fieldEditor.action(EditorAction.OptionSave, this.field, { option })
-      .subscribe(() => {
-        this.fieldEditor.fieldChange(this.field);
-      });
+      .subscribe();
   }
 
   public removeOption(option): void {
@@ -213,14 +204,11 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
     })
       .pipe(
         switchMap(() => this.fieldEditor.action(EditorAction.OptionDelete, this.field, { option })),
-        tap(() => {
-          this.field.options = this.field.options
-            .filter((item) => item !== option);
-        }),
         takeUntil(this._destory$),
       )
       .subscribe(() => {
-        this.fieldEditor.fieldChange(this.field);
+        this.field.options = this.field.options
+          .filter((item) => item !== option);
         this._cdRef.markForCheck();
       });
   }
@@ -229,9 +217,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
     moveItemInArray(this.field.options, event.previousIndex, event.currentIndex);
 
     this.fieldEditor.action(EditorAction.OptionReorder, this.field)
-      .subscribe(() => {
-        this.fieldEditor.fieldChange(this.field);
-      });
+      .subscribe();
   }
 
   private _addOptionWithImage(): void {
@@ -265,8 +251,6 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
         }),
         takeUntil(this._destory$),
       )
-      .subscribe(() => {
-        this.fieldEditor.fieldChange(this.field);
-      });
+      .subscribe();
   }
 }
