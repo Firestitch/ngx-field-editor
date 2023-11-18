@@ -22,7 +22,7 @@
 
     <ng-template #content>
       <ng-container *ngIf="fieldViewTemplateRefs[field.type]; else standardField">
-        <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.type]; context: { field: field }"></ng-template>
+        <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.type]; context: { field: field, fieldViewer: fieldViewer }"></ng-template>
       </ng-container>
 
       <ng-template #standardField>

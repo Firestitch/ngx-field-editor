@@ -47,6 +47,10 @@ export class FieldViewerComponent implements AfterContentInit {
     private _fieldViewerService: FieldViewerService,
   ) { }
 
+  public get fieldViewer() {
+    return this._fieldViewerService;
+  }
+
   public ngAfterContentInit() {
     this.fieldViews.forEach((directive: FieldViewDirective) => {
       this.fieldViewTemplateRefs[directive.type] = directive.templateRef;

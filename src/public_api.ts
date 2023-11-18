@@ -22,7 +22,7 @@ export {
   FieldRenderTimeComponent, FieldRenderVisualSelectorComponent, FieldRendererComponent
 } from './app/modules/field-renderer/components';
 
-export { FieldEditorService, FieldRendererService } from './app/services';
+export { FieldEditorService, FieldRendererService, FieldViewerService } from './app/services';
 
 export { FS_FIELD_EDITOR_CONFIG } from './app/injectors/fs-field-editor.providers';
 export { FieldEditorToolbarDirective } from './app/modules/field-editor/directives/field-editor-toolbar/field-editor-toolbar.directive';
@@ -43,4 +43,5 @@ export {
 export {
   EditorAction, FieldType, RendererAction, ViewerAction, VisualSelectorFormat
 } from './app/enums';
+
 
