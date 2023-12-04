@@ -23,11 +23,11 @@
           <ng-container *ngIf="showOptionName">
             <div class="option-label">
               <mat-form-field class="form-field-padless" floatLabel="never">
-                <mat-label>Label</mat-label>
                 <input
                   matInput
                   [(ngModel)]="option.name"
                   [name]="'label' + idx"
+                  [placeholder]="'Label'"
                   [ngModelOptions]="{ updateOn: 'blur' }"
                   (ngModelChange)="optionSave(option)">
               </mat-form-field>
@@ -39,9 +39,9 @@
               <mat-form-field          
                   floatLabel="never"
                   class="form-field-padless">
-                <mat-label>Value</mat-label>
                 <input
                   matInput
+                  [placeholder]="'Value'"
                   [(ngModel)]="option.value"
                   [name]="'option-value-' + idx"
                   [ngModelOptions]="{ updateOn: 'blur' }"

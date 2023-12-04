@@ -5,7 +5,7 @@
     cdkDragLockAxis="y"
     [cdkDragDisabled]="!canReorder"
     (cdkDragStarted)="dragStarted()">
-  <ng-container *ngIf="canReorder">
+  <ng-container *ngIf="canReorder && !isFieldSelected">
     <div class="field-drag" cdkDragHandle>
       <button 
           mat-icon-button 
