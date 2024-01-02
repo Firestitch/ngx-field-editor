@@ -110,12 +110,12 @@
     </ng-container>
 
     <div class="option-label" [ngClass]="{ hide: !showOptionName}">
-      <mat-form-field floatLabel="never" class="new-option">
-        <mat-label>Add New Option</mat-label>
+      <mat-form-field floatLabel="never" class="new-option form-field-padless">
         <input
           matInput
           #addOptionInput
           [(ngModel)]="newOption"
+          placeholder="Add New Option"
           name="newOption"
           (keydown)="addOptionKeydown($event, !this.field.configs.showValues)">
       </mat-form-field>
@@ -160,7 +160,7 @@
     </button>
     <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
 
-    <mat-form-field
+    <mat-form-field 
         floatLabel="never">
       <mat-label>Label</mat-label>
       <input

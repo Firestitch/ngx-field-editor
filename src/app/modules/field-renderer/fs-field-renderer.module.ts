@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -30,8 +29,8 @@ import { FsPromptModule } from '@firestitch/prompt';
 import { FsRadioGroupModule } from '@firestitch/radiogroup';
 
 
-import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
 import { FsFieldCommonModule } from '../field-common/fs-field-common.module';
+import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
 
 import {
   FieldRenderVisualSelectorComponent,
@@ -74,7 +73,6 @@ import { FieldRenderDirective } from './directives/field-render/field-render.dir
     MatRadioModule,
     MatCardModule,
     MatTooltipModule,
-    FlexLayoutModule,
 
     FsFormModule,
     FsCommonModule,

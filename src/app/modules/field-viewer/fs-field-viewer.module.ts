@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -23,7 +22,6 @@ import { FieldViewDirective } from './directives/field-view/field-view.directive
 @NgModule({
   imports: [
     CommonModule,
-    FlexLayoutModule,
 
     MatIconModule,
     MatTooltipModule,

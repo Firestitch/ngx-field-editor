@@ -37,7 +37,7 @@
       </ng-template>
 
       <ng-template fsFieldConfig type="share" let-field="field" let-fieldEditor="fieldEditor">
-        <div fxLayout="column">
+        <div class="fs-column">
           <mat-checkbox [(ngModel)]="field.configs['facebook']" name="facebook" (click)="fieldEditor.fieldChange(field)">Enable Facebook</mat-checkbox>
           <mat-checkbox [(ngModel)]="field.configs['google']" name="google" (click)="fieldEditor.fieldChange(field)">Enable Google</mat-checkbox>
         </div>

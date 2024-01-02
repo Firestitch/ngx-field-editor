@@ -1,10 +1,10 @@
 <div *ngIf="(fieldEditor.fieldSelected$ | async).guid === field.guid; else selectedElse">
-  <div fxFlexLayout="row" fxLayoutAlign="start center">
-    <div fxFlex>
+  <div class="fs-row.gap-small row">
+    <div class="label-field">
       <mat-form-field
           *ngIf="showLabel"
           floatLabel="never"
-          class="label">
+          class="label form-field-padless">
         <mat-label>Label</mat-label>
         <input
           matInput
@@ -58,19 +58,21 @@
     </fs-field-header-menu>
   </div>
 
-  <mat-form-field *ngIf="hasDescription" class="description">
-    <mat-label>Description</mat-label>
-    <textarea
-      matInput
-      #description
-      [cdkTextareaAutosize]="true"
-      [(ngModel)]="field.description"
-      name="description"
-      [disabled]="!canEdit"
-      [ngModelOptions]="{ updateOn: 'blur' }"
-      (ngModelChange)="actionConfig()">
-    </textarea>
-  </mat-form-field>
+  <ng-container *ngIf="hasDescription">
+    <mat-form-field class="row description form-field-padless">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        #description
+        [cdkTextareaAutosize]="true"
+        [(ngModel)]="field.description"
+        name="description"
+        [disabled]="!canEdit"
+        [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="actionConfig()">
+      </textarea>
+    </mat-form-field>
+  </ng-container>
 </div>
 
 <ng-template #selectedElse>

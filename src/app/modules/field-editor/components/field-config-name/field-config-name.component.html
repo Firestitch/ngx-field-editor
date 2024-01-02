@@ -1,5 +1,5 @@
 <div class="options">
-  <div fxFlexLayout="row" fxLayoutAlign="start center">
+  <div class="fs-row.gap-small">
     <mat-checkbox color="primary" [(ngModel)]="field.configs.firstName.display" (ngModelChange)="fieldSave()"></mat-checkbox>
 
     <mat-form-field floatLabel="never" fxFlex>
@@ -15,7 +15,7 @@
     </mat-form-field>
   </div>
 
-  <div fxFlexLayout="row" fxLayoutAlign="start center">
+  <div class="fs-row.gap-small">
     <mat-checkbox color="primary" [(ngModel)]="field.configs.lastName.display" (ngModelChange)="fieldSave()"></mat-checkbox>
 
     <mat-form-field floatLabel="never" fxFlex>

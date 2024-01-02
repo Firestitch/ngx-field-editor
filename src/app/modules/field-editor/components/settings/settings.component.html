@@ -2,7 +2,7 @@
   <fs-dialog>
     <h1 mat-dialog-title>Settings</h1>
     <mat-dialog-content>
-      <div fxLayout="column">
+      <div class="fs-column">
         <ng-container *ngIf="type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.LongText || type === FieldType.ShortText || type === FieldType.RichText">
           <mat-form-field>
             <mat-label>Default Value</mat-label>
@@ -70,7 +70,7 @@
             </mat-select>
           </mat-form-field>
           <ng-container *ngIf="configs.format">
-            <div fxLayout="row" fxLayoutGap="20px" class="preview-image-ratio">
+            <div class="fs-row.gap-large preview-image-ratio">
               <mat-form-field>
                 <mat-label>Preview Image Ratio Width</mat-label>
                 <input
