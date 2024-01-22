@@ -1,0 +1,8 @@
+@import '../../../field-renderer/components/field-render-visual-selector/field-render-visual-selector-model/field-render-visual-selector-model.component.scss';
+
+.options .option {
+  cursor: initial;
+  &:hover:not(.selected) {
+    background: none;
+  }
+}

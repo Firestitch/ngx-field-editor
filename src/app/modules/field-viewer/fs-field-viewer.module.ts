@@ -11,7 +11,7 @@ import { FsLabelModule } from '@firestitch/label';
 
 import { FsFieldCommonModule } from '../field-common/fs-field-common.module';
 
-import { FieldViewGalleryComponent } from './components';
+import { FieldViewGalleryComponent, FieldViewVisualSelectorComponent } from './components';
 import { FieldViewHeadingComponent } from './components/field-view-heading/field-view-heading.component';
 import { FieldViewOptionsComponent } from './components/field-view-options';
 import { FieldViewComponent } from './components/field-view/field-view.component';
@@ -45,6 +45,7 @@ import { FieldViewDirective } from './directives/field-view/field-view.directive
     FieldViewDirective,
     FieldViewOptionsComponent,
     FieldViewGalleryComponent,
+    FieldViewVisualSelectorComponent,
   ],
 })
 

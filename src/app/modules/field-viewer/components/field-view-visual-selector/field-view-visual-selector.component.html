@@ -1,0 +1,26 @@
+<div class="options">
+  <ng-container 
+      *ngFor="let option of field.options; let index = index">
+    <div class="option" [ngClass]="{ selected: (field.data.value?.selected || []).indexOf(option.guid)!==-1 }">
+      <div class="option-container">
+        <ng-container *ngIf="configs.format === VisualSelectorFormat.Image || configs.format === VisualSelectorFormat.ImageName">
+          <div 
+              class="option-image-container" 
+              [style.aspectRatio]="configs.previewWidth/configs.previewHeight">
+            <div 
+              *ngIf="option.image"
+              class="option-image"
+              [style.backgroundImage]="'url(' + option.image.preview + ')'">
+            </div>
+            <div *ngIf="!option.image" class="option-image-missing">
+              <mat-icon>image_not_supported</mat-icon>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="configs.format === VisualSelectorFormat.Name || configs.format === VisualSelectorFormat.ImageName">
+          <div class="option-name">{{option.name}}</div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

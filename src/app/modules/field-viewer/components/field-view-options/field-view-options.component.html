@@ -36,10 +36,13 @@
   </ng-container>
 
   <ng-container *ngSwitchCase="fieldType.VisualSelector">
-    <ng-container *ngFor="let option of field.options || []">
+    <fs-field-view-visual-selector
+      [field]="field">
+    </fs-field-view-visual-selector>
+    <!-- <ng-container *ngFor="let option of field.options || []">
       <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
     </ng-container>
-    <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span>
+    <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span> -->
   </ng-container>
 </ng-container>
 
