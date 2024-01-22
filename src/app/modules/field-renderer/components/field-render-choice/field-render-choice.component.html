@@ -14,7 +14,10 @@
         [disabled]="disabled"
         [value]="option.guid"
         (change)="radioChange(notes)">
-      {{ option.name }}
+      <div class="fs-column">
+        <div>{{option.name}}</div>
+        <div *ngIf="option.notesLabel" class="checkbox-hint"><small>{{ option.notesLabel }}</small></div>
+      </div>
     <mat-form-field 
         [ngClass]="{ show: option.notes && field.data.value.selected === option.guid }"
         [floatLabel]="'never'" 

@@ -9,7 +9,11 @@
   <mat-radio-button
       *ngFor="let gender of field.options"
       [value]="gender.guid">
-    {{gender.name}}
+    <div class="fs-column">
+      <div>{{gender.name}}</div>
+      <div *ngIf="gender.notesLabel" class="checkbox-hint"><small>{{ gender.notesLabel }}</small></div>
+    </div>
+    
   </mat-radio-button>
   <mat-hint>{{field.description}}</mat-hint>
 </fs-radio-group>
