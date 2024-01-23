@@ -1,7 +1,7 @@
 <div class="options">
   <ng-container 
       *ngFor="let option of field.options; let index = index">
-    <div class="option" [ngClass]="{ selected: (field.data.value?.selected || []).indexOf(option.guid)!==-1 }">
+    <div class="option" *ngIf="selected[option.guid]">
       <div class="option-container">
         <ng-container *ngIf="configs.format === VisualSelectorFormat.Image || configs.format === VisualSelectorFormat.ImageName">
           <div 

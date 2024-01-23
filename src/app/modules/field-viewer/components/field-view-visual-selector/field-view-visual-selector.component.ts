@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ChangeDetectorRef } from '@angular/core';
 
 import { FieldOption } from '../../../../interfaces';
 import { VisualSelectorFormat } from '../../../../enums';
@@ -16,6 +16,8 @@ export class FieldViewVisualSelectorComponent {
   @Input('field')
   public set setField(field) {
     this.field = initField(field);
+    this._selectedUpdate(this.field);
+    this._cdRef.markForCheck();
   }
 
   public field: FieldOption;
@@ -24,6 +26,20 @@ export class FieldViewVisualSelectorComponent {
     return this.field.configs;
   }
 
+  public selected: any = {};
+
   public VisualSelectorFormat = VisualSelectorFormat;
+
+  constructor(
+    private _cdRef: ChangeDetectorRef,
+  ) { }
+
+  private _selectedUpdate(field: FieldOption): void {
+    this.selected = {};
+    field.options
+      .forEach((option) => {
+        this.selected[option.guid] = (field.data.value?.selected || []).indexOf(option.guid) !== -1;
+      });
+  }
 
 }
