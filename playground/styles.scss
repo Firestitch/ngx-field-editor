@@ -1,13 +1,13 @@
-@use '~@angular/material' as mat;
-@use "~@firestitch/style/styles" as fs-style;
+@use '@angular/material' as mat;
+@use "@firestitch/style/styles" as fs-style;
 
-@import '~@firestitch/component-tools/assets/playground.scss';
+@import '@firestitch/component-tools/assets/playground.scss';
+@import '@firestitch/file/styles.scss';
+@import '@firestitch/message/styles';
+@import '@firestitch/html-editor/styles';
+@import '@firestitch/gallery/styles';
+@import '@firestitch/form/styles';
 @import '../src/app/styles.scss';
-@import '~@firestitch/file/styles.scss';
-@import '~@firestitch/message/styles';
-@import '~@firestitch/html-editor/styles';
-@import '~@firestitch/gallery/styles';
-@import '~@firestitch/form/styles';
 
 
 @include mat.core();
