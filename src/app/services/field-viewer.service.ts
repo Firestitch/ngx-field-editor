@@ -73,6 +73,9 @@ export class FieldViewerService implements OnDestroy {
           case FieldType.File:
             hasValue = field.data?.files?.length > 0;
             break;
+          case FieldType.VisualSelector:
+            hasValue = !!(value?.selected || []).length;
+            break;
 
           default:
             hasValue = value !== null && value !== undefined && value !== '';
