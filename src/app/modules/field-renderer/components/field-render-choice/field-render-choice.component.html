@@ -9,8 +9,8 @@
     [disabled]="disabled"
     messageSelector=".fs-form-message"
     orientation="vertical">
-  <mat-radio-button
-        *ngFor="let option of field.options; let index = index"
+  <ng-container *ngFor="let option of field.options; let index = index">
+    <mat-radio-button       
         [disabled]="disabled"
         [value]="option.guid"
         (change)="radioChange(notes)">
@@ -18,18 +18,19 @@
         <div>{{option.name}}</div>
         <div *ngIf="option.notesLabel" class="checkbox-hint"><small>{{ option.notesLabel }}</small></div>
       </div>
-    <mat-form-field 
-        [ngClass]="{ show: option.notes && field.data.value.selected === option.guid }"
-        [floatLabel]="'never'" 
-        class="notes">
-      <input
-        #notes
-        [placeholder]="option.notesLabel || 'Notes'"
-        matInput
-        [(ngModel)]="field.data.value.notes[option.guid]"
-        [name]="'notes-' + field.guid + option.guid">
-    </mat-form-field>
-  </mat-radio-button>
+      <mat-form-field 
+          [ngClass]="{ show: option.notes && field.data.value.selected === option.guid }"
+          [floatLabel]="'never'" 
+          class="form-field-padless notes">
+        <input
+          #notes
+          [placeholder]="option.notesLabel || 'Notes'"
+          matInput
+          [(ngModel)]="field.data.value.notes[option.guid]"
+          [name]="'notes-' + field.guid + option.guid">
+      </mat-form-field>
+    </mat-radio-button>
+  </ng-container>
   <mat-radio-button
       *ngIf="field.configs.other"
       value="other"
@@ -37,9 +38,9 @@
       [disabled]="disabled"
       class="other choice">
     <mat-form-field floatLabel="never" class="form-field-padless">
-      <mat-label>Other</mat-label>
       <input
         matInput
+        placeholder="Other"
         (click)="otherInputClick()"
         (ngModelChange)="otherInputChange($event)"
         [(ngModel)]="otherValue"

@@ -4,12 +4,8 @@ mat-checkbox {
 
 .option-container {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   padding: 3px 0;
-
-  &.has-notes {
-    padding-bottom: 60px;
-  }
 
   .notes:not(.enabled) {
     color: #ccc;
@@ -50,17 +46,12 @@ mat-checkbox {
 
   .option-note {
     width: 100%;
-    position: absolute;
 
     mat-form-field {
       width: 100%;
-      margin: 10px 0 0 10px;
+      margin-top: 2px;
     }
   }
-}
-
-.new-option {
-  margin-top: 3px;
 }
 
 .or {
@@ -73,9 +64,10 @@ mat-checkbox {
 
 .other {
   display: flex;
+  padding: 3px 0;
   align-items: center;
 
-  ::ng-deep .mat-form-field {
+  mat-form-field {
     width: 100%;
   }
 }

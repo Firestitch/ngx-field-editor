@@ -564,11 +564,13 @@ export class ExampleComponent implements OnInit {
             value: '66',
             name: 'Option A',
             guid: '3wdasd',
+            notes: true,
           },
           {
             value: '77',
             name: 'Option B',
             guid: '2343w346',
+            notes: true,
           },
           {
             value: '88',
@@ -611,11 +613,13 @@ export class ExampleComponent implements OnInit {
             value: '99',
             name: 'Option A',
             guid: '56tgdf',
+            notes: true,
           },
           {
             value: '111',
             name: 'Option B',
             guid: '35dfghfh',
+            notes: true,
           },
           {
             value: '222',

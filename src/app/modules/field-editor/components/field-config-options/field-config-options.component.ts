@@ -38,7 +38,8 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
   public addOptionInput: ElementRef;
 
   @Input() public showOther = false;
-  @Input() public showOptionName = false;
+  @Input() public showOptionLabel = false;
+  @Input() public showNotes = false;
   @Input() public showOptionImage = false;
   @Input() public field: FieldOption;
 

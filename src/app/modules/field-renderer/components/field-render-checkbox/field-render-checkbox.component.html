@@ -17,7 +17,7 @@
     {{ option.name }}
     <mat-form-field 
         [floatLabel]="'never'" 
-        class="notes"
+        class="form-field-padless notes"
         [ngClass]="{ show: option.notes && field.data.value.selected.includes(option.guid) }">
       <input
         #notes
@@ -36,9 +36,9 @@
       [disabled]="disabled"
       class="other checkbox">
     <mat-form-field floatLabel="never" class="form-field-padless">
-      <mat-label>Other</mat-label>
       <input
         matInput
+        placeholder="Other"
         (click)="otherInputClick($event)"
         [(ngModel)]="otherValue"
         (ngModelChange)="otherInputChange($event)"

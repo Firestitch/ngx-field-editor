@@ -2,14 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
-  Output,
-  ViewChild,
+  Output
 } from '@angular/core';
 
 import { FsPrompt } from '@firestitch/prompt';
@@ -31,12 +28,10 @@ import { FieldComponent } from '../field/field.component';
 })
 export class FieldHeaderComponent
   extends FieldComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnDestroy {
 
   @Input()
   public hasDescription = false;
-  @ViewChild('description')
-  public descriptionEl: ElementRef;
 
   public showDelete = false;
   public canEdit = false;
@@ -64,14 +59,6 @@ export class FieldHeaderComponent
 
   public ngOnInit(): void {
     this._initHeaderConfig();
-  }
-
-  public ngOnChanges(changes: any): void {
-    if (changes.hasDescription?.currentValue) {
-      setTimeout(() => {
-        this.descriptionEl?.nativeElement?.focus();
-      });
-    }
   }
 
   public ngOnDestroy(): void {

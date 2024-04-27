@@ -1,11 +1,11 @@
 <div
     class="field-container"
     [ngClass]="['field-' + field.type]"
-    cdkDrag
+    cdkDrag    
     cdkDragLockAxis="y"
     [cdkDragDisabled]="!canReorder"
     (cdkDragStarted)="dragStarted()">
-  <ng-container *ngIf="canReorder && !isFieldSelected">
+  <ng-container *ngIf="canReorder">
     <div class="field-drag" cdkDragHandle>
       <button 
           mat-icon-button 
@@ -47,7 +47,8 @@
             <fs-field-config-options
               [field]="field"
               [showOther]="true"
-              [showOptionName]="true">
+              [showNotes]="true"
+              [showOptionLabel]="true">
             </fs-field-config-options>
           </ng-container>
 
@@ -55,7 +56,7 @@
             <fs-field-config-options
               [field]="field"
               [showOther]="true"
-              [showOptionName]="true">
+              [showOptionLabel]="true">
             </fs-field-config-options>
           </ng-container>
 
@@ -63,7 +64,8 @@
             <fs-field-config-options
               [field]="field"
               [showOther]="true"
-              [showOptionName]="true">
+              [showNotes]="true"
+              [showOptionLabel]="true">
             </fs-field-config-options>
           </ng-container>
 

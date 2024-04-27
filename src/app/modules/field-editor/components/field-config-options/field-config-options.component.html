@@ -20,7 +20,7 @@
               [previewDiameter]="60">
             </fs-file-image-picker>
           </ng-container>
-          <ng-container *ngIf="showOptionName">
+          <ng-container *ngIf="showOptionLabel">
             <div class="option-label">
               <mat-form-field class="form-field-padless" floatLabel="never">
                 <input
@@ -50,7 +50,7 @@
             </div>
           </ng-container>
         </div>
-        <ng-container *ngIf="option.notes && showOptionName">
+        <ng-container *ngIf="option.notes && showNotes">
           <div class="option-note">
             <mat-form-field          
               floatLabel="never"
@@ -66,16 +66,17 @@
           </div>
         </ng-container>
       </div>
-
-      <button
-          mat-icon-button
-          type="button"
-          class="notes"
-          [ngClass]="{ enabled: option.notes }"
-          (click)="toggleOptionNotes(option)"
-          [matTooltip]="option.notes ? 'Disable response notes' : 'Enable response notes'">
-        <mat-icon>chat</mat-icon>
-      </button>
+      <ng-container *ngIf="showNotes">
+        <button
+            mat-icon-button
+            type="button"
+            class="notes"
+            [ngClass]="{ enabled: option.notes }"
+            (click)="toggleOptionNotes(option)"
+            [matTooltip]="option.notes ? 'Disable response notes' : 'Enable response notes'">
+          <mat-icon>chat</mat-icon>
+        </button>
+      </ng-container>
       <button
           button
           mat-icon-button
@@ -109,7 +110,7 @@
       </fs-file-image-picker>
     </ng-container>
 
-    <div class="option-label" [ngClass]="{ hide: !showOptionName}">
+    <div class="option-label" [ngClass]="{ hide: !showOptionLabel}">
       <mat-form-field floatLabel="never" class="new-option form-field-padless">
         <input
           matInput
@@ -123,11 +124,10 @@
     
     <div class="option-value">
       <ng-container *ngIf="field.configs.showValues">
-        <mat-form-field          
-            floatLabel="never">
-          <mat-label>Value</mat-label>
+        <mat-form-field floatLabel="never">
           <input
             matInput
+            placeholder="Value"
             [(ngModel)]="newOptionValue"
             name="newOptionValue"
             (keydown)="addOptionKeydown($event, true)">
@@ -160,9 +160,7 @@
     </button>
     <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
 
-    <mat-form-field 
-        floatLabel="never">
-      <mat-label>Label</mat-label>
+    <mat-form-field class="form-field-padless">
       <input
         matInput
         disabled="true"

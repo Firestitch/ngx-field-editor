@@ -13,4 +13,8 @@ export class FieldConfigAddressComponent extends FieldComponent {
 
   public fieldNames = ['street', 'address2', 'city', 'region', 'zip', 'country'];
 
+  public toggleRequired(item): void {
+    this.field.configs[item].required = !this.field.configs[item].required;
+    this.fieldSave();
+  }
 }

@@ -5,9 +5,9 @@
           *ngIf="showLabel"
           floatLabel="never"
           class="label form-field-padless">
-        <mat-label>Label</mat-label>
         <input
           matInput
+          placeholder="Label"
           [(ngModel)]="field.label"
           name="label"
           [disabled]="!canEdit"
@@ -60,10 +60,10 @@
 
   <ng-container *ngIf="hasDescription">
     <mat-form-field class="row description form-field-padless">
-      <mat-label>Description</mat-label>
       <textarea
         matInput
         #description
+        placeholder="Description"
         [cdkTextareaAutosize]="true"
         [(ngModel)]="field.description"
         name="description"
