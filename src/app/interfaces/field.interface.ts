@@ -8,5 +8,7 @@ export interface Field {
   hideRequired?: boolean;
   hideDescription?: boolean;
   configs?: any;
+  maxYear?: number;
+  maxDate?: Date;
   data?: any;
 }

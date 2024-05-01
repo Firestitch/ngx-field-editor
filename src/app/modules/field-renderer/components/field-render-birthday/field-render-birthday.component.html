@@ -5,7 +5,8 @@
     fsDatePickerBirthday
     [(ngModel)]="field.data.value"
     (ngModelChange)="changed.emit(field)"
-    [maxDate]="curentDay"
+    [maxDate]="!field.maxYear && !field.maxDate ? curentDay : field.maxDate"
+    [maxYear]="field.maxYear"
     [name]="name"
     [required]="field.configs.required===true">
   <mat-hint>{{field.description}}</mat-hint>

@@ -371,6 +371,13 @@ export class ExampleComponent implements OnInit {
   public getFields(): (Field | FieldOption)[] {
     return [
       {
+        label: 'Student Date of Birth',
+        type: FieldType.Birthday,
+        guid: 'birthday',
+        maxYear: new Date().getFullYear() + 5,
+        data: {},
+      },
+      {
         data: {},
         guid: '1',
         type: FieldType.Dropdown,
