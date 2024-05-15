@@ -1,24 +1,27 @@
 <ng-container *ngFor="let field of fields">
-  <div *ngIf="field.show | async">
-    <ng-container [ngSwitch]="field.type">
-      <ng-container *ngSwitchCase="FieldType.Heading">
-        <fs-field-view-heading [field]="field">
-        </fs-field-view-heading>
+  <ng-container *ngIf="field.show | async">
+    <div class="field" [attr.data-field]="field.guid">
+      <ng-container [ngSwitch]="field.type">
+        <ng-container *ngSwitchCase="FieldType.Heading">
+          <fs-field-view-heading 
+            [field]="field">
+          </fs-field-view-heading>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <fs-label-field>
+            <fs-label>
+              <div class="label-container" [ngClass]="{ tooltip: !!field.description }">
+                {{field.label}}
+                <ng-container *ngIf="field.description">
+                  <mat-icon [matTooltip]="field.description">info</mat-icon>
+                </ng-container>
+              </div>            
+            </fs-label>
+            <ng-container *ngTemplateOutlet="content"></ng-container>
+          </fs-label-field>
+        </ng-container>
       </ng-container>
-      <ng-container *ngSwitchDefault>
-        <fs-label-field>
-          <fs-label>
-            <div class="label-container" [ngClass]="{ tooltip: !!field.description }">
-              {{field.label}}
-              <ng-container *ngIf="field.description">
-                <mat-icon [matTooltip]="field.description">info</mat-icon>
-              </ng-container>
-            </div>            
-          </fs-label>
-          <ng-container *ngTemplateOutlet="content"></ng-container>
-        </fs-label-field>
-      </ng-container>
-    </ng-container>
+    </div>
 
     <ng-template #content>
       <ng-container *ngIf="fieldViewTemplateRefs[field.type]; else standardField">
@@ -37,5 +40,5 @@
         </ng-template>
       </ng-template>
     </ng-template>
-  </div>
+  </ng-container>
 </ng-container>

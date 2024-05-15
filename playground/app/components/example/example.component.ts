@@ -13,6 +13,7 @@ import {
   FieldRendererComponent,
   FieldRendererConfig,
   FieldType,
+  FieldViewerComponent,
   FieldViewerConfig,
   RendererAction,
   ToolbarItem,
@@ -37,6 +38,9 @@ export class ExampleComponent implements OnInit {
   @ViewChild(FieldEditorComponent)
   public fieldEditor: FieldEditorComponent;
 
+  @ViewChild(FieldViewerComponent)
+  public fieldViewer: FieldViewerComponent;
+
   @ViewChild(FieldRendererComponent)
   public fieldRenderer: FieldRendererComponent;
 
@@ -55,6 +59,11 @@ export class ExampleComponent implements OnInit {
     this.initFieldEditor();
     this.initFieldRenderer();
     this.initFieldViewer();
+
+    // setTimeout(() => {
+    //   const s = this.fieldViewer.getRenderedValues();
+    //   debugger;
+    // }, 3000);
   }
 
   public initFieldEditor(): void {

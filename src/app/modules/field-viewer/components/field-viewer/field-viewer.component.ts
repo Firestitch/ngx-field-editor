@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChildren,
+  ElementRef,
   Input,
   QueryList,
 } from '@angular/core';
@@ -45,10 +46,21 @@ export class FieldViewerComponent implements AfterContentInit {
 
   constructor(
     private _fieldViewerService: FieldViewerService,
+    private _el: ElementRef,
   ) { }
 
   public get fieldViewer() {
     return this._fieldViewerService;
+  }
+
+  public getRenderedValues() {
+    return this.fields
+      .map((field: ViewField) => {
+        return {
+          ...field,
+          element: this._el.nativeElement.querySelector(`.field[data-field="${field.guid}"] .field-content`),
+        }
+      });
   }
 
   public ngAfterContentInit() {
