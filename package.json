@@ -67,7 +67,7 @@
     "@firestitch/html-editor": "^12.7.6",
     "@firestitch/iframe": "^12.0.7",
     "@firestitch/label": "^12.0.4",
-    "@firestitch/lint": "^12.0.20",
+    "@firestitch/lint": "^14.0.11",
     "@firestitch/list": "^12.20.1",
     "@firestitch/map": "^12.1.8",
     "@firestitch/mask": "^12.3.6",
