@@ -5,6 +5,9 @@ mat-checkbox {
 .option-container {
   display: flex;
   align-items: baseline;
+  &.visual-selector {
+    align-items: center;
+  }
   padding: 3px 0;
 
   .notes:not(.enabled) {

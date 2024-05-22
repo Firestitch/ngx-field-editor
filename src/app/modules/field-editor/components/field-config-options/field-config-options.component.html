@@ -4,7 +4,7 @@
       cdkDrag 
       cdkDragLockAxis="y" 
       class="fs-field-option">
-    <div class="option-container" [ngClass]="{ 'has-notes': option.notes }">
+    <div class="option-container" [ngClass]="{ 'has-notes': option.notes, 'visual-selector': field.type === FieldType.VisualSelector }">
       <div class="option-drag" cdkDragHandle>
         <button button mat-icon-button type="button" class="drag-button option-drag-button"><mat-icon>drag_indicator</mat-icon></button>
       </div>
