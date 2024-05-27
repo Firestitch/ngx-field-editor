@@ -1,0 +1,7 @@
+fs-gallery {
+  ::ng-deep {
+    fs-gallery-thumbnail-preview .file {
+      display: flex !important;
+    }
+  }
+}
