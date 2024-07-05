@@ -6,7 +6,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 
 import { FsPrompt } from '@firestitch/prompt';
@@ -103,10 +103,13 @@ export class FieldHeaderComponent
       )
       .subscribe(() => {
         const field = this.fieldEditor.findFieldByGuid(this.field.guid);
-        const fieldIndex = this.fieldEditor.config.fields.indexOf(field);
-        this.fieldEditor.config.fields.splice(fieldIndex, 1);
-        this.fieldEditor.unselectField();
-        this._cdRef.markForCheck();
+        const fieldIndex = this.fieldEditor.findFieldIndexByField(field);
+        
+        if(fieldIndex !== -1) {
+          this.fieldEditor.config.fields.splice(fieldIndex, 1);
+          this.fieldEditor.unselectField();
+          this._cdRef.markForCheck();
+        }
       });
   }
 

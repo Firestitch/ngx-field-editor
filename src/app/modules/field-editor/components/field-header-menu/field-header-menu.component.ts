@@ -125,25 +125,29 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
   }
 
   public duplicate(event: Event): void {
-    const index = this.fieldEditor.config.fields.indexOf(this.field) + 1;
+    let index = this.fieldEditor.findFieldIndexByField(this.field);
 
-    const copiedField = {
-      ...cloneDeep(this.field),
-      data: {},
-    };
+    if(index !== -1) {
+      index++;
 
-    this.fieldEditor.config.beforeFieldDuplicate(copiedField)
-      .pipe(
-        switchMap((field) => this.fieldEditor
-          .action(EditorAction.FieldDuplicate, field, { index })),
-        map((response) => initField(response.field)),
-        switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
-        tap((field) => {
-          this.fieldEditor.config.fields.splice(index, 0, field);
-          this.fieldEditor.selectField(field);
-        }),
-        takeUntil(this._destroy$),
-      )
-      .subscribe();
+      const copiedField = {
+        ...cloneDeep(this.field),
+        data: {},
+      };
+
+      this.fieldEditor.config.beforeFieldDuplicate(copiedField)
+        .pipe(
+          switchMap((field) => this.fieldEditor
+            .action(EditorAction.FieldDuplicate, field, { index })),
+          map((response) => initField(response.field)),
+          switchMap((field) => this.fieldEditor.config.afterFieldDuplicated(field)),
+          tap((field) => {
+            this.fieldEditor.config.fields.splice(index, 0, field);
+            this.fieldEditor.selectField(field);
+          }),
+          takeUntil(this._destroy$),
+        )
+        .subscribe();
+    }
   }
 }

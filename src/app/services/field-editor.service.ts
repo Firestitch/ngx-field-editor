@@ -108,6 +108,10 @@ export class FieldEditorService implements OnDestroy {
     return this.findFieldIndex((field) => field.guid === guid);
   }
 
+  public findFieldIndexByField(field: Field): number {
+    return this.findFieldIndex((item) => field.guid === item.guid);
+  }
+
   public fieldShowDelete(field: Field): Observable<boolean> {
     return this.config.fieldShowDelete ?
       this.config.fieldShowDelete(field) :
