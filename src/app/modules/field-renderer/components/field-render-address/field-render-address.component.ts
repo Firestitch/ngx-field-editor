@@ -25,8 +25,10 @@ export class FieldRenderAddressComponent extends FieldComponent implements OnIni
   public config: IFsAddressConfig;
 
   public ngOnInit(): void {
+    console.log(this.field);
     this.config = {
       label: this.field.label,
+      hint: this.field.description,
       name: {
         visible: false,
       },
