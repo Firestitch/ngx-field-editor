@@ -20,7 +20,7 @@ import {
   catchError, delay, filter, finalize, map, switchMap, takeUntil, tap,
 } from 'rxjs/operators';
 
-import { EditorAction } from '../../../../enums';
+import { EditorAction, VisualSelectorFormat } from '../../../../enums';
 import { FieldOption } from '../../../../interfaces';
 import { FieldEditorService } from '../../../../services';
 import { FieldComponent } from '../field/field.component';
@@ -139,6 +139,10 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
     this._newOptionFile = fsFile;
     this._newFileImagePicker = fileImagePicker;
     this.addOptionFocus();
+
+    if (this.field.configs.format === VisualSelectorFormat.Image) {
+      this._addOptionWithImage();
+    }
   }
 
   public selectOptionImage(
@@ -229,7 +233,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
             file: this._newOptionFile.file,
             option,
           };
-
+          
           return this.fieldEditor.action(EditorAction.OptionImageUpload, this.field, data)
             .pipe(
               map((response) => {
