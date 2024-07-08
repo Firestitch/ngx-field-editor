@@ -179,7 +179,7 @@ function initName(field: Field) {
     field.configs.lastName = { display: true, label: 'Last Name' };
   }
 
-  if (!field.data.value) {
+  if (!field.data.value || Array.isArray(field.data.value)) {
     field.data.value = {};
   }
 }
