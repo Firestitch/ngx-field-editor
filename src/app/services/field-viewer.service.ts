@@ -62,7 +62,8 @@ export class FieldViewerService implements OnDestroy {
 
           case FieldType.Choice:
           case FieldType.Checkbox:
-            hasValue = Object.keys(value?.selected || []).length !== 0;
+            hasValue = Object.keys(value?.selected || []).length !== 0
+              || !!value?.other;
             break;
 
           case FieldType.Name:
