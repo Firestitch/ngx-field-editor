@@ -71,7 +71,10 @@ export class FieldRenderCheckboxComponent extends FieldComponent implements OnIn
   }
 
   public validate = () => {
-    if (this.field.configs.required === true && !this.field.data.value.selected.length) {
+    const hasValue = this.field.data.value.selected.length
+      || (this.field.configs.other && this.other);
+
+    if (this.field.configs.required === true && !hasValue) {
       throw new Error('This field is required');
     }
   };
