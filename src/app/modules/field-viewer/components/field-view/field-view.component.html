@@ -46,7 +46,9 @@
   </ng-container>
 
   <ng-container *ngSwitchCase="FieldType.Name">
-    {{field.data.value.firstName}} {{field.data.value.middleName}} {{field.data.value.lastName}}
+    <ng-container *ngIf="field.data.value">
+      {{field.data.value.firstName}} {{field.data.value.middleName}} {{field.data.value.lastName}}
+    </ng-container>
   </ng-container>
 
   <ng-container *ngSwitchCase="FieldType.File">
