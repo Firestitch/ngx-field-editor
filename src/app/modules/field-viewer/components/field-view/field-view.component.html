@@ -64,7 +64,7 @@
   </ng-container>
 
   <ng-container *ngSwitchCase="FieldType.Address">
-    <div class="address">
+    <div *ngIf="field.data.value" class="address">
       <span *ngIf="field.data?.value.street">{{field.data.value.street}}</span>
       <span *ngIf="field.data?.value.adddress2">{{field.data.value.address2}}</span>
       <span *ngIf="field.data?.value.city">{{field.data.value.city}}</span>
