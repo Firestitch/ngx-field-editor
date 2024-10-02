@@ -50,9 +50,14 @@ export class FieldRenderRichTextComponent extends FieldComponent implements OnIn
   }
 
   public ngOnInit(): void {
+    this.editorConfig = {
+      hint: this.field.description,
+    };
+
     this._fieldRenderer.canImageUpload(this.field)
       .subscribe((canImageUpload) => {
         this.editorConfig = {
+          ...this.editorConfig,
           autofocus: false,
           disabled: this.disabled,
           label: this.field.label,
