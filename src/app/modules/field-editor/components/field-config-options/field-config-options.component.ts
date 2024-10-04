@@ -41,7 +41,7 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
   @Input() public showOptionLabel = false;
   @Input() public showNotes = false;
   @Input() public showOptionImage = false;
-  @Input() public field: FieldOption;
+  @Input() declare public field: FieldOption;
 
   public newOption = '';
   public newOptionValue = '';

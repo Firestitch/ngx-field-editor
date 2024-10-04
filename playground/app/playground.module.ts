@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
 
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MAT_LEGACY_FORM_FIELD_DEFAULT_OPTIONS as MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/legacy-form-field';
 
 import { FsDatePickerModule } from '@firestitch/datepicker';
 import { FsExampleModule } from '@firestitch/example';
@@ -21,7 +21,6 @@ import { FsPhoneModule } from '@firestitch/phone';
 
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DragulaModule } from 'ng2-dragula';
 
 import { AppComponent } from './app.component';
 import {
@@ -56,10 +55,9 @@ const routes: Routes = [
     FsLabelModule,
     FsExampleModule.forRoot(),
 
-    DragulaModule.forRoot(),
     BrowserAnimationsModule,
     AppMaterialModule,
-    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, {}),
     TermsFieldModule,
     SignatureFieldModule,
     HttpClientModule,

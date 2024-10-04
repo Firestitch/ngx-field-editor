@@ -23,13 +23,16 @@ import { FieldComponent } from '../../field/field.component';
 })
 export class FieldRenderNameModelComponent extends FieldComponent implements ControlValueAccessor, Validator {
 
-  @Input() public field;
   @Input() public disabled = false;
 
   public value;
 
-  public onChange: (_: any) => void = (_: any) => { };
-  public onTouched: () => void = () => { };
+  public onChange: (_: any) => void = (_: any) => { 
+    //
+  };
+  public onTouched: () => void = () => {
+    //
+  };
 
   public change(event, name) {
     this.field.data.value[name] = event;

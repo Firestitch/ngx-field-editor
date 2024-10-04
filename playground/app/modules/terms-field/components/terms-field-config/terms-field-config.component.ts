@@ -18,7 +18,7 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { guid } from '@firestitch/common';
 
 import { Field } from '@firestitch/field-editor';

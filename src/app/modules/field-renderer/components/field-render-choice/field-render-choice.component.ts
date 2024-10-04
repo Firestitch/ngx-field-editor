@@ -24,7 +24,7 @@ import { FieldComponent } from '../field/field.component';
 })
 export class FieldRenderChoiceComponent extends FieldComponent implements OnInit {
 
-  @Input() public field: FieldOption;
+  @Input() declare public field: FieldOption;
 
   @ViewChild('radiobuttons', { read: NgModel })
   public radiobuttons: NgModel;

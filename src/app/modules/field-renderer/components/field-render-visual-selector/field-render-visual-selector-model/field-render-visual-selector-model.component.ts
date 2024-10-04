@@ -30,7 +30,7 @@ import { FieldComponent } from '../../field';
 export class FieldRenderVisualSelectorModelComponent
   extends FieldComponent implements ControlValueAccessor, OnInit, Validator {
 
-  @Input() public field: FieldOption;
+  @Input() declare public field: FieldOption;
 
   public selected = {};
   public VisualSelectorFormat = VisualSelectorFormat;

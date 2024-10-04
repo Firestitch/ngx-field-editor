@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { ControlContainer, NgForm, NgModel } from '@angular/forms';
 
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
 
 import { controlContainerFactory } from '@firestitch/core';
 
@@ -26,7 +26,7 @@ import { FieldComponent } from '../field/field.component';
 })
 export class FieldRenderCheckboxComponent extends FieldComponent implements OnInit {
 
-  @Input() public field: FieldOption;
+  @Input() declare public field: FieldOption;
 
   @ViewChild('checkboxes', { read: NgModel })
   public checkboxes: NgModel;

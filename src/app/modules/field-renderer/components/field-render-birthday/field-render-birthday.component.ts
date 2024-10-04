@@ -21,7 +21,7 @@ import { FieldComponent } from '../field/field.component';
 })
 export class FieldRenderBirthdayComponent extends FieldComponent {
 
-  @Input() public field: FieldOption;
+  @Input() declare public field: FieldOption;
 
   public curentDay = new Date();
 

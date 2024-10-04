@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { VisualSelectorFormat } from '../../../../enums';
-import { FieldEditorService } from '../../../../services';
 import { FieldComponent } from '../field/field.component';
 
 
@@ -12,8 +11,6 @@ import { FieldComponent } from '../field/field.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldConfigVisualSelectorComponent extends FieldComponent {
-
-  @Input() public fieldEditor: FieldEditorService;
 
   public VisualSelectorFormat = VisualSelectorFormat;
 
