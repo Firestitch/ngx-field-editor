@@ -20,7 +20,7 @@ import { FieldType } from '../../../../enums';
 import { Field } from '../../../../interfaces';
 import { FieldEditorService } from '../../../../services';
 import { FieldRenderDirective } from '../../../field-renderer/directives';
-import { FieldConfigDirective, FieldContainerDirective } from '../../directives';
+import { FieldConfigDirective } from '../../directives';
 
 
 @Component({
@@ -55,7 +55,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public fieldRenderTemplate: TemplateRef<any>;
 
   @Input()
-  public fieldContainerTemplateRef: TemplateRef<FieldContainerDirective>;
+  public fieldContainerTemplateRef: TemplateRef<any>;
 
   @HostBinding('class.selected')
   public isFieldSelected = false;

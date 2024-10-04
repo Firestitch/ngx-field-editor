@@ -52,7 +52,7 @@
     "@firestitch/chip": "^15.0.0",
     "@firestitch/clear": "^15.0.1",
     "@firestitch/common": "^15.0.0",
-    "@firestitch/component-tools": "^16.0.0",
+    "@firestitch/component-tools": "^16.0.3",
     "@firestitch/core": "^15.0.0",
     "@firestitch/country": "^15.0.0",
     "@firestitch/date": "^15.0.1",
@@ -103,7 +103,7 @@
     "@firestitch/signature": ">=12.0.0"
   },
   "dependencies": {
-    "@w11k/angular-sticky-things": "1.7.0",
+    "@w11k/angular-sticky-things": "1.8.0",
     "tslib": "^2.3.1"
   }
 }
