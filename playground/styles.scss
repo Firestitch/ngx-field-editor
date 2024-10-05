@@ -19,7 +19,7 @@
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
 @include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
+@include mat.core();
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
 //  The following line adds:
 //    1. Default typography styles for all components
@@ -29,7 +29,7 @@
 //  you can delete this line and instead use:
 //    `@include fs-style.core(mat.define-legacy-typography-config());`
 @include fs-style.core();
-@include mat.legacy-core();
+@include mat.core();
 @include fs-file(mat.$blue-palette);
 @include fs-html-editor(mat.$blue-palette);
 @include fs-field-editor(mat.$blue-palette);
