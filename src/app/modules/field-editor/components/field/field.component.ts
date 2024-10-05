@@ -31,7 +31,7 @@ export class FieldComponent implements OnDestroy {
   }
 
   public ngOnDestroy() {
-    this._destory$.next();
+    this._destory$.next(null);
     this._destory$.complete();
   }
 

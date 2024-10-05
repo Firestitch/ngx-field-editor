@@ -16,7 +16,7 @@ export class FieldViewerService implements OnDestroy {
   private _destroy$ = new Subject();
 
   public ngOnDestroy(): void {
-    this._destroy$.next();
+    this._destroy$.next(null);
     this._destroy$.complete();
   }
 

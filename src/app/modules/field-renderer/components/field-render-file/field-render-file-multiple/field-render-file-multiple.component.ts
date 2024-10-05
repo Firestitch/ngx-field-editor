@@ -120,7 +120,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   }
 
   public ngOnDestroy(): void {
-    this._destroy$.next();
+    this._destroy$.next(null);
     this._destroy$.complete();
   }
 

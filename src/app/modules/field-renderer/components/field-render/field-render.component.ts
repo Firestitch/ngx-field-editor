@@ -60,7 +60,7 @@ export class FieldRenderComponent implements AfterContentInit {
   @Input('field')
   public set setField(field) {
     this.field = initField(field);
-    this._disabledState.next();
+    this._disabledState.next(null);
   }
 
   public get disabled$(): Observable<boolean> {
