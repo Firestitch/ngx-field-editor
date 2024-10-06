@@ -59,15 +59,15 @@ fs-field-renderer {
 
 @mixin fs-field-editor($theme) {
 
-  $primary: mat.define-palette($theme);
+  $primary: mat.m2-define-palette($theme);
 
   .cdk-drag-placeholder {
-    background-color: mat.get-color-from-palette($primary, 500) !important;
+    background-color: mat.m2-get-color-from-palette($primary, 500) !important;
     opacity: .2;
   }
 
   .toolbar-field.cdk-drag-preview {
-    background: mat.get-color-from-palette($primary);
+    background: mat.m2-get-color-from-palette($primary);
     white-space: nowrap;
     height: auto !important;
     width: auto !important;
@@ -86,7 +86,7 @@ fs-field-renderer {
   }
 
   .toolbar-button {
-    color: mat.get-contrast-color-from-palette($primary, 500);
+    color: mat.m2-get-contrast-color-from-palette($primary, 500);
   }
 }
 

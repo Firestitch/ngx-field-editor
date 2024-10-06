@@ -19,7 +19,7 @@ import { FS_MAP_GOOGLE_MAP_KEY } from '@firestitch/map';
 import { FsMessageModule } from '@firestitch/message';
 import { FsPhoneModule } from '@firestitch/phone';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -37,47 +37,39 @@ const routes: Routes = [
   { path: '', component: ExamplesComponent },
 ];
 
-@NgModule({
-  bootstrap: [AppComponent],
-  imports: [
-    FormsModule,
-    BrowserModule,
-
-    FsFieldEditorModule.forRoot(),
-    FsFieldViewerModule,
-    FsFieldRendererModule,
-    FsDatePickerModule.forRoot(),
-    FsMessageModule.forRoot(),
-    FsHtmlEditorModule.forRoot(),
-    FsPhoneModule.forRoot(),
-    FsFileModule.forRoot(),
-    FsFormModule,
-    FsLabelModule,
-    FsExampleModule.forRoot(),
-
-    BrowserAnimationsModule,
-    AppMaterialModule,
-    RouterModule.forRoot(routes, {}),
-    TermsFieldModule,
-    SignatureFieldModule,
-    HttpClientModule,
-  ],
-  declarations: [
-    AppComponent,
-    ExamplesComponent,
-    ExampleComponent,
-    FieldRenderComponent,
-  ],
-  providers: [
-    {
-      provide: FS_MAP_GOOGLE_MAP_KEY,
-      useFactory: () => '',
-    },
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline' },
-    },
-  ],
-})
+@NgModule({ bootstrap: [AppComponent],
+    declarations: [
+        AppComponent,
+        ExamplesComponent,
+        ExampleComponent,
+        FieldRenderComponent,
+    ], imports: [FormsModule,
+        BrowserModule,
+        FsFieldEditorModule.forRoot(),
+        FsFieldViewerModule,
+        FsFieldRendererModule,
+        FsDatePickerModule.forRoot(),
+        FsMessageModule.forRoot(),
+        FsHtmlEditorModule.forRoot(),
+        FsPhoneModule.forRoot(),
+        FsFileModule.forRoot(),
+        FsFormModule,
+        FsLabelModule,
+        FsExampleModule.forRoot(),
+        BrowserAnimationsModule,
+        AppMaterialModule,
+        RouterModule.forRoot(routes, {}),
+        TermsFieldModule,
+        SignatureFieldModule], providers: [
+        {
+            provide: FS_MAP_GOOGLE_MAP_KEY,
+            useFactory: () => '',
+        },
+        {
+            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+            useValue: { appearance: 'outline' },
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class PlaygroundModule {
 }

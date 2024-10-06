@@ -11,7 +11,7 @@
 
 @include mat.core();
 @include fs-style.core();
-@include fs-file(mat.$blue-palette);
-@include fs-html-editor(mat.$blue-palette);
-@include fs-field-editor(mat.$blue-palette);
+@include fs-file(mat.$m2-blue-palette);
+@include fs-html-editor(mat.$m2-blue-palette);
+@include fs-field-editor(mat.$m2-blue-palette);
 @include fs-form($app-theme);
