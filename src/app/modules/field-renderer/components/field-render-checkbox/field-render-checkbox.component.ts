@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { ControlContainer, NgForm, NgModel } from '@angular/forms';
 
-import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 import { controlContainerFactory } from '@firestitch/core';
 

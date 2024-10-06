@@ -3,18 +3,18 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
-import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { FsAddressModule } from '@firestitch/address';
 import { FsCheckboxGroupModule } from '@firestitch/checkboxgroup';
@@ -32,8 +32,6 @@ import { FsPhoneModule } from '@firestitch/phone';
 import { FsPopoverModule } from '@firestitch/popover';
 import { FsPromptModule } from '@firestitch/prompt';
 import { FsRadioGroupModule } from '@firestitch/radiogroup';
-
-import { AngularStickyThingsModule } from '@w11k/angular-sticky-things';
 
 import { FieldType } from '../../enums/field-type';
 import { FS_FIELD_EDITOR_ORIGINAL_CONFIG } from '../../injectors/fs-field-editor-original.providers';
@@ -64,6 +62,7 @@ import { FieldHeaderComponent } from './components/field-header/field-header.com
 import { FieldToolbarItemComponent } from './components/field-toolbar-item/field-toolbar-item.component';
 import { FieldToolbarComponent } from './components/field-toolbar/field-toolbar.component';
 import { FieldComponent } from './components/field/field.component';
+import { StickyThingDirective } from './directives';
 import { FieldConfigDirective } from './directives/field-config/field-config.directive';
 import { FieldContainerDirective } from './directives/field-container/field-container.directive';
 import { FieldEditorToolbarDirective } from './directives/field-editor-toolbar/field-editor-toolbar.directive';
@@ -120,7 +119,6 @@ export function defaultConfigFactory(config) {
     MatDialogModule,
 
     DragDropModule,
-    AngularStickyThingsModule,
 
     FsFormModule,
     FsCommonModule,
@@ -166,6 +164,7 @@ export function defaultConfigFactory(config) {
     FieldConfigVisualSelectorComponent,
     FieldHeaderMenuComponent,
     ScrollableHandlerDirective,
+    StickyThingDirective,
   ],
   exports: [
     FieldEditorComponent,

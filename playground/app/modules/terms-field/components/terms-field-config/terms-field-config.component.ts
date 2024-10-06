@@ -1,30 +1,26 @@
 import {
-  AfterContentInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   forwardRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import {
-  AbstractControl,
-  ControlContainer,
   ControlValueAccessor,
-  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
-  NgForm,
-  NgModel,
-  ValidationErrors,
-  Validator,
 } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { guid } from '@firestitch/common';
 
+import { MatDialog } from '@angular/material/dialog';
+
+import { guid } from '@firestitch/common';
 import { Field } from '@firestitch/field-editor';
 import { FsListComponent, FsListConfig } from '@firestitch/list';
+
 import { of, Subject } from 'rxjs';
-import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { filter, takeUntil, tap } from 'rxjs/operators';
+
 import { TermType } from '../../enums';
 import { Term } from '../../interfaces/term';
 import { TermsFieldConfigDialogComponent } from '../terms-field-config-dialog';
@@ -42,7 +38,7 @@ import { TermsFieldConfigDialogComponent } from '../terms-field-config-dialog';
     },
   ],  
 })
-export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit {
+export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   @ViewChild(FsListComponent)
   public list: FsListComponent;
@@ -71,12 +67,12 @@ export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit {
         {
           click: (term) => {
             return of(true)
-            .pipe(
-              tap(() => {
-                this.terms = this.terms
-                .filter((item: Term) => item.guid !== term.guid);                
-              }),
-            )
+              .pipe(
+                tap(() => {
+                  this.terms = this.terms
+                    .filter((item: Term) => item.guid !== term.guid);                
+                }),
+              );
           },
           remove: {
             title: 'Confirm',
@@ -92,36 +88,36 @@ export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit {
             this._open({
               guid: guid(),
             })
-            .subscribe((term) => {
-              this.terms.push(term);
-              this.termsChange(this.terms);
-              this.list.reload();
-            });
-          }
-        }
+              .subscribe((term) => {
+                this.terms.push(term);
+                this.termsChange(this.terms);
+                this.list.reload();
+              });
+          },
+        },
       ],
       fetch: () => {
-        return of({ data: this.terms })
+        return of({ data: this.terms });
       },
     };    
   }
 
   public open(term: Term) {
-      this._dialog.open(TermsFieldConfigDialogComponent, {
+    this._dialog.open(TermsFieldConfigDialogComponent, {
       data: { 
         term,
       },
-   })
-     .afterClosed()
-     .pipe(
-       takeUntil(this._destroy$),
-     )
-     .subscribe((term) => {
-      const index = this.terms.findIndex((item) => item.guid === term.guid);
-      this.terms[index] = term;
-      this.termsChange(this.terms);
-      this.list.reload();
-     });
+    })
+      .afterClosed()
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((term) => {
+        const index = this.terms.findIndex((item) => item.guid === term.guid);
+        this.terms[index] = term;
+        this.termsChange(this.terms);
+        this.list.reload();
+      });
   }
 
   public _open(term: Term) {

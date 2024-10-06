@@ -5,29 +5,26 @@ import {
   forwardRef,
   Input,
   OnDestroy,
-  OnInit,
   Optional,
 } from '@angular/core';
 import {
   ControlContainer,
   ControlValueAccessor,
-  NgForm,
   NG_VALUE_ACCESSOR,
+  NgForm,
 } from '@angular/forms';
-
-import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { guid } from '@firestitch/common';
+
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
 
 import { controlContainerFactory } from '@firestitch/core';
 import { Field } from '@firestitch/field-editor';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+
 import { TermType } from '../../enums';
 import { Term } from '../../interfaces';
-
 import { TermsFieldRenderDialogComponent } from '../terms-field-render-dialog';
 
 
@@ -47,7 +44,7 @@ import { TermsFieldRenderDialogComponent } from '../terms-field-render-dialog';
       provide: ControlContainer,
       useFactory: controlContainerFactory,
       deps: [[new Optional(), NgForm]],
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -150,11 +147,11 @@ export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestro
       field.data.terms = field?.data?.terms || {};
 
       this.terms
-      .forEach((term) => {
-        if(!field.data.terms[term.guid]) {
-          field.data.terms[term.guid] = {};
-        }
-      });   
+        .forEach((term) => {
+          if(!field.data.terms[term.guid]) {
+            field.data.terms[term.guid] = {};
+          }
+        });   
 
       this._field = field;
       this._cdRef.markForCheck();

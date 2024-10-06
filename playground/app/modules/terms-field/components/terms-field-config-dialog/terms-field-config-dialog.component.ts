@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Inject,
   OnInit,
 } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -34,18 +34,18 @@ export class TermsFieldConfigDialogComponent implements OnInit {
   public ngOnInit(): void {
     this.term = {
       ...this._data.term,
-      type: this._data.term.type || TermType.None
+      type: this._data.term.type || TermType.None,
     };
   }
 
   public save = (): Observable<any> => {
     return of(this.term)
-    .pipe(
-      tap((term) => {
-        this._dialogRef.close(term);
-      }),
-    );
-  }
+      .pipe(
+        tap((term) => {
+          this._dialogRef.close(term);
+        }),
+      );
+  };
 
   public contentLabelBlur(): void {
     if(!this.term.contentTitle) {

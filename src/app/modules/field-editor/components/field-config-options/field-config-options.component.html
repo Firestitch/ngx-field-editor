@@ -22,7 +22,7 @@
           </ng-container>
           <ng-container *ngIf="showOptionLabel">
             <div class="option-label">
-              <mat-form-field class="form-field-padless" floatLabel="never">
+              <mat-form-field class="form-field-padless">
                 <input
                   matInput
                   [(ngModel)]="option.name"
@@ -37,7 +37,6 @@
           <ng-container *ngIf="field.configs.showValues">
             <div class="option-value">
               <mat-form-field          
-                  floatLabel="never"
                   class="form-field-padless">
                 <input
                   matInput
@@ -53,7 +52,6 @@
         <ng-container *ngIf="option.notes && showNotes">
           <div class="option-note">
             <mat-form-field          
-              floatLabel="never"
               class="form-field-padless">
             <input
               matInput
@@ -111,7 +109,7 @@
     </ng-container>
 
     <div class="option-label" [ngClass]="{ hide: !showOptionLabel}">
-      <mat-form-field floatLabel="never" class="new-option form-field-padless">
+      <mat-form-field class="new-option form-field-padless">
         <input
           matInput
           #addOptionInput
@@ -123,7 +121,7 @@
     </div>
     
     <div *ngIf="field.configs.showValues" class="option-value">
-      <mat-form-field floatLabel="never" class="form-field-padless">
+      <mat-form-field class="form-field-padless">
         <input
           matInput
           placeholder="Value"
