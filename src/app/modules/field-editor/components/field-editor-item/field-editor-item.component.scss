@@ -67,16 +67,12 @@
   border-radius: 6px;
 }
 
-.label.mat-form-field {
+mat-form-field.label {
   display: block;
   margin-right: 10px;
 
   input {
     font-size: 17px;
-  }
-
-  .mat-form-field-infix {
-    border-top: 0;
   }
 }
 

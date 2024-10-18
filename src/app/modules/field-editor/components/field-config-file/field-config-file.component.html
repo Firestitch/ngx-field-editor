@@ -1,5 +1,5 @@
 <div class="options">
-  <div class="row-allow">
+  <div class="fs-row.gap-sm">
     <mat-form-field [floatLabel]="'always'">
       <mat-label>Allow file types</mat-label>
       <mat-select
@@ -8,7 +8,7 @@
           [multiple]="true"
           [placeholder]="'Any'"
           (ngModelChange)="allowFileTypeChange($event)">
-        <mat-option [value]="null">Any</mat-option>
+        <mat-option [value]="null" class="any">Any</mat-option>
         <mat-option [value]="'image'">Image</mat-option>
         <mat-option [value]="'video'">Video</mat-option>
         <mat-option [value]="'pdf'">PDF</mat-option>
@@ -44,7 +44,7 @@
           name="imageQuality"
           [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="imageQualityChange($event)">
-          <span matSuffix>
+          <span matTextSuffix>
             %
           </span>
       </mat-form-field>

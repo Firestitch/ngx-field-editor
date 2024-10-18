@@ -2,7 +2,7 @@
   <mat-divider></mat-divider>
 </ng-container>
 <ng-template #elseDivider>
-  <button
+  <div
       mat-menu-item
       [disabled]="item.disabled">
     <div 
@@ -18,12 +18,10 @@
           (cdkDragStarted)="dragStarted(item)"
           (cdkDragDropped)="dragDropped($event)">
         <div class="fs-row">
-          <button mat-icon-button type="button">
-            <mat-icon>{{ item.icon }}</mat-icon>
-          </button>
+          <mat-icon>{{ item.icon }}</mat-icon>
           <span class="label">{{ item.label }}</span>
         </div>
       </div>
     </div>
-  </button>
+  </div> 
 </ng-template>

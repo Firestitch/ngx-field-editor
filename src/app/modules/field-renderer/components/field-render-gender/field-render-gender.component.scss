@@ -1,5 +1,5 @@
 
-.mat-radio-button {
+mat-radio-button {
   margin-bottom: 5px;
 
   &:last-child {
@@ -12,11 +12,6 @@ fs-label-field {
 }
 
 :host ::ng-deep {
-  .mat-form-field-subscript-wrapper {
-    top: initial;
-    bottom: -15px;
-  }
-
   .fs-label-message {
     font-size: normal;
   }

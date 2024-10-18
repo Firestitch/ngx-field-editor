@@ -19,25 +19,12 @@
     }
   }
 
-  .mat-checkbox {
+  mat-checkbox {
     margin: 10px 0 !important;
   }
 
   .other {
     max-width: 100%;
-
-    .mat-checkbox-layout {
-      display: flex;
-
-      .mat-checkbox-label {
-        width: calc(100% - 24px);
-        flex-grow: 1;
-      }
-    }
-
-    .mat-form-field-infix {
-      border-top: 0;
-    }
 
     mat-form-field {      
       margin-left: 8px;
@@ -45,7 +32,6 @@
   }
   
   .mat-form-field {
-    margin-top: -3px;
     width: 400px;
     max-width: 100%;
     display: block;

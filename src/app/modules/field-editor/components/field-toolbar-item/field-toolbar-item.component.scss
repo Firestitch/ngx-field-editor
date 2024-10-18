@@ -5,3 +5,14 @@
 .label {
   padding-right: 2px;
 }
+
+
+.toolbar-field {
+  padding: 0 16px;
+}
+
+:host {
+  .mat-mdc-menu-item {
+    padding: 0;
+  }
+}
