@@ -61,9 +61,11 @@ fs-field-renderer {
 
   $primary: mat.m2-define-palette($theme);
 
-  .cdk-drag-placeholder {
-    background-color: mat.m2-get-color-from-palette($primary, 500) !important;
-    opacity: .2;
+  fs-field-editor {
+    .cdk-drag-placeholder {
+      background-color: mat.m2-get-color-from-palette($primary, 500) !important;
+      opacity: .2;
+    }
   }
 
   .toolbar-field.cdk-drag-preview {
