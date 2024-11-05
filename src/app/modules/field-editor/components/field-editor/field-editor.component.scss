@@ -1,5 +1,4 @@
 .field-editor-container {
-  display: flex;
 
   .fields-container {
     width: 100%;
@@ -19,6 +18,14 @@
     .toolbar {
       width: 40px;
       margin: 10px;
+      z-index: 1000;
+      position: absolute;
+      right: 0;
+
+      .toolbar-wrapper {
+        position: absolute;
+        right: 0;
+      }
 
       fs-field-toolbar {
         left: auto !important;
@@ -46,7 +53,7 @@
   &:not(.cdk-drop-list-dragging) {
     ::ng-deep {
       .fs-field:not(.selected):hover {
-        background: #f9f9f9;
+        background-color: #f9f9f9;
       }
 
       .fs-field:hover {

@@ -1,12 +1,33 @@
 <div
     class="field-editor-container"
+    #boundary
     scrollableHandler
     [ngClass]="{
       'has-fields': fieldEditor.hasFields,
       'field-selected': !!(fieldEditor.fieldSelected$ | async)
     }">
+  <ng-container *ngIf="fieldEditor.config.canAddField">
+    <div class="toolbar-container">
+      <div #spacer></div>
+      <div class="toolbar">
+        <div
+            class="toolbar-wrapper"
+            stickyThing
+            [spacer]="spacer"
+            [scrollContainer]="scrollContainer"
+            [boundary]="scrollContainer ? null : boundary"
+            [marginTop]="50">
+          <ng-container *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl, template: toolbarTpl } "></ng-container>
+          <ng-template #toolbarTpl>
+            <fs-field-toolbar [toolbarItems]="fieldEditor.config.toolbar.items"></fs-field-toolbar>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </ng-container>
   <div class="fields-container">
-    <div class="fields"
+    <div
+        class="fields"
         cdkDropList
         (cdkDropListDropped)="drop($event)"
         [id]="fieldEditor.editorId">
@@ -22,28 +43,4 @@
       </ng-container>
     </div>
   </div>
-  <ng-container *ngIf="fieldEditor.config.canAddField">
-    <div class="toolbar-container" #boundary>
-      <div #spacer></div>
-      <div class="toolbar">
-        <div
-            class="toolbar-wrapper"
-            stickyThing
-            [spacer]="spacer"
-            [scrollContainer]="scrollContainer"
-            [boundary]="scrollContainer ? null : boundary"
-            [marginTop]="50">
-          <ng-container
-            *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl, template: toolbarTpl } ">
-          </ng-container>
-          <ng-template #toolbarTpl>
-            <fs-field-toolbar
-              [toolbarItems]="fieldEditor.config.toolbar.items">
-            </fs-field-toolbar>
-          </ng-template>
-
-        </div>
-      </div>
-    </div>
-  </ng-container>
 </div>
