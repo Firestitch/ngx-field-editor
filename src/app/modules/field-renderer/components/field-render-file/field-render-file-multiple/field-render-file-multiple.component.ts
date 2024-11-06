@@ -13,9 +13,10 @@ import {
   NgForm,
 } from '@angular/forms';
 
+import { FsApiFile } from '@firestitch/api';
 import { controlContainerFactory } from '@firestitch/core';
 import { FsFile } from '@firestitch/file';
-import { FsGalleryItem, FsGalleryMenuItem } from '@firestitch/gallery';
+import { FsGalleryItem, FsGalleryItemAction } from '@firestitch/gallery';
 import { FsPrompt } from '@firestitch/prompt';
 
 import { forkJoin, Subject } from 'rxjs';
@@ -23,7 +24,7 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { FileRenderFile } from '../../../../../classes/file-render-file';
 import { RendererAction } from '../../../../../enums';
-import { Field } from '../../../../../interfaces';
+import { Field, FieldFile } from '../../../../../interfaces';
 import { FieldRendererService } from '../../../../../services';
 import { FieldGalleryComponent } from '../../../../field-common/components';
 
@@ -54,10 +55,11 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   @ViewChild(FieldGalleryComponent)
   public fieldGallery: FieldGalleryComponent;
 
-  public actions: FsGalleryMenuItem[];
+  public actions: FsGalleryItemAction[];
   public files = [];
   public onChange: (data: any) => void;
   public onTouched: () => void;
+  public filePreviewDownload: (field: Field, file: FieldFile) => FsApiFile;
 
   private _destroy$ = new Subject();
 
@@ -74,26 +76,27 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
       files = [files];
     }
 
-    files.forEach((fsFile: FsFile) => {
-      this._fieldRenderer.action(RendererAction.FileUpload, this.field, { file: fsFile.file })
-        .pipe(
-          takeUntil(this._destroy$),
-        )
-        .subscribe((response: any) => {
-          const file = new FileRenderFile(response.url, response.filename);
-          file.value = response;
+    files
+      .forEach((fsFile: FsFile) => {
+        this._fieldRenderer.action(RendererAction.FileUpload, this.field, { file: fsFile.file })
+          .pipe(
+            takeUntil(this._destroy$),
+          )
+          .subscribe((response: any) => {
+            const file = new FileRenderFile(response.url, response.filename);
+            file.value = response;
 
-          if (this.field.configs.allowMultiple) {
-            this.files.push(response);
-          } else {
-            this.files = [response];
-          }
+            if (this.field.configs.allowMultiple) {
+              this.files.push(response);
+            } else {
+              this.files = [response];
+            }
 
-          this.onChange(this.files);
-          this.fieldGallery.reload();
-          this._cdRef.markForCheck();
-        });
-    });
+            this.onChange(this.files);
+            this.fieldGallery.reload();
+            this._cdRef.markForCheck();
+          });
+      });
   }
 
   public writeValue(data: any): void {
@@ -110,12 +113,13 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   }
 
   public ngOnInit() {
+    this.filePreviewDownload = this._fieldRenderer.filePreviewDownload;
     forkJoin({
-      fileDownload: this._fieldRenderer.canFileDownload(this.field),
-      fileDelete: this._fieldRenderer.canFileDelete(this.field),
+      canFileDownload: this._fieldRenderer.canFileDownload(this.field),
+      canFileDelete: this._fieldRenderer.canFileDelete(this.field),
     })
-      .subscribe(({ fileDownload, fileDelete }) => {
-        this._initActions(fileDownload, fileDelete);
+      .subscribe(({ canFileDownload, canFileDelete }) => {
+        this._initActions(canFileDownload, canFileDelete);
       });
   }
 
@@ -124,20 +128,21 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
     this._destroy$.complete();
   }
 
-  private _initActions(fileDownload, fileDelete) {
+  private _initActions(canFileDownload: boolean, canFileDelete: boolean) {
     this.actions = [];
-
-    if (fileDownload) {
+    
+    if (canFileDownload) {
       this.actions.push({
         label: 'Download',
         click: (item: FsGalleryItem) => {
           this._fieldRenderer
-            .action(RendererAction.FileDownload, this.field, { fieldFile: item.data });
+            .fileDownload(this.field, item.data)
+            .download();
         },
       });
     }
 
-    if (fileDelete) {
+    if (canFileDelete) {
       this.actions.push({
         label: 'Remove',
         click: (item: FsGalleryItem) => {

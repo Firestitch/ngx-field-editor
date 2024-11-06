@@ -1,5 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
+import { FsApiFile } from '@firestitch/api';
+
 import { Observable, of, Subject } from 'rxjs';
 
 import { cloneDeep } from 'lodash-es';
@@ -63,9 +65,29 @@ export class FieldRendererService implements OnDestroy {
     return of({});
   }
 
+  public fileDownload(field: Field, fieldFile: any): FsApiFile {
+    if (this.config.fileDownload) {
+      return this.config.fileDownload(field, fieldFile);
+    }
+
+    return null;
+  }
+
+  public filePreviewDownload(field: Field, fieldFile: any): FsApiFile {
+    if (this.config.filePreviewDownload) {
+      return this.config.filePreviewDownload(field, fieldFile);
+    }
+
+    return null;
+  }
+
   public canFileDownload(field: Field): Observable<boolean> {
-    if (!this.config?.canFileDownload) {
+    if (!this.config?.fileDownload) {
       return of(false);
+    }
+
+    if (!this.config?.canFileDownload) {
+      return of(true);
     }
 
     return this.config.canFileDownload(field);

@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { FsGalleryItem, FsGalleryMenuItem } from '@firestitch/gallery';
+import { FsGalleryItem, FsGalleryItemAction } from '@firestitch/gallery';
 
 import { ViewerAction } from '../../../../enums';
 import { Field } from '../../../../interfaces';
@@ -23,7 +23,7 @@ export class FieldViewGalleryComponent implements OnInit {
 
   @Input() public field: Field;
 
-  public menuItems: FsGalleryMenuItem[];
+  public menuItems: FsGalleryItemAction[];
 
   constructor(
     private _fieldViewerService: FieldViewerService,

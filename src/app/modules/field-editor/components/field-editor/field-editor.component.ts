@@ -76,7 +76,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   ) { }
 
   @HostListener('document:keydown.escape', ['$event'])
-  public onKeydownHandler(event: KeyboardEvent) {
+  public onKeydownHandler() {
     this.fieldEditor.unselectField();
   }
 

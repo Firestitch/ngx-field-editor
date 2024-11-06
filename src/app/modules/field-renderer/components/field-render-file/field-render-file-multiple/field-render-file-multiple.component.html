@@ -11,16 +11,19 @@
       mat-raised-button
       type="button"
       color="default">
-    <mat-icon>file_upload</mat-icon>
+    <mat-icon>
+      file_upload
+    </mat-icon>
     Select File
   </button>
 </fs-file>
-
-<ng-container *ngIf="actions">
-  <div class="files-preview" [hidden]="!files.length">
+@if (actions) {
+  <div
+      class="files-preview"
+      [hidden]="!files.length">
     <fs-field-gallery
       [actions]="actions"
       [field]="field">
     </fs-field-gallery>
   </div>
-</ng-container>
+}

@@ -59,11 +59,6 @@ export class ExampleComponent implements OnInit {
     this.initFieldEditor();
     this.initFieldRenderer();
     this.initFieldViewer();
-
-    // setTimeout(() => {
-    //   const s = this.fieldViewer.getRenderedValues();
-    //   debugger;
-    // }, 3000);
   }
 
   public initFieldEditor(): void {

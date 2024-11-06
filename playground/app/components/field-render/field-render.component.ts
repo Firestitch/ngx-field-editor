@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { Field } from '@firestitch/field-editor';
 
@@ -6,6 +6,7 @@ import { Field } from '@firestitch/field-editor';
   selector: 'field-render',
   templateUrl: './field-render.component.html',
   styleUrls: ['./field-render.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldRenderComponent {
 

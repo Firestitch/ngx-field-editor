@@ -6,16 +6,19 @@ import {
   ViewChild,
 } from '@angular/core';
 
+import { FsApiFile } from '@firestitch/api';
 import {
   FsGalleryComponent, FsGalleryConfig,
   FsGalleryInfoConfig,
   FsGalleryItem,
-  FsGalleryMenuItem,
+  FsGalleryItemAction,
   GalleryLayout,
   GalleryThumbnailSize, mime,
 } from '@firestitch/gallery';
 
 import { Observable, of } from 'rxjs';
+
+import { Field, FieldFile } from '../../../../interfaces';
 
 
 @Component({
@@ -26,11 +29,12 @@ import { Observable, of } from 'rxjs';
 })
 export class FieldGalleryComponent implements OnInit, OnChanges {
 
-  @ViewChild(FsGalleryComponent, { static: true })
+  @ViewChild(FsGalleryComponent)
   public gallery: FsGalleryComponent;
 
   @Input() public field: any = { config: {} };
-  @Input() public actions: FsGalleryMenuItem[] = [];
+  @Input() public actions: FsGalleryItemAction[] = [];
+  @Input() public filePreviewDownload: (field: Field, file: FieldFile) => FsApiFile;
 
   public galleryConfig: FsGalleryConfig;
 
@@ -59,9 +63,6 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
     if (this.actions.length) {
       info = {
         ...info,
-        menu: {
-          items: this.actions,
-        },
       };
     }
 
@@ -80,15 +81,18 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
       zoom: false,
       preview: false,
       info,
-      fetch: (query?: any, item?: FsGalleryItem): Observable<FsGalleryItem[]> => {
+      itemActions: this.actions,
+      fetch: (): Observable<FsGalleryItem[]> => {
         const files = (this.field.data?.files || []) as any[];
-
+      
         return of(
           files
             .map<FsGalleryItem>((file) => {
+              const preview = file.url || 
+                (this.filePreviewDownload && this.filePreviewDownload(this.field, file));
               const galleryItem: FsGalleryItem = {
                 url: file.url,
-                preview: file.url,
+                preview,
                 name: this.field.configs.showFilename === false ? '' : file.filename,
                 mime: file.mime || mime(file.filename, file.url, '', false),
                 data: file,
