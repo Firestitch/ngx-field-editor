@@ -1,16 +1,21 @@
-
 <fs-label-field class="fs-form-wrapper">
-  <fs-label class="fs-form-label">{{ field.label }}</fs-label>
-    <app-field-render-file-multiple
-      [field]="field"
-      [name]="name"
-      [required]="field.configs.required"
-      (ngModelChange)="change($event)"
-      [disabled]="disabled"
-      [accept]="accept"
-      [ngModel]="field.data.files">
-    </app-field-render-file-multiple>
+  <fs-label class="fs-form-label">
+    {{ field.label }}
+  </fs-label>
+  <app-field-render-file-multiple
+    [field]="field"
+    [name]="name"
+    [validate]="validate"
+    (ngModelChange)="change($event)"
+    [disabled]="disabled"
+    [accept]="accept"
+    [ngModel]="field.data.files">
+  </app-field-render-file-multiple>
   <fs-label-message class="fs-form-message">
-    <div class="fs-form-hint" *ngIf="field.description">{{ field.description }}</div>
+    <div
+        class="fs-form-hint"
+        *ngIf="field.description">
+      {{ field.description }}
+    </div>
   </fs-label-message>
 </fs-label-field>

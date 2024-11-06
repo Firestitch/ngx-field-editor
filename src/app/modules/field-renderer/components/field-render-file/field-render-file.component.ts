@@ -1,4 +1,6 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
+import { of } from 'rxjs';
 
 import { FieldComponent } from '../field/field.component';
 
@@ -22,6 +24,14 @@ export class FieldRenderFileComponent extends FieldComponent implements OnInit {
     const allowedTypes = this._getAllowedTypes(config);
     this.accept = allowedTypes.length ? allowedTypes.join(',') : '*';
   }
+
+  public validate = () => {
+    if(this.field.configs.required && !this.field.data.files?.length) {
+      return of({ required: true });
+    }
+
+    return of(null);
+  };
 
   private _getAllowedTypes(allowedTypes) {
     const allowed = [];

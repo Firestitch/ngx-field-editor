@@ -2,6 +2,8 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   forwardRef,
+  inject,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
@@ -10,6 +12,7 @@ import {
 import {
   ControlContainer, ControlValueAccessor,
   NG_VALUE_ACCESSOR,
+  NgControl,
   NgForm,
 } from '@angular/forms';
 
@@ -61,6 +64,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   public onTouched: () => void;
 
   private _destroy$ = new Subject();
+  private _controlContainer = inject(Injector);
 
   constructor(
     private _fieldRenderer: FieldRendererService,
@@ -69,8 +73,6 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   ) { }
 
   public selectFile(files) {
-    this.onTouched();
-
     if (!this.field.configs.allowMultiple) {
       files = [files];
     }
@@ -92,6 +94,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
             }
 
             this.onChange(this.files);
+            this._pristine();
             this.fieldGallery.reload();
             this._cdRef.markForCheck();
           });
@@ -170,11 +173,20 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
                   this._fieldRenderer.config.afterFileDeleted(this.field, item.data);
                 }
               }
+              this._pristine();
             });
         },
       });
     }
 
     this._cdRef.markForCheck();
+  }
+
+  private _pristine() {
+    const control = this._controlContainer.get(NgControl);
+
+    const formControl = this._controlContainer.get(NgForm).controls[control.name];
+    formControl.markAsPristine();
+    formControl.updateValueAndValidity();
   }
 }

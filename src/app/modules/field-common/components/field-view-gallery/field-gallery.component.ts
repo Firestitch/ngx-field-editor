@@ -31,7 +31,7 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
   @ViewChild(FsGalleryComponent)
   public gallery: FsGalleryComponent;
 
-  @Input() public field: any = { config: {} };
+  @Input() public field: Field = { configs: {} };
   @Input() public actions: FsGalleryItemAction[] = [];
   @Input() public filePreviewDownload: (field: Field, file: FieldFile) => FsApiFile;
 

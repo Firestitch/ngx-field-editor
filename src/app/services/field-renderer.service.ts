@@ -74,7 +74,7 @@ export class FieldRendererService implements OnDestroy {
   }
 
   public filePreviewDownload(field: Field, fieldFile: any): FsApiFile {
-    if (this.config.filePreviewDownload) {
+    if (this.config?.filePreviewDownload) {
       return this.config.filePreviewDownload(field, fieldFile);
     }
 
