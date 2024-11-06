@@ -9,7 +9,6 @@ import {
 import { FsApiFile } from '@firestitch/api';
 import {
   FsGalleryComponent, FsGalleryConfig,
-  FsGalleryInfoConfig,
   FsGalleryItem,
   FsGalleryItemAction,
   GalleryLayout,
@@ -56,16 +55,6 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
   }
 
   private _initGalleryConfig(): void {
-    let info: FsGalleryInfoConfig = {
-      icon: false,
-    };
-
-    if (this.actions.length) {
-      info = {
-        ...info,
-      };
-    }
-
     this.galleryConfig = {
       thumbnail: {
         width: 200,
@@ -80,7 +69,10 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
       layout: GalleryLayout.Flow,
       zoom: false,
       preview: false,
-      info,
+      info: {
+        icon: false,
+        name: true,
+      },
       itemActions: this.actions,
       fetch: (): Observable<FsGalleryItem[]> => {
         const files = (this.field.data?.files || []) as any[];
