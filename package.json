@@ -2,7 +2,7 @@
   "name": "@firestitch/field-editor",
   "title": "Field Editor",
   "description": "@firestitch/field-editor",
-  "version": "18.0.7",
+  "version": "18.0.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-field-editor"
@@ -102,5 +102,8 @@
   },
   "dependencies": {
     "tslib": "^2.3.1"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "*"
   }
 }

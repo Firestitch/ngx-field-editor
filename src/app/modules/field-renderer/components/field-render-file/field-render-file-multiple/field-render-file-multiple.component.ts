@@ -59,7 +59,6 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
   public files = [];
   public onChange: (data: any) => void;
   public onTouched: () => void;
-  public filePreviewDownload: (field: Field, file: FieldFile) => FsApiFile;
 
   private _destroy$ = new Subject();
 
@@ -112,8 +111,11 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
     this.onTouched = fn;
   }
 
+  public filePreviewDownload = (field: Field, file: FieldFile): FsApiFile => {
+    return this._fieldRenderer.filePreviewDownload(field, file);
+  };
+
   public ngOnInit() {
-    this.filePreviewDownload = this._fieldRenderer.filePreviewDownload;
     forkJoin({
       canFileDownload: this._fieldRenderer.canFileDownload(this.field),
       canFileDelete: this._fieldRenderer.canFileDelete(this.field),
