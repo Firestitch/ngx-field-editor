@@ -197,10 +197,6 @@ export class FieldEditorService implements OnDestroy {
     this.config = {
       ...this._defaultConfig,
       ...config,
-    };
-
-    this.config = {
-      ...config,
       canAddField: config.canAddField ?? true,
       afterFieldUnselected: config.afterFieldUnselected ? config.afterFieldUnselected : (field: Field) => {
         return of(field);

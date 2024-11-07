@@ -1,9 +1,14 @@
 <div class="options">
   <div class="fs-row.gap-small">
-    <mat-checkbox color="primary" [(ngModel)]="field.configs.firstName.display" (ngModelChange)="fieldSave()"></mat-checkbox>
-
+    <mat-checkbox
+      color="primary"
+      [(ngModel)]="field.configs.firstName.display"
+      (ngModelChange)="fieldSave()">
+    </mat-checkbox>
     <mat-form-field>
-      <mat-label>Label</mat-label>
+      <mat-label>
+        Label
+      </mat-label>
       <input
         matInput
         [(ngModel)]="field.configs.firstName.label"
@@ -11,15 +16,21 @@
         name="firstName"
         [ngModelOptions]="{ updateOn: 'blur' }"
         (ngModelChange)="fieldSave()">
-      <div matPrefix>{{field.label}}&nbsp;</div>
+      <div matTextPrefix>
+        {{ field.label }}&nbsp;
+      </div>
     </mat-form-field>
   </div>
-
   <div class="fs-row.gap-small">
-    <mat-checkbox color="primary" [(ngModel)]="field.configs.lastName.display" (ngModelChange)="fieldSave()"></mat-checkbox>
-
+    <mat-checkbox
+      color="primary"
+      [(ngModel)]="field.configs.lastName.display"
+      (ngModelChange)="fieldSave()">
+    </mat-checkbox>
     <mat-form-field>
-      <mat-label>Label</mat-label>
+      <mat-label>
+        Label
+      </mat-label>
       <input
         matInput
         [(ngModel)]="field.configs.lastName.label"
@@ -27,7 +38,9 @@
         name="lastName"
         [ngModelOptions]="{ updateOn: 'blur' }"
         (ngModelChange)="fieldSave()">
-      <div matPrefix>{{field.label}}&nbsp;</div>
+      <div matTextPrefix>
+        {{ field.label }}&nbsp;
+      </div>
     </mat-form-field>
   </div>
 </div>

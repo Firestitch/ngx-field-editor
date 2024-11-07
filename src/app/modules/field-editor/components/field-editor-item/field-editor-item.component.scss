@@ -2,6 +2,7 @@
   display: block;
   border-radius: 5px;
   position: relative;
+  z-index: 999;
 
   &.selected .field-container {
     box-sizing: border-box;
@@ -21,8 +22,11 @@
 
   &:not(.selected) {
     cursor: pointer;
-    * {
+
+    ::ng-deep * {
       pointer-events: none;
+      user-select: none;
+      cursor: pointer !important;
     }
 
     .field-drag,
@@ -32,10 +36,16 @@
   }
 
   &.selected {
-    box-shadow: 0 3px 3px -2px #0003, 0 3px 4px #00000024, 0 1px 8px #0000001f;
+    box-shadow: 0 3px 3px -2px #0003, 0 3px 4px #00000024, 0 1px 5px #0000001f;
     z-index: 1;
     position: relative;
     cursor: initial;
+    margin: 0 4px;
+
+    .field-container {
+      margin-left: -4px;
+      margin-right: -4px;
+    }
   }
 }
 

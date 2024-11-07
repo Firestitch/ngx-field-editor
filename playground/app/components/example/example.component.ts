@@ -180,7 +180,7 @@ export class ExampleComponent implements OnInit {
             tap(() => this._message.success('Saved Changes')),
           );
       },
-      toolbar: this.getToolbar(),
+      // toolbar: this.getToolbar(),
       fieldMenu: {
         items: [
           {

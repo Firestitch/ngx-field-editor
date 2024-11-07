@@ -2,7 +2,6 @@
 
   .fields-container {
     width: 100%;
-    margin: 0 5px;
 
     .fields {
       min-height: 60px;
@@ -12,6 +11,7 @@
   &:not(.has-fields) .fields-container {
     border: 2px dashed #efefef;
     border-radius: 6px;
+    box-sizing: border-box;
   }
 
   .toolbar-container {
@@ -20,7 +20,7 @@
       margin: 10px;
       z-index: 1000;
       position: absolute;
-      right: 24px;
+      right: 0;
 
       .toolbar-wrapper {
         position: absolute;

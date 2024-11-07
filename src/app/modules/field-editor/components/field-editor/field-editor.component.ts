@@ -17,7 +17,6 @@ import {
 } from '@angular/core';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Overlay } from '@angular/cdk/overlay';
 
 import { fromEvent, Subject } from 'rxjs';
 import { delay, filter, switchMap, takeUntil } from 'rxjs/operators';
@@ -72,7 +71,6 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     public fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
     private _elRef: ElementRef,
-    private _overlay: Overlay,
   ) { }
 
   @HostListener('document:keydown.escape', ['$event'])

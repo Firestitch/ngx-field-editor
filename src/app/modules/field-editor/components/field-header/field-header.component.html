@@ -1,5 +1,5 @@
 <div *ngIf="(fieldEditor.fieldSelected$ | async).guid === field.guid; else selectedElse">
-  <div class="fs-row.gap-small row">
+  <div class="fs-row.gap-xs row">
     <div class="label-field">
       <mat-form-field
           *ngIf="showLabel"
@@ -15,23 +15,31 @@
       </mat-form-field>
     </div>
     <button
-      *ngIf="canEdit && showRequired"
-      mat-icon-button
-      type="button"
-      (click)="toggleRequired()"
-      matTooltip="Required Response"
-      class="require-button"
-      [ngClass]="{ disabled: !field.configs.required }">
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-          viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+        *ngIf="canEdit && showRequired"
+        mat-icon-button
+        type="button"
+        (click)="toggleRequired()"
+        matTooltip="Required Response"
+        class="require-button"
+        [ngClass]="{ disabled: !field.configs.required }">
+      <svg
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 512 512"
+          style="enable-background:new 0 0 512 512;"
+          space="preserve">
         <g>
           <path d="M451.3,324.6l-125-68.6l125-68.6c10.4-5.7,14-18.8,8.1-29l-17.1-29.7c-5.9-10.2-19.1-13.6-29.2-7.5l-121.9,73.9l3.1-142.6
             c0.3-11.8-9.3-21.5-21.1-21.5h-34.2c-11.8,0-21.3,9.7-21.1,21.5l3.1,142.6L98.9,121.2c-10.1-6.1-23.3-2.8-29.2,7.5l-17.1,29.7
             c-5.9,10.2-2.3,23.3,8.1,29l125,68.6l-125,68.6c-10.4,5.7-14,18.8-8.1,29l17.1,29.7c5.9,10.2,19.1,13.6,29.2,7.5l121.9-73.9
             l-3.1,142.6c-0.3,11.8,9.3,21.5,21.1,21.5h34.2c11.8,0,21.3-9.7,21.1-21.5l-3.1-142.6l121.9,73.9c10.1,6.1,23.3,2.8,29.2-7.5
-            l17.1-29.7C465.3,343.4,461.7,330.3,451.3,324.6z"/>
+            l17.1-29.7C465.3,343.4,461.7,330.3,451.3,324.6z"></path>
         </g>
-        </svg>
+      </svg>
     </button>
     <button
         *ngIf="canEdit && showDescription"
@@ -40,7 +48,9 @@
         (click)="toggleDescriptionNote($event)"
         matTooltip="Description"
         [ngClass]="{ disabled: !hasDescription }">
-      <mat-icon>subject</mat-icon>
+      <mat-icon>
+        subject
+      </mat-icon>
     </button>
     <button
         *ngIf="showDelete"
@@ -48,7 +58,9 @@
         type="button"
         (click)="delete($event)"
         matTooltip="Delete">
-      <mat-icon>delete</mat-icon>
+      <mat-icon>
+        delete
+      </mat-icon>
     </button>
     <fs-field-header-menu
       *ngIf="showActions"
@@ -56,7 +68,6 @@
       (fieldChanged)="changed()">
     </fs-field-header-menu>
   </div>
-
   <ng-container *ngIf="hasDescription">
     <mat-form-field class="row description form-field-padless">
       <textarea
@@ -73,10 +84,13 @@
     </mat-form-field>
   </ng-container>
 </div>
-
 <ng-template #selectedElse>
   <div class="view">
-    <div class="label">{{field.label}}</div>
-    <div class="description">{{field.description}}</div>
+    <div class="label">
+      {{ field.label }}
+    </div>
+    <div class="description">
+      {{ field.description }}
+    </div>
   </div>
 </ng-template>

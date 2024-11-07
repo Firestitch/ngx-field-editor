@@ -1,10 +1,10 @@
 import { FieldType } from '../enums/field-type';
 
 export const TOOLBAR_DEFAULTS = {
-  [FieldType.ShortText]: { icon: 'short_text', label: 'Short Text'},
-  [FieldType.LongText]: { icon: 'subject', label: 'Long Text' },
+  [FieldType.ShortText]: { icon: 'short_text', label: 'Short text' },
+  [FieldType.LongText]: { icon: 'subject', label: 'Long text' },
   [FieldType.Dropdown]: { icon: 'arrow_drop_down_circle', label: 'Dropdown' },
-  [FieldType.Choice]: { icon: 'radio_button_checked', label: 'Multiple Choice' },
+  [FieldType.Choice]: { icon: 'radio_button_checked', label: 'Multiple choice' },
   [FieldType.Checkbox]: { icon: 'check_box', label: 'Checkboxes' },
   [FieldType.Date]: { icon: 'date_range', label: 'Date' },
   [FieldType.Time]: { icon: 'access_time', label: 'Time' },
@@ -17,6 +17,6 @@ export const TOOLBAR_DEFAULTS = {
   [FieldType.Address]: { icon: 'location_on', label: 'Address' },
   [FieldType.Heading]: { icon: 'title', label: 'Heading' },
   [FieldType.Content]: { icon: 'text_format', label: 'Content' },
-  [FieldType.RichText]: { icon: 'art_track', label: 'RichText' },
-  [FieldType.VisualSelector]: { icon: 'grid_view', label: 'Visual Selector' },
+  [FieldType.RichText]: { icon: 'art_track', label: 'Rich text' },
+  [FieldType.VisualSelector]: { icon: 'grid_view', label: 'Visual selector' },
 };
