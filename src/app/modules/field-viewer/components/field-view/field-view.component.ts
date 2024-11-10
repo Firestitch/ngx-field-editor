@@ -26,12 +26,12 @@ export class FieldViewComponent implements OnInit {
 
   public ngOnInit(): void {
     if(this.data) {
-      this.field = this.data.field;
+      this.field.data = this.data;
     }
   }
 
   public get dateLocal(): Date {
-    if (this.field.type !== FieldType.Date) {
+    if ((this.field.type as FieldType) !== FieldType.Date) {
       return null;
     }
 

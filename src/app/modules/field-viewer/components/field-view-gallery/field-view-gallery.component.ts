@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   OnInit,
 } from '@angular/core';
@@ -24,31 +25,35 @@ export class FieldViewGalleryComponent implements OnInit {
   @Input() public field: Field;
 
   public menuItems: FsGalleryItemAction[];
-
-  constructor(
-    private _fieldViewerService: FieldViewerService,
-    private _cdRef: ChangeDetectorRef,
-  ) { }
+  
+  private _fieldViewerService = inject(FieldViewerService, { optional: true });
+  private _cdRef = inject(ChangeDetectorRef);
 
   public fileDownload(data): void {
-    this._fieldViewerService.action(ViewerAction.FileDownload, this.field, data)
-      .subscribe();
+    if(this._fieldViewerService) {
+      this._fieldViewerService.action(ViewerAction.FileDownload, this.field, data)
+        .subscribe();
+    }
   }
 
   public ngOnInit(): void {
-    this._fieldViewerService.canFileDownload(this.field)
-      .subscribe((canFileDownload) => {
-        this.menuItems = canFileDownload ? [
-          {
-            label: 'Download',
-            click: (galleryItem: FsGalleryItem) => {
-              this.fileDownload({ fieldFile: galleryItem.data });
+    if(this._fieldViewerService) {
+      this._fieldViewerService.canFileDownload(this.field)
+        .subscribe((canFileDownload) => {
+          this.menuItems = canFileDownload ? [
+            {
+              label: 'Download',
+              click: (galleryItem: FsGalleryItem) => {
+                this.fileDownload({ fieldFile: galleryItem.data });
+              },
             },
-          },
-        ] : [];
+          ] : [];
 
-        this._cdRef.markForCheck();
-      });
+          this._cdRef.markForCheck();
+        });
+    } else {
+      this.menuItems = [];
+    }
   }
 
 
