@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 
 import { EditorAction } from '../enums';
 
-import { Toolbar, ToolbarItem } from './toolbar.interface';
-import { Field } from './field.interface';
 import { FieldOption } from './field-option.interface';
+import { Field } from './field.interface';
+import { Toolbar, ToolbarItem } from './toolbar.interface';
 
 export interface FsFieldEditorCallbackParams {
   field?: Field;

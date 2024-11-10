@@ -8,6 +8,7 @@ import {
   ContentChildren,
   ElementRef,
   HostListener,
+  inject,
   Inject,
   Input,
   OnDestroy,
@@ -17,6 +18,7 @@ import {
 } from '@angular/core';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { fromEvent, Subject } from 'rxjs';
 import { delay, filter, switchMap, takeUntil } from 'rxjs/operators';
@@ -64,6 +66,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   public fieldRenderTemplateRefs = {};
 
   private _destroy$ = new Subject<void>();
+  private _dialogRef = inject(MatDialogRef, { optional: true });
 
   constructor(
     @Inject(DOCUMENT) public document: any,
@@ -81,6 +84,9 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   public ngOnInit(): void {
     this._listenClickOutside();
     this._listenFieldAdded();
+    if(this._dialogRef) {
+      this.scrollContainer = document.querySelector<HTMLElement>(`#${this._dialogRef.id} .mat-mdc-dialog-content`);
+    }
   }
 
   public get fields(): Field[] {

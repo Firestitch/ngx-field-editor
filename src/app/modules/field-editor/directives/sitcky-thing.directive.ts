@@ -40,54 +40,55 @@ export interface StickyStatus {
 })
 export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
 
-  filterGate = false;
-  marginTop$ = new BehaviorSubject(0);
-  marginBottom$ = new BehaviorSubject(0);
-  enable$ = new BehaviorSubject(true);
+  public filterGate = false;
+  public marginTop$ = new BehaviorSubject(0);
+  public marginBottom$ = new BehaviorSubject(0);
+  public enable$ = new BehaviorSubject(true);
 
-  @Input() scrollContainer: string | HTMLElement | undefined;
-  @Input() auditTime = 0;
-  @Input() set marginTop(value: number) {
+  @Input() public scrollContainer: string | HTMLElement | undefined;
+  @Input() public auditTime = 0;
+  @Input() public set marginTop(value: number) {
     this.marginTop$.next(value);
   }
 
-  @Input() set marginBottom(value: number) {
+  @Input() public set marginBottom(value: number) {
     this.marginBottom$.next(value);
   }
 
-  @Input() set enable(value: boolean) {
+  @Input() public set enable(value: boolean) {
     this.enable$.next(value);
   }
-  @Input('spacer') spacerElement: HTMLElement | undefined;
-  @Input('boundary') boundaryElement: HTMLElement | undefined;
-  sticky = false;
-  @HostBinding('class.is-sticky') isSticky = false;
-  @HostBinding('class.boundary-reached') boundaryReached = false;
-  @HostBinding('class.upper-bound-reached') upperBoundReached = false;
-  @Output() stickyStatus: EventEmitter<StickyStatus> = new EventEmitter<StickyStatus>();
-  @Output() stickyPosition: EventEmitter<StickyPositions> = new EventEmitter<StickyPositions>();
+  @Input('spacer') public spacerElement: HTMLElement | undefined;
+  @Input('boundary') public boundaryElement: HTMLElement | undefined;
+  public sticky = false;
+
+  @HostBinding('class.is-sticky') public isSticky = false;
+  @HostBinding('class.boundary-reached') public boundaryReached = false;
+  @HostBinding('class.upper-bound-reached') public upperBoundReached = false;
+  @Output() public stickyStatus: EventEmitter<StickyStatus> = new EventEmitter<StickyStatus>();
+  @Output() public stickyPosition: EventEmitter<StickyPositions> = new EventEmitter<StickyPositions>();
 
   /**
    * The field represents some position values in normal (not sticky) mode.
    * If the browser size or the content of the page changes, this value must be recalculated.
    * */
-  private scroll$ = new Subject<number>();
-  private scrollThrottled$: Observable<number>;
-  private target = this.getScrollTarget();
+  private _scroll$ = new Subject<number>();
+  private _scrollThrottled$: Observable<number>;
+  private _target;
 
-  private resize$ = new Subject<void>();
-  private resizeThrottled$: Observable<void>;
-  private extraordinaryChange$ = new BehaviorSubject<void>(undefined);
+  private _resize$ = new Subject<void>();
+  private _resizeThrottled$: Observable<void>;
+  private _extraordinaryChange$ = new BehaviorSubject<void>(undefined);
 
-  private status$: Observable<StickyStatus>;
+  private _status$: Observable<StickyStatus>;
 
-  private componentDestroyed = new Subject<void>();
+  private _componentDestroyed = new Subject<void>();
 
-  constructor(private stickyElement: ElementRef, @Inject(PLATFORM_ID) private platformId: string) {
+  constructor(private _stickyElement: ElementRef, @Inject(PLATFORM_ID) private _platformId: string) {
 
     /**
      * Throttle the scroll to animation frame (around 16.67ms) */
-    this.scrollThrottled$ = this.scroll$
+    this._scrollThrottled$ = this._scroll$
       .pipe(
         throttleTime(0, animationFrameScheduler),
         share(),
@@ -95,7 +96,7 @@ export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
 
     /**
      * Throttle the resize to animation frame (around 16.67ms) */
-    this.resizeThrottled$ = this.resize$
+    this._resizeThrottled$ = this._resize$
       .pipe(
         throttleTime(0, animationFrameScheduler),
         // emit once since we are currently using combineLatest
@@ -104,39 +105,39 @@ export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
       );
 
 
-    this.status$ = combineLatest(
+    this._status$ = combineLatest(
       this.enable$,
-      this.scrollThrottled$,
+      this._scrollThrottled$,
       this.marginTop$,
       this.marginBottom$,
-      this.extraordinaryChange$,
-      this.resizeThrottled$,
+      this._extraordinaryChange$,
+      this._resizeThrottled$,
     )
       .pipe(
         filter(([enabled]) => this.checkEnabled(enabled)),
-        map(([enabled, pageYOffset, marginTop, marginBottom]) => this.determineStatus(this.determineElementOffsets(), pageYOffset, marginTop, marginBottom, enabled)),
+        map(([enabled, pageYOffset, marginTop, marginBottom]) => this._determineStatus(this._determineElementOffsets(), pageYOffset, marginTop, marginBottom, enabled)),
         share(),
       );
 
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     const operators = this.scrollContainer ?
-      pipe(takeUntil(this.componentDestroyed)) :
-      pipe(auditTime(this.auditTime), takeUntil(this.componentDestroyed));
-    this.status$
+      pipe(takeUntil(this._componentDestroyed)) :
+      pipe(auditTime(this.auditTime), takeUntil(this._componentDestroyed));
+    this._status$
       .pipe(operators)
       .subscribe((status: StickyStatus) => {
-        this.setSticky(status);
-        this.setStatus(status);
+        this._setSticky(status);
+        this._setStatus(status);
       });
   }
 
   public recalculate(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this._platformId)) {
       // Make sure to be in the next tick by using timeout
       setTimeout(() => {
-        this.extraordinaryChange$.next(undefined);
+        this._extraordinaryChange$.next(undefined);
       }, 0);
     }
   }
@@ -150,9 +151,9 @@ export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
    * emit in order to reset and call removeSticky. So this method basically
    * turns the filter in "filter, but let the first pass".
    * */
-  checkEnabled(enabled: boolean): boolean {
+  public checkEnabled(enabled: boolean): boolean {
 
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this._platformId)) {
       return false;
     }
 
@@ -177,36 +178,41 @@ export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:resize', [])
-  onWindowResize(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.resize$.next();
+  public onWindowResize(): void {
+    if (isPlatformBrowser(this._platformId)) {
+      this._resize$.next();
     }
   }
+ 
+  public getComputedStyle(el: HTMLElement): ClientRect | DOMRect {
+    return el.getBoundingClientRect();
+  }
 
-  setupListener(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const target = this.getScrollTarget();
+  public setupListener(): void {
+    if (isPlatformBrowser(this._platformId)) {
+      const target = this._getScrollTarget();
       target.addEventListener('scroll', this.listener);
     }
   }
 
-  listener = (e: Event) => {
+  public listener = (e: Event) => {
     const upperScreenEdgeAt = (e.target as HTMLElement).scrollTop || window.pageYOffset;
-    this.scroll$.next(upperScreenEdgeAt);
+    this._scroll$.next(upperScreenEdgeAt);
   };
 
 
-  ngOnInit(): void {
-    this.checkSetup();
+  public ngOnInit(): void {
+    this._target = this._getScrollTarget();
+    this._checkSetup();
     this.setupListener();
   }
 
-  ngOnDestroy(): void {
-    this.target.removeEventListener('scroll', this.listener);
-    this.componentDestroyed.next();
+  public ngOnDestroy(): void {
+    this._target.removeEventListener('scroll', this.listener);
+    this._componentDestroyed.next();
   }
 
-  private getScrollTarget(): Element | Window {
+  private _getScrollTarget(): Element | Window {
     let target: Element | Window;
     if (this.scrollContainer && typeof this.scrollContainer === 'string') {
       target = document.querySelector(this.scrollContainer);
@@ -222,19 +228,23 @@ export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
 
     return target;
   }
-  getComputedStyle(el: HTMLElement): ClientRect | DOMRect {
-    return el.getBoundingClientRect();
-  }
 
-  private determineStatus(originalVals: StickyPositions, pageYOffset: number, marginTop: number, marginBottom: number, enabled: boolean) {
-    const elementPos = this.determineElementOffsets();
+  private get _scrollTop() {
+    return (this._target).scrollTop || window.pageYOffset;
+  } 
+
+  private _determineStatus(originalVals: StickyPositions, pageYOffset: number, marginTop: number, marginBottom: number, enabled: boolean) {
+    const elementPos = this._determineElementOffsets();
     let isSticky = enabled && pageYOffset > originalVals.offsetY;
     if (pageYOffset < elementPos.offsetY) {
       isSticky = false;
     }
-    const stickyElementHeight = this.getComputedStyle(this.stickyElement.nativeElement).height;
-    const reachedLowerEdge = (this.boundaryElement != null) ? this.boundaryElement && window.pageYOffset + stickyElementHeight + marginBottom >= (originalVals.bottomBoundary - marginTop * 1.0) : undefined;
-    const reachedUpperEdge = (this.boundaryElement != null) ? window.pageYOffset < (this.boundaryElement.offsetTop + marginTop * 1.0) : undefined;
+    const stickyElementHeight = this.getComputedStyle(this._stickyElement.nativeElement).height;
+    const reachedLowerEdge = this.boundaryElement  ? 
+      this.boundaryElement && this._scrollTop + stickyElementHeight + marginBottom >= (originalVals.bottomBoundary - marginTop * 1.0) : undefined;
+    
+    const reachedUpperEdge = this.boundaryElement  ? 
+      this._scrollTop < (this.boundaryElement.offsetTop + marginTop * 1.0) : undefined;
     this.stickyPosition.emit({ ...elementPos, upperScreenEdgeAt: pageYOffset, marginBottom, marginTop });
 
     return {
@@ -245,24 +255,14 @@ export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-
-  // not always pixel. e.g. ie9
-  private getMargins(): { top: number, bottom: number } {
-    const stickyStyles = window.getComputedStyle(this.stickyElement.nativeElement);
-    const top = parseInt(stickyStyles.marginTop, 10);
-    const bottom = parseInt(stickyStyles.marginBottom, 10);
-
-    return { top, bottom };
-  }
-
   /**
    * Gets the offset for element. If the element
    * currently is sticky, it will get removed
    * to access the original position. Other
    * wise this would just be 0 for fixed elements. */
-  private determineElementOffsets(): StickyPositions {
+  private _determineElementOffsets(): StickyPositions {
     if (this.sticky) {
-      this.removeSticky();
+      this._removeSticky();
     }
     let bottomBoundary: number | null = null;
 
@@ -273,41 +273,26 @@ export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
     }
 
     return {
-      offsetY: (getPosition(this.stickyElement.nativeElement).y - this.marginTop$.value), bottomBoundary,
+      offsetY: (getPosition(this._stickyElement.nativeElement).y - this.marginTop$.value), bottomBoundary,
     };
   }
 
-  private makeSticky(boundaryReached: boolean = false, marginTop: number, marginBottom: number): void {
+  private _makeSticky(boundaryReached: boolean = false, marginTop: number, marginBottom: number): void {
     // do this before setting it to pos:fixed
-    const { width, height, left } = this.getComputedStyle(this.stickyElement.nativeElement);
+    const { width, height, left } = this.getComputedStyle(this._stickyElement.nativeElement);
     const offSet = boundaryReached ? (this.getComputedStyle(this.boundaryElement).bottom - height - this.marginBottom$.value) : this.marginTop$.value;
-    if (this.scrollContainer && !this.sticky) {
-      this.stickyElement.nativeElement.style.position = 'sticky';
-      this.stickyElement.nativeElement.style.top = '0px';
-      this.sticky = true;
-    } else {
-      this.stickyElement.nativeElement.style.position = 'fixed';
-      this.stickyElement.nativeElement.style.top = `${offSet  }px`;
-      this.stickyElement.nativeElement.style.left = `${left  }px`;
-      this.stickyElement.nativeElement.style.width = `${width}px`;
-    }
+    this._stickyElement.nativeElement.style.position = 'fixed';
+    this._stickyElement.nativeElement.style.top = `${offSet}px`;
+    this._stickyElement.nativeElement.style.left = `${left}px`;
+    this._stickyElement.nativeElement.style.width = `${width}px`;
+
     if (this.spacerElement) {
       const spacerHeight = marginBottom + height + marginTop;
       this.spacerElement.style.height = `${spacerHeight}px`;
     }
   }
 
-  private determineBoundaryReached(boundaryHeight: number, stickyElHeight: number, cssMargins, marginTop: number, marginBottom: number, upperScreenEdgeAt: number) {
-
-    const boundaryElementPos = getPosition(this.boundaryElement);
-
-    const boundaryElementLowerEdge = boundaryElementPos.y + boundaryHeight;
-    const lowerEdgeStickyElement = upperScreenEdgeAt + stickyElHeight + marginTop + cssMargins.top + marginBottom + cssMargins.bottom;
-
-    return boundaryElementLowerEdge <= lowerEdgeStickyElement;
-  }
-
-  private checkSetup() {
+  private _checkSetup() {
     if (isDevMode() && !this.spacerElement) {
       console.warn(`******There might be an issue with your sticky directive!******
 
@@ -325,33 +310,33 @@ Then pass the spacer element as input:
   }
 
 
-  private setSticky(status: StickyStatus): void {
+  private _setSticky(status: StickyStatus): void {
     if (status.isSticky) {
       if (this.upperBoundReached) {
-        this.removeSticky();
+        this._removeSticky();
         this.isSticky = false;
       } else {
-        this.makeSticky(status.reachedLowerEdge, status.marginTop, status.marginBottom);
+        this._makeSticky(status.reachedLowerEdge, status.marginTop, status.marginBottom);
         this.isSticky = true;
       }
     } else {
-      this.removeSticky();
+      this._removeSticky();
     }
   }
 
-  private setStatus(status: StickyStatus) {
+  private _setStatus(status: StickyStatus) {
     this.upperBoundReached = status.reachedUpperEdge;
     this.boundaryReached = status.reachedLowerEdge;
     this.stickyStatus.next(status);
   }
 
-  private removeSticky(): void {
+  private _removeSticky(): void {
     this.boundaryReached = false;
     this.sticky = false;
-    this.stickyElement.nativeElement.style.position = '';
-    this.stickyElement.nativeElement.style.width = 'auto';
-    this.stickyElement.nativeElement.style.left = 'auto';
-    this.stickyElement.nativeElement.style.top = 'auto';
+    this._stickyElement.nativeElement.style.position = '';
+    this._stickyElement.nativeElement.style.width = 'auto';
+    this._stickyElement.nativeElement.style.left = 'auto';
+    this._stickyElement.nativeElement.style.top = 'auto';
     if (this.spacerElement) {
       this.spacerElement.style.height = '0';
     }

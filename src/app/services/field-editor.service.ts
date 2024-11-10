@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 
 import { guid as fsGuid } from '@firestitch/common';
 
@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash-es';
 
 import { EditorAction } from '../enums';
 import { initField } from '../helpers/init-field';
-import { FS_FIELD_EDITOR_CONFIG } from '../injectors/fs-field-editor.providers';
+import { FS_FIELD_EDITOR_ORIGINAL_CONFIG } from '../injectors/fs-field-editor-original.providers';
 import { ToolbarItem } from '../interfaces';
 import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
 import {
@@ -32,9 +32,7 @@ export class FieldEditorService implements OnDestroy {
   private _fieldAdded$ = new Subject<Field>();
   private _fieldChanged$ = new Subject<Field>();
 
-  constructor(
-    @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig: FieldEditorConfig,
-  ) { }
+  private _defaultConfig = inject<FieldEditorConfig>(FS_FIELD_EDITOR_ORIGINAL_CONFIG, { optional: true });
 
   public get fieldAdded$(): Observable<Field> {
     return this._fieldAdded$.asObservable();
@@ -195,6 +193,9 @@ export class FieldEditorService implements OnDestroy {
 
   public setConfig(config: FieldEditorConfig) {
     this.config = {
+      toolbar: {
+        items: [],
+      },
       ...this._defaultConfig,
       ...config,
       canAddField: config.canAddField ?? true,

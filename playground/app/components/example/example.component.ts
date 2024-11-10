@@ -1,12 +1,13 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild,
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject, OnInit, ViewChild,
 } from '@angular/core';
 
+
+import { MatDialog } from '@angular/material/dialog';
 
 import { guid } from '@firestitch/common';
 import {
   EditorAction,
-  FS_FIELD_EDITOR_CONFIG,
   Field,
   FieldEditorComponent, FieldEditorConfig,
   FieldOption,
@@ -15,6 +16,7 @@ import {
   FieldType,
   FieldViewerComponent,
   FieldViewerConfig,
+  FS_FIELD_EDITOR_CONFIG,
   RendererAction,
   ToolbarItem,
   VisualSelectorFormat,
@@ -25,6 +27,8 @@ import { Observable, of } from 'rxjs';
 import { delay, mapTo, tap } from 'rxjs/operators';
 
 import { ViewerAction } from 'src/app/enums';
+
+import { DialogComponent } from '../dialog';
 
 
 @Component({
@@ -48,6 +52,8 @@ export class ExampleComponent implements OnInit {
   public fieldRendererConfig: FieldRendererConfig;
   public fieldViewerConfig: FieldViewerConfig;
   public selectedIndex = 0;
+
+  private _dialog = inject(MatDialog);
 
   constructor(
     @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig: FieldEditorConfig,
@@ -697,5 +703,9 @@ export class ExampleComponent implements OnInit {
     return `<b>COPYRIGHTS, TRADEMARKS & RESTRICTIONS</b>
 <br>
 The material included herein, including site design, text, graphics and the selection and arrangement thereof are copyrighted © by Staples, Inc. ALL RIGHTS RESERVED. Staples.com®, Staples®, that was easy®, other trademarks and all page headers, custom graphics and custom icons are service marks and trademarks of Staples the Office Superstore, LLC. All other trademarks, product names and company names or logos cited herein are the property of their respective owners.`    ;
+  }
+
+  public openDialog() {
+    this._dialog.open(DialogComponent);
   }
 }
