@@ -14,7 +14,7 @@
         [disabled]="disabled"
         [value]="option.guid"
         (change)="radioChange(notes)">
-      <div class="fs-column">
+      <div class="fs-column label-content">
         <div>{{option.name}}</div>
         <div *ngIf="option.notesLabel" class="checkbox-hint"><small>{{ option.notesLabel }}</small></div>
       </div>

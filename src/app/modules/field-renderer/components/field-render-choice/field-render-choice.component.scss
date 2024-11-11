@@ -1,17 +1,26 @@
 :host ::ng-deep {
 
-  .mat-radio-button {
+  .mat-mdc-radio-button {
     margin-bottom: 5px;
 
     &:last-child {
       margin-bottom: 0;
     }
 
-    .mat-radio-label {
+    .mdc-label {
       width: 100%;
 
-      .mat-radio-label-content {
-        width: calc(100% - 28px);
+      // .label-content {
+      //   width: calc(100% - 28px);
+      // }
+    }
+
+    &:not(.other) {
+      .mdc-form-field {
+        align-items: start;
+        .mdc-label {
+          padding: calc((var(--mdc-radio-state-layer-size) - 20px) / 2);
+        }
       }
     }
       
@@ -39,7 +48,7 @@
     max-width: 100%;
     margin-right: 8px;
 
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
       border-top: 0;
     }
   }
