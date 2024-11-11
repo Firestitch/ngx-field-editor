@@ -26,7 +26,7 @@ export function initField(field: Field | FieldOption): Field {
     field.configs = {};
   }
 
-  switch (field.type) {
+  switch (field.type as FieldType) {
     case FieldType.Heading:
       initHeading(field);
       break;
@@ -39,7 +39,6 @@ export function initField(field: Field | FieldOption): Field {
     case FieldType.Choice:
     case FieldType.Dropdown:
     case FieldType.Gender:
-    case FieldType.VisualSelector:
       initOption(field);
       break;
 
@@ -65,6 +64,12 @@ export function initField(field: Field | FieldOption): Field {
     case FieldType.RichText:
       initText(field);
       break;
+
+    case FieldType.VisualSelector: {
+      initOptionVisualSelector(field);
+  
+      break;
+    }
   }
 
   return field;
@@ -72,7 +77,9 @@ export function initField(field: Field | FieldOption): Field {
 
 
 function initOption(field: FieldOption) {
-  if (field.type === FieldType.Gender) {
+  const fieldType = field.type as FieldType;
+
+  if (fieldType === FieldType.Gender) {
     if (!field.options) {
       field.options = [
         { name: 'Male', value: 'male', guid: guid() },
@@ -83,11 +90,11 @@ function initOption(field: FieldOption) {
     field.options = [];
   }
 
-  switch (field.type) {
+  switch (fieldType) {
     case FieldType.Checkbox:
     case FieldType.Choice:
     case FieldType.Gender: {
-      const selected = field.type === FieldType.Checkbox ? [] : null;
+      const selected = fieldType === FieldType.Checkbox ? [] : null;
 
       if (!isObject(field.data.value)) {
         field.data.value = { selected };
@@ -95,7 +102,7 @@ function initOption(field: FieldOption) {
 
       const value = getPopulateFieldValue(field);
       if (value !== null) {
-        field.data.value.selected = field.type === FieldType.Checkbox ? value.split(',') : value;
+        field.data.value.selected = fieldType === FieldType.Checkbox ? value.split(',') : value;
       }
 
       if (!isObject(field.data.value.notes)) {
@@ -108,11 +115,6 @@ function initOption(field: FieldOption) {
       if (isObject(field.data.value)) {
         field.data.value = null;
       }
-
-      break;
-    }
-    case FieldType.VisualSelector: {
-      initOptionVisualSelector(field);
 
       break;
     }
@@ -131,7 +133,7 @@ function initOptionDefault(field: FieldOption) {
         String(item.guid).toLowerCase() === _default);
 
     if (option) {
-      switch (field.type) {
+      switch (field.type as FieldType) {
         case FieldType.Choice:
           if (!field.data.value.selected) {
             field.data.value.selected = option.guid;
