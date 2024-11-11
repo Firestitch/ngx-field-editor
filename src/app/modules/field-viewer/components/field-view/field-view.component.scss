@@ -1,5 +1,14 @@
-.address span:not(:first-child):before {
-  content: ", ";
+.address {
+  display: inline-flex;
+  flex-wrap: wrap;
+  
+  span {
+    display: inline-flex;
+
+    &:not(:last-child):after {
+      content: ", \00a0";
+    }
+  }
 }
 
 .not-specified {

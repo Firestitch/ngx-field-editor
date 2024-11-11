@@ -11,8 +11,8 @@ import { FieldOption } from '../../../../interfaces';
 
 @Component({
   selector: 'fs-field-view-options',
-  templateUrl: 'field-view-options.component.html',
-  styleUrls: ['field-view-options.component.scss'],
+  templateUrl: './field-view-options.component.html',
+  styleUrls: ['./field-view-options.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldViewOptionsComponent {

@@ -8,6 +8,7 @@ import {
 import { parseLocal } from '@firestitch/date';
 
 import { FieldType } from '../../../../enums/field-type';
+import { initField } from '../../../../helpers';
 import { Field } from '../../../../interfaces';
 
 
@@ -28,6 +29,8 @@ export class FieldViewComponent implements OnInit {
     if(this.data) {
       this.field.data = this.data;
     }
+
+    this.field = initField(this.field);
   }
 
   public get dateLocal(): Date {
