@@ -12,14 +12,14 @@ export { FieldEditorItemComponent } from './app/modules/field-editor/components/
 export { FieldEditorComponent } from './app/modules/field-editor/components/field-editor/field-editor.component';
 
 export {
-  FieldViewComponent, FieldViewHeadingComponent, FieldViewerComponent
+  FieldViewComponent, FieldViewHeadingComponent, FieldViewerComponent,
 } from './app/modules/field-viewer/components';
 
 export {
   FieldRenderAddressComponent, FieldRenderBirthdayComponent, FieldRenderCheckboxComponent, FieldRenderChoiceComponent, FieldRenderComponent,
   FieldRenderContentComponent, FieldRenderDateComponent, FieldRenderDropdownComponent, FieldRenderFileComponent, FieldRenderFileMultipleComponent,
   FieldRenderGenderComponent, FieldRenderNameComponent, FieldRenderNameModelComponent, FieldRenderRichTextComponent, FieldRenderTextComponent,
-  FieldRenderTimeComponent, FieldRenderVisualSelectorComponent, FieldRendererComponent
+  FieldRenderTimeComponent, FieldRenderVisualSelectorComponent, FieldRendererComponent,
 } from './app/modules/field-renderer/components';
 
 export { FieldEditorService, FieldRendererService, FieldViewerService } from './app/services';
@@ -28,20 +28,19 @@ export { FS_FIELD_EDITOR_CONFIG } from './app/injectors/fs-field-editor.provider
 export { FieldEditorToolbarDirective } from './app/modules/field-editor/directives/field-editor-toolbar/field-editor-toolbar.directive';
 
 export {
-  Field, FieldConfig, FieldEditorConfig, FieldMenu,
+  Field, FieldConfig, FieldEditorConfig, FieldFile, FieldMenu,
   FieldMenuItem, FieldOption, FieldRendererConfig,
-  FieldViewerConfig,
-  FsFieldEditorCallbackFn,
+  FieldViewerConfig, FsFieldEditorCallbackFn,
   FsFieldEditorCallbackParams, Toolbar, ToolbarItem, ToolbarItems,
-  ViewField
+  ViewField,
 } from './app/interfaces';
 
 export {
-  initField
+  initField,
 } from './app/helpers';
 
 export {
-  EditorAction, FieldType, RendererAction, ViewerAction, VisualSelectorFormat
+  EditorAction, FieldType, RendererAction, ViewerAction, VisualSelectorFormat,
 } from './app/enums';
 
 
