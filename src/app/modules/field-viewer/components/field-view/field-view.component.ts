@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnInit,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 
 import { parseLocal } from '@firestitch/date';
@@ -18,19 +19,25 @@ import { Field } from '../../../../interfaces';
   styleUrls: ['./field-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldViewComponent implements OnInit {
+export class FieldViewComponent implements OnChanges {
 
   @Input() public field: Field;
   @Input() public data: any;
 
   public FieldType = FieldType;
 
-  public ngOnInit(): void {
-    if(this.data) {
-      this.field.data = this.data;
-    }
+  public ngOnChanges(changes: SimpleChanges): void {
+    if(changes.field) {
+      const field = {
+        ...this.field,
+      };
 
-    this.field = initField(this.field);
+      if(this.data) {
+        field.data = this.data;
+      }
+
+      this.field = initField(field);
+    }
   }
 
   public get dateLocal(): Date {
