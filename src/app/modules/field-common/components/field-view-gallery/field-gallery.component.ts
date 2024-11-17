@@ -11,8 +11,7 @@ import {
   FsGalleryComponent, FsGalleryConfig,
   FsGalleryItem,
   FsGalleryItemAction,
-  GalleryLayout,
-  GalleryThumbnailSize, mime,
+  mime,
 } from '@firestitch/gallery';
 
 import { Observable, of } from 'rxjs';
@@ -57,16 +56,14 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
   private _initGalleryConfig(): void {
     this.galleryConfig = {
       thumbnail: {
-        width: 200,
-        size: GalleryThumbnailSize.Contain,
-        heightScale: !this.actions.length && this.field.configs.showFilename === false ? 1 : .6,
+        width: 250,
+        heightScale: .6,
       },
       showChangeSize: false,
       showChangeView: false,
       reload: false,
       noResults: false,
       persist: false,
-      layout: GalleryLayout.Flow,
       zoom: false,
       preview: false,
       info: {
