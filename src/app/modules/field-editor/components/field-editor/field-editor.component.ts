@@ -69,7 +69,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
   private _dialogRef = inject(MatDialogRef, { optional: true });
 
   constructor(
-    @Inject(DOCUMENT) public document: any,
+    @Inject(DOCUMENT) public document: Document,
     public fieldEditor: FieldEditorService,
     public fieldRenderer: FieldRendererService,
     private _cdRef: ChangeDetectorRef,
@@ -85,7 +85,8 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     this._listenClickOutside();
     this._listenFieldAdded();
     if(this._dialogRef) {
-      this.scrollContainer = document.querySelector<HTMLElement>(`#${this._dialogRef.id} .mat-mdc-dialog-content`);
+      this.scrollContainer = document
+        .querySelector<HTMLElement>(`#${this._dialogRef.id} .mat-mdc-dialog-content`);
     }
   }
 
@@ -148,7 +149,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
     } else {
       this.fieldEditor.config.afterFieldDropped(event.item.data.field, event.currentIndex)
         .pipe(
-          switchMap((field) => this.fieldEditor
+          switchMap((field: Field) => this.fieldEditor
             .insertField(
               field,
               event.currentIndex,
@@ -165,7 +166,7 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
         delay(100),
         takeUntil(this._destroy$),
       )
-      .subscribe((field) => {
+      .subscribe((field: Field) => {
         this.fieldEditor.selectField(field);
       });
   }

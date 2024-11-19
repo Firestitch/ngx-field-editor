@@ -18,7 +18,6 @@ import {
   FieldViewerConfig,
   FS_FIELD_EDITOR_CONFIG,
   RendererAction,
-  ToolbarItem,
   VisualSelectorFormat,
 } from '@firestitch/field-editor';
 import { FsMessage } from '@firestitch/message';
@@ -86,7 +85,7 @@ export class ExampleComponent implements OnInit {
 
         return of(field);
       },
-      beforeFieldAdd: (field: Field, toolbar: ToolbarItem) => {
+      beforeFieldAdd: (field: Field) => {
         console.log('Before Field Added', field);
 
         if (field.type === 'share') {
@@ -133,25 +132,25 @@ export class ExampleComponent implements OnInit {
 
         return of(field);
       },
-      fieldShowDelete: (field: Field) => {
+      fieldShowDelete: () => {
         return of(true);
       },
-      fieldShowDuplicate: (field: Field) => {
+      fieldShowDuplicate: () => {
         return of(true);
       },
-      fieldCanEdit: (field: Field) => {
+      fieldCanEdit: () => {
         return of(true);
       },
-      fieldShowRequired: (field: Field) => {
+      fieldShowRequired: () => {
         return of(true);
       },
-      fieldShowDescription: (field: Field) => {
+      fieldShowDescription: () => {
         return of(true);
       },
-      fieldShowSettings: (field: Field) => {
+      fieldShowSettings: () => {
         return of(true);
       },
-      fieldCanConfig: (field: Field) => {
+      fieldCanConfig: () => {
         return of(true);
       },
       action: (action: EditorAction, field: Field, data: any): Observable<any> => {
@@ -194,7 +193,7 @@ export class ExampleComponent implements OnInit {
             click: (field: Field) => {
               console.log('Field Menu Click', field);
             },
-            show: (field: Field): Observable<boolean> => {
+            show: (): Observable<boolean> => {
               return of(true);
             },
           },
@@ -216,7 +215,7 @@ export class ExampleComponent implements OnInit {
                 {
                   icon: 'share',
                   label: 'Share',
-                  click: (field: Field, toolbarItem: ToolbarItem): Observable<Field> => {
+                  click: (field: Field): Observable<Field> => {
                     return of(field);
                   },
                 },
@@ -269,7 +268,7 @@ export class ExampleComponent implements OnInit {
             },
           ],
         },
-        ...this._defaultConfig.toolbar.items,
+        //...this._defaultConfig.toolbar.items,
         {
           type: FieldType.Divider,
         },
@@ -302,8 +301,9 @@ export class ExampleComponent implements OnInit {
   public initFieldRenderer(): void {
     this.fieldRendererConfig = {
       fields: this.getFields(),
-      disableField: (field) => {
-        return of(false).pipe(delay(1000));
+      disableField: () => {
+        return of(false)
+          .pipe(delay(1000));
       },
       action: (action: RendererAction, field, data: any): Observable<any> => {
         console.log('Field Renderer Action', action, field, data);
@@ -343,13 +343,13 @@ export class ExampleComponent implements OnInit {
       afterFileDeleted: (field, data) => {
         console.log('After File Deleted', field, data);
       },
-      showField: (field: Field) => {
+      showField: () => {
         return of(true);
       },
-      canFileDownload: (field: Field): Observable<boolean> => {
+      canFileDownload: (): Observable<boolean> => {
         return of(true);
       },
-      canFileDelete: (field: Field): Observable<boolean> => {
+      canFileDelete: (): Observable<boolean> => {
         return of(true);
       },
       initField: (field: Field) => {
@@ -361,7 +361,7 @@ export class ExampleComponent implements OnInit {
   public initFieldViewer(): void {
     this.fieldViewerConfig = {
       fields: this.getFields(),
-      canFileDownload: (field: Field) => of(true),
+      canFileDownload: () => of(true),
       action: (viewerAction: ViewerAction, field: Field, data: any) => {
         console.log('Viewer Action', viewerAction, field, data);
 

@@ -38,38 +38,43 @@ const routes: Routes = [
 ];
 
 @NgModule({ bootstrap: [AppComponent],
-    declarations: [
-        AppComponent,
-        ExamplesComponent,
-        ExampleComponent,
-        FieldRenderComponent,
-    ], imports: [FormsModule,
-        BrowserModule,
-        FsFieldEditorModule.forRoot(),
-        FsFieldViewerModule,
-        FsFieldRendererModule,
-        FsDatePickerModule.forRoot(),
-        FsMessageModule.forRoot(),
-        FsHtmlEditorModule.forRoot(),
-        FsPhoneModule.forRoot(),
-        FsFileModule.forRoot(),
-        FsFormModule,
-        FsLabelModule,
-        FsExampleModule.forRoot(),
-        BrowserAnimationsModule,
-        AppMaterialModule,
-        RouterModule.forRoot(routes, {}),
-        TermsFieldModule,
-        SignatureFieldModule], providers: [
-        {
-            provide: FS_MAP_GOOGLE_MAP_KEY,
-            useFactory: () => '',
-        },
-        {
-            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-            useValue: { appearance: 'outline' },
-        },
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
+  declarations: [
+    AppComponent,
+    ExamplesComponent,
+    ExampleComponent,
+    FieldRenderComponent,
+  ],
+  imports: [
+    FormsModule,
+    BrowserModule,
+    FsFieldEditorModule.forRoot(),
+    FsFieldViewerModule,
+    FsFieldRendererModule,
+    FsDatePickerModule.forRoot(),
+    FsMessageModule.forRoot(),
+    FsHtmlEditorModule.forRoot(),
+    FsPhoneModule.forRoot(),
+    FsFileModule.forRoot(),
+    FsFormModule,
+    FsLabelModule,
+    FsExampleModule.forRoot(),
+    BrowserAnimationsModule,
+    AppMaterialModule,
+    RouterModule.forRoot(routes, {}),
+    TermsFieldModule,
+    SignatureFieldModule,
+  ], 
+  providers: [
+    {
+      provide: FS_MAP_GOOGLE_MAP_KEY,
+      useFactory: () => '',
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
+    provideHttpClient(withInterceptorsFromDi()),
+  ], 
+})
 export class PlaygroundModule {
 }

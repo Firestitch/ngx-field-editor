@@ -7,11 +7,14 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { cloneDeep } from 'lodash-es';
 
+import { DefaultToolbarItems } from '../consts';
 import { EditorAction } from '../enums';
 import { initField } from '../helpers/init-field';
 import { FS_FIELD_EDITOR_ORIGINAL_CONFIG } from '../injectors/fs-field-editor-original.providers';
 import { ToolbarItem } from '../interfaces';
-import { FieldEditorConfig, FsFieldEditorCallbackParams } from '../interfaces/field-editor-config.interface';
+import {
+  FieldEditorConfig, FsFieldEditorCallbackParams,
+} from '../interfaces/field-editor-config.interface';
 import {
   Field,
 } from '../interfaces/field.interface';
@@ -194,7 +197,7 @@ export class FieldEditorService implements OnDestroy {
   public setConfig(config: FieldEditorConfig) {
     this.config = {
       toolbar: {
-        items: [],
+        items: DefaultToolbarItems,
       },
       ...this._defaultConfig,
       ...config,

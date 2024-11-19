@@ -1,5 +1,6 @@
 .field-editor-container {
-
+  position: relative;
+  
   .fields-container {
     width: 100%;
 
@@ -21,11 +22,6 @@
       z-index: 1000;
       position: absolute;
       right: 0;
-
-      .toolbar-wrapper {
-        position: absolute;
-        right: 0;
-      }
 
       fs-field-toolbar {
         left: auto !important;
