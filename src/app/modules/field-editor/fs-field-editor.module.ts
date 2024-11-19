@@ -33,8 +33,7 @@ import { FsPopoverModule } from '@firestitch/popover';
 import { FsPromptModule } from '@firestitch/prompt';
 import { FsRadioGroupModule } from '@firestitch/radiogroup';
 
-import { DefaultToolbarItems } from 'src/app/consts';
-
+import { DefaultToolbarItems } from '../../consts';
 import { FS_FIELD_EDITOR_ORIGINAL_CONFIG } from '../../injectors/fs-field-editor-original.providers';
 import { FS_FIELD_EDITOR_CONFIG } from '../../injectors/fs-field-editor.providers';
 import { FieldEditorConfig } from '../../interfaces';
