@@ -95,7 +95,7 @@ export class FieldRendererService implements OnDestroy {
 
   public canFileDelete(field: Field): Observable<boolean> {
     if (!this.config?.canFileDelete) {
-      return of(false);
+      return of(true);
     }
 
     return this.config.canFileDelete(field);

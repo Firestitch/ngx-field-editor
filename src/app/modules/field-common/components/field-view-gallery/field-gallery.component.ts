@@ -33,6 +33,7 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
   @Input() public field: Field = { configs: {} };
   @Input() public actions: FsGalleryItemAction[] = [];
   @Input() public filePreviewDownload: (field: Field, file: FieldFile) => FsApiFile;
+  @Input() public fileDownload: (field: Field, file: FieldFile) => FsApiFile;
 
   public galleryConfig: FsGalleryConfig;
 
@@ -79,8 +80,12 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
             .map<FsGalleryItem>((file) => {
               const preview = file.url || 
                 (this.filePreviewDownload && this.filePreviewDownload(this.field, file));
+
+              const url = file.url || 
+                (this.fileDownload && this.fileDownload(this.field, file));
+
               const galleryItem: FsGalleryItem = {
-                url: file.url,
+                url,
                 preview,
                 name: this.field.configs.showFilename === false ? '' : file.filename,
                 mime: file.mime || mime(file.filename, file.url, '', false),

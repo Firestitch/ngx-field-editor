@@ -79,7 +79,8 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
 
     files
       .forEach((fsFile: FsFile) => {
-        this._fieldRenderer.action(RendererAction.FileUpload, this.field, { file: fsFile.file })
+        this._fieldRenderer
+          .action(RendererAction.FileUpload, this.field, { file: fsFile.file })
           .pipe(
             takeUntil(this._destroy$),
           )
@@ -114,8 +115,12 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
     this.onTouched = fn;
   }
 
-  public filePreviewDownload = (field: Field, file: FieldFile): FsApiFile => {
-    return this._fieldRenderer.filePreviewDownload(field, file);
+  public filePreviewDownload = (field: Field, fieldFile: FieldFile): FsApiFile => {
+    return this._fieldRenderer.filePreviewDownload(field, fieldFile);
+  };
+
+  public fileDownload = (field: Field, fieldFile: FieldFile): FsApiFile => {
+    return this._fieldRenderer.fileDownload(field, fieldFile);
   };
 
   public ngOnInit() {
