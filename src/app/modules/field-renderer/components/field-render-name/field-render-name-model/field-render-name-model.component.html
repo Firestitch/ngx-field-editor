@@ -8,7 +8,7 @@
         [disabled]="disabled"
         (ngModelChange)="change($event,'firstName')"
         [(ngModel)]="field.data.value.firstName">
-      <mat-hint>{{field.description}}</mat-hint>
+      <mat-hint *ngIf="field.description">{{field.description}}</mat-hint>
     </mat-form-field>
   </ng-container>
   <ng-container *ngIf="field.configs.lastName?.display">
@@ -20,8 +20,8 @@
         [disabled]="disabled"
         (ngModelChange)="change($event,'lastName')"
         [(ngModel)]="field.data.value.lastName">
-      <ng-container *ngIf="!field.configs.firstName?.display">
-        <mat-hint>{{field.description }}</mat-hint>
+      <ng-container *ngIf="!field.configs.firstName?.display && field.description">
+        <mat-hint>{{field.description}}</mat-hint>
       </ng-container>
     </mat-form-field>
   </ng-container>

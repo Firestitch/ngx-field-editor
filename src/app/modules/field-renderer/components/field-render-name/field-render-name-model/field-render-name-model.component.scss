@@ -9,6 +9,12 @@
       margin-left: 10px;
     }
   }
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      flex: none;
+    }
+  }
 }
 
 @media (max-width: 599px) {
