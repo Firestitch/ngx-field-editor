@@ -10,8 +10,7 @@ import {
 import { FsApiFile } from '@firestitch/api';
 import { FsGalleryItem, FsGalleryItemAction } from '@firestitch/gallery';
 
-import { ViewerAction } from 'src/app/enums';
-
+import { ViewerAction } from '../../../../enums';
 import { Field, FieldFile } from '../../../../interfaces';
 import { FieldViewerService } from '../../../../services';
 
