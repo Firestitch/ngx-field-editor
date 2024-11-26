@@ -39,7 +39,11 @@
     </ng-container>
     <ng-container *ngSwitchCase="FieldType.File">
       <ng-container *ngIf="field.data.files?.length">
-        <fs-field-view-gallery [field]="field"></fs-field-view-gallery>
+        <fs-field-view-gallery
+          [filePreviewDownload]="filePreviewDownload"
+          [fileDownload]="fileDownload"
+          [field]="field">
+        </fs-field-view-gallery>
       </ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="FieldType.Gender">

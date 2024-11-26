@@ -3,5 +3,6 @@ export enum RendererAction {
   FileUpload = 'fileUpload',
   FileDelete = 'fileDelete',
   FileDownload = 'fileDownload',
+  FilePreview = 'filePreview',
   ImageUpload = 'imageUpload',
 }

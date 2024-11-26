@@ -7,10 +7,12 @@ import {
   OnInit,
 } from '@angular/core';
 
+import { FsApiFile } from '@firestitch/api';
 import { FsGalleryItem, FsGalleryItemAction } from '@firestitch/gallery';
 
-import { ViewerAction } from '../../../../enums';
-import { Field } from '../../../../interfaces';
+import { ViewerAction } from 'src/app/enums';
+
+import { Field, FieldFile } from '../../../../interfaces';
 import { FieldViewerService } from '../../../../services';
 
 
@@ -23,28 +25,24 @@ import { FieldViewerService } from '../../../../services';
 export class FieldViewGalleryComponent implements OnInit {
 
   @Input() public field: Field;
+  @Input() public filePreviewDownload: (field: Field, file: FieldFile) => FsApiFile;
+  @Input() public fileDownload: (field: Field, file: FieldFile) => FsApiFile;
 
   public menuItems: FsGalleryItemAction[];
   
   private _fieldViewerService = inject(FieldViewerService, { optional: true });
   private _cdRef = inject(ChangeDetectorRef);
 
-  public fileDownload(data): void {
-    if(this._fieldViewerService) {
-      this._fieldViewerService.action(ViewerAction.FileDownload, this.field, data)
-        .subscribe();
-    }
-  }
-
   public ngOnInit(): void {
     if(this._fieldViewerService) {
-      this._fieldViewerService.canFileDownload(this.field)
+      this._fieldViewerService
+        .canFileDownload(this.field)
         .subscribe((canFileDownload) => {
           this.menuItems = canFileDownload ? [
             {
               label: 'Download',
               click: (galleryItem: FsGalleryItem) => {
-                this.fileDownload({ fieldFile: galleryItem.data });
+                this._fileDownload(galleryItem.data);
               },
             },
           ] : [];
@@ -52,8 +50,14 @@ export class FieldViewGalleryComponent implements OnInit {
           this._cdRef.markForCheck();
         });
     } else {
-      this.menuItems = [];
+      this.menuItems = [];  
     }
+  }
+
+  private _fileDownload(data): void {
+    this._fieldViewerService
+      .action(ViewerAction.FileDownload, this.field, { fieldFile: data })
+      .subscribe();
   }
 
 

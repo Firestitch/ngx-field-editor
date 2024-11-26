@@ -1,5 +1,7 @@
 <ng-container *ngIf="menuItems">
-  <fs-field-gallery 
+  <fs-field-gallery
+    [filePreviewDownload]="filePreviewDownload"
+    [fileDownload]="fileDownload"
     [actions]="menuItems"
     [field]="field">
   </fs-field-gallery>

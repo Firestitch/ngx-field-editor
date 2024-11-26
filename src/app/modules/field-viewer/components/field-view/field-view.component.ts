@@ -6,11 +6,12 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
+import { FsApiFile } from '@firestitch/api';
 import { parseLocal } from '@firestitch/date';
 
 import { FieldType } from '../../../../enums/field-type';
 import { initField } from '../../../../helpers';
-import { Field } from '../../../../interfaces';
+import { Field, FieldFile } from '../../../../interfaces';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class FieldViewComponent implements OnChanges {
 
   @Input() public field: Field;
   @Input() public data: any;
+  @Input() public filePreviewDownload: (field: Field, file: FieldFile) => FsApiFile;
+  @Input() public fileDownload: (field: Field, file: FieldFile) => FsApiFile;
 
   public FieldType = FieldType;
 
