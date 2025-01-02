@@ -11,7 +11,7 @@
 
   .notes {
     &.show {
-      margin-top: 10px;
+      margin-top: 3px;
     }
 
     &:not(.show) {
@@ -26,8 +26,13 @@
       margin-left: 8px;
     }
   }
+
+  mat-checkbox {
+    margin: 8px 0 !important;
+  }
   
-  .mat-form-field {
+  mat-form-field {
+    margin-top: 0;
     width: 400px;
     max-width: 100%;
     display: block;
