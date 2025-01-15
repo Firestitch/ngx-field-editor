@@ -1,25 +1,39 @@
-<div cdkDropList class="options" (cdkDropListDropped)="drop($event)">
-  <div  
-      *ngFor="let option of field.options; index as idx" 
-      cdkDrag 
-      cdkDragLockAxis="y" 
+<div
+    cdkDropList
+    class="options"
+    (cdkDropListDropped)="drop($event)">
+  <div
+      *ngFor="let option of field.options; index as idx"
+      cdkDrag
+      cdkDragLockAxis="y"
       class="fs-field-option">
-    <div class="option-container" [ngClass]="{ 'has-notes': option.notes, 'visual-selector': field.type === FieldType.VisualSelector }">
-      <div class="option-drag" cdkDragHandle>
-        <button button mat-icon-button type="button" class="drag-button option-drag-button"><mat-icon>drag_indicator</mat-icon></button>
+    <div
+        class="option-container"
+        [ngClass]="{ 'has-notes': option.notes, 'visual-selector': field.type === FieldType.VisualSelector }">
+      <div
+          class="option-drag"
+          cdkDragHandle>
+        <button
+            button
+            mat-icon-button
+            type="button"
+            class="drag-button option-drag-button">
+          <mat-icon>
+            drag_indicator
+          </mat-icon>
+        </button>
       </div>
-
       <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
       <div class="option-data-container">
         <div class="option-data">
-          <ng-container *ngIf="showOptionImage">
+          @if (showOptionImage && (this.field.configs.format === VisualSelectorFormat.Image || this.field.configs.format === VisualSelectorFormat.ImageName)) {
             <fs-file-image-picker
               #fileImagePicker
               [url]="option.image?.preview"
               (select)="selectOptionImage($event, option, fileImagePicker)"
               [previewDiameter]="60">
             </fs-file-image-picker>
-          </ng-container>
+          }
           <ng-container *ngIf="showOptionLabel">
             <div class="option-label">
               <mat-form-field class="form-field-padless">
@@ -33,11 +47,9 @@
               </mat-form-field>
             </div>
           </ng-container>
-
           <ng-container *ngIf="field.configs.showValues">
             <div class="option-value">
-              <mat-form-field          
-                  class="form-field-padless">
+              <mat-form-field class="form-field-padless">
                 <input
                   matInput
                   [placeholder]="'Value'"
@@ -51,16 +63,15 @@
         </div>
         <ng-container *ngIf="option.notes && showNotes">
           <div class="option-note">
-            <mat-form-field          
-              class="form-field-padless">
-            <input
-              matInput
-              placeholder="Notes"
-              [(ngModel)]="option.notesLabel"
-              [name]="'notes-label' + idx"
-              [ngModelOptions]="{ updateOn: 'blur' }"
-              (ngModelChange)="optionSave(option)">
-          </mat-form-field>
+            <mat-form-field class="form-field-padless">
+              <input
+                matInput
+                placeholder="Notes"
+                [(ngModel)]="option.notesLabel"
+                [name]="'notes-label' + idx"
+                [ngModelOptions]="{ updateOn: 'blur' }"
+                (ngModelChange)="optionSave(option)">
+            </mat-form-field>
           </div>
         </ng-container>
       </div>
@@ -72,7 +83,9 @@
             [ngClass]="{ enabled: option.notes }"
             (click)="toggleOptionNotes(option)"
             [matTooltip]="option.notes ? 'Disable response notes' : 'Enable response notes'">
-          <mat-icon>chat</mat-icon>
+          <mat-icon>
+            chat
+          </mat-icon>
         </button>
       </ng-container>
       <button
@@ -80,7 +93,9 @@
           mat-icon-button
           type="button"
           (click)="removeOption(option)">
-        <mat-icon>delete</mat-icon>
+        <mat-icon>
+          delete
+        </mat-icon>
       </button>
     </div>
   </div>
@@ -91,60 +106,66 @@
   <ng-container *ngIf="field.options.length">
     <button
         button
-        mat-icon-button 
-        type="button" 
+        mat-icon-button
+        type="button"
         class="option-drag-placeholder">
       <mat-icon></mat-icon>
     </button>
     <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
   </ng-container>
-
   <div class="option-data">
-    <ng-container *ngIf="showOptionImage">
+    @if (showOptionImage && (this.field.configs.format === VisualSelectorFormat.Image || this.field.configs.format === VisualSelectorFormat.ImageName)) {
       <fs-file-image-picker
         #fileImagePicker
-        (select)="selectNewOptionImage($event, fileImagePicker)"
+        (select)="addOptionImage($event, fileImagePicker)"
         [previewDiameter]="60">
       </fs-file-image-picker>
-    </ng-container>
-
-    <div class="option-label" [ngClass]="{ hide: !showOptionLabel}">
+    }
+    <div
+        class="option-label"
+        [ngClass]="{ hide: !showOptionLabel}">
       <mat-form-field class="new-option form-field-padless">
         <input
           matInput
-          #addOptionInput
-          [(ngModel)]="newOption"
           placeholder="Add New Option"
           name="newOption"
-          (keydown)="addOptionKeydown($event, !this.field.configs.showValues)">
+          (focus)="addOptionFocus()">
       </mat-form-field>
     </div>
-    
-    <div *ngIf="field.configs.showValues" class="option-value">
+    <div
+        *ngIf="field.configs.showValues"
+        class="option-value">
       <mat-form-field class="form-field-padless">
         <input
           matInput
           placeholder="Value"
-          [(ngModel)]="newOptionValue"
           name="newOptionValue"
-          (keydown)="addOptionKeydown($event, true)">
+          (focus)="addOptionFocus()">
       </mat-form-field>
     </div>
-
     <ng-container *ngIf="showOther && field.options.length && !field.configs.other">
-      <span class="or">Or</span> <button mat-button type="button" color="primary" (click)="otherToggle()">
-        {{ field.configs.other ? 'Remove' : 'Add' }} "Other" Option</button>
+      <span class="or">
+        Or
+      </span>
+      <button
+          mat-button
+          type="button"
+          color="primary"
+          (click)="otherToggle()">
+        {{ field.configs.other ? 'Remove' : 'Add' }} "Other" Option
+      </button>
     </ng-container>
   </div>
-  <button 
-      button 
-      mat-icon-button 
-      type="button" 
+  <button
+      button
+      mat-icon-button
+      type="button"
       style="visibility: hidden">
-    <mat-icon>delete</mat-icon>
+    <mat-icon>
+      delete
+    </mat-icon>
   </button>
 </div>
-
 <ng-container *ngIf="showOther && field.configs.other">
   <div class="other">
     <button
@@ -152,10 +173,11 @@
         mat-icon-button
         type="button"
         [ngStyle]="{'visibility': 'hidden'}">
-      <mat-icon>drag_indicator</mat-icon>
+      <mat-icon>
+        drag_indicator
+      </mat-icon>
     </button>
     <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
-
     <mat-form-field class="form-field-padless">
       <input
         matInput
@@ -163,28 +185,28 @@
         name="label"
         value="Other">
     </mat-form-field>
-
     <button
         mat-icon-button
         type="button"
         (click)="otherToggle()">
-      <mat-icon>delete</mat-icon>
+      <mat-icon>
+        delete
+      </mat-icon>
     </button>
   </div>
 </ng-container>
-
 <ng-template #disabledPlaceholder>
   <ng-container [ngSwitch]="field.type">
-    <mat-checkbox 
-      *ngSwitchCase="FieldType.Checkbox" 
+    <mat-checkbox
+      *ngSwitchCase="FieldType.Checkbox"
       disabled="true">
     </mat-checkbox>
-    <mat-radio-button   
-      *ngSwitchCase="FieldType.Choice" 
+    <mat-radio-button
+      *ngSwitchCase="FieldType.Choice"
       [disabled]="true">
     </mat-radio-button>
-    <mat-radio-button 
-      *ngSwitchCase="FieldType.Dropdown" 
+    <mat-radio-button
+      *ngSwitchCase="FieldType.Dropdown"
       [disabled]="true">
     </mat-radio-button>
   </ng-container>

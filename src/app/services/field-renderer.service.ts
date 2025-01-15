@@ -58,7 +58,7 @@ export class FieldRendererService implements OnDestroy {
   }
 
   public action(action: RendererAction, field: Field, data: any = {}): Observable<any> {
-    if (this.config.action) {
+    if (this.config?.action) {
       return this.config.action(action, field, data);
     }
 
@@ -66,7 +66,7 @@ export class FieldRendererService implements OnDestroy {
   }
 
   public fileDownload(field: Field, fieldFile: any): FsApiFile {
-    if (this.config.fileDownload) {
+    if (this.config?.fileDownload) {
       return this.config.fileDownload(field, fieldFile);
     }
 

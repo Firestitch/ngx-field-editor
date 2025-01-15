@@ -3,9 +3,9 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  inject,
   Input,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -15,9 +15,11 @@ import { guid } from '@firestitch/common';
 import { FsFile, FsFileImagePickerComponent } from '@firestitch/file';
 import { FsPrompt } from '@firestitch/prompt';
 
-import { BehaviorSubject, Observable, forkJoin, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, pipe } from 'rxjs';
 import {
-  catchError, delay, filter, finalize, map, switchMap, takeUntil, tap,
+  catchError,
+  delay,
+  filter, finalize, map, switchMap, takeUntil, tap,
 } from 'rxjs/operators';
 
 import { EditorAction, VisualSelectorFormat } from '../../../../enums';
@@ -34,21 +36,16 @@ import { FieldComponent } from '../field/field.component';
 })
 export class FieldConfigOptionsComponent extends FieldComponent implements OnInit {
 
-  @ViewChild('addOptionInput', { static: true })
-  public addOptionInput: ElementRef;
-
   @Input() public showOther = false;
   @Input() public showOptionLabel = false;
   @Input() public showNotes = false;
   @Input() public showOptionImage = false;
   @Input() declare public field: FieldOption;
 
-  public newOption = '';
-  public newOptionValue = '';
-  private _optionLoading$ = new BehaviorSubject<boolean>(false);
+  public VisualSelectorFormat = VisualSelectorFormat;
 
-  private _newOptionFile: FsFile;
-  private _newFileImagePicker: FsFileImagePickerComponent;
+  private _optionLoading$ = new BehaviorSubject<boolean>(false);
+  private _el = inject(ElementRef);
 
   constructor(
     public fieldEditor: FieldEditorService,
@@ -66,17 +63,11 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
       .pipe(
         filter((response) => response[0] && response[1]),
       )
-      .subscribe(() => {
-        this.addOptionFocus();
-      });
+      .subscribe();
   }
 
   public get optionLoading$(): Observable<any> {
     return this._optionLoading$.asObservable();
-  }
-
-  public addOptionFocus(): void {
-    this.addOptionInput.nativeElement.focus();
   }
 
   public optionSave(option) {
@@ -84,42 +75,39 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
       .subscribe();
   }
 
-  public addOptionKeydown(e: KeyboardEvent, listenTab): void {
-    if (!(e.key === 'Enter' || (e.key === 'Tab' && listenTab))) {
-      return;
-    }
+  public addOptionFocus(): void {
+    this.addOption()
+      .pipe(
+        this.addOptionPipe(),
+      )
+      .subscribe();
+  }
 
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (this.newOption.length || this._newOptionFile) {
-      if (this._newOptionFile) {
-        this._addOptionWithImage();
-      } else {
-        this.addOption()
-          .pipe(
-            tap((option) => {
-              this.field.options.push(option);
-              this._cdRef.markForCheck();
-            }),
-            delay(1000),
-          )
-          .subscribe(() => {
-            this.addOptionFocus();
-          });
-      }
-    }
+  public addOptionPipe()  {
+    return pipe(
+      tap((option) => {
+        this.field.options.push(option);
+        this._cdRef.markForCheck();
+      }),
+      delay(0),
+      tap(() => {
+        this._el.nativeElement
+          .querySelector(`input[name="label${(this.field.options.length - 1)}"]`)
+          .focus();
+      }),
+    );
   }
 
   public addOption(): Observable<any> {
     const option = {
-      value: this.newOptionValue,
-      name: this.newOption,
+      value: '',
+      name: '',
       guid: guid('xxxxxx'),
     };
     this._optionLoading$.next(true);
 
-    return this.fieldEditor.action(EditorAction.OptionAdd, this.field, { option })
+    return this.fieldEditor
+      .action(EditorAction.OptionAdd, this.field, { option })
       .pipe(
         map((response) => {
           return {
@@ -128,21 +116,37 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
           };
         }),
         finalize(() => {
-          this.newOption = '';
-          this.newOptionValue = '';
           this._optionLoading$.next(false);
         }),
       );
   }
 
-  public selectNewOptionImage(fsFile: FsFile, fileImagePicker: FsFileImagePickerComponent): void {
-    this._newOptionFile = fsFile;
-    this._newFileImagePicker = fileImagePicker;
-    this.addOptionFocus();
-
-    if (this.field.configs.format === VisualSelectorFormat.Image) {
-      this._addOptionWithImage();
-    }
+  public addOptionImage(fsFile: FsFile, fileImagePicker: FsFileImagePickerComponent): void {
+    this.addOption()
+      .pipe(
+        switchMap((option) => {
+          const data = {
+            file: fsFile.file,
+            option,
+          };
+          
+          return this.fieldEditor.action(EditorAction.OptionImageUpload, this.field, data)
+            .pipe(
+              map((response) => {
+                return {
+                  ...option,
+                  ...response.option,
+                };
+              }),
+            );
+        }),
+        this.addOptionPipe(),
+        finalize(() => {
+          fileImagePicker.cancel();
+        }),
+        takeUntil(this._destory$),
+      )
+      .subscribe();
   }
 
   public selectOptionImage(
@@ -222,40 +226,6 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
     moveItemInArray(this.field.options, event.previousIndex, event.currentIndex);
 
     this.fieldEditor.action(EditorAction.OptionReorder, this.field)
-      .subscribe();
-  }
-
-  private _addOptionWithImage(): void {
-    this.addOption()
-      .pipe(
-        switchMap((option) => {
-          const data = {
-            file: this._newOptionFile.file,
-            option,
-          };
-          
-          return this.fieldEditor.action(EditorAction.OptionImageUpload, this.field, data)
-            .pipe(
-              map((response) => {
-                return {
-                  ...option,
-                  ...response.option,
-                };
-              }),
-            );
-        }),
-        tap((option) => {
-          this.field.options.push(option);
-          this._newOptionFile = null;
-
-          this._cdRef.markForCheck();
-        }),
-        finalize(() => {
-          this._newFileImagePicker.cancel();
-          this._newFileImagePicker = null;
-        }),
-        takeUntil(this._destory$),
-      )
       .subscribe();
   }
 }
