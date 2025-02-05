@@ -52,7 +52,7 @@
         background-color: #f9f9f9;
       }
 
-      .fs-field:hover {
+      .fs-field.selected:hover {
         .field-drag-button {
           visibility: visible;
         }

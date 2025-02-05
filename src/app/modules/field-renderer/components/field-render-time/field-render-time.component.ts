@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Optional } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';

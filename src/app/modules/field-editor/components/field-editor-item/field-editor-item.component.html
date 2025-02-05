@@ -126,40 +126,22 @@
             <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="FieldType.Choice">
-            <fs-field-render-choice
-              [disabled]="true"
-              [field]="field">
-            </fs-field-render-choice>
+            <fs-field-render-choice [field]="field"></fs-field-render-choice>
           </ng-container>
           <ng-container *ngSwitchCase="FieldType.Dropdown">
-            <fs-field-render-dropdown
-              [disabled]="true"
-              [field]="field">
-            </fs-field-render-dropdown>
+            <fs-field-render-dropdown [field]="field"></fs-field-render-dropdown>
           </ng-container>
           <ng-container *ngSwitchCase="FieldType.Checkbox">
-            <fs-field-render-checkbox
-              [disabled]="true"
-              [field]="field">
-            </fs-field-render-checkbox>
+            <fs-field-render-checkbox [field]="field"></fs-field-render-checkbox>
           </ng-container>
           <ng-container *ngSwitchCase="FieldType.Name">
-            <fs-field-render-name
-              [disabled]="true"
-              [field]="field">
-            </fs-field-render-name>
+            <fs-field-render-name [field]="field"></fs-field-render-name>
           </ng-container>
           <ng-container *ngSwitchCase="FieldType.File">
-            <fs-field-render-file
-              [disabled]="true"
-              [field]="field">
-            </fs-field-render-file>
+            <fs-field-render-file [field]="field"></fs-field-render-file>
           </ng-container>
           <ng-container *ngSwitchCase="FieldType.Gender">
-            <fs-field-render-gender
-              [disabled]="true"
-              [field]="field">
-            </fs-field-render-gender>
+            <fs-field-render-gender [field]="field"></fs-field-render-gender>
           </ng-container>
           <ng-container *ngSwitchCase="FieldType.Heading">
             <fs-field-view-heading [field]="field"></fs-field-view-heading>
@@ -196,16 +178,10 @@
             </fs-label-field>
           </ng-container>
           <ng-container *ngSwitchCase="FieldType.Address">
-            <fs-field-render-address
-              [disabled]="true"
-              [field]="field">
-            </fs-field-render-address>
+            <fs-field-render-address [field]="field"></fs-field-render-address>
           </ng-container>
           <ng-template #fsFieldText>
-            <fs-field-render-text
-              [disabled]="true"
-              [field]="field">
-            </fs-field-render-text>
+            <fs-field-render-text [field]="field"></fs-field-render-text>
           </ng-template>
         </ng-container>
       </ng-template>

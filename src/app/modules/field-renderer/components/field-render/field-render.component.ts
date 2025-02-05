@@ -43,7 +43,7 @@ export class FieldRenderComponent implements AfterContentInit {
   private _disabled$ = this._disabledState
     .pipe(
       switchMap(() => {
-        if (!!this.fieldRenderer?.config.disableField) {
+        if (this.fieldRenderer?.config.disableField) {
           return this.fieldRenderer.config.disableField(this.field)
             .pipe(startWith(true));
         }
@@ -60,7 +60,7 @@ export class FieldRenderComponent implements AfterContentInit {
   @Input('field')
   public set setField(field) {
     this.field = initField(field);
-    this._disabledState.next(null);
+    this._disabledState.next(false);
   }
 
   public get disabled$(): Observable<boolean> {
