@@ -9,24 +9,17 @@
 
     .mdc-label {
       width: 100%;
-
-      // .label-content {
-      //   width: calc(100% - 28px);
-      // }
     }
 
-    &:not(.other) {
+    .other {
       .mdc-form-field {
         align-items: start;
-        .mdc-label {
-          padding: calc((var(--mdc-radio-state-layer-size) - 20px) / 2);
-        }
       }
     }
       
     .notes {
       &.show {
-        margin-top: 5px;
+        margin-top: 15px;
       }
 
       &:not(.show) {
@@ -48,8 +41,10 @@
     max-width: 100%;
     margin-right: 8px;
 
-    .mat-mdc-form-field-infix {
-      border-top: 0;
+    ::ng-deep {
+      .mdc-label {
+        padding-top: 0 !important;
+      }
     }
   }
 

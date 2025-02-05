@@ -10,20 +10,30 @@
     messageSelector=".fs-form-message"
     orientation="vertical">
   <ng-container *ngFor="let option of field.options; let index = index">
-    <mat-radio-button       
+    <mat-radio-button
         [disabled]="disabled"
         [value]="option.guid"
         (change)="radioChange(notes)">
       <div class="fs-column label-content">
-        <div>{{option.name}}</div>
-        <div *ngIf="option.notesLabel" class="checkbox-hint"><small>{{ option.notesLabel }}</small></div>
+        <div>
+          {{ option.name }}
+        </div>
+        <div
+            *ngIf="option.notesLabel"
+            class="checkbox-hint">
+          <small>
+            {{ option.notesLabel }}
+          </small>
+        </div>
       </div>
-      <mat-form-field 
+      <mat-form-field
           [ngClass]="{ show: option.notes && field.data.value.selected === option.guid }"
           class="form-field-padless notes">
+        <mat-label>
+          {{ option.notesLabel || 'Notes' }}
+        </mat-label>
         <input
           #notes
-          [placeholder]="option.notesLabel || 'Notes'"
           matInput
           [(ngModel)]="field.data.value.notes[option.guid]"
           [name]="'notes-' + field.guid + option.guid">
@@ -47,5 +57,7 @@
         [disabled]="disabled">
     </mat-form-field>
   </mat-radio-button>
-  <mat-hint>{{field.description}}</mat-hint>
+  <mat-hint>
+    {{ field.description }}
+  </mat-hint>
 </fs-radio-group>

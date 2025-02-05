@@ -11,7 +11,7 @@
 
   .notes {
     &.show {
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     &:not(.show) {
@@ -22,8 +22,10 @@
   .other {
     max-width: 100%;
 
-    mat-form-field {      
-      margin-left: 8px;
+    ::ng-deep {
+      .mdc-label {
+        padding-top: 0 !important;
+      }
     }
   }
 

@@ -15,12 +15,14 @@
       [disabled]="disabled"
       (change)="checkboxChange($event, notes)">
     {{ option.name }}
-    <mat-form-field 
+    <mat-form-field
         class="form-field-padless notes"
         [ngClass]="{ show: option.notes && field.data.value.selected.includes(option.guid) }">
+      <mat-label>
+        {{ option.notesLabel || 'Notes' }}
+      </mat-label>
       <input
         #notes
-        [placeholder]="option.notesLabel || 'Notes'"
         matInput
         [(ngModel)]="field.data.value.notes[option.guid]"
         [name]="'notes-' + field.guid + option.guid">
@@ -45,5 +47,7 @@
         [disabled]="disabled">
     </mat-form-field>
   </mat-checkbox>
-  <mat-hint>{{field.description}}</mat-hint>
+  <mat-hint>
+    {{ field.description }}
+  </mat-hint>
 </fs-checkbox-group>

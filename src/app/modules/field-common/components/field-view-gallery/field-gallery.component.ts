@@ -90,6 +90,7 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
                 name: this.field.configs.showFilename === false ? '' : file.filename,
                 mime: file.mime || mime(file.filename, file.url, '', false),
                 data: file,
+                guid: file.id,
               };
 
               return galleryItem;
