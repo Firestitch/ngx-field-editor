@@ -1,11 +1,17 @@
-<form fsForm [submit]="save">
+<form
+    fsForm
+    [submit]="save">
   <fs-dialog>
-    <h1 mat-dialog-title>Settings</h1>
+    <h1 mat-dialog-title>
+      Settings
+    </h1>
     <mat-dialog-content>
       <div class="fs-column">
         <ng-container *ngIf="type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.LongText || type === FieldType.ShortText || type === FieldType.RichText">
           <mat-form-field>
-            <mat-label>Default Value</mat-label>
+            <mat-label>
+              Default Value
+            </mat-label>
             <input
               matInput
               [(ngModel)]="configs.default"
@@ -13,7 +19,9 @@
           </mat-form-field>
         </ng-container>
         <mat-form-field>
-          <mat-label>Identifier</mat-label>
+          <mat-label>
+            Identifier
+          </mat-label>
           <input
             matInput
             [required]="configs.populate"
@@ -21,78 +29,98 @@
             name="identifier">
         </mat-form-field>
         <fs-label-field>
-          <fs-label>Populate from URL</fs-label>
-          <mat-checkbox name="populate" [(ngModel)]="configs.populate">
+          <fs-label>
+            Populate from URL
+          </fs-label>
+          <mat-checkbox
+              name="populate"
+              [(ngModel)]="configs.populate">
             <div class="populated-checkbox">
-              Allow field to be populated from URL            
-              <fs-popover 
+              Allow field to be populated from URL
+              <fs-popover
                   [wrapperClass]="'popover-populate-url'"
                   [maxWidth]="null"
                   [indication]="false"
                   [template]="populateTemplate">
-                <mat-icon>help_outline</mat-icon>              
+                <mat-icon>
+                  help_outline
+                </mat-icon>
               </fs-popover>
             </div>
           </mat-checkbox>
         </fs-label-field>
-
-        <ng-container
-          *ngIf="type === FieldType.Checkbox || type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.Gender || type === FieldType.VisualSelector">
-
+        <ng-container *ngIf="type === FieldType.Checkbox || type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.Gender || type === FieldType.VisualSelector">
           <fs-label-field>
-            <fs-label>Show option values</fs-label>
-            <mat-checkbox 
-                name="showValues" 
+            <fs-label>
+              Show option values
+            </fs-label>
+            <mat-checkbox
+                name="showValues"
                 [(ngModel)]="configs.showValues">
-              Show  
+              Show
             </mat-checkbox>
           </fs-label-field>
         </ng-container>
-
         <ng-container *ngIf="type === FieldType.VisualSelector">
           <fs-label-field>
-            <fs-label>Allow multiple selection</fs-label>
-            <mat-checkbox 
-                name="multipleSelection" 
+            <fs-label>
+              Allow multiple selection
+            </fs-label>
+            <mat-checkbox
+                name="multipleSelection"
                 [(ngModel)]="configs.multipleSelection">
               Enable
             </mat-checkbox>
           </fs-label-field>
-
           <mat-form-field>
-            <mat-label>Format</mat-label>
+            <mat-label>
+              Format
+            </mat-label>
             <mat-select
                 [(ngModel)]="configs.format"
                 name="format">
-              <mat-option [value]="VisualSelectorFormat.Name">Name Only</mat-option>
-              <mat-option [value]="VisualSelectorFormat.Image">Image Only</mat-option>
-              <mat-option [value]="VisualSelectorFormat.ImageName">Image and Name</mat-option>
+              <mat-option [value]="VisualSelectorFormat.Name">
+                Name Only
+              </mat-option>
+              <mat-option [value]="VisualSelectorFormat.Image">
+                Image Only
+              </mat-option>
+              <mat-option [value]="VisualSelectorFormat.ImageName">
+                Image and Name
+              </mat-option>
             </mat-select>
           </mat-form-field>
           <ng-container *ngIf="configs.format">
             <div class="fs-row.gap-large preview-image-ratio">
               <mat-form-field class="full-width">
-                <mat-label>Preview Image Ratio Width</mat-label>
+                <mat-label>
+                  Preview Image Ratio Width
+                </mat-label>
                 <input
                   matInput
                   [required]="true"
                   [(ngModel)]="configs.previewWidth"
                   name="previewWidth">
-                <mat-icon matTextSuffix>px</mat-icon>
+                <span matTextSuffix>
+                  px
+                </span>
               </mat-form-field>
-              
               <mat-form-field class="full-width">
-                <mat-label>Preview Image Ratio Height</mat-label>
+                <mat-label>
+                  Preview Image Ratio Height
+                </mat-label>
                 <input
                   matInput
                   [required]="true"
                   [(ngModel)]="configs.previewHeight"
                   name="previewHeight">
-                <mat-icon matTextSuffix>px</mat-icon>
+                <span matTextSuffix>
+                  px
+                </span>
               </mat-form-field>
             </div>
           </ng-container>
-        </ng-container>          
+        </ng-container>
       </div>
     </mat-dialog-content>
     <mat-dialog-actions>
@@ -111,9 +139,10 @@
     </mat-dialog-actions>
   </fs-dialog>
 </form>
-
 <ng-template #populateTemplate>
-  <fs-label>Example URL</fs-label>
+  <fs-label>
+    Example URL
+  </fs-label>
   <ng-container [ngSwitch]="type">
     <ng-container *ngSwitchCase="FieldType.Checkbox">
       <ng-container *ngTemplateOutlet="choicePopulate"></ng-container>
@@ -128,35 +157,32 @@
       <ng-container *ngTemplateOutlet="genderPopulate"></ng-container>
     </ng-container>
     <ng-container *ngSwitchDefault>
-      <app-populate-url 
+      <app-populate-url
         [identifier]="configs.identifier"
         [value]="populateValue">
       </app-populate-url>
     </ng-container>
   </ng-container>
-
   <ng-template #choicePopulate>
     <ng-container *ngFor="let option of field.options">
       <div>
-        {{option.label}} 
-        <app-populate-url 
-          [identifier]="configs.identifier" 
+        {{ option.label }}
+        <app-populate-url
+          [identifier]="configs.identifier"
           [value]="option.value || option.guid">
         </app-populate-url>
       </div>
     </ng-container>
   </ng-template>
-
   <ng-template #genderPopulate>
     <ng-container *ngFor="let option of configs.genders">
       <div>
-        {{option.label}} 
-        <app-populate-url 
-          [identifier]="configs.identifier" 
+        {{ option.label }}
+        <app-populate-url
+          [identifier]="configs.identifier"
           [value]="option.value || option.guid">
         </app-populate-url>
       </div>
     </ng-container>
   </ng-template>
-
 </ng-template>
