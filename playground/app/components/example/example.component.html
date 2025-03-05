@@ -95,7 +95,10 @@
   </mat-tab>
   <mat-tab label="Rendered Fields">
     <ng-template matTabContent>
-      <form (fsForm)="save()">
+      <form
+          fsForm
+          [submit]="save"
+          [confirm]="false">
         <fs-field-renderer [config]="fieldRendererConfig">
           <ng-template
               fsFieldRender
@@ -134,7 +137,7 @@
           </ng-template>
         </fs-field-renderer>
         <button
-            mat-raised-button
+            mat-flat-button
             color="primary"
             type="submit">
           Save
@@ -179,7 +182,7 @@
   </mat-tab>
 </mat-tab-group>
 <a
-    mat-raised-button
+    mat-stroked-button
     color="primary"
     (click)="openDialog()">
   Open Dialog
