@@ -66,7 +66,8 @@ export class FieldRenderRichTextComponent extends FieldComponent implements OnIn
         if (canImageUpload) {
           this.editorConfig.image = {
             upload: (file: File): Observable<string> => {
-              return this._fieldRenderer.action(RendererAction.ImageUpload, this.field, { file })
+              return this._fieldRenderer
+                .action(RendererAction.ImageUpload, this.field, { file })
                 .pipe(
                   map((response) => response.url),
                 );

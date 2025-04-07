@@ -65,7 +65,7 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public canConfig = false;
   public canReorder = false;
   public hasDescription = false;
-  public froalaRenderEditorConfig: FsHtmlEditorConfig = null;
+  public htmlEditorConfig: FsHtmlEditorConfig = null;
 
   private _destroy$ = new Subject();
 
@@ -152,9 +152,11 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.froalaRenderEditorConfig = {
+    this.htmlEditorConfig = {
       autofocus: false,
       disabled: true,
+      label: this.field.label,
+      hint: this.field.description,
       froalaConfig: this.field.configs.froalaConfig,
     };
   }

@@ -37,8 +37,15 @@
     border-radius: 5px;
 
     * {
-      visibility: hidden;
+      display: none;
     }
+  }
+}
+
+::ng-deep {
+  .cdk-drag-preview.field-container {
+    height: auto !important;
+    display: none;
   }
 }
 
@@ -52,7 +59,7 @@
         background-color: #f9f9f9;
       }
 
-      .fs-field.selected:hover {
+      .fs-field:hover {
         .field-drag-button {
           visibility: visible;
         }
