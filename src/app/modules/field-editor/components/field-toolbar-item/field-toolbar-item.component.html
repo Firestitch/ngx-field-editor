@@ -1,14 +1,14 @@
-<ng-container *ngIf="item.type==='divider'; else elseDivider">
+@if (item.type==='divider') {
   <mat-divider></mat-divider>
-</ng-container>
-<ng-template #elseDivider>
+} @else {
   <div
       mat-menu-item
       [disabled]="item.disabled">
-    <div 
-        cdkDropList 
+    <div
+        class="toolbar-fields"
+        cdkDropList
         [cdkDropListConnectedTo]="fieldEditor.editorId">
-      <div  
+      <div
           class="toolbar-field"
           [ngClass]="{ disabled: item.disabled }"
           cdkDrag
@@ -18,10 +18,26 @@
           (cdkDragStarted)="dragStarted(item)"
           (cdkDragDropped)="dragDropped($event)">
         <div class="fs-row">
-          <mat-icon>{{ item.icon }}</mat-icon>
-          <span class="label">{{ item.label }}</span>
+          <mat-icon>
+            {{ item.icon }}
+          </mat-icon>
+          <span class="label">
+            {{ item.label }}
+          </span>
         </div>
       </div>
+      @if (dragging) {
+        <div class="toolbar-field toolbar-field-clone">
+          <div class="fs-row">
+            <mat-icon>
+              {{ item.icon }}
+            </mat-icon>
+            <span class="label">
+              {{ item.label }}
+            </span>
+          </div>
+        </div>
+      }
     </div>
-  </div> 
-</ng-template>
+  </div>
+}

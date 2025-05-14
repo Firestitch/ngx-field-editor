@@ -30,6 +30,7 @@ export class FieldToolbarItemComponent {
   public menuTrigger: MatMenuTrigger;
 
   public field: Field = null;
+  public dragging = false;
 
   constructor(
     public fieldEditor: FieldEditorService,
@@ -40,6 +41,7 @@ export class FieldToolbarItemComponent {
   }
 
   public dragStarted(item: ToolbarItem): void {
+    this.dragging = true;
     this._hideMenuBackdrop();
     this.fieldEditor.unselectField();
 
@@ -56,6 +58,7 @@ export class FieldToolbarItemComponent {
   }
 
   public dragDropped(event: CdkDragDrop<any>): void {
+    this.dragging = false;
     this._restoreMenuBackdrop();
 
     if (event.container !== event.previousContainer) {

@@ -6,13 +6,21 @@
   padding-right: 2px;
 }
 
-
 .toolbar-field {
   padding: 0 16px;
+  mat-icon {
+    margin-right: 12px;
+  }
 }
 
 :host {
   .mat-mdc-menu-item {
     padding: 0;
+  }
+}
+
+.toolbar-fields.cdk-drop-list-dragging {
+  .toolbar-field-clone {
+    display: none;
   }
 }

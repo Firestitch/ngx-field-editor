@@ -66,7 +66,6 @@ export class FieldGalleryComponent implements OnInit, OnChanges {
       noResults: false,
       persist: false,
       zoom: false,
-      preview: false,
       info: {
         icon: false,
         name: true,
