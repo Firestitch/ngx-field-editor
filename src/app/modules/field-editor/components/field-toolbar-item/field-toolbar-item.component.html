@@ -3,6 +3,7 @@
 } @else {
   <div
       mat-menu-item
+      (click)="itemClick(item)"
       [disabled]="item.disabled">
     <div
         class="toolbar-fields"
@@ -14,7 +15,6 @@
           cdkDrag
           [cdkDragData]="{ field: field, item: item }"
           [cdkDragDisabled]="item.disabled"
-          (click)="itemClick(item)"
           (cdkDragStarted)="dragStarted(item)"
           (cdkDragDropped)="dragDropped($event)">
         <div class="fs-row">
