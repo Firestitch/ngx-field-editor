@@ -152,7 +152,7 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
       });
     }
 
-    if (canFileDelete) {
+    if (canFileDelete && !this.disabled) {
       this.actions.push({
         label: 'Remove',
         click: (item: FsGalleryItem) => {

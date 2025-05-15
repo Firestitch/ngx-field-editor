@@ -70,6 +70,10 @@ export class FieldRenderVisualSelectorModelComponent
   }
 
   public select(option): void {
+    if (this.disabled) {
+      return;
+    }
+
     const selected = !this.selected[option.guid];
 
     if (!this.configs.multipleSelection) {

@@ -1,5 +1,7 @@
 <mat-form-field class="form-field-multiline-subscript">
-  <mat-label *ngIf="field.label">{{field.label}}</mat-label>
+  <mat-label *ngIf="field.label">
+    {{ field.label }}
+  </mat-label>
   <input
     matInput
     fsDatePickerBirthday
@@ -8,6 +10,9 @@
     [maxDate]="!field.maxYear && !field.maxDate ? curentDay : field.maxDate"
     [maxYear]="field.maxYear"
     [name]="name"
+    [disabled]="disabled"
     [required]="field.configs.required===true">
-  <mat-hint>{{field.description}}</mat-hint>
+  <mat-hint>
+    {{ field.description }}
+  </mat-hint>
 </mat-form-field>
