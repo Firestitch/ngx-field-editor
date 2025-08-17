@@ -21,7 +21,6 @@ export class FieldConfigDirective {
   ): context is {
     $implicit: Field,
     field: Field,
-    template: TemplateRef<any>,
     fieldEditor: FieldEditorService,
     headerTemplate: TemplateRef<any>,
     configTemplate: TemplateRef<any>,
