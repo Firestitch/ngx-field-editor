@@ -19,158 +19,173 @@
       </button>
     </div>
   }
-  <ng-container *ngIf="fieldContainerTemplateRef; else containerTemplate">
-    <ng-container
-      [ngTemplateOutlet]="fieldContainerTemplateRef"
-      [ngTemplateOutletContext]="{ template: containerTemplate, selected: isFieldSelected, field: field }">
-    </ng-container>
-  </ng-container>
+  <div class="field-content">
+    @if (fieldContainerTemplateRef) {
+      <ng-container
+        [ngTemplateOutlet]="fieldContainerTemplateRef"
+        [ngTemplateOutletContext]="{ 
+        template: containerTemplate, 
+        selected: isFieldSelected, 
+        field: field,
+        fieldEditor: fieldEditor
+      }">
+      </ng-container>
+    } @else {
+      <ng-container *ngTemplateOutlet="containerTemplate"></ng-container>
+    }
+  </div>
 </div>
 <ng-template #containerTemplate>
-  <div class="field-content">
-    <fs-field-header
-      *ngIf="isFieldSelected"
-      [field]="field"
-      [hasDescription]="hasDescription"
-      (toggleDescription)="toggleDescriptionNote($event)"
-      (fieldChanged)="headerFieldChanged($event)">
-    </fs-field-header>
-    <ng-container *ngIf="isFieldSelected; else renderField">
-      <div
-          class="field-config"
-          [ngClass]="{ 'disabled': !canEdit || !canConfig }">
-        <ng-container *ngIf="fieldConfigTemplate; else configStandardField">
-          <ng-template *ngTemplateOutlet="fieldConfigTemplate; context: { field: field, fieldEditor: fieldEditor }"></ng-template>
-        </ng-container>
-        <ng-template #configStandardField>
-          <ng-container [ngSwitch]="field.type">
-            <ng-container *ngSwitchCase="FieldType.Choice">
-              <fs-field-config-options
-                [field]="field"
-                [showOther]="true"
-                [showNotes]="true"
-                [showOptionLabel]="true">
-              </fs-field-config-options>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Dropdown">
-              <fs-field-config-options
-                [field]="field"
-                [showOther]="false"
-                [showOptionLabel]="true">
-              </fs-field-config-options>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Checkbox">
-              <fs-field-config-options
-                [field]="field"
-                [showOther]="true"
-                [showNotes]="true"
-                [showOptionLabel]="true">
-              </fs-field-config-options>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Name">
-              <fs-field-config-name [field]="field"></fs-field-config-name>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.File">
-              <fs-field-config-file [field]="field"></fs-field-config-file>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Gender">
-              <fs-field-config-gender [field]="field"></fs-field-config-gender>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Heading">
-              <fs-field-config-heading [field]="field"></fs-field-config-heading>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Content">
-              <fs-field-config-content [field]="field"></fs-field-config-content>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.RichText">
-              <fs-field-config-rich-text [field]="field"></fs-field-config-rich-text>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Address">
-              <fs-field-config-address [field]="field"></fs-field-config-address>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.VisualSelector">
-              <fs-field-config-visual-selector [field]="field"></fs-field-config-visual-selector>
-            </ng-container>
-          </ng-container>
+  @if (isFieldSelected) {
+    <div
+        class="field-config"
+        [ngClass]="{ 'disabled': !canEdit || !canConfig }">
+      @if (fieldConfigTemplate) {
+        <ng-template
+          [ngTemplateOutlet]="fieldConfigTemplate"
+          [ngTemplateOutletContext]="{ field: field, fieldEditor: fieldEditor, configTemplate: configTemplate, headerTemplate: headerTemplate }">
         </ng-template>
-      </div>
-    </ng-container>
-    <ng-template #renderField>
-      <div class="field-render">
-        <ng-container *ngIf="fieldRenderTemplate; else renderStandardField">
-          <ng-template
-            [ngTemplateOutlet]="fieldRenderTemplate"
-            [ngTemplateOutletContext]="{field: field, fieldEditor: fieldEditor}">
-          </ng-template>
+      } @else {
+        <ng-container [ngTemplateOutlet]="headerTemplate"></ng-container>
+        <ng-container [ngTemplateOutlet]="configTemplate"></ng-container>
+      }
+      <ng-template #headerTemplate>
+        <fs-field-header
+          [field]="field"
+          [hasDescription]="hasDescription"
+          (toggleDescription)="toggleDescriptionNote($event)"
+          (fieldChanged)="headerFieldChanged($event)">
+        </fs-field-header>
+      </ng-template>
+      <ng-template #configTemplate>
+        @switch (field.type) {
+          @case (FieldType.Choice) {
+            <fs-field-config-options
+              [field]="field"
+              [showOther]="true"
+              [showNotes]="true"
+              [showOptionLabel]="true">
+            </fs-field-config-options>
+          }
+          @case (FieldType.Dropdown) {
+            <fs-field-config-options
+              [field]="field"
+              [showOther]="false"
+              [showOptionLabel]="true">
+            </fs-field-config-options>
+          }
+          @case (FieldType.Checkbox) {
+            <fs-field-config-options
+              [field]="field"
+              [showOther]="true"
+              [showNotes]="true"
+              [showOptionLabel]="true">
+            </fs-field-config-options>
+          }
+          @case (FieldType.Name) {
+            <fs-field-config-name [field]="field"></fs-field-config-name>
+          }
+          @case (FieldType.File) {
+            <fs-field-config-file [field]="field"></fs-field-config-file>
+          }
+          @case (FieldType.Gender) {
+            <fs-field-config-gender [field]="field"></fs-field-config-gender>
+          }
+          @case (FieldType.Heading) {
+            <fs-field-config-heading [field]="field"></fs-field-config-heading>
+          }
+          @case (FieldType.Content) {
+            <fs-field-config-content [field]="field"></fs-field-config-content>
+          }
+          @case (FieldType.RichText) {
+            <fs-field-config-rich-text [field]="field"></fs-field-config-rich-text>
+          }
+          @case (FieldType.Address) {
+            <fs-field-config-address [field]="field"></fs-field-config-address>
+          }
+          @case (FieldType.VisualSelector) {
+            <fs-field-config-visual-selector [field]="field"></fs-field-config-visual-selector>
+          }
+        }
+      </ng-template>
+    </div>
+  } @else {
+    <div class="field-render">
+      @if (fieldRenderTemplate) {
+        <ng-container
+          [ngTemplateOutlet]="fieldRenderTemplate"
+          [ngTemplateOutletContext]="{ field: field, fieldEditor: fieldEditor, selected: isFieldSelected, template: fieldRenderTemplate }">
         </ng-container>
-        <ng-template #renderStandardField>
-          <ng-container [ngSwitch]="field.type">
-            <ng-container *ngSwitchCase="FieldType.ShortText">
-              <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.LongText">
-              <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Phone">
-              <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Email">
-              <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Date">
-              <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Birthday">
-              <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Time">
-              <ng-container *ngTemplateOutlet="fsFieldText"></ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Choice">
-              <fs-field-render-choice [field]="field"></fs-field-render-choice>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Dropdown">
-              <fs-field-render-dropdown [field]="field"></fs-field-render-dropdown>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Checkbox">
-              <fs-field-render-checkbox [field]="field"></fs-field-render-checkbox>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Name">
-              <fs-field-render-name [field]="field"></fs-field-render-name>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.File">
-              <fs-field-render-file [field]="field"></fs-field-render-file>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Gender">
-              <fs-field-render-gender [field]="field"></fs-field-render-gender>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Heading">
-              <fs-field-view-heading [field]="field"></fs-field-view-heading>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.VisualSelector">
-              <fs-field-render-visual-selector [field]="field"></fs-field-render-visual-selector>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Content">
-              <fs-html-editor
-                [config]="htmlEditorConfig"
-                [ngModel]="field.configs.content">
-              </fs-html-editor>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.RichText">
-              <fs-html-editor
-                [config]="htmlEditorConfig"
-                [ngModel]="field.configs.default">
-              </fs-html-editor>
-            </ng-container>
-            <ng-container *ngSwitchCase="FieldType.Address">
-              <fs-field-render-address [field]="field"></fs-field-render-address>
-            </ng-container>
-            <ng-template #fsFieldText>
-              <fs-field-render-text [field]="field"></fs-field-render-text>
-            </ng-template>
-          </ng-container>
-        </ng-template>
-      </div>
-    </ng-template>
-  </div>
+      } @else {
+        <ng-container [ngTemplateOutlet]="renderTemplate"></ng-container>
+      }
+      <ng-template #renderTemplate>
+        @switch (field.type) {
+          @case (FieldType.ShortText) {
+            <fs-field-render-text [field]="field"></fs-field-render-text>
+          }
+          @case (FieldType.LongText) {
+            <fs-field-render-text [field]="field"></fs-field-render-text>
+          }
+          @case (FieldType.Phone) {
+            <fs-field-render-text [field]="field"></fs-field-render-text>
+          }
+          @case (FieldType.Email) {
+            <fs-field-render-text [field]="field"></fs-field-render-text>
+          }
+          @case (FieldType.Date) {
+            <fs-field-render-text [field]="field"></fs-field-render-text>
+          }
+          @case (FieldType.Birthday) {
+            <fs-field-render-text [field]="field"></fs-field-render-text>
+          }
+          @case (FieldType.Time) {
+            <fs-field-render-text [field]="field"></fs-field-render-text>
+          }
+          @case (FieldType.Choice) {
+            <fs-field-render-choice [field]="field"></fs-field-render-choice>
+          }
+          @case (FieldType.Dropdown) {
+            <fs-field-render-dropdown [field]="field"></fs-field-render-dropdown>
+          }
+          @case (FieldType.Checkbox) {
+            <fs-field-render-checkbox [field]="field"></fs-field-render-checkbox>
+          }
+          @case (FieldType.Name) {
+            <fs-field-render-name [field]="field"></fs-field-render-name>
+          }
+          @case (FieldType.File) {
+            <fs-field-render-file [field]="field"></fs-field-render-file>
+          }
+          @case (FieldType.Gender) {
+            <fs-field-render-gender [field]="field"></fs-field-render-gender>
+          }
+          @case (FieldType.Heading) {
+            <fs-field-view-heading [field]="field"></fs-field-view-heading>
+          }
+          @case (FieldType.VisualSelector) {
+            <fs-field-render-visual-selector [field]="field"></fs-field-render-visual-selector>
+          }
+          @case (FieldType.Content) {
+            <fs-html-editor
+              [config]="htmlEditorConfig"
+              [ngModel]="field.configs.content">
+            </fs-html-editor>
+          }
+          @case (FieldType.RichText) {
+            <fs-html-editor
+              [config]="htmlEditorConfig"
+              [ngModel]="field.configs.default">
+            </fs-html-editor>
+          }
+          @case (FieldType.Address) {
+            <fs-field-render-address [field]="field"></fs-field-render-address>
+          }
+          @default {
+            <fs-field-render-text [field]="field"></fs-field-render-text>
+          }
+        }
+      </ng-template>
+    </div>
+  }
 </ng-template>

@@ -23,6 +23,31 @@
           </div>
         </ng-template>
         <ng-template
+            fsFieldConfig
+            [type]="FieldType.RichText"
+            let-field="field"
+            let-fieldEditor="fieldEditor"
+            let-headerTemplate="headerTemplate"
+            let-configTemplate="configTemplate">
+          <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+          <ng-container *ngTemplateOutlet="configTemplate"></ng-container>
+          <mat-form-field>
+            <mat-label>
+              Custom select
+            </mat-label>
+            <mat-select
+                [(ngModel)]="field.configs['customSelect']"
+                name="customSelect"
+                (ngModelChange)="fieldEditor.fieldChange(field)">
+              <mat-option
+                  *ngFor="let item of ['item1', 'item2', 'item3']"
+                  [value]="item">
+                {{ item }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-template>
+        <ng-template
             fsFieldRender
             type="signature"
             let-field="field"
@@ -121,7 +146,7 @@
             <app-signature-field-render
               name="signature"
               [ngModel]="field"
-              (ngModelChange)="fieldEditor.fieldChange(fieldEditor, field)">
+              (ngModelChange)="fieldEditor.fieldChange(field)">
             </app-signature-field-render>
           </ng-template>
           <ng-template

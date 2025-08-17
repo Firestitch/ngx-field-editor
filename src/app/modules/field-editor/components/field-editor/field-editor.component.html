@@ -15,7 +15,7 @@
             [spacer]="spacer"
             [scrollContainer]="scrollContainer"
             [marginTop]="50">
-          <ng-container *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl, template: toolbarTpl } "></ng-container>
+          <ng-container *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl, fieldEditor: fieldEditor, template: toolbarTpl } "></ng-container>
           <ng-template #toolbarTpl>
             <fs-field-toolbar [toolbarItems]="fieldEditor.config.toolbar.items"></fs-field-toolbar>
           </ng-template>

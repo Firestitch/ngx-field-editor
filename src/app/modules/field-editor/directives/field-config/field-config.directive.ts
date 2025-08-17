@@ -1,5 +1,9 @@
 
-import { Directive, TemplateRef, Input } from '@angular/core';
+import { Directive, Input, TemplateRef } from '@angular/core';
+
+import { FieldType } from '../../../../enums';
+import { Field } from '../../../../interfaces';
+import { FieldEditorService } from '../../../../services';
 
 
 @Directive({
@@ -7,7 +11,22 @@ import { Directive, TemplateRef, Input } from '@angular/core';
 })
 export class FieldConfigDirective {
 
-  @Input() public type;
+  @Input() public type: string | FieldType;
 
   constructor(public templateRef: TemplateRef<any>) {}
+
+  public static ngTemplateContextGuard(
+    directive: FieldConfigDirective,
+    context: unknown,
+  ): context is {
+    $implicit: Field,
+    field: Field,
+    template: TemplateRef<any>,
+    fieldEditor: FieldEditorService,
+    headerTemplate: TemplateRef<any>,
+    configTemplate: TemplateRef<any>,
+  } {
+    return true;
+  }
+
 }

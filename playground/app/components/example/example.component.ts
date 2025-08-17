@@ -50,6 +50,7 @@ export class ExampleComponent implements OnInit {
   public fieldRendererConfig: FieldRendererConfig;
   public fieldViewerConfig: FieldViewerConfig;
   public selectedIndex = 0;
+  public FieldType = FieldType;
 
   private _dialog = inject(MatDialog);
 
