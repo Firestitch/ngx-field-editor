@@ -37,27 +37,31 @@
 </div>
 <ng-template #containerTemplate>
   @if (isFieldSelected) {
-    <div
-        class="field-config"
-        [ngClass]="{ 'disabled': !canEdit || !canConfig }">
-      @if (fieldConfigTemplate) {
-        <ng-template
-          [ngTemplateOutlet]="fieldConfigTemplate"
-          [ngTemplateOutletContext]="{ field: field, fieldEditor: fieldEditor, configTemplate: configTemplate, headerTemplate: headerTemplate }">
-        </ng-template>
-      } @else {
-        <ng-container [ngTemplateOutlet]="headerTemplate"></ng-container>
-        <ng-container [ngTemplateOutlet]="configTemplate"></ng-container>
-      }
-      <ng-template #headerTemplate>
+    @if (fieldConfigTemplate) {
+      <ng-template
+        [ngTemplateOutlet]="fieldConfigTemplate"
+        [ngTemplateOutletContext]="{ field: field, fieldEditor: fieldEditor, configTemplate: configTemplate, headerTemplate: headerTemplate }">
+      </ng-template>
+    } @else {
+      <ng-container [ngTemplateOutlet]="headerTemplate"></ng-container>
+      <ng-container [ngTemplateOutlet]="configTemplate"></ng-container>
+    }
+    <ng-template #headerTemplate>
+      <div
+          class="field-header"
+          [ngClass]="{ 'disabled': !canEdit }">
         <fs-field-header
           [field]="field"
           [hasDescription]="hasDescription"
           (toggleDescription)="toggleDescriptionNote($event)"
           (fieldChanged)="headerFieldChanged($event)">
         </fs-field-header>
-      </ng-template>
-      <ng-template #configTemplate>
+      </div>
+    </ng-template>
+    <ng-template #configTemplate>
+      <div
+          class="field-config"
+          [ngClass]="{ 'disabled': !canEdit || !canConfig }">
         @switch (field.type) {
           @case (FieldType.Choice) {
             <fs-field-config-options
@@ -107,8 +111,8 @@
             <fs-field-config-visual-selector [field]="field"></fs-field-config-visual-selector>
           }
         }
-      </ng-template>
-    </div>
+      </div>
+    </ng-template>
   } @else {
     <div class="field-render">
       @if (fieldRenderTemplate) {
