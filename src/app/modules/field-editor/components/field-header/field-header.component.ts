@@ -35,6 +35,7 @@ export class FieldHeaderComponent
 
   public showDelete = false;
   public canEdit = false;
+  public canConfig = false;
   public showRequired = false;
   public showDescription = false;
   public showLabel = false;
@@ -104,7 +105,7 @@ export class FieldHeaderComponent
       .subscribe(() => {
         const field = this.fieldEditor.findFieldByGuid(this.field.guid);
         const fieldIndex = this.fieldEditor.findFieldIndexByField(field);
-        
+
         if(fieldIndex !== -1) {
           this.fieldEditor.config.fields.splice(fieldIndex, 1);
           this.fieldEditor.unselectField();
@@ -116,6 +117,7 @@ export class FieldHeaderComponent
   private _initHeaderConfig(): void {
     this._checkShowDelete();
     this._checkFieldCanEdit();
+    this._checkFieldCanConfig();
     this._checkFieldShowRequired();
     this._checkFieldShowDescription();
     this._checkFieldCanLabel();
@@ -141,6 +143,17 @@ export class FieldHeaderComponent
       )
       .subscribe((value) => {
         this.canEdit = value;
+        this._cdRef.markForCheck();
+      });
+  }
+
+  private _checkFieldCanConfig(): void {
+    this.fieldEditor.fieldCanConfig(this.field)
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.canConfig = value;
         this._cdRef.markForCheck();
       });
   }

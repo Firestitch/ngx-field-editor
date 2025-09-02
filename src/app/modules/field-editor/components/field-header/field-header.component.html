@@ -9,7 +9,7 @@
           placeholder="Label"
           [(ngModel)]="field.label"
           name="label"
-          [disabled]="!canEdit"
+          [disabled]="!canConfig"
           [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="actionConfig()">
       </mat-form-field>
@@ -42,7 +42,7 @@
       </svg>
     </button>
     <button
-        *ngIf="canEdit && showDescription"
+        *ngIf="canConfig && showDescription"
         mat-icon-button
         type="button"
         (click)="toggleDescriptionNote($event)"

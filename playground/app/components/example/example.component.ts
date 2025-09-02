@@ -151,7 +151,7 @@ export class ExampleComponent implements OnInit {
         return of(true);
       },
       fieldCanConfig: () => {
-        return of(true);
+        return of(false);
       },
       action: (action: EditorAction, field: Field, data: any): Observable<any> => {
         console.log('Field Action', action, field, data);
