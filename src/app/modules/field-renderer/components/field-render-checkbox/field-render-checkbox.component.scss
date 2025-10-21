@@ -25,11 +25,16 @@
     ::ng-deep {
       .mdc-label {
         padding-top: 0 !important;
+        width: 100%;
       }
     }
   }
 
   mat-checkbox {
+    &.mat-mdc-checkbox-checked .mdc-label {
+      width: 100%;
+    }
+
     margin: 8px 0 !important;
   }
   

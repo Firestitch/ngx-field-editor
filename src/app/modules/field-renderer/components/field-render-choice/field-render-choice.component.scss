@@ -7,14 +7,8 @@
       margin-bottom: 0;
     }
 
-    .mdc-label {
+    &.mat-mdc-radio-checked .mdc-label {
       width: 100%;
-    }
-
-    .other {
-      .mdc-form-field {
-        align-items: start;
-      }
     }
       
     .notes {
@@ -41,9 +35,14 @@
     max-width: 100%;
     margin-right: 8px;
 
+    .mdc-form-field {
+      align-items: start;
+    }
+
     ::ng-deep {
       .mdc-label {
         padding-top: 0 !important;
+        width: 100%;
       }
     }
   }
@@ -58,5 +57,4 @@
 .checkbox-hint {
   white-space: normal;
   line-height: initial;
-  color: gray;
 }
