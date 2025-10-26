@@ -3,28 +3,29 @@
     {{ field.label }}
   </mat-label>
   <mat-select
-      [(ngModel)]="field.data.value"
-      (ngModelChange)="changed.emit(field)"
-      [required]="field.configs.required === true"
-      name="{{name}}Dropdown"
-      [disabled]="disabled">
-    <mat-option
-        *ngFor="let option of field.options"
+    [(ngModel)]="field.data.value"
+    (ngModelChange)="changed.emit(field)"
+    [required]="field.configs.required === true"
+    name="{{name}}Dropdown"
+    [disabled]="disabled">
+    @for (option of field.options; track option) {
+      <mat-option
         [value]="option.guid">
-      {{ option.name }}
-    </mat-option>
-    <!-- <mat-option 
-        *ngIf="field.configs.other" 
-        [value]="OtherOption">
-      Other
-    </mat-option> -->
-  </mat-select>
-  <mat-hint>
-    {{ field.description }}
-  </mat-hint>
+        {{ option.name }}
+      </mat-option>
+    }
+    <!-- <mat-option
+    *ngIf="field.configs.other"
+    [value]="OtherOption">
+    Other
+  </mat-option> -->
+</mat-select>
+<mat-hint>
+  {{ field.description }}
+</mat-hint>
 </mat-form-field>
-<!-- 
-  <mat-form-field *ngIf="field.data.value === OtherOption" class="other">
+<!--
+<mat-form-field *ngIf="field.data.value === OtherOption" class="other">
   <mat-label>{{field.label}} Other</mat-label>
   <textarea
     matInput
@@ -36,5 +37,5 @@
     [ngModelOptions]="{ updateOn: 'blur' }"
     (ngModelChange)="changed.emit(field)">
   </textarea>
-</mat-form-field> 
+</mat-form-field>
 -->

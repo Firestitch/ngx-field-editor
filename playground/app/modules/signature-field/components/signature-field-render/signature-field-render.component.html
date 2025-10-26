@@ -1,5 +1,7 @@
 <fs-label-field class="fs-form-wrapper">
-  <fs-label class="fs-form-label" *ngIf="field?.label">{{field.label}}</fs-label>
+  @if (field?.label) {
+    <fs-label class="fs-form-label">{{field.label}}</fs-label>
+  }
   <fs-signature
     [ngModel]="signature"
     [required]="field?.configs.required"
@@ -9,7 +11,9 @@
     (changed)="changed($event)">
   </fs-signature>
 
-  <fs-label-message class="fs-form-message" *ngIf="field?.description">
-    <div class="fs-form-hint">{{ field?.description }}</div>
-  </fs-label-message>
+  @if (field?.description) {
+    <fs-label-message class="fs-form-message">
+      <div class="fs-form-hint">{{ field?.description }}</div>
+    </fs-label-message>
+  }
 </fs-label-field>

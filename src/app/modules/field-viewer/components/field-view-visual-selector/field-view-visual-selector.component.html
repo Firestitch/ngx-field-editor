@@ -1,26 +1,30 @@
 <div class="options">
-  <ng-container 
-      *ngFor="let option of field.options; let index = index">
-    <div class="option" *ngIf="selected[option.guid]">
-      <div class="option-container">
-        <ng-container *ngIf="configs.format === VisualSelectorFormat.Image || configs.format === VisualSelectorFormat.ImageName">
-          <div 
-              class="option-image-container" 
+  @for (option of field.options; track option; let index = $index) {
+    @if (selected[option.guid]) {
+      <div class="option">
+        <div class="option-container">
+          @if (configs.format === VisualSelectorFormat.Image || configs.format === VisualSelectorFormat.ImageName) {
+            <div
+              class="option-image-container"
               [style.aspectRatio]="configs.previewWidth/configs.previewHeight">
-            <div 
-              *ngIf="option.image"
-              class="option-image"
-              [style.backgroundImage]="'url(' + option.image.preview + ')'">
+              @if (option.image) {
+                <div
+                  class="option-image"
+                  [style.backgroundImage]="'url(' + option.image.preview + ')'">
+                </div>
+              }
+              @if (!option.image) {
+                <div class="option-image-missing">
+                  <mat-icon>image_not_supported</mat-icon>
+                </div>
+              }
             </div>
-            <div *ngIf="!option.image" class="option-image-missing">
-              <mat-icon>image_not_supported</mat-icon>
-            </div>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="configs.format === VisualSelectorFormat.Name || configs.format === VisualSelectorFormat.ImageName">
-          <div class="option-name">{{option.name}}</div>
-        </ng-container>
+          }
+          @if (configs.format === VisualSelectorFormat.Name || configs.format === VisualSelectorFormat.ImageName) {
+            <div class="option-name">{{option.name}}</div>
+          }
+        </div>
       </div>
-    </div>
-  </ng-container>
+    }
+  }
 </div>

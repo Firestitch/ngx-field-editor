@@ -1,9 +1,11 @@
 <fs-label-field class="fs-form-wrapper">
-  <fs-label 
-      class="fs-form-label" 
-      *ngIf="field.label">
-    {{field.label}}
-  </fs-label>
+  @if (field.label) {
+    <fs-label
+      class="fs-form-label"
+      >
+      {{field.label}}
+    </fs-label>
+  }
   <fs-field-render-visual-selector-model
     [required]="field.configs.required"
     (changed)="changed.emit(field)"

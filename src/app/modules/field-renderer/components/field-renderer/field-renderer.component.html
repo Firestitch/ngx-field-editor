@@ -1,7 +1,7 @@
-<ng-container *ngFor="let field of fieldRenderer.config.fields; trackBy: trackByGuid">
+@for (field of fieldRenderer.config.fields; track trackByGuid($index, field)) {
   <fs-field-render
     [attr.data-guid]="field.guid"
     [field]="field"
     [fieldRenders]="fieldRenders">
   </fs-field-render>
-</ng-container>
+}

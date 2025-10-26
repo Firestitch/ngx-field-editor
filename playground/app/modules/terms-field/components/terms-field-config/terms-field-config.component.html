@@ -1,10 +1,12 @@
-<fs-list [config]="listConfig" *ngIf="terms">
-  <fs-list-column title="Terms">    
-    <ng-template fs-list-cell let-row="row">
-      <a
+@if (terms) {
+  <fs-list [config]="listConfig">
+    <fs-list-column title="Terms">
+      <ng-template fs-list-cell let-row="row">
+        <a
           (click)="open(row)">
-        {{row.label}} {{row.contentLabel}}
-      </a>
-    </ng-template>
-  </fs-list-column>
-</fs-list>
+          {{row.label}} {{row.contentLabel}}
+        </a>
+      </ng-template>
+    </fs-list-column>
+  </fs-list>
+}

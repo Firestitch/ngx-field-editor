@@ -1,34 +1,35 @@
 <fs-radio-group
-    #radiobuttons
-    [(ngModel)]="field.data.value.selected"
-    (ngModelChange)="radiosChange($event)"
-    [label]="field.label"
-    [name]="'choices' + name"
-    [fsFormFunction]="validate"
-    [attr.validation-required]="this.field.configs.required"
-    [disabled]="disabled"
-    messageSelector=".fs-form-message"
-    orientation="vertical">
-  <ng-container *ngFor="let option of field.options; let index = index">
+  #radiobuttons
+  [(ngModel)]="field.data.value.selected"
+  (ngModelChange)="radiosChange($event)"
+  [label]="field.label"
+  [name]="'choices' + name"
+  [fsFormFunction]="validate"
+  [attr.validation-required]="this.field.configs.required"
+  [disabled]="disabled"
+  messageSelector=".fs-form-message"
+  orientation="vertical">
+  @for (option of field.options; track option; let index = $index) {
     <mat-radio-button
-        [disabled]="disabled"
-        [value]="option.guid"
-        (change)="radioChange(notes)">
+      [disabled]="disabled"
+      [value]="option.guid"
+      (change)="radioChange(notes)">
       <div class="label-content">
         <div>
           {{ option.name }}
         </div>
-        <div
-            *ngIf="option.notesLabel"
+        @if (option.notesLabel) {
+          <div
             class="checkbox-hint">
-          <small>
-            {{ option.notesLabel }}
-          </small>
-        </div>
+            <small>
+              {{ option.notesLabel }}
+            </small>
+          </div>
+        }
       </div>
       <mat-form-field
-          [ngClass]="{ show: option.notes && field.data.value.selected === option.guid }"
-          class="form-field-padless notes">
+        [ngClass]="{ show: option.notes && field.data.value.selected === option.guid }"
+        class="form-field-padless notes">
         <mat-label>
           {{ option.notesLabel || 'Notes' }}
         </mat-label>
@@ -39,24 +40,25 @@
           [name]="'notes-' + field.guid + option.guid">
       </mat-form-field>
     </mat-radio-button>
-  </ng-container>
-  <mat-radio-button
-      *ngIf="field.configs.other"
+  }
+  @if (field.configs.other) {
+    <mat-radio-button
       value="other"
       [name]="'choiceOther' + name"
       [disabled]="disabled"
       class="other choice">
-    <mat-form-field class="form-field-padless">
-      <input
-        matInput
-        placeholder="Other"
-        (click)="otherInputClick()"
-        (ngModelChange)="otherInputChange($event)"
-        [(ngModel)]="otherValue"
-        [name]="'otherInput' + name"
-        [disabled]="disabled">
-    </mat-form-field>
-  </mat-radio-button>
+      <mat-form-field class="form-field-padless">
+        <input
+          matInput
+          placeholder="Other"
+          (click)="otherInputClick()"
+          (ngModelChange)="otherInputChange($event)"
+          [(ngModel)]="otherValue"
+          [name]="'otherInput' + name"
+          [disabled]="disabled">
+      </mat-form-field>
+    </mat-radio-button>
+  }
   <mat-hint>
     {{ field.description }}
   </mat-hint>

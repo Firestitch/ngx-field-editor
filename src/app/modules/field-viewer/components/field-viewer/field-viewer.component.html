@@ -1,44 +1,39 @@
-<ng-container *ngFor="let field of fields">
-  <ng-container *ngIf="field.show | async">
+@for (field of fields; track field) {
+  @if (field.show | async) {
     <div class="field" [attr.data-field]="field.guid">
-      <ng-container [ngSwitch]="field.type">
-        <ng-container *ngSwitchCase="FieldType.Heading">
-          <fs-field-view-heading 
+      @switch (field.type) {
+        @case (FieldType.Heading) {
+          <fs-field-view-heading
             [field]="field">
           </fs-field-view-heading>
-        </ng-container>
-        <ng-container *ngSwitchDefault>
+        }
+        @default {
           <fs-label-field>
             <fs-label>
               <div class="label-container" [ngClass]="{ tooltip: !!field.description }">
                 {{field.label}}
-                <ng-container *ngIf="field.description">
+                @if (field.description) {
                   <mat-icon [matTooltip]="field.description">info</mat-icon>
-                </ng-container>
-              </div>            
+                }
+              </div>
             </fs-label>
             <ng-container *ngTemplateOutlet="content"></ng-container>
           </fs-label-field>
-        </ng-container>
-      </ng-container>
+        }
+      }
     </div>
-
     <ng-template #content>
-      <ng-container *ngIf="fieldViewTemplateRefs[field.type]; else standardField">
+      @if (fieldViewTemplateRefs[field.type]) {
         <ng-template *ngTemplateOutlet="fieldViewTemplateRefs[field.type]; context: { field: field, fieldViewer: fieldViewer }"></ng-template>
-      </ng-container>
-
-      <ng-template #standardField>
-        <ng-container *ngIf="field.hasValue; else elseHasValue">
+      } @else {
+        @if (field.hasValue) {
           <fs-field-view
             [field]="field">
           </fs-field-view>
-        </ng-container>
-      
-        <ng-template #elseHasValue>
+        } @else {
           <span class="not-specified">Not Specified</span>
-        </ng-template>
-      </ng-template>
+        }
+      }
     </ng-template>
-  </ng-container>
-</ng-container>
+  }
+}

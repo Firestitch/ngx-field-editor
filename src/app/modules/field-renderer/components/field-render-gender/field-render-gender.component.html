@@ -1,19 +1,21 @@
 <fs-radio-group
-    [(ngModel)]="field.data.value.selected"
-    [label]="field.label"
-    [name]="'gender' + name"
-    [disabled]="disabled"
-    (ngModelChange)="changed.emit(field)"
-    [required]="field.configs.required===true"
-    orientation="vertical">
-  <mat-radio-button
-      *ngFor="let gender of field.options"
+  [(ngModel)]="field.data.value.selected"
+  [label]="field.label"
+  [name]="'gender' + name"
+  [disabled]="disabled"
+  (ngModelChange)="changed.emit(field)"
+  [required]="field.configs.required===true"
+  orientation="vertical">
+  @for (gender of field.options; track gender) {
+    <mat-radio-button
       [value]="gender.guid">
-    <div class="fs-column">
-      <div>{{gender.name}}</div>
-      <div *ngIf="gender.notesLabel" class="checkbox-hint"><small>{{ gender.notesLabel }}</small></div>
-    </div>
-    
-  </mat-radio-button>
+      <div class="fs-column">
+        <div>{{gender.name}}</div>
+        @if (gender.notesLabel) {
+          <div class="checkbox-hint"><small>{{ gender.notesLabel }}</small></div>
+        }
+      </div>
+    </mat-radio-button>
+  }
   <mat-hint>{{field.description}}</mat-hint>
 </fs-radio-group>

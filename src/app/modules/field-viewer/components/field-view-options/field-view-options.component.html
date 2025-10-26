@@ -1,59 +1,66 @@
 
-<ng-container [ngSwitch]="field.type">
-  <ng-container *ngSwitchCase="fieldType.Choice">
+@switch (field.type) {
+  @case (fieldType.Choice) {
     <ng-template [ngTemplateOutlet]="checkboxResults"
-                 [ngTemplateOutletContext]="{$implicit: field}">
+      [ngTemplateOutletContext]="{$implicit: field}">
     </ng-template>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="fieldType.Gender">
+  }
+  @case (fieldType.Gender) {
     <ng-template [ngTemplateOutlet]="checkboxResults"
-                 [ngTemplateOutletContext]="{$implicit: field}">
+      [ngTemplateOutletContext]="{$implicit: field}">
     </ng-template>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="fieldType.Dropdown">
-    <span *ngIf="field.data.value === OtherOption; else dropdownValue">
-      {{field.data.other}}
-    </span>
-    <ng-template #dropdownValue>
-      <ng-container *ngFor="let option of field.options || []">
-        <span *ngIf="field.data.value===option.guid">{{option.name}}</span>
-      </ng-container>
-    </ng-template>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="fieldType.Checkbox">
-    <ng-container *ngFor="let option of field.options || []">
-      <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">
-        {{option.name}}
-        <ng-container *ngIf="option.notes && field.data.value.notes[option.guid]">
-          ({{field.data.value.notes[option.guid]}})
-        </ng-container>
+  }
+  @case (fieldType.Dropdown) {
+    @if (field.data.value === OtherOption) {
+      <span>
+        {{field.data.other}}
       </span>
-    </ng-container>
-    <span class="option" *ngIf="field.data.value?.other">{{field.data.value?.other}}</span>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="fieldType.VisualSelector">
+    } @else {
+      @for (option of field.options || []; track option) {
+        @if (field.data.value===option.guid) {
+          <span>{{option.name}}</span>
+        }
+      }
+    }
+  }
+  @case (fieldType.Checkbox) {
+    @for (option of field.options || []; track option) {
+      @if ((field.data.value?.selected || []).indexOf(option.guid)!==-1) {
+        <span class="option">
+          {{option.name}}
+          @if (option.notes && field.data.value.notes[option.guid]) {
+            ({{field.data.value.notes[option.guid]}})
+          }
+        </span>
+      }
+    }
+    @if (field.data.value?.other) {
+      <span class="option">{{field.data.value?.other}}</span>
+    }
+  }
+  @case (fieldType.VisualSelector) {
     <fs-field-view-visual-selector
       [field]="field">
     </fs-field-view-visual-selector>
     <!-- <ng-container *ngFor="let option of field.options || []">
-      <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
-    </ng-container>
-    <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span> -->
+    <span class="option" *ngIf="(field.data.value?.selected || []).indexOf(option.guid)!==-1">{{option.name}}</span>
   </ng-container>
-</ng-container>
+  <span class="option" *ngIf="(field.data.value?.selected || []).indexOf('other')!==-1">{{field.data.value?.other}}</span> -->
+}
+}
 
 <ng-template let-field #checkboxResults>
-  <ng-container *ngFor="let option of field.options || []">
-      <span *ngIf="field.data.value?.selected===option.guid">
+  @for (option of field.options || []; track option) {
+    @if (field.data.value?.selected===option.guid) {
+      <span>
         {{option.name}}
-        <ng-container *ngIf="option.notes">
+        @if (option.notes) {
           ({{field.data.value.notes[option.guid]}})
-        </ng-container>
+        }
       </span>
-  </ng-container>
-  <span *ngIf="field.data.value?.selected==='other'">{{field.data.value?.other}}</span>
+    }
+  }
+  @if (field.data.value?.selected==='other') {
+    <span>{{field.data.value?.other}}</span>
+  }
 </ng-template>

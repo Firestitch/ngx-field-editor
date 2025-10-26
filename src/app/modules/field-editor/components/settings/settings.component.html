@@ -1,13 +1,13 @@
 <form
-    fsForm
-    [submit]="save">
+  fsForm
+  [submit]="save">
   <fs-dialog>
     <h1 mat-dialog-title>
       Settings
     </h1>
     <mat-dialog-content>
       <div class="fs-column">
-        <ng-container *ngIf="type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.LongText || type === FieldType.ShortText || type === FieldType.RichText">
+        @if (type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.LongText || type === FieldType.ShortText || type === FieldType.RichText) {
           <mat-form-field>
             <mat-label>
               Default Value
@@ -17,7 +17,7 @@
               [(ngModel)]="configs.default"
               name="default">
           </mat-form-field>
-        </ng-container>
+        }
         <mat-form-field>
           <mat-label>
             Identifier
@@ -33,15 +33,15 @@
             Populate from URL
           </fs-label>
           <mat-checkbox
-              name="populate"
-              [(ngModel)]="configs.populate">
+            name="populate"
+            [(ngModel)]="configs.populate">
             <div class="populated-checkbox">
               Allow field to be populated from URL
               <fs-popover
-                  [wrapperClass]="'popover-populate-url'"
-                  [maxWidth]="null"
-                  [indication]="false"
-                  [template]="populateTemplate">
+                [wrapperClass]="'popover-populate-url'"
+                [maxWidth]="null"
+                [indication]="false"
+                [template]="populateTemplate">
                 <mat-icon>
                   help_outline
                 </mat-icon>
@@ -49,26 +49,26 @@
             </div>
           </mat-checkbox>
         </fs-label-field>
-        <ng-container *ngIf="type === FieldType.Checkbox || type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.Gender || type === FieldType.VisualSelector">
+        @if (type === FieldType.Checkbox || type === FieldType.Dropdown || type === FieldType.Choice || type === FieldType.Gender || type === FieldType.VisualSelector) {
           <fs-label-field>
             <fs-label>
               Show option values
             </fs-label>
             <mat-checkbox
-                name="showValues"
-                [(ngModel)]="configs.showValues">
+              name="showValues"
+              [(ngModel)]="configs.showValues">
               Show
             </mat-checkbox>
           </fs-label-field>
-        </ng-container>
-        <ng-container *ngIf="type === FieldType.VisualSelector">
+        }
+        @if (type === FieldType.VisualSelector) {
           <fs-label-field>
             <fs-label>
               Allow multiple selection
             </fs-label>
             <mat-checkbox
-                name="multipleSelection"
-                [(ngModel)]="configs.multipleSelection">
+              name="multipleSelection"
+              [(ngModel)]="configs.multipleSelection">
               Enable
             </mat-checkbox>
           </fs-label-field>
@@ -77,8 +77,8 @@
               Format
             </mat-label>
             <mat-select
-                [(ngModel)]="configs.format"
-                name="format">
+              [(ngModel)]="configs.format"
+              name="format">
               <mat-option [value]="VisualSelectorFormat.Name">
                 Name Only
               </mat-option>
@@ -90,7 +90,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <ng-container *ngIf="configs.format">
+          @if (configs.format) {
             <div class="fs-row.gap-lg preview-image-ratio">
               <mat-form-field class="full-width">
                 <mat-label>
@@ -119,21 +119,21 @@
                 </span>
               </mat-form-field>
             </div>
-          </ng-container>
-        </ng-container>
+          }
+        }
       </div>
     </mat-dialog-content>
     <mat-dialog-actions>
       <button
-          type="submit"
-          color="primary"
-          mat-button>
+        type="submit"
+        color="primary"
+        mat-button>
         Save
       </button>
       <button
-          type="button"
-          mat-button
-          [mat-dialog-close]="null">
+        type="button"
+        mat-button
+        [mat-dialog-close]="null">
         Cancel
       </button>
     </mat-dialog-actions>
@@ -143,28 +143,28 @@
   <fs-label>
     Example URL
   </fs-label>
-  <ng-container [ngSwitch]="type">
-    <ng-container *ngSwitchCase="FieldType.Checkbox">
+  @switch (type) {
+    @case (FieldType.Checkbox) {
       <ng-container *ngTemplateOutlet="choicePopulate"></ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="FieldType.Dropdown">
+    }
+    @case (FieldType.Dropdown) {
       <ng-container *ngTemplateOutlet="choicePopulate"></ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="FieldType.Choice">
+    }
+    @case (FieldType.Choice) {
       <ng-container *ngTemplateOutlet="choicePopulate"></ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="FieldType.Gender">
+    }
+    @case (FieldType.Gender) {
       <ng-container *ngTemplateOutlet="genderPopulate"></ng-container>
-    </ng-container>
-    <ng-container *ngSwitchDefault>
+    }
+    @default {
       <app-populate-url
         [identifier]="configs.identifier"
         [value]="populateValue">
       </app-populate-url>
-    </ng-container>
-  </ng-container>
+    }
+  }
   <ng-template #choicePopulate>
-    <ng-container *ngFor="let option of field.options">
+    @for (option of field.options; track option) {
       <div>
         {{ option.label }}
         <app-populate-url
@@ -172,10 +172,10 @@
           [value]="option.value || option.guid">
         </app-populate-url>
       </div>
-    </ng-container>
+    }
   </ng-template>
   <ng-template #genderPopulate>
-    <ng-container *ngFor="let option of configs.genders">
+    @for (option of configs.genders; track option) {
       <div>
         {{ option.label }}
         <app-populate-url
@@ -183,6 +183,6 @@
           [value]="option.value || option.guid">
         </app-populate-url>
       </div>
-    </ng-container>
+    }
   </ng-template>
 </ng-template>

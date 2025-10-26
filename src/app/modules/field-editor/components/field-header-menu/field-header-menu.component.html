@@ -1,11 +1,11 @@
-<ng-container *ngIf="menuItems?.length">
+@if (menuItems?.length) {
   <fs-menu>
-    <ng-container *ngFor="let menuItem of menuItems">
+    @for (menuItem of menuItems; track menuItem) {
       <ng-template
-          fs-menu-item
-          (click)="menuItem.click($event)">
+        fs-menu-item
+        (click)="menuItem.click($event)">
         {{menuItem.label}}
       </ng-template>
-    </ng-container>
+    }
   </fs-menu>
-</ng-container>
+}

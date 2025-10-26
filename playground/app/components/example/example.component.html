@@ -3,32 +3,32 @@
     <ng-template matTabContent>
       <fs-field-editor [config]="fieldEditorConfig">
         <ng-template
-            fsFieldContainer
-            let-template="template"
-            let-selected="selected">
+          fsFieldContainer
+          let-template="template"
+          let-selected="selected">
           <ng-container [ngTemplateOutlet]="template"></ng-container>
         </ng-template>
         <ng-template
-            fsFieldEditorToolbar
-            let-template>
+          fsFieldEditorToolbar
+          let-template>
           <div class="custom-wrapper">
             <ng-container *ngTemplateOutlet="template"></ng-container>
             <button
-                style="margin-top: 10px;"
-                mat-mini-fab
-                color="primary"
-                type="button">
+              style="margin-top: 10px;"
+              mat-mini-fab
+              color="primary"
+              type="button">
               Test
             </button>
           </div>
         </ng-template>
         <ng-template
-            fsFieldConfig
-            [type]="FieldType.RichText"
-            let-field="field"
-            let-fieldEditor="fieldEditor"
-            let-headerTemplate="headerTemplate"
-            let-configTemplate="configTemplate">
+          fsFieldConfig
+          [type]="FieldType.RichText"
+          let-field="field"
+          let-fieldEditor="fieldEditor"
+          let-headerTemplate="headerTemplate"
+          let-configTemplate="configTemplate">
           <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
           <ng-container *ngTemplateOutlet="configTemplate"></ng-container>
           <mat-form-field>
@@ -36,22 +36,23 @@
               Custom select
             </mat-label>
             <mat-select
-                [(ngModel)]="field.configs['customSelect']"
-                name="customSelect"
-                (ngModelChange)="fieldEditor.fieldChange(field)">
-              <mat-option
-                  *ngFor="let item of ['item1', 'item2', 'item3']"
+              [(ngModel)]="field.configs['customSelect']"
+              name="customSelect"
+              (ngModelChange)="fieldEditor.fieldChange(field)">
+              @for (item of ['item1', 'item2', 'item3']; track item) {
+                <mat-option
                   [value]="item">
-                {{ item }}
-              </mat-option>
+                  {{ item }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </ng-template>
         <ng-template
-            fsFieldRender
-            type="signature"
-            let-field="field"
-            let-fieldEditor="fieldEditor">
+          fsFieldRender
+          type="signature"
+          let-field="field"
+          let-fieldEditor="fieldEditor">
           <app-signature-field-render
             [disabled]="true"
             name="signature"
@@ -60,43 +61,47 @@
           </app-signature-field-render>
         </ng-template>
         <ng-template
-            fsFieldRender
-            type="share"
-            let-field="field">
-          <img
-            src="/assets/google-logo.svg"
-            height="50"
-            *ngIf="field.configs['google']">
-          <img
-            src="/assets/facebook-logo.svg"
-            height="50"
-            *ngIf="field.configs['facebook']">
+          fsFieldRender
+          type="share"
+          let-field="field">
+          @if (field.configs['google']) {
+            <img
+              src="/assets/google-logo.svg"
+              height="50"
+              >
+          }
+          @if (field.configs['facebook']) {
+            <img
+              src="/assets/facebook-logo.svg"
+              height="50"
+              >
+          }
         </ng-template>
         <ng-template
-            fsFieldConfig
-            type="share"
-            let-field="field"
-            let-fieldEditor="fieldEditor">
+          fsFieldConfig
+          type="share"
+          let-field="field"
+          let-fieldEditor="fieldEditor">
           <div class="fs-column">
             <mat-checkbox
-                [(ngModel)]="field.configs['facebook']"
-                name="facebook"
-                (click)="fieldEditor.fieldChange(field)">
+              [(ngModel)]="field.configs['facebook']"
+              name="facebook"
+              (click)="fieldEditor.fieldChange(field)">
               Enable Facebook
             </mat-checkbox>
             <mat-checkbox
-                [(ngModel)]="field.configs['google']"
-                name="google"
-                (click)="fieldEditor.fieldChange(field)">
+              [(ngModel)]="field.configs['google']"
+              name="google"
+              (click)="fieldEditor.fieldChange(field)">
               Enable Google
             </mat-checkbox>
           </div>
         </ng-template>
         <ng-template
-            fsFieldConfig
-            type="terms"
-            let-field="field"
-            let-fieldEditor="fieldEditor">
+          fsFieldConfig
+          type="terms"
+          let-field="field"
+          let-fieldEditor="fieldEditor">
           <app-terms-field-config
             name="terms-{{ field?.data?.guid }}"
             [ngModel]="field"
@@ -104,10 +109,10 @@
           </app-terms-field-config>
         </ng-template>
         <ng-template
-            fsFieldRender
-            type="terms"
-            let-field="field"
-            let-fieldEditor="fieldEditor">
+          fsFieldRender
+          type="terms"
+          let-field="field"
+          let-fieldEditor="fieldEditor">
           <app-terms-field-render
             name="terms"
             [disabled]="true"
@@ -121,28 +126,32 @@
   <mat-tab label="Rendered Fields">
     <ng-template matTabContent>
       <form
-          fsForm
-          [submit]="save"
-          [confirm]="false">
+        fsForm
+        [submit]="save"
+        [confirm]="false">
         <fs-field-renderer [config]="fieldRendererConfig">
           <ng-template
-              fsFieldRender
-              type="share"
-              let-field="field">
-            <img
-              src="/assets/google-logo.svg"
-              height="50"
-              *ngIf="field.configs['google']">
-            <img
-              src="/assets/facebook-logo.svg"
-              height="50"
-              *ngIf="field.configs['facebook']">
+            fsFieldRender
+            type="share"
+            let-field="field">
+            @if (field.configs['google']) {
+              <img
+                src="/assets/google-logo.svg"
+                height="50"
+                >
+            }
+            @if (field.configs['facebook']) {
+              <img
+                src="/assets/facebook-logo.svg"
+                height="50"
+                >
+            }
           </ng-template>
           <ng-template
-              fsFieldRender
-              type="signature"
-              let-field="field"
-              let-fieldEditor="fieldEditor">
+            fsFieldRender
+            type="signature"
+            let-field="field"
+            let-fieldEditor="fieldEditor">
             <app-signature-field-render
               name="signature"
               [ngModel]="field"
@@ -150,10 +159,10 @@
             </app-signature-field-render>
           </ng-template>
           <ng-template
-              fsFieldRender
-              type="terms"
-              let-field="field"
-              let-fieldEditor="fieldEditor">
+            fsFieldRender
+            type="terms"
+            let-field="field"
+            let-fieldEditor="fieldEditor">
             <app-terms-field-render
               name="terms"
               [ngModel]="field"
@@ -162,9 +171,9 @@
           </ng-template>
         </fs-field-renderer>
         <button
-            mat-flat-button
-            color="primary"
-            type="submit">
+          mat-flat-button
+          color="primary"
+          type="submit">
           Save
         </button>
       </form>
@@ -174,27 +183,31 @@
     <ng-template matTabContent>
       <fs-field-viewer [config]="fieldViewerConfig">
         <ng-template
-            fsFieldView
-            type="share"
-            let-field="field">
+          fsFieldView
+          type="share"
+          let-field="field">
           <fs-label-field>
             <fs-label>
               Share
             </fs-label>
-            <img
-              src="/assets/google-logo.svg"
-              height="50"
-              *ngIf="field.configs['google']">
-            <img
-              src="/assets/facebook-logo.svg"
-              height="50"
-              *ngIf="field.configs['facebook']">
+            @if (field.configs['google']) {
+              <img
+                src="/assets/google-logo.svg"
+                height="50"
+                >
+            }
+            @if (field.configs['facebook']) {
+              <img
+                src="/assets/facebook-logo.svg"
+                height="50"
+                >
+            }
           </fs-label-field>
         </ng-template>
         <ng-template
-            fsFieldView
-            type="signature"
-            let-field="field">
+          fsFieldView
+          type="signature"
+          let-field="field">
           <fs-label-field>
             <fs-label>
               Signature
@@ -207,9 +220,9 @@
   </mat-tab>
 </mat-tab-group>
 <br>
-<a
+  <a
     mat-stroked-button
     color="primary"
     (click)="openDialog()">
-  Open Dialog
-</a>
+    Open Dialog
+  </a>

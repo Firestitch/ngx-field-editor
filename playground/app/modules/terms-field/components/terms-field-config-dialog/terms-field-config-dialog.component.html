@@ -11,20 +11,20 @@
             [disabled]="disabled"
             name="terms-label">
         </mat-form-field>
-      
+
         <mat-form-field>
           <mat-select
-              [(ngModel)]="term.type"
-              [disabled]="disabled"
-              name="terms-content-source"
-              placeholder="Copy Type">
+            [(ngModel)]="term.type"
+            [disabled]="disabled"
+            name="terms-content-source"
+            placeholder="Copy Type">
             <mat-option [value]="TermType.None">None</mat-option>
             <mat-option [value]="TermType.Url">URL</mat-option>
             <mat-option [value]="TermType.Dialog">Dialog</mat-option>
           </mat-select>
         </mat-form-field>
-      
-        <ng-container *ngIf="term.type===TermType.Url || term.type===TermType.Dialog">
+
+        @if (term.type===TermType.Url || term.type===TermType.Dialog) {
           <mat-form-field>
             <input
               matInput
@@ -34,23 +34,23 @@
               (blur)="contentLabelBlur()"
               [required]="true"
               name="terms-content-label">
-          </mat-form-field>    
-      
-          <mat-form-field
-              *ngIf="term.type===TermType.Url">
-            <input
-              matInput
-              #url
-              placeholder="Copy URL"
-              [(ngModel)]="term.contentUrl"
-              [disabled]="disabled"
-              [required]="true"
-              name="terms-content-url"
-              [fsFormUrl]="true"
-              [fsFormUrlProtocol]="true">
           </mat-form-field>
-          
-          <ng-container *ngIf="term.type===TermType.Dialog">
+          @if (term.type===TermType.Url) {
+            <mat-form-field
+              >
+              <input
+                matInput
+                #url
+                placeholder="Copy URL"
+                [(ngModel)]="term.contentUrl"
+                [disabled]="disabled"
+                [required]="true"
+                name="terms-content-url"
+                [fsFormUrl]="true"
+                [fsFormUrlProtocol]="true">
+            </mat-form-field>
+          }
+          @if (term.type===TermType.Dialog) {
             <mat-form-field>
               <input
                 matInput
@@ -58,29 +58,27 @@
                 [(ngModel)]="term.contentTitle"
                 name="dialogTitle">
             </mat-form-field>
-
             <fs-html-editor
               [config]="{ label: 'Copy' }"
               name="terms-content"
               [(ngModel)]="term.content"
               [required]="true">
             </fs-html-editor>
-          </ng-container>
-      
-        </ng-container>
+          }
+        }
       </div>
     </mat-dialog-content>
     <mat-dialog-actions>
       <button
-          type="submit"
-          mat-button
-          color="primary">
+        type="submit"
+        mat-button
+        color="primary">
         Save
-      </button>  
+      </button>
       <button
-          type="button"
-          mat-button
-          [mat-dialog-close]="null">
+        type="button"
+        mat-button
+        [mat-dialog-close]="null">
         Cancel
       </button>
     </mat-dialog-actions>

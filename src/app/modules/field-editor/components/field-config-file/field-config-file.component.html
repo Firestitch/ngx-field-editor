@@ -3,11 +3,11 @@
     <mat-form-field [floatLabel]="'always'">
       <mat-label>Allow file types</mat-label>
       <mat-select
-          [(ngModel)]="allowFileTypes"
-          name="allowFileTypes"
-          [multiple]="true"
-          [placeholder]="'Any'"
-          (ngModelChange)="allowFileTypeChange($event)">
+        [(ngModel)]="allowFileTypes"
+        name="allowFileTypes"
+        [multiple]="true"
+        [placeholder]="'Any'"
+        (ngModelChange)="allowFileTypeChange($event)">
         <mat-option [value]="null" class="any">Any</mat-option>
         <mat-option [value]="'image'">Image</mat-option>
         <mat-option [value]="'video'">Video</mat-option>
@@ -15,7 +15,7 @@
       </mat-select>
     </mat-form-field>
 
-    <ng-container *ngIf="allowFileImage">
+    @if (allowFileImage) {
       <mat-form-field>
         <mat-label>Image Max Width</mat-label>
         <input
@@ -25,7 +25,6 @@
           [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="fieldSave()">
       </mat-form-field>
-
       <mat-form-field>
         <mat-label>Image Max Height</mat-label>
         <input
@@ -35,7 +34,6 @@
           [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="fieldSave()">
       </mat-form-field>
-
       <mat-form-field>
         <mat-label>Image Quality</mat-label>
         <input
@@ -44,11 +42,11 @@
           name="imageQuality"
           [ngModelOptions]="{ updateOn: 'blur' }"
           (ngModelChange)="imageQualityChange($event)">
-          <span matTextSuffix>
-            %
-          </span>
+        <span matTextSuffix>
+          %
+        </span>
       </mat-form-field>
-    </ng-container>
+    }
   </div>
 
   <div class="fs-row.gap-sm">
@@ -56,7 +54,7 @@
       <fs-label>Allow Multiple</fs-label>
       <mat-checkbox color="primary" [(ngModel)]="field.configs.allowMultiple" (ngModelChange)="fieldSave()"></mat-checkbox>
     </fs-label-field>
-    
+
     <fs-label-field>
       <fs-label>Show Filename</fs-label>
       <mat-checkbox color="primary" [(ngModel)]="field.configs.showFilename" (ngModelChange)="fieldSave()"></mat-checkbox>

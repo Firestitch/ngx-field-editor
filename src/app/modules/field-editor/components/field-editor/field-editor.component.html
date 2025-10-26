@@ -1,20 +1,20 @@
 <div
-    class="field-editor-container"
-    scrollableHandler
+  class="field-editor-container"
+  scrollableHandler
     [ngClass]="{
       'has-fields': fieldEditor.hasFields,
       'field-selected': !!(fieldEditor.fieldSelected$ | async)
     }">
-  <ng-container *ngIf="fieldEditor.config.canAddField">
+  @if (fieldEditor.config.canAddField) {
     <div class="toolbar-container">
       <div #spacer></div>
       <div class="toolbar">
         <div
-            class="toolbar-wrapper"
-            stickyThing
-            [spacer]="spacer"
-            [scrollContainer]="scrollContainer"
-            [marginTop]="50">
+          class="toolbar-wrapper"
+          stickyThing
+          [spacer]="spacer"
+          [scrollContainer]="scrollContainer"
+          [marginTop]="50">
           <ng-container *ngTemplateOutlet="editorToolbarTpl || toolbarTpl; context: { $implicit: toolbarTpl, fieldEditor: fieldEditor, template: toolbarTpl } "></ng-container>
           <ng-template #toolbarTpl>
             <fs-field-toolbar [toolbarItems]="fieldEditor.config.toolbar.items"></fs-field-toolbar>
@@ -22,14 +22,14 @@
         </div>
       </div>
     </div>
-  </ng-container>
+  }
   <div class="fields-container">
     <div
-        class="fields"
-        cdkDropList
-        (cdkDropListDropped)="drop($event)"
-        [id]="fieldEditor.editorId">
-      <ng-container *ngFor="let field of fields">
+      class="fields"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+      [id]="fieldEditor.editorId">
+      @for (field of fields; track field) {
         <fs-field-editor-item
           class="fs-field field"
           (click)="fieldClick(field)"
@@ -38,7 +38,7 @@
           [fieldRenderTemplate]="fieldRenderTemplateRefs[field.type]"
           [fieldContainerTemplateRef]="fieldContainerTemplateRef">
         </fs-field-editor-item>
-      </ng-container>
+      }
     </div>
   </div>
 </div>

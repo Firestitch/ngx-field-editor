@@ -1,8 +1,8 @@
-<ng-container *ngIf="menuItems">
+@if (menuItems) {
   <fs-field-gallery
     [filePreviewDownload]="filePreviewDownload"
     [fileDownload]="fileDownload"
     [actions]="menuItems"
     [field]="field">
   </fs-field-gallery>
-</ng-container>
+}

@@ -1,11 +1,11 @@
 
-  <ng-container *ngIf="editorConfig">
-    <fs-html-editor
-      [(ngModel)]="field.data.value"
-      [config]="editorConfig"
-      [disabled]="disabled"
-      [required]="field.configs.required"
-      [name]="name"
-      (ngModelChange)="changed.emit(field)">
-    </fs-html-editor>
-  </ng-container>
+@if (editorConfig) {
+  <fs-html-editor
+    [(ngModel)]="field.data.value"
+    [config]="editorConfig"
+    [disabled]="disabled"
+    [required]="field.configs.required"
+    [name]="name"
+    (ngModelChange)="changed.emit(field)">
+  </fs-html-editor>
+}

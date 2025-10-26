@@ -1,49 +1,46 @@
 
 
-<ng-container *ngIf="!parentItem; else nestedTrigger">
+@if (!parentItem) {
   <button
-      mat-mini-fab
-      type="button"
-      color="primary"
-      [matMenuTriggerFor]="menu"
-      #trigger="matMenuTrigger"
-      class="toolbar-button">
+    mat-mini-fab
+    type="button"
+    color="primary"
+    [matMenuTriggerFor]="menu"
+    #trigger="matMenuTrigger"
+    class="toolbar-button">
     <mat-icon>add</mat-icon>
   </button>
-</ng-container>
-
-<ng-template #nestedTrigger>
+} @else {
   <button
-      mat-menu-item
-      type="button"
-      [matMenuTriggerFor]="menu"
-      (click)="handleMenuItemClick($event)"
-      #childTrigger="matMenuTrigger">
+    mat-menu-item
+    type="button"
+    [matMenuTriggerFor]="menu"
+    (click)="handleMenuItemClick($event)"
+    #childTrigger="matMenuTrigger">
     {{ parentItem.label }}
   </button>
-</ng-template>
+}
+
 
 <mat-menu
-    #menu="matMenu"
-    xPosition="before"
-    [backdropClass]="backdropClass"
-    [class]="menuClass">
-  <ng-container *ngFor="let item of items">
-    <ng-container *ngIf="item.items else simpleItem">
+  #menu="matMenu"
+  xPosition="before"
+  [backdropClass]="backdropClass"
+  [class]="menuClass">
+  @for (item of items; track item) {
+    @if (item.items) {
       <fs-field-toolbar
         [parentItem]="item"
         [rootTriggerRef]="triggerRef ? triggerRef : rootTriggerRef"
         (itemClick)="closeChildItems($event)">
       </fs-field-toolbar>
-    </ng-container>
-
-    <ng-template #simpleItem>
+    } @else {
       <ng-template
         [ngTemplateOutlet]="itemTpl"
         [ngTemplateOutletContext]="{ $implicit: item }">
       </ng-template>
-    </ng-template>
-  </ng-container>
+    }
+  }
 </mat-menu>
 
 

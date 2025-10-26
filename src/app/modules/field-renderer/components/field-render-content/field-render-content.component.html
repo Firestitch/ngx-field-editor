@@ -5,7 +5,9 @@
     [html]="field.configs.content">
   </fs-html-renderer>
 
-  <fs-label-message *ngIf="field.description">
-    {{ field.description }}
-  </fs-label-message>
+  @if (field.description) {
+    <fs-label-message>
+      {{ field.description }}
+    </fs-label-message>
+  }
 </fs-label-field>

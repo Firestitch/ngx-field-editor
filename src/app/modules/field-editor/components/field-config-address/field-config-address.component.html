@@ -1,22 +1,23 @@
 <table>
-  <tr *ngFor="let item of fieldNames">
+  @for (item of fieldNames; track item) {
+    <tr>
       <td class="checkbox">
         <mat-checkbox
           color="primary"
           [(ngModel)]="field.configs[item].enabled"
-          (ngModelChange)="fieldSave()"></mat-checkbox>
+        (ngModelChange)="fieldSave()"></mat-checkbox>
       </td>
       <td class="checkbox">
-        <ng-container *ngIf="field.configs[item].enabled">
+        @if (field.configs[item].enabled) {
           <button
-              mat-icon-button
-              type="button"
-              (click)="toggleRequired(item)"
-              matTooltip="Required"
-              class="require-button"
-              [ngClass]="{ disabled: !field.configs[item].required }">
+            mat-icon-button
+            type="button"
+            (click)="toggleRequired(item)"
+            matTooltip="Required"
+            class="require-button"
+            [ngClass]="{ disabled: !field.configs[item].required }">
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+              viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
               <g>
                 <path d="M451.3,324.6l-125-68.6l125-68.6c10.4-5.7,14-18.8,8.1-29l-17.1-29.7c-5.9-10.2-19.1-13.6-29.2-7.5l-121.9,73.9l3.1-142.6
                   c0.3-11.8-9.3-21.5-21.1-21.5h-34.2c-11.8,0-21.3,9.7-21.1,21.5l3.1,142.6L98.9,121.2c-10.1-6.1-23.3-2.8-29.2,7.5l-17.1,29.7
@@ -26,19 +27,20 @@
               </g>
             </svg>
           </button>
-        </ng-container>
+        }
       </td>
       <td>
-          <mat-form-field class="form-field-padless">
-            <input
-              matInput
-              placeholder="Label"
-              [(ngModel)]="field.configs[item].label"
-              [disabled]="!field.configs[item].enabled"
-              [name]="field.configs[item]"
-              [ngModelOptions]="{ updateOn: 'blur' }"
-              (ngModelChange)="fieldSave()">
-          </mat-form-field>
+        <mat-form-field class="form-field-padless">
+          <input
+            matInput
+            placeholder="Label"
+            [(ngModel)]="field.configs[item].label"
+            [disabled]="!field.configs[item].enabled"
+            [name]="field.configs[item]"
+            [ngModelOptions]="{ updateOn: 'blur' }"
+            (ngModelChange)="fieldSave()">
+        </mat-form-field>
       </td>
-  </tr>
+    </tr>
+  }
 </table>

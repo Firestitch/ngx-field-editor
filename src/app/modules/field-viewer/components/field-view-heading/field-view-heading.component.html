@@ -1,20 +1,21 @@
-<ng-container [ngSwitch]="field.configs.type">
-  <ng-container *ngSwitchCase="1">
+
+@switch (field.configs.type) {
+  @case (1) {
     <h1>{{field.label}}</h1>
-  </ng-container>
-  <ng-container *ngSwitchCase="2">
+  }
+  @case (2) {
     <h2>{{field.label}}</h2>
-  </ng-container>
-  <ng-container *ngSwitchCase="3">
+  }
+  @case (3) {
     <h3>{{field.label}}</h3>
-  </ng-container>
-  <ng-container *ngSwitchCase="4">
+  }
+  @case (4) {
     <h4>{{field.label}}</h4>
-  </ng-container>
-  <ng-container *ngSwitchCase="5">
+  }
+  @case (5) {
     <h5>{{field.label}}</h5>
-  </ng-container>
-</ng-container>
+  }
+}
 
 
 

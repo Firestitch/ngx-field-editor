@@ -1,7 +1,9 @@
 <mat-form-field class="form-field-multiline-subscript">
-  <mat-label *ngIf="field.label">
-    {{ field.label }}
-  </mat-label>
+  @if (field.label) {
+    <mat-label>
+      {{ field.label }}
+    </mat-label>
+  }
   <input
     matInput
     fsDatePickerBirthday

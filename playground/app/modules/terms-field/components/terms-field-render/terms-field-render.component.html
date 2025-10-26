@@ -1,39 +1,46 @@
-<fs-label-field *ngIf="field" class="fs-form-wrapper">
-  <fs-label *ngIf="field.label">
-    {{ field.label }}
-  </fs-label>
-
-  <div 
-    *ngFor="let term of terms">
-    <mat-checkbox
-        [name]="'term-' + term.guid"
-        [(ngModel)]="field.data.terms[term.guid].agreed"
-        (change)="checkboxChange($event, field.data.terms[term.guid])"
-        (click)="checkboxClick($event)"
-        [required]="true"
-        [disabled]="disabled">
-      {{ term.label }}
-      <a
-          *ngIf="term.type===TermType.Url"
-          (click)="urlClick($event)"
-          [href]="term.contentUrl" target="_blank">
-        {{term.contentLabel}}
-      </a>
-      <a
-          *ngIf="term.type===TermType.Dialog"
-          (click)="dialogClick($event, term)">
-        {{term.contentLabel}}
-      </a>
-    </mat-checkbox>
-<!-- 
-    <div 
-        class="agreed" 
-        *ngIf="field.data.terms[term.guid].agreed">
-      <div class="small details">{{field.data.terms[term.guid].name}} agreed on {{ field.data.terms[term.guid].date | fsDateFormat: 'date-time' }}</div>
-      <img class="signature" *ngIf="signature" [src]="signature">
-    </div> -->
-  </div> 
-  <fs-label-message>
-    <div class="fs-form-message"></div>
-  </fs-label-message>
-</fs-label-field>
+@if (field) {
+  <fs-label-field class="fs-form-wrapper">
+    @if (field.label) {
+      <fs-label>
+        {{ field.label }}
+      </fs-label>
+    }
+    @for (term of terms; track term) {
+      <div
+        >
+        <mat-checkbox
+          [name]="'term-' + term.guid"
+          [(ngModel)]="field.data.terms[term.guid].agreed"
+          (change)="checkboxChange($event, field.data.terms[term.guid])"
+          (click)="checkboxClick($event)"
+          [required]="true"
+          [disabled]="disabled">
+          {{ term.label }}
+          @if (term.type===TermType.Url) {
+            <a
+              (click)="urlClick($event)"
+              [href]="term.contentUrl" target="_blank">
+              {{term.contentLabel}}
+            </a>
+          }
+          @if (term.type===TermType.Dialog) {
+            <a
+              (click)="dialogClick($event, term)">
+              {{term.contentLabel}}
+            </a>
+          }
+        </mat-checkbox>
+        <!--
+        <div
+          class="agreed"
+          *ngIf="field.data.terms[term.guid].agreed">
+          <div class="small details">{{field.data.terms[term.guid].name}} agreed on {{ field.data.terms[term.guid].date | fsDateFormat: 'date-time' }}</div>
+          <img class="signature" *ngIf="signature" [src]="signature">
+        </div> -->
+      </div>
+    }
+    <fs-label-message>
+      <div class="fs-form-message"></div>
+    </fs-label-message>
+  </fs-label-field>
+}

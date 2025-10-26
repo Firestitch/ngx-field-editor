@@ -1,52 +1,54 @@
 <fs-checkbox-group
-    #checkboxes
-    [(ngModel)]="field.data.value.selected"
-    [name]="'checkboxes' + name"
-    [disabled]="disabled"
-    (ngModelChange)="changed.emit(field)"
-    orientation="vertical"
-    [label]="field.label"
-    [fsFormFunction]="validate"
-    [attr.validation-required]="field.configs.required"
-    messageSelector=".fs-form-message">
-  <mat-checkbox
-      *ngFor="let option of field.options; let index = index"
+  #checkboxes
+  [(ngModel)]="field.data.value.selected"
+  [name]="'checkboxes' + name"
+  [disabled]="disabled"
+  (ngModelChange)="changed.emit(field)"
+  orientation="vertical"
+  [label]="field.label"
+  [fsFormFunction]="validate"
+  [attr.validation-required]="field.configs.required"
+  messageSelector=".fs-form-message">
+  @for (option of field.options; track option; let index = $index) {
+    <mat-checkbox
       [value]="option.guid"
       [disabled]="disabled"
       (change)="checkboxChange($event, notes)">
-    {{ option.name }}
-    <mat-form-field
+      {{ option.name }}
+      <mat-form-field
         class="form-field-padless notes"
         [ngClass]="{ show: option.notes && field.data.value.selected.includes(option.guid) }">
-      <mat-label>
-        {{ option.notesLabel || 'Notes' }}
-      </mat-label>
-      <input
-        #notes
-        matInput
-        [(ngModel)]="field.data.value.notes[option.guid]"
-        [name]="'notes-' + field.guid + option.guid">
-    </mat-form-field>
-  </mat-checkbox>
-  <mat-checkbox
-      *ngIf="field.configs.other"
+        <mat-label>
+          {{ option.notesLabel || 'Notes' }}
+        </mat-label>
+        <input
+          #notes
+          matInput
+          [(ngModel)]="field.data.value.notes[option.guid]"
+          [name]="'notes-' + field.guid + option.guid">
+      </mat-form-field>
+    </mat-checkbox>
+  }
+  @if (field.configs.other) {
+    <mat-checkbox
       value="other"
       [(ngModel)]="other"
       [name]="'checkboxOther' + name"
       (ngModelChange)="otherChange($event)"
       [disabled]="disabled"
       class="other checkbox">
-    <mat-form-field class="form-field-padless">
-      <input
-        matInput
-        placeholder="Other"
-        (click)="otherInputClick($event)"
-        [(ngModel)]="otherValue"
-        (ngModelChange)="otherInputChange($event)"
-        [name]="'otherInput' + name"
-        [disabled]="disabled">
-    </mat-form-field>
-  </mat-checkbox>
+      <mat-form-field class="form-field-padless">
+        <input
+          matInput
+          placeholder="Other"
+          (click)="otherInputClick($event)"
+          [(ngModel)]="otherValue"
+          (ngModelChange)="otherInputChange($event)"
+          [name]="'otherInput' + name"
+          [disabled]="disabled">
+      </mat-form-field>
+    </mat-checkbox>
+  }
   <mat-hint>
     {{ field.description }}
   </mat-hint>
