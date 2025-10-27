@@ -1,25 +1,37 @@
 import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, FormsModule } from '@angular/forms';
 
 import { FieldComponent } from '../../field/field.component';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FsFormModule } from '@firestitch/form';
 
 @Component({
-  selector: 'fs-field-render-name-model',
-  templateUrl: './field-render-name-model.component.html',
-  styleUrls: ['./field-render-name-model.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FieldRenderNameModelComponent),
-      multi: true,
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: FieldRenderNameModelComponent,
-      multi: true,
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-render-name-model',
+    templateUrl: './field-render-name-model.component.html',
+    styleUrls: ['./field-render-name-model.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => FieldRenderNameModelComponent),
+            multi: true,
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: FieldRenderNameModelComponent,
+            multi: true,
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatInput,
+        FormsModule,
+        FsFormModule,
+        MatHint,
+    ],
 })
 export class FieldRenderNameModelComponent extends FieldComponent implements ControlValueAccessor, Validator {
 

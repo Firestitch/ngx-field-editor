@@ -3,13 +3,33 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/
 import { MatSelect } from '@angular/material/select';
 
 import { FieldComponent } from '.././field/field.component';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
+import { MatOption } from '@angular/material/core';
+import { MatInput } from '@angular/material/input';
+import { FsLabelModule } from '@firestitch/label';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 
 @Component({
-  selector: 'fs-field-config-file',
-  templateUrl: './field-config-file.component.html',
-  styleUrls: ['./field-config-file.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-config-file',
+    templateUrl: './field-config-file.component.html',
+    styleUrls: ['./field-config-file.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        FormsModule,
+        FsFormModule,
+        MatOption,
+        MatInput,
+        MatSuffix,
+        FsLabelModule,
+        MatCheckbox,
+    ],
 })
 export class FieldConfigFileComponent extends FieldComponent implements OnInit {
 

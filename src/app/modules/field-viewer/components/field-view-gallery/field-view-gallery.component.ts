@@ -13,13 +13,16 @@ import { FsGalleryItem, FsGalleryItemAction } from '@firestitch/gallery';
 import { ViewerAction } from '../../../../enums';
 import { Field, FieldFile } from '../../../../interfaces';
 import { FieldViewerService } from '../../../../services';
+import { FieldGalleryComponent } from '../../../field-common/components/field-view-gallery/field-gallery.component';
 
 
 @Component({
-  selector: 'fs-field-view-gallery',
-  templateUrl: './field-view-gallery.component.html',
-  styleUrls: ['./field-view-gallery.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-view-gallery',
+    templateUrl: './field-view-gallery.component.html',
+    styleUrls: ['./field-view-gallery.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FieldGalleryComponent],
 })
 export class FieldViewGalleryComponent implements OnInit {
 

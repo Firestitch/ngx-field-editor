@@ -3,7 +3,8 @@ import { Directive, TemplateRef, Input } from '@angular/core';
 
 
 @Directive({
-  selector: '[fsFieldView]'
+    selector: '[fsFieldView]',
+    standalone: true
 })
 export class FieldViewDirective {
 

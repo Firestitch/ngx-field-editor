@@ -16,7 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { guid } from '@firestitch/common';
 import { Field } from '@firestitch/field-editor';
-import { FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListComponent, FsListConfig, FsListColumnDirective, FsListCellDirective } from '@firestitch/list';
 
 import { of, Subject } from 'rxjs';
 import { filter, takeUntil, tap } from 'rxjs/operators';
@@ -27,16 +27,22 @@ import { TermsFieldConfigDialogComponent } from '../terms-field-config-dialog';
 
 
 @Component({
-  selector: 'app-terms-field-config',
-  templateUrl: './terms-field-config.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TermsFieldConfigComponent),
-      multi: true,
-    },
-  ],  
+    selector: 'app-terms-field-config',
+    templateUrl: './terms-field-config.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TermsFieldConfigComponent),
+            multi: true,
+        },
+    ],
+    standalone: true,
+    imports: [
+        FsListComponent,
+        FsListColumnDirective,
+        FsListCellDirective,
+    ],
 })
 export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit, OnDestroy {
 

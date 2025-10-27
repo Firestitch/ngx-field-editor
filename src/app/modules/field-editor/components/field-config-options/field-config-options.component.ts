@@ -8,11 +8,11 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 
 
 import { guid } from '@firestitch/common';
-import { FsFile, FsFileImagePickerComponent } from '@firestitch/file';
+import { FsFile, FsFileImagePickerComponent, FsFileModule } from '@firestitch/file';
 import { FsPrompt } from '@firestitch/prompt';
 
 import { BehaviorSubject, forkJoin, Observable, of, pipe } from 'rxjs';
@@ -26,13 +26,44 @@ import { EditorAction, VisualSelectorFormat } from '../../../../enums';
 import { FieldOption } from '../../../../interfaces';
 import { FieldEditorService } from '../../../../services';
 import { FieldComponent } from '../field/field.component';
+import { NgClass, NgTemplateOutlet, NgStyle, AsyncPipe } from '@angular/common';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatRadioButton } from '@angular/material/radio';
 
 
 @Component({
-  selector: 'fs-field-config-options',
-  templateUrl: './field-config-options.component.html',
-  styleUrls: ['./field-config-options.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-config-options',
+    templateUrl: './field-config-options.component.html',
+    styleUrls: ['./field-config-options.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        CdkDropList,
+        CdkDrag,
+        NgClass,
+        CdkDragHandle,
+        MatIconButton,
+        MatIcon,
+        NgTemplateOutlet,
+        FsFileModule,
+        MatFormField,
+        MatInput,
+        FormsModule,
+        FsFormModule,
+        MatTooltip,
+        MatButton,
+        NgStyle,
+        MatCheckbox,
+        MatRadioButton,
+        AsyncPipe,
+    ],
 })
 export class FieldConfigOptionsComponent extends FieldComponent implements OnInit {
 

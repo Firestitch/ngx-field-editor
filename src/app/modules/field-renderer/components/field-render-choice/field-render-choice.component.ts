@@ -1,26 +1,44 @@
 import {
   ChangeDetectionStrategy, Component, Input, OnInit, Optional, ViewChild,
 } from '@angular/core';
-import { ControlContainer, NgForm, NgModel } from '@angular/forms';
+import { ControlContainer, NgForm, NgModel, FormsModule } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldOption } from '../../../../interfaces';
 import { FieldComponent } from '../field/field.component';
+import { FsRadioGroupModule } from '@firestitch/radiogroup';
+import { FsFormModule } from '@firestitch/form';
+import { MatRadioButton } from '@angular/material/radio';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { NgClass } from '@angular/common';
+import { MatInput } from '@angular/material/input';
 
 
 @Component({
-  selector: 'fs-field-render-choice',
-  templateUrl: './field-render-choice.component.html',
-  styleUrls: ['./field-render-choice.component.scss'],
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: controlContainerFactory,
-      deps: [[new Optional(), NgForm]],
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-render-choice',
+    templateUrl: './field-render-choice.component.html',
+    styleUrls: ['./field-render-choice.component.scss'],
+    viewProviders: [
+        {
+            provide: ControlContainer,
+            useFactory: controlContainerFactory,
+            deps: [[new Optional(), NgForm]],
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsRadioGroupModule,
+        FormsModule,
+        FsFormModule,
+        MatRadioButton,
+        MatFormField,
+        NgClass,
+        MatLabel,
+        MatInput,
+        MatHint,
+    ],
 })
 export class FieldRenderChoiceComponent extends FieldComponent implements OnInit {
 

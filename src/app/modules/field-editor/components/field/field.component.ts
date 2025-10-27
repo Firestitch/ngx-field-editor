@@ -11,8 +11,9 @@ import { FieldEditorService } from '../../../../services';
 
 
 @Component({
-  template: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    template: '',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class FieldComponent implements OnDestroy {
 

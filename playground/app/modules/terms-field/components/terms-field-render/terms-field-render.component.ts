@@ -7,15 +7,10 @@ import {
   OnDestroy,
   Optional,
 } from '@angular/core';
-import {
-  ControlContainer,
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  NgForm,
-} from '@angular/forms';
+import { ControlContainer, ControlValueAccessor, NG_VALUE_ACCESSOR, NgForm, FormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 
 import { controlContainerFactory } from '@firestitch/core';
@@ -26,27 +21,36 @@ import { Subject } from 'rxjs';
 import { TermType } from '../../enums';
 import { Term } from '../../interfaces';
 import { TermsFieldRenderDialogComponent } from '../terms-field-render-dialog';
+import { FsLabelModule } from '@firestitch/label';
+import { FsFormModule } from '@firestitch/form';
 
 
 @Component({
-  selector: 'app-terms-field-render',
-  templateUrl: './terms-field-render.component.html',
-  styleUrls: ['./terms-field-render.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TermsFieldRenderComponent),
-      multi: true,
-    },
-  ],
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: controlContainerFactory,
-      deps: [[new Optional(), NgForm]],
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-terms-field-render',
+    templateUrl: './terms-field-render.component.html',
+    styleUrls: ['./terms-field-render.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TermsFieldRenderComponent),
+            multi: true,
+        },
+    ],
+    viewProviders: [
+        {
+            provide: ControlContainer,
+            useFactory: controlContainerFactory,
+            deps: [[new Optional(), NgForm]],
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsLabelModule,
+        MatCheckbox,
+        FormsModule,
+        FsFormModule,
+    ],
 })
 export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestroy {
 

@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -17,7 +17,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList } from '@angular/cdk/drag-drop';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { fromEvent, Subject } from 'rxjs';
@@ -31,14 +31,29 @@ import { FieldRenderDirective } from '../../../field-renderer/directives/field-r
 import { FieldConfigDirective } from '../../directives/field-config/field-config.directive';
 import { FieldContainerDirective } from '../../directives/field-container/field-container.directive';
 import { FieldEditorToolbarDirective } from '../../directives/field-editor-toolbar/field-editor-toolbar.directive';
+import { ScrollableHandlerDirective } from '../../directives/scrollable/scrollable-handler.directive';
+import { StickyThingDirective } from '../../directives/sitcky-thing.directive';
+import { FieldToolbarComponent } from '../field-toolbar/field-toolbar.component';
+import { FieldEditorItemComponent } from '../field-editor-item/field-editor-item.component';
 
 
 @Component({
-  selector: 'fs-field-editor',
-  templateUrl: './field-editor.component.html',
-  styleUrls: ['./field-editor.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FieldEditorService, FieldRendererService],
+    selector: 'fs-field-editor',
+    templateUrl: './field-editor.component.html',
+    styleUrls: ['./field-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [FieldEditorService, FieldRendererService],
+    standalone: true,
+    imports: [
+        ScrollableHandlerDirective,
+        NgClass,
+        StickyThingDirective,
+        NgTemplateOutlet,
+        FieldToolbarComponent,
+        CdkDropList,
+        FieldEditorItemComponent,
+        AsyncPipe,
+    ],
 })
 export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy {
 

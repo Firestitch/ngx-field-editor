@@ -18,13 +18,37 @@ import { EditorAction, FieldType } from '../../../../enums';
 import { Field } from '../../../../interfaces';
 import { FieldEditorService } from '../../../../services';
 import { FieldComponent } from '../field/field.component';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { FieldHeaderMenuComponent } from '../field-header-menu/field-header-menu.component';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 
 @Component({
-  selector: 'fs-field-header',
-  templateUrl: './field-header.component.html',
-  styleUrls: ['./field-header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-header',
+    templateUrl: './field-header.component.html',
+    styleUrls: ['./field-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        MatFormField,
+        MatInput,
+        FormsModule,
+        FsFormModule,
+        MatIconButton,
+        MatTooltip,
+        NgClass,
+        MatIcon,
+        FieldHeaderMenuComponent,
+        CdkTextareaAutosize,
+        AsyncPipe,
+    ],
 })
 export class FieldHeaderComponent
   extends FieldComponent

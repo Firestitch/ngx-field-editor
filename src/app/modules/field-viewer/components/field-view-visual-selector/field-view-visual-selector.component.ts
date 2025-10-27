@@ -3,13 +3,16 @@ import { ChangeDetectionStrategy, Component, Input, ChangeDetectorRef } from '@a
 import { FieldOption } from '../../../../interfaces';
 import { VisualSelectorFormat } from '../../../../enums';
 import { initField } from '../../../../helpers/init-field';
+import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
-  selector: 'fs-field-view-visual-selector',
-  templateUrl: './field-view-visual-selector.component.html',
-  styleUrls: ['./field-view-visual-selector.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-view-visual-selector',
+    templateUrl: './field-view-visual-selector.component.html',
+    styleUrls: ['./field-view-visual-selector.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [MatIcon],
 })
 export class FieldViewVisualSelectorComponent {
 

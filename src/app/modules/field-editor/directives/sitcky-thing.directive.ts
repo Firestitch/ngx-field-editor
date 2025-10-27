@@ -36,7 +36,8 @@ export interface StickyStatus {
 }
 
 @Directive({
-  selector: '[stickyThing]',
+    selector: '[stickyThing]',
+    standalone: true,
 })
 export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
 

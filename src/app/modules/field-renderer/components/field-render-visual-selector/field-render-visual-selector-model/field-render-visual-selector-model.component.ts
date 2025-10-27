@@ -7,25 +7,29 @@ import {
 import { VisualSelectorFormat } from '../../../../../enums';
 import { FieldOption } from '../../../../../interfaces';
 import { FieldComponent } from '../../field';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
-  selector: 'fs-field-render-visual-selector-model',
-  templateUrl: './field-render-visual-selector-model.component.html',
-  styleUrls: ['./field-render-visual-selector-model.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FieldRenderVisualSelectorModelComponent),
-      multi: true,
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: FieldRenderVisualSelectorModelComponent,
-      multi: true,
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-render-visual-selector-model',
+    templateUrl: './field-render-visual-selector-model.component.html',
+    styleUrls: ['./field-render-visual-selector-model.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => FieldRenderVisualSelectorModelComponent),
+            multi: true,
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: FieldRenderVisualSelectorModelComponent,
+            multi: true,
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgClass, MatIcon],
 })
 export class FieldRenderVisualSelectorModelComponent
   extends FieldComponent implements ControlValueAccessor, OnInit, Validator {

@@ -7,12 +7,7 @@ import {
 } from '@angular/core';
 
 import { FsApiFile } from '@firestitch/api';
-import {
-  FsGalleryComponent, FsGalleryConfig,
-  FsGalleryItem,
-  FsGalleryItemAction,
-  mime,
-} from '@firestitch/gallery';
+import { FsGalleryComponent, FsGalleryConfig, FsGalleryItem, FsGalleryItemAction, mime, FsGalleryModule } from '@firestitch/gallery';
 
 import { Observable, of } from 'rxjs';
 
@@ -20,10 +15,12 @@ import { Field, FieldFile } from '../../../../interfaces';
 
 
 @Component({
-  selector: 'fs-field-gallery',
-  templateUrl: './field-gallery.component.html',
-  styleUrls: ['./field-gallery.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-gallery',
+    templateUrl: './field-gallery.component.html',
+    styleUrls: ['./field-gallery.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FsGalleryModule],
 })
 export class FieldGalleryComponent implements OnInit, OnChanges {
 

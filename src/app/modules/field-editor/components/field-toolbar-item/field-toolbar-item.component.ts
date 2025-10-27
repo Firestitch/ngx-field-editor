@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
 
 import { guid } from '@firestitch/common';
 
@@ -13,13 +13,25 @@ import { cloneDeep } from 'lodash-es';
 import { BACKDROP_CLASS, BACKDROP_HIDDEN_CLASS } from '../../../../consts/backdrop-class';
 import { Field, ToolbarItem } from '../../../../interfaces';
 import { FieldEditorService } from '../../../../services';
+import { MatDivider } from '@angular/material/divider';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
-  selector: 'fs-field-toolbar-item',
-  templateUrl: './field-toolbar-item.component.html',
-  styleUrls: ['./field-toolbar-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-toolbar-item',
+    templateUrl: './field-toolbar-item.component.html',
+    styleUrls: ['./field-toolbar-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        MatDivider,
+        MatMenuItem,
+        CdkDropList,
+        CdkDrag,
+        NgClass,
+        MatIcon,
+    ],
 })
 export class FieldToolbarItemComponent {
 

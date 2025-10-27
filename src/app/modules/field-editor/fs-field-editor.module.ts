@@ -39,8 +39,7 @@ import { FS_FIELD_EDITOR_CONFIG } from '../../injectors/fs-field-editor.provider
 import { FieldEditorConfig } from '../../interfaces';
 import { FieldEditorService } from '../../services';
 import { FieldRenderDirective } from '../field-renderer/directives';
-import { FsFieldRendererModule } from '../field-renderer/fs-field-renderer.module';
-import { FsFieldViewerModule } from '../field-viewer/fs-field-viewer.module';
+
 
 import {
   FieldConfigVisualSelectorComponent,
@@ -95,9 +94,7 @@ export function defaultConfigFactory(config) {
     MatCardModule,
     MatTooltipModule,
     MatDialogModule,
-
     DragDropModule,
-
     FsFormModule,
     FsCommonModule,
     FsPromptModule,
@@ -115,11 +112,7 @@ export function defaultConfigFactory(config) {
     FsMenuModule,
     FsPopoverModule,
     FsAddressModule,
-    FsFieldViewerModule,
-    FsFieldRendererModule,
     FsDialogModule,
-  ],
-  declarations: [
     FieldEditorComponent,
     FieldEditorItemComponent,
     FieldToolbarComponent,
@@ -143,6 +136,7 @@ export function defaultConfigFactory(config) {
     FieldHeaderMenuComponent,
     ScrollableHandlerDirective,
     StickyThingDirective,
+    FieldRenderDirective,
   ],
   exports: [
     FieldEditorComponent,

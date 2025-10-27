@@ -27,13 +27,63 @@ import { delay, mapTo, tap } from 'rxjs/operators';
 import { ViewerAction, VisualSelectorFormat } from 'src/app/enums';
 
 import { DialogComponent } from '../dialog';
+import { MatTabGroup, MatTab, MatTabContent } from '@angular/material/tabs';
+import { FieldEditorComponent as FieldEditorComponent_1 } from '../../../../src/app/modules/field-editor/components/field-editor/field-editor.component';
+import { FieldContainerDirective } from '../../../../src/app/modules/field-editor/directives/field-container/field-container.directive';
+import { NgTemplateOutlet } from '@angular/common';
+import { FieldEditorToolbarDirective } from '../../../../src/app/modules/field-editor/directives/field-editor-toolbar/field-editor-toolbar.directive';
+import { MatMiniFabButton, MatButton, MatAnchor } from '@angular/material/button';
+import { FieldConfigDirective } from '../../../../src/app/modules/field-editor/directives/field-config/field-config.directive';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
+import { MatOption } from '@angular/material/core';
+import { FieldRenderDirective } from '../../../../src/app/modules/field-renderer/directives/field-render/field-render.directive';
+import { SignatureFieldRenderComponent } from '../../modules/signature-field/components/signature-field-render/signature-field-render.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { TermsFieldConfigComponent } from '../../modules/terms-field/components/terms-field-config/terms-field-config.component';
+import { TermsFieldRenderComponent } from '../../modules/terms-field/components/terms-field-render/terms-field-render.component';
+import { FieldRendererComponent as FieldRendererComponent_1 } from '../../../../src/app/modules/field-renderer/components/field-renderer/field-renderer.component';
+import { FieldViewerComponent as FieldViewerComponent_1 } from '../../../../src/app/modules/field-viewer/components/field-viewer/field-viewer.component';
+import { FieldViewDirective } from '../../../../src/app/modules/field-viewer/directives/field-view/field-view.directive';
+import { FsLabelModule } from '@firestitch/label';
 
 
 @Component({
-  selector: 'app-example',
-  templateUrl: './example.component.html',
-  styleUrls: ['./example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-example',
+    templateUrl: './example.component.html',
+    styleUrls: ['./example.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        MatTabGroup,
+        MatTab,
+        MatTabContent,
+        FieldEditorComponent_1,
+        FieldContainerDirective,
+        NgTemplateOutlet,
+        FieldEditorToolbarDirective,
+        MatMiniFabButton,
+        FieldConfigDirective,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        FormsModule,
+        FsFormModule,
+        MatOption,
+        FieldRenderDirective,
+        SignatureFieldRenderComponent,
+        MatCheckbox,
+        TermsFieldConfigComponent,
+        TermsFieldRenderComponent,
+        FieldRendererComponent_1,
+        MatButton,
+        FieldViewerComponent_1,
+        FieldViewDirective,
+        FsLabelModule,
+        MatAnchor,
+    ],
 })
 export class ExampleComponent implements OnInit {
 

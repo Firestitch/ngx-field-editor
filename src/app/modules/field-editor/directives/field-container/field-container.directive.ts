@@ -6,7 +6,8 @@ import { FieldEditorService } from '../../../../services';
 
 
 @Directive({
-  selector: '[fsFieldContainer]',
+    selector: '[fsFieldContainer]',
+    standalone: true,
 })
 export class FieldContainerDirective {
   constructor(public templateRef: TemplateRef<any>) { }

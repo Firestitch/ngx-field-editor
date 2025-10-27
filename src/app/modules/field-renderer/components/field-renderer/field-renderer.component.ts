@@ -15,21 +15,24 @@ import { FieldRendererService } from '../../../../services';
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
 
 import { Field, FieldRendererConfig } from './../../../../interfaces';
+import { FieldRenderComponent } from '../field-render/field-render.component';
 
 
 @Component({
-  selector: 'fs-field-renderer',
-  templateUrl: './field-renderer.component.html',
-  styleUrls: ['./field-renderer.component.scss'],
-  providers: [FieldRendererService],
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: controlContainerFactory,
-      deps: [[new Optional(), NgForm]],
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-renderer',
+    templateUrl: './field-renderer.component.html',
+    styleUrls: ['./field-renderer.component.scss'],
+    providers: [FieldRendererService],
+    viewProviders: [
+        {
+            provide: ControlContainer,
+            useFactory: controlContainerFactory,
+            deps: [[new Optional(), NgForm]],
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FieldRenderComponent],
 })
 export class FieldRendererComponent {
 

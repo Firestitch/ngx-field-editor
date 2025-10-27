@@ -7,18 +7,33 @@ import {
 } from '@angular/core';
 
 import { FsApiFile } from '@firestitch/api';
-import { parseLocal } from '@firestitch/date';
+import { parseLocal, FsDateModule } from '@firestitch/date';
 
 import { FieldType } from '../../../../enums/field-type';
 import { initField } from '../../../../helpers';
 import { Field, FieldFile } from '../../../../interfaces';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { FieldViewHeadingComponent } from '../field-view-heading/field-view-heading.component';
+import { FsHtmlRendererModule } from '@firestitch/html-editor';
+import { FieldViewGalleryComponent } from '../field-view-gallery/field-view-gallery.component';
+import { FieldViewOptionsComponent } from '../field-view-options/field-view-options.component';
 
 
 @Component({
-  selector: 'fs-field-view',
-  templateUrl: './field-view.component.html',
-  styleUrls: ['./field-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-view',
+    templateUrl: './field-view.component.html',
+    styleUrls: ['./field-view.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgClass,
+        FieldViewHeadingComponent,
+        NgTemplateOutlet,
+        FsHtmlRendererModule,
+        FieldViewGalleryComponent,
+        FieldViewOptionsComponent,
+        FsDateModule,
+    ],
 })
 export class FieldViewComponent implements OnChanges {
 

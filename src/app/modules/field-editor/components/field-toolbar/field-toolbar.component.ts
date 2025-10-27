@@ -12,7 +12,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuTrigger, MatMenuItem, MatMenu } from '@angular/material/menu';
 
 import { guid } from '@firestitch/common';
 
@@ -27,13 +27,27 @@ import {
 import { TOOLBAR_DEFAULTS } from '../../../../helpers/toolbar-defaults';
 import { Field, ToolbarItem, ToolbarItems } from '../../../../interfaces';
 import { FieldEditorService } from '../../../../services';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { NgTemplateOutlet } from '@angular/common';
+import { FieldToolbarItemComponent } from '../field-toolbar-item/field-toolbar-item.component';
 
 
 @Component({
-  selector: 'fs-field-toolbar',
-  templateUrl: './field-toolbar.component.html',
-  styleUrls: ['./field-toolbar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-toolbar',
+    templateUrl: './field-toolbar.component.html',
+    styleUrls: ['./field-toolbar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        MatMiniFabButton,
+        MatMenuTrigger,
+        MatIcon,
+        MatMenuItem,
+        MatMenu,
+        NgTemplateOutlet,
+        FieldToolbarItemComponent,
+    ],
 })
 export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()

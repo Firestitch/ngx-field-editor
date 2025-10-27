@@ -7,6 +7,7 @@ import { FieldEditorService } from '../../../../services';
 
 @Directive({
   selector: '[fsFieldRender]',
+  standalone: true,
 })
 export class FieldRenderDirective {
 

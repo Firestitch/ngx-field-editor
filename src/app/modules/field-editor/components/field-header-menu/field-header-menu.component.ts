@@ -21,13 +21,16 @@ import { initField } from '../../../../helpers';
 import { Field, FieldMenuItem } from '../../../../interfaces';
 import { FieldEditorService } from '../../../../services';
 import { SettingsComponent } from '../settings';
+import { FsMenuModule } from '@firestitch/menu';
 
 
 @Component({
-  selector: 'fs-field-header-menu',
-  templateUrl: './field-header-menu.component.html',
-  styleUrls: ['./field-header-menu.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-header-menu',
+    templateUrl: './field-header-menu.component.html',
+    styleUrls: ['./field-header-menu.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FsMenuModule],
 })
 export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
 

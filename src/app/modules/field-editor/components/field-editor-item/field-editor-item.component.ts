@@ -11,7 +11,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 
-import { FsHtmlEditorConfig } from '@firestitch/html-editor';
+import { FsHtmlEditorConfig, FsHtmlEditorModule } from '@firestitch/html-editor';
 
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -21,13 +21,71 @@ import { Field } from '../../../../interfaces';
 import { FieldEditorService } from '../../../../services';
 import { FieldRenderDirective } from '../../../field-renderer/directives';
 import { FieldConfigDirective } from '../../directives';
+import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { FieldHeaderComponent } from '../field-header/field-header.component';
+import { FieldConfigOptionsComponent } from '../field-config-options/field-config-options.component';
+import { FieldConfigNameComponent } from '../field-config-name/field-config-name.component';
+import { FieldConfigFileComponent } from '../field-config-file/field-config-file.component';
+import { FieldConfigGenderComponent } from '../field-config-gender/field-config-gender.component';
+import { FieldConfigHeadingComponent } from '../field-config-heading/field-config-heading.component';
+import { FieldConfigContentComponent } from '../field-config-content/field-config-content.component';
+import { FieldConfigRichTextComponent } from '../field-config-rich-text/field-config-rich-text.component';
+import { FieldConfigAddressComponent } from '../field-config-address/field-config-address.component';
+import { FieldConfigVisualSelectorComponent } from '../field-config-visual-selector/field-config-visual-selector.component';
+import { FieldRenderTextComponent } from '../../../field-renderer/components/field-render-text/field-render-text.component';
+import { FieldRenderChoiceComponent } from '../../../field-renderer/components/field-render-choice/field-render-choice.component';
+import { FieldRenderDropdownComponent } from '../../../field-renderer/components/field-render-dropdown/field-render-dropdown.component';
+import { FieldRenderCheckboxComponent } from '../../../field-renderer/components/field-render-checkbox/field-render-checkbox.component';
+import { FieldRenderNameComponent } from '../../../field-renderer/components/field-render-name/field-render-name.component';
+import { FieldRenderFileComponent } from '../../../field-renderer/components/field-render-file/field-render-file.component';
+import { FieldRenderGenderComponent } from '../../../field-renderer/components/field-render-gender/field-render-gender.component';
+import { FieldViewHeadingComponent } from '../../../field-viewer/components/field-view-heading/field-view-heading.component';
+import { FieldRenderVisualSelectorComponent } from '../../../field-renderer/components/field-render-visual-selector/field-render-visual-selector.component';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
+import { FieldRenderAddressComponent } from '../../../field-renderer/components/field-render-address/field-render-address.component';
 
 
 @Component({
-  selector: 'fs-field-editor-item',
-  templateUrl: './field-editor-item.component.html',
-  styleUrls: ['./field-editor-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-editor-item',
+    templateUrl: './field-editor-item.component.html',
+    styleUrls: ['./field-editor-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        CdkDrag,
+        NgClass,
+        CdkDragHandle,
+        MatIconButton,
+        MatIcon,
+        NgTemplateOutlet,
+        FieldHeaderComponent,
+        FieldConfigOptionsComponent,
+        FieldConfigNameComponent,
+        FieldConfigFileComponent,
+        FieldConfigGenderComponent,
+        FieldConfigHeadingComponent,
+        FieldConfigContentComponent,
+        FieldConfigRichTextComponent,
+        FieldConfigAddressComponent,
+        FieldConfigVisualSelectorComponent,
+        FieldRenderTextComponent,
+        FieldRenderChoiceComponent,
+        FieldRenderDropdownComponent,
+        FieldRenderCheckboxComponent,
+        FieldRenderNameComponent,
+        FieldRenderFileComponent,
+        FieldRenderGenderComponent,
+        FieldViewHeadingComponent,
+        FieldRenderVisualSelectorComponent,
+        FsHtmlEditorModule,
+        FormsModule,
+        FsFormModule,
+        FieldRenderAddressComponent,
+    ],
 })
 export class FieldEditorItemComponent implements OnInit, OnDestroy {
 

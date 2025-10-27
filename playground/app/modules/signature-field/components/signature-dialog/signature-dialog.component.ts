@@ -7,8 +7,9 @@ import { tap } from 'rxjs/operators';
 
 
 @Component({
-  templateUrl: './signature-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './signature-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class SignatureDialogComponent {
 

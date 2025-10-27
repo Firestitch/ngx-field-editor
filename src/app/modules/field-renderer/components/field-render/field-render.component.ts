@@ -15,20 +15,57 @@ import { FieldRendererService } from '../../../../services';
 import { FieldRenderDirective } from '../../directives/field-render/field-render.directive';
 
 import { Field } from './../../../../interfaces';
+import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { FieldRenderDateComponent } from '../field-render-date/field-render-date.component';
+import { FieldRenderBirthdayComponent } from '../field-render-birthday/field-render-birthday.component';
+import { FieldRenderTimeComponent } from '../field-render-time/field-render-time.component';
+import { FieldRenderChoiceComponent } from '../field-render-choice/field-render-choice.component';
+import { FieldRenderDropdownComponent } from '../field-render-dropdown/field-render-dropdown.component';
+import { FieldRenderCheckboxComponent } from '../field-render-checkbox/field-render-checkbox.component';
+import { FieldRenderNameComponent } from '../field-render-name/field-render-name.component';
+import { FieldViewHeadingComponent } from '../../../field-viewer/components/field-view-heading/field-view-heading.component';
+import { FieldRenderFileComponent } from '../field-render-file/field-render-file.component';
+import { FieldRenderGenderComponent } from '../field-render-gender/field-render-gender.component';
+import { FieldRenderAddressComponent } from '../field-render-address/field-render-address.component';
+import { FieldRenderContentComponent } from '../field-render-content/field-render-content.component';
+import { FieldRenderRichTextComponent } from '../field-render-rich-text/field-render-rich-text.component';
+import { FieldRenderVisualSelectorComponent } from '../field-render-visual-selector/field-render-visual-selector.component';
+import { FieldRenderTextComponent } from '../field-render-text/field-render-text.component';
 
 
 @Component({
-  selector: 'fs-field-render',
-  styleUrls: ['./field-render.component.scss'],
-  templateUrl: './field-render.component.html',
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: controlContainerFactory,
-      deps: [[new Optional(), NgForm]],
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-render',
+    styleUrls: ['./field-render.component.scss'],
+    templateUrl: './field-render.component.html',
+    viewProviders: [
+        {
+            provide: ControlContainer,
+            useFactory: controlContainerFactory,
+            deps: [[new Optional(), NgForm]],
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgClass,
+        NgTemplateOutlet,
+        FieldRenderDateComponent,
+        FieldRenderBirthdayComponent,
+        FieldRenderTimeComponent,
+        FieldRenderChoiceComponent,
+        FieldRenderDropdownComponent,
+        FieldRenderCheckboxComponent,
+        FieldRenderNameComponent,
+        FieldViewHeadingComponent,
+        FieldRenderFileComponent,
+        FieldRenderGenderComponent,
+        FieldRenderAddressComponent,
+        FieldRenderContentComponent,
+        FieldRenderRichTextComponent,
+        FieldRenderVisualSelectorComponent,
+        FieldRenderTextComponent,
+        AsyncPipe,
+    ],
 })
 export class FieldRenderComponent implements AfterContentInit {
 

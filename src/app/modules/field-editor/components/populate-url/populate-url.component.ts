@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
-  selector: 'app-populate-url',
-  templateUrl: './populate-url.component.html',
-  styleUrls: ['./populate-url.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-populate-url',
+    templateUrl: './populate-url.component.html',
+    styleUrls: ['./populate-url.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [MatIcon],
 })
 export class PopulateUrlComponent implements OnChanges {
 

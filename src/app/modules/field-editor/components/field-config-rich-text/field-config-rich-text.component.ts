@@ -1,19 +1,27 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 
-import { FsHtmlEditorComponent, FsHtmlEditorConfig } from '@firestitch/html-editor';
+import { FsHtmlEditorComponent, FsHtmlEditorConfig, FsHtmlEditorModule } from '@firestitch/html-editor';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { EditorAction } from '../../../../enums';
 import { FieldComponent } from '../field/field.component';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
 
 
 @Component({
-  selector: 'fs-field-config-rich-text',
-  templateUrl: './field-config-rich-text.component.html',
-  styleUrls: ['./field-config-rich-text.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-config-rich-text',
+    templateUrl: './field-config-rich-text.component.html',
+    styleUrls: ['./field-config-rich-text.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsHtmlEditorModule,
+        FormsModule,
+        FsFormModule,
+    ],
 })
 export class FieldConfigRichTextComponent extends FieldComponent implements OnInit {
 

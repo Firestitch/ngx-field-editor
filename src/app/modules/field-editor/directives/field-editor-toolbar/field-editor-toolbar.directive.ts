@@ -4,7 +4,8 @@ import { FieldEditorService } from '../../../../services';
 
 
 @Directive({
-  selector: '[fsFieldEditorToolbar]',
+    selector: '[fsFieldEditorToolbar]',
+    standalone: true,
 })
 export class FieldEditorToolbarDirective { 
 

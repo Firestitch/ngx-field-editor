@@ -18,7 +18,7 @@ import {
 
 import { FsApiFile } from '@firestitch/api';
 import { controlContainerFactory } from '@firestitch/core';
-import { FsFile } from '@firestitch/file';
+import { FsFile, FsFileModule } from '@firestitch/file';
 import { FsGalleryItem, FsGalleryItemAction } from '@firestitch/gallery';
 import { FsPrompt } from '@firestitch/prompt';
 
@@ -30,24 +30,36 @@ import { RendererAction } from '../../../../../enums';
 import { Field, FieldFile } from '../../../../../interfaces';
 import { FieldRendererService } from '../../../../../services';
 import { FieldGalleryComponent } from '../../../../field-common/components';
+import { MatButton } from '@angular/material/button';
+import { FsFormModule } from '@firestitch/form';
+import { MatIcon } from '@angular/material/icon';
+import { FieldGalleryComponent as FieldGalleryComponent_1 } from '../../../../field-common/components/field-view-gallery/field-gallery.component';
 
 @Component({
-  selector: 'app-field-render-file-multiple',
-  templateUrl: './field-render-file-multiple.component.html',
-  styleUrls: ['./field-render-file-multiple.component.scss'],
-  providers: [
-    {
-      provide: ControlContainer,
-      useFactory: controlContainerFactory,
-      deps: [[new Optional(), NgForm]],
-    },
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: forwardRef(() => FieldRenderFileMultipleComponent),
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-field-render-file-multiple',
+    templateUrl: './field-render-file-multiple.component.html',
+    styleUrls: ['./field-render-file-multiple.component.scss'],
+    providers: [
+        {
+            provide: ControlContainer,
+            useFactory: controlContainerFactory,
+            deps: [[new Optional(), NgForm]],
+        },
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: forwardRef(() => FieldRenderFileMultipleComponent),
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsFileModule,
+        MatButton,
+        FsFormModule,
+        MatIcon,
+        FieldGalleryComponent_1,
+    ],
 })
 export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, ControlValueAccessor {
 

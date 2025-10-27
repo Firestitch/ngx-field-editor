@@ -8,11 +8,11 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { ControlContainer, NgForm, FormsModule } from '@angular/forms';
 
 
 import { controlContainerFactory } from '@firestitch/core';
-import { FsHtmlEditorComponent, FsHtmlEditorConfig } from '@firestitch/html-editor';
+import { FsHtmlEditorComponent, FsHtmlEditorConfig, FsHtmlEditorModule } from '@firestitch/html-editor';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -20,20 +20,27 @@ import { map } from 'rxjs/operators';
 import { RendererAction } from '../../../../enums';
 import { FieldRendererService } from '../../../../services';
 import { FieldComponent } from '../field/field.component';
+import { FsFormModule } from '@firestitch/form';
 
 
 @Component({
-  selector: 'fs-field-render-rich-text',
-  styleUrls: ['./field-render-rich-text.component.scss'],
-  templateUrl: './field-render-rich-text.component.html',
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: controlContainerFactory,
-      deps: [[new Optional(), NgForm]],
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-render-rich-text',
+    styleUrls: ['./field-render-rich-text.component.scss'],
+    templateUrl: './field-render-rich-text.component.html',
+    viewProviders: [
+        {
+            provide: ControlContainer,
+            useFactory: controlContainerFactory,
+            deps: [[new Optional(), NgForm]],
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsHtmlEditorModule,
+        FormsModule,
+        FsFormModule,
+    ],
 })
 export class FieldRenderRichTextComponent extends FieldComponent implements OnInit, OnChanges {
 

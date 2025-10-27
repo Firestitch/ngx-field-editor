@@ -7,7 +7,8 @@ import { FieldEditorService } from '../../../../services';
 
 
 @Directive({
-  selector: '[fsFieldConfig]',
+    selector: '[fsFieldConfig]',
+    standalone: true,
 })
 export class FieldConfigDirective {
 

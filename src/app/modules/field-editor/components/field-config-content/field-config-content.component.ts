@@ -1,19 +1,27 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { FsHtmlEditorConfig } from '@firestitch/html-editor';
+import { FsHtmlEditorConfig, FsHtmlEditorModule } from '@firestitch/html-editor';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { EditorAction } from '../../../../enums';
 import { FieldComponent } from '../field/field.component';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
 
 
 @Component({
-  selector: 'fs-field-config-content',
-  templateUrl: './field-config-content.component.html',
-  styleUrls: ['./field-config-content.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-field-config-content',
+    templateUrl: './field-config-content.component.html',
+    styleUrls: ['./field-config-content.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsHtmlEditorModule,
+        FormsModule,
+        FsFormModule,
+    ],
 })
 export class FieldConfigContentComponent extends FieldComponent implements OnInit {
 

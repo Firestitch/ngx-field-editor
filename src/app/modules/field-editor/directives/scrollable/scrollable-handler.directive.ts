@@ -8,7 +8,8 @@ import { CdkScrollable } from "@angular/cdk/scrolling";
  * it should recalculate positions of all elements
  */
 @Directive({
-  selector: '[scrollableHandler]',
+    selector: '[scrollableHandler]',
+    standalone: true,
 })
 export class ScrollableHandlerDirective extends CdkScrollable implements OnInit {
 

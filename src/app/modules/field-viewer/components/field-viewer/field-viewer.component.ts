@@ -13,14 +13,31 @@ import { FieldType } from '../../../../enums';
 import { FieldViewerConfig, ViewField } from '../../../../interfaces';
 import { FieldViewerService } from '../../../../services';
 import { FieldViewDirective } from '../../directives/field-view/field-view.directive';
+import { FieldViewHeadingComponent } from '../field-view-heading/field-view-heading.component';
+import { FsLabelModule } from '@firestitch/label';
+import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FieldViewComponent } from '../field-view/field-view.component';
 
 
 @Component({
-  selector: 'fs-field-viewer',
-  templateUrl: './field-viewer.component.html',
-  styleUrls: ['./field-viewer.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FieldViewerService],
+    selector: 'fs-field-viewer',
+    templateUrl: './field-viewer.component.html',
+    styleUrls: ['./field-viewer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [FieldViewerService],
+    standalone: true,
+    imports: [
+        FieldViewHeadingComponent,
+        FsLabelModule,
+        NgClass,
+        MatIcon,
+        MatTooltip,
+        NgTemplateOutlet,
+        FieldViewComponent,
+        AsyncPipe,
+    ],
 })
 export class FieldViewerComponent implements AfterContentInit {
 
