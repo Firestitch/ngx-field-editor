@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ChangeDetectorRef, inject } from '@angular/core';
 
 import { FieldOption } from '../../../../interfaces';
 import { VisualSelectorFormat } from '../../../../enums';
@@ -15,6 +15,8 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatIcon],
 })
 export class FieldViewVisualSelectorComponent {
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   @Input('field')
   public set setField(field) {
@@ -32,10 +34,6 @@ export class FieldViewVisualSelectorComponent {
   public selected: any = {};
 
   public VisualSelectorFormat = VisualSelectorFormat;
-
-  constructor(
-    private _cdRef: ChangeDetectorRef,
-  ) { }
 
   private _selectedUpdate(field: FieldOption): void {
     this.selected = {};

@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  forwardRef,
-  Input,
-  OnDestroy,
-  Optional,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnDestroy, Optional, inject } from '@angular/core';
 import { ControlContainer, ControlValueAccessor, NG_VALUE_ACCESSOR, NgForm, FormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -53,6 +45,10 @@ import { FsFormModule } from '@firestitch/form';
     ],
 })
 export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestroy {
+  private _cdRef = inject(ChangeDetectorRef);
+  private _dialog = inject(MatDialog);
+  private _sanitizer = inject(DomSanitizer);
+
 
   @Input() public disabled;
 
@@ -64,12 +60,6 @@ export class TermsFieldRenderComponent implements ControlValueAccessor, OnDestro
 
   private _field: Field = null;
   private _destroy$ = new Subject();
-
-  constructor(
-    private _cdRef: ChangeDetectorRef,
-    private _dialog: MatDialog,
-    private _sanitizer: DomSanitizer,
-  ) {}
 
   public checkboxChange(event: MatCheckboxChange, termData): void {
     if (event.checked) {

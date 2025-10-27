@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -12,13 +12,16 @@ import { tap } from 'rxjs/operators';
     standalone: true,
 })
 export class SignatureDialogComponent {
+  private _dialogRef = inject<MatDialogRef<SignatureDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
 
   public field;
   public signature;
 
-  constructor(
-    private _dialogRef: MatDialogRef<SignatureDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {
+  constructor() {
+    const data = this.data;
+
     this.field = data.field;
   }
 

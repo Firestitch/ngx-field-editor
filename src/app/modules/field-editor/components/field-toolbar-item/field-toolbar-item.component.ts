@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
@@ -34,6 +34,8 @@ import { MatIcon } from '@angular/material/icon';
     ],
 })
 export class FieldToolbarItemComponent {
+  fieldEditor = inject(FieldEditorService);
+
 
   @Input()
   public item: ToolbarItem;
@@ -43,10 +45,6 @@ export class FieldToolbarItemComponent {
 
   public field: Field = null;
   public dragging = false;
-
-  constructor(
-    public fieldEditor: FieldEditorService,
-  ) { }
 
   private get _backdrop(): Element {
     return document.getElementsByClassName(BACKDROP_CLASS).item(0);

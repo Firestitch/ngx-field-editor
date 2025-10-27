@@ -1,16 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 
 import { MatMenuTrigger, MatMenuItem, MatMenu } from '@angular/material/menu';
 
@@ -50,6 +38,8 @@ import { FieldToolbarItemComponent } from '../field-toolbar-item/field-toolbar-i
     ],
 })
 export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
+  fieldEditor = inject(FieldEditorService);
+
   @Input()
   public toolbarItems: ToolbarItems = [];
 
@@ -81,10 +71,6 @@ export class FieldToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _closed = true;
   private _destroy$ = new Subject<void>();
-
-  constructor(
-    public fieldEditor: FieldEditorService,
-  ) { }
 
   public ngOnInit(): void {
     if (!this.parentItem) {

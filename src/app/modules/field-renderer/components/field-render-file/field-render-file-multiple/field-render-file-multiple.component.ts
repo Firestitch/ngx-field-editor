@@ -62,6 +62,10 @@ import { FieldGalleryComponent as FieldGalleryComponent_1 } from '../../../../fi
     ],
 })
 export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  private _fieldRenderer = inject(FieldRendererService);
+  private _cdRef = inject(ChangeDetectorRef);
+  private _prompt = inject(FsPrompt);
+
 
   @Input() public field: Field;
   @Input() public disabled = false;
@@ -77,12 +81,6 @@ export class FieldRenderFileMultipleComponent implements OnInit, OnDestroy, Cont
 
   private _destroy$ = new Subject();
   private _controlContainer = inject(Injector);
-
-  constructor(
-    private _fieldRenderer: FieldRendererService,
-    private _cdRef: ChangeDetectorRef,
-    private _prompt: FsPrompt,
-  ) { }
 
   public selectFile(files) {
     if (!this.field.configs.allowMultiple) {

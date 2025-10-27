@@ -1,6 +1,4 @@
-import {
-  AfterContentInit, ChangeDetectionStrategy, Component, Input, Optional, QueryList,
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, Input, Optional, QueryList, inject } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
@@ -68,6 +66,8 @@ import { FieldRenderTextComponent } from '../field-render-text/field-render-text
     ],
 })
 export class FieldRenderComponent implements AfterContentInit {
+  fieldRenderer = inject(FieldRendererService, { optional: true });
+
 
   @Input()
   public fieldRenders = new QueryList<FieldRenderDirective>();
@@ -89,10 +89,6 @@ export class FieldRenderComponent implements AfterContentInit {
 
       }),
     );
-
-  constructor(
-    @Optional() public fieldRenderer: FieldRendererService,
-  ) { }
 
   @Input('field')
   public set setField(field) {

@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ContentChildren,
-  Input,
-  Optional,
-  QueryList,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, Input, Optional, QueryList, inject } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { controlContainerFactory } from '@firestitch/core';
@@ -35,13 +28,11 @@ import { FieldRenderComponent } from '../field-render/field-render.component';
     imports: [FieldRenderComponent],
 })
 export class FieldRendererComponent {
+  fieldRenderer = inject(FieldRendererService);
+
 
   @ContentChildren(FieldRenderDirective)
   public fieldRenders: QueryList<FieldRenderDirective>;
-
-  constructor(
-    public fieldRenderer: FieldRendererService,
-  ) { }
 
   @Input('config')
   public set config(config: FieldRendererConfig) {

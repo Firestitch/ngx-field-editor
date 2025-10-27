@@ -1,21 +1,5 @@
 import { DOCUMENT, NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
-import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ContentChildren,
-  ElementRef,
-  HostListener,
-  inject,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  TemplateRef,
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, HostListener, inject, Input, OnDestroy, OnInit, QueryList, TemplateRef } from '@angular/core';
 
 import { CdkDragDrop, moveItemInArray, CdkDropList } from '@angular/cdk/drag-drop';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -56,6 +40,12 @@ import { FieldEditorItemComponent } from '../field-editor-item/field-editor-item
     ],
 })
 export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy {
+  document = inject<Document>(DOCUMENT);
+  fieldEditor = inject(FieldEditorService);
+  fieldRenderer = inject(FieldRendererService);
+  private _cdRef = inject(ChangeDetectorRef);
+  private _elRef = inject(ElementRef);
+
 
   @Input()
   public scrollContainer: string | HTMLElement = null;
@@ -82,14 +72,6 @@ export class FieldEditorComponent implements OnInit, AfterContentInit, OnDestroy
 
   private _destroy$ = new Subject<void>();
   private _dialogRef = inject(MatDialogRef, { optional: true });
-
-  constructor(
-    @Inject(DOCUMENT) public document: Document,
-    public fieldEditor: FieldEditorService,
-    public fieldRenderer: FieldRendererService,
-    private _cdRef: ChangeDetectorRef,
-    private _elRef: ElementRef,
-  ) { }
 
   @HostListener('document:keydown.escape', ['$event'])
   public onKeydownHandler() {

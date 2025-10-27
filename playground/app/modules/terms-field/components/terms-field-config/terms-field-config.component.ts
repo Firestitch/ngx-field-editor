@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  forwardRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -45,6 +37,9 @@ import { TermsFieldConfigDialogComponent } from '../terms-field-config-dialog';
     ],
 })
 export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit, OnDestroy {
+  private _dialog = inject(MatDialog);
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   @ViewChild(FsListComponent)
   public list: FsListComponent;
@@ -59,11 +54,6 @@ export class TermsFieldConfigComponent implements ControlValueAccessor, OnInit, 
   private _disabled = false;
   private _field: Field = null;
   private _destroy$ = new Subject();
-
-  constructor(
-    private _dialog: MatDialog,
-    private _cdRef: ChangeDetectorRef,    
-  ) {}
 
   public ngOnInit(): void {
     this.listConfig = {

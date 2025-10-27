@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 
 import { guid } from '@firestitch/common';
 
@@ -16,6 +16,8 @@ import { FieldEditorService } from '../../../../services';
     standalone: true,
 })
 export class FieldComponent implements OnDestroy {
+  fieldEditor = inject(FieldEditorService);
+
 
   @Input() public disabled = false;
 
@@ -25,11 +27,6 @@ export class FieldComponent implements OnDestroy {
   public name = `field-${guid()}`;
 
   protected _destory$ = new Subject();
-
-  constructor(
-    public fieldEditor: FieldEditorService,
-  ) {
-  }
 
   public ngOnDestroy() {
     this._destory$.next(null);

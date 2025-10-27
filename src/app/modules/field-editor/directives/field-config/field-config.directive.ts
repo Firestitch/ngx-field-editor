@@ -1,5 +1,5 @@
 
-import { Directive, Input, TemplateRef } from '@angular/core';
+import { Directive, Input, TemplateRef, inject } from '@angular/core';
 
 import { FieldType } from '../../../../enums';
 import { Field } from '../../../../interfaces';
@@ -11,10 +11,10 @@ import { FieldEditorService } from '../../../../services';
     standalone: true,
 })
 export class FieldConfigDirective {
+  templateRef = inject<TemplateRef<any>>(TemplateRef);
+
 
   @Input() public type: string | FieldType;
-
-  constructor(public templateRef: TemplateRef<any>) {}
 
   public static ngTemplateContextGuard(
     directive: FieldConfigDirective,

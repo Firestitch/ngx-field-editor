@@ -1,12 +1,4 @@
-import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  Component,
-  ContentChildren,
-  ElementRef,
-  Input,
-  QueryList,
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChildren, ElementRef, Input, QueryList, inject } from '@angular/core';
 
 
 import { FieldType } from '../../../../enums';
@@ -40,6 +32,9 @@ import { FieldViewComponent } from '../field-view/field-view.component';
     ],
 })
 export class FieldViewerComponent implements AfterContentInit {
+  private _fieldViewerService = inject(FieldViewerService);
+  private _el = inject(ElementRef);
+
 
   @ContentChildren(FieldViewDirective)
   public fieldViews: QueryList<FieldViewDirective>;
@@ -60,11 +55,6 @@ export class FieldViewerComponent implements AfterContentInit {
           return !this.hideNotSpecified || field.hasValue;
         });
   }
-
-  constructor(
-    private _fieldViewerService: FieldViewerService,
-    private _el: ElementRef,
-  ) { }
 
   public get fieldViewer() {
     return this._fieldViewerService;

@@ -1,14 +1,15 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatIconButton } from '@angular/material/button';
+import { MatFormField } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatTooltip } from '@angular/material/tooltip';
+
+import { FsFormModule } from '@firestitch/form';
 import { FsPrompt } from '@firestitch/prompt';
 
 import { Subject } from 'rxjs';
@@ -16,39 +17,29 @@ import { finalize, switchMap, takeUntil } from 'rxjs/operators';
 
 import { EditorAction, FieldType } from '../../../../enums';
 import { Field } from '../../../../interfaces';
-import { FieldEditorService } from '../../../../services';
-import { FieldComponent } from '../field/field.component';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-import { FsFormModule } from '@firestitch/form';
-import { MatIconButton } from '@angular/material/button';
-import { MatTooltip } from '@angular/material/tooltip';
-import { NgClass, AsyncPipe } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
 import { FieldHeaderMenuComponent } from '../field-header-menu/field-header-menu.component';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { FieldComponent } from '../field/field.component';
 
 
 @Component({
-    selector: 'fs-field-header',
-    templateUrl: './field-header.component.html',
-    styleUrls: ['./field-header.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        MatFormField,
-        MatInput,
-        FormsModule,
-        FsFormModule,
-        MatIconButton,
-        MatTooltip,
-        NgClass,
-        MatIcon,
-        FieldHeaderMenuComponent,
-        CdkTextareaAutosize,
-        AsyncPipe,
-    ],
+  selector: 'fs-field-header',
+  templateUrl: './field-header.component.html',
+  styleUrls: ['./field-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatFormField,
+    MatInput,
+    FormsModule,
+    FsFormModule,
+    MatIconButton,
+    MatTooltip,
+    NgClass,
+    MatIcon,
+    FieldHeaderMenuComponent,
+    CdkTextareaAutosize,
+    AsyncPipe,
+  ],
 })
 export class FieldHeaderComponent
   extends FieldComponent
@@ -56,6 +47,13 @@ export class FieldHeaderComponent
 
   @Input()
   public hasDescription = false;
+
+  @Output()
+  public fieldChanged = new EventEmitter<Field>();
+
+  @Output()
+  public toggleDescription = new EventEmitter<Field>();
+
 
   public showDelete = false;
   public canEdit = false;
@@ -65,22 +63,10 @@ export class FieldHeaderComponent
   public showLabel = false;
   public showActions = false;
   public FieldType = FieldType;
-
-  @Output()
-  public fieldChanged = new EventEmitter<Field>();
-
-  @Output()
-  public toggleDescription = new EventEmitter<Field>();
-
+  
+  private _prompt = inject(FsPrompt);
+  private _cdRef = inject(ChangeDetectorRef);
   private _destroy$ = new Subject();
-
-  constructor(
-    public fieldEditor: FieldEditorService,
-    private _prompt: FsPrompt,
-    private _cdRef: ChangeDetectorRef,
-  ) {
-    super(fieldEditor);
-  }
 
   public ngOnInit(): void {
     this._initHeaderConfig();

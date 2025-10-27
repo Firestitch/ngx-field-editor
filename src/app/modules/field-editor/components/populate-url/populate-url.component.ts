@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIcon } from '@angular/material/icon';
 
@@ -12,17 +12,14 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatIcon],
 })
 export class PopulateUrlComponent implements OnChanges {
+  private _domSanitizer = inject(DomSanitizer);
+
 
   @Input() public identifier;
   @Input() public value;
 
   public populateUrl;
   public populateUrlTrust;
-
-  constructor(
-    private _domSanitizer: DomSanitizer,
-  ) {
-  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     const url = new URL(location.href);

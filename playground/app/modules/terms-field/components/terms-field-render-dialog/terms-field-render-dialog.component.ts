@@ -1,10 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { } from '@angular/forms';
+
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
 import { Term } from '../../interfaces';
@@ -32,13 +28,15 @@ import { FsFormModule } from '@firestitch/form';
     ],
 })
 export class TermsFieldRenderDialogComponent {
+  dialogRef = inject<MatDialogRef<TermsFieldRenderDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
 
   public term: Term;
 
-  constructor(
-    public dialogRef: MatDialogRef<TermsFieldRenderDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data,
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.term = data.term;
   }
 

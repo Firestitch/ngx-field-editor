@@ -1,19 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Inject,
-  Input,
-  isDevMode,
-  OnDestroy,
-  OnInit,
-  Output,
-  PLATFORM_ID,
-} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, isDevMode, OnDestroy, OnInit, Output, PLATFORM_ID, inject } from '@angular/core';
 
 import { animationFrameScheduler, BehaviorSubject, combineLatest, Observable, pipe, Subject } from 'rxjs';
 import { auditTime, filter, map, share, startWith, takeUntil, throttleTime } from 'rxjs/operators';
@@ -40,6 +26,9 @@ export interface StickyStatus {
     standalone: true,
 })
 export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
+  private _stickyElement = inject(ElementRef);
+  private _platformId = inject(PLATFORM_ID);
+
 
   public filterGate = false;
   public marginTop$ = new BehaviorSubject(0);
@@ -85,7 +74,7 @@ export class StickyThingDirective implements OnInit, AfterViewInit, OnDestroy {
 
   private _componentDestroyed = new Subject<void>();
 
-  constructor(private _stickyElement: ElementRef, @Inject(PLATFORM_ID) private _platformId: string) {
+  constructor() {
 
     /**
      * Throttle the scroll to animation frame (around 16.67ms) */

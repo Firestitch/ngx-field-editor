@@ -1,3 +1,4 @@
+import { AsyncPipe, NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -7,12 +8,20 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
-
+import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatRadioButton } from '@angular/material/radio';
+import { MatTooltip } from '@angular/material/tooltip';
 
 import { guid } from '@firestitch/common';
 import { FsFile, FsFileImagePickerComponent, FsFileModule } from '@firestitch/file';
+import { FsFormModule } from '@firestitch/form';
 import { FsPrompt } from '@firestitch/prompt';
 
 import { BehaviorSubject, forkJoin, Observable, of, pipe } from 'rxjs';
@@ -24,46 +33,35 @@ import {
 
 import { EditorAction, VisualSelectorFormat } from '../../../../enums';
 import { FieldOption } from '../../../../interfaces';
-import { FieldEditorService } from '../../../../services';
 import { FieldComponent } from '../field/field.component';
-import { NgClass, NgTemplateOutlet, NgStyle, AsyncPipe } from '@angular/common';
-import { MatIconButton, MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-import { FsFormModule } from '@firestitch/form';
-import { MatTooltip } from '@angular/material/tooltip';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { MatRadioButton } from '@angular/material/radio';
 
 
 @Component({
-    selector: 'fs-field-config-options',
-    templateUrl: './field-config-options.component.html',
-    styleUrls: ['./field-config-options.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [
-        CdkDropList,
-        CdkDrag,
-        NgClass,
-        CdkDragHandle,
-        MatIconButton,
-        MatIcon,
-        NgTemplateOutlet,
-        FsFileModule,
-        MatFormField,
-        MatInput,
-        FormsModule,
-        FsFormModule,
-        MatTooltip,
-        MatButton,
-        NgStyle,
-        MatCheckbox,
-        MatRadioButton,
-        AsyncPipe,
-    ],
+  selector: 'fs-field-config-options',
+  templateUrl: './field-config-options.component.html',
+  styleUrls: ['./field-config-options.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CdkDropList,
+    CdkDrag,
+    NgClass,
+    CdkDragHandle,
+    MatIconButton,
+    MatIcon,
+    NgTemplateOutlet,
+    FsFileModule,
+    MatFormField,
+    MatInput,
+    FormsModule,
+    FsFormModule,
+    MatTooltip,
+    MatButton,
+    NgStyle,
+    MatCheckbox,
+    MatRadioButton,
+    AsyncPipe,
+  ],
 })
 export class FieldConfigOptionsComponent extends FieldComponent implements OnInit {
 
@@ -77,14 +75,8 @@ export class FieldConfigOptionsComponent extends FieldComponent implements OnIni
 
   private _optionLoading$ = new BehaviorSubject<boolean>(false);
   private _el = inject(ElementRef);
-
-  constructor(
-    public fieldEditor: FieldEditorService,
-    private _prompt: FsPrompt,
-    private _cdRef: ChangeDetectorRef,
-  ) {
-    super(fieldEditor);
-  }
+  private _prompt = inject(FsPrompt);
+  private _cdRef = inject(ChangeDetectorRef);
 
   public ngOnInit(): void {
     forkJoin([

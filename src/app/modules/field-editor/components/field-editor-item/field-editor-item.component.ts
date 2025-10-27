@@ -1,15 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  ElementRef,
-  HostBinding,
-  Input,
-  OnDestroy,
-  OnInit,
-  TemplateRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, HostBinding, Input, OnDestroy, OnInit, TemplateRef, inject } from '@angular/core';
 
 import { FsHtmlEditorConfig, FsHtmlEditorModule } from '@firestitch/html-editor';
 
@@ -88,6 +77,10 @@ import { FieldRenderAddressComponent } from '../../../field-renderer/components/
     ],
 })
 export class FieldEditorItemComponent implements OnInit, OnDestroy {
+  fieldEditor = inject(FieldEditorService);
+  private _elRef = inject(ElementRef);
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   @ContentChild(FieldConfigDirective, { read: TemplateRef })
   public set contentFieldConfigTemplate(value: TemplateRef<any>) {
@@ -126,12 +119,6 @@ export class FieldEditorItemComponent implements OnInit, OnDestroy {
   public htmlEditorConfig: FsHtmlEditorConfig = null;
 
   private _destroy$ = new Subject();
-
-  constructor(
-    public fieldEditor: FieldEditorService,
-    private _elRef: ElementRef,
-    private _cdRef: ChangeDetectorRef,
-  ) { }
 
   public fieldChange(field: Field) {
     this.fieldEditor.fieldChange(field);

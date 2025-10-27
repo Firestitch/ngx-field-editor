@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnChanges,
-  OnInit,
-  Optional,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit, Optional, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { ControlContainer, NgForm, FormsModule } from '@angular/forms';
 
 
@@ -43,18 +34,14 @@ import { FsFormModule } from '@firestitch/form';
     ],
 })
 export class FieldRenderRichTextComponent extends FieldComponent implements OnInit, OnChanges {
+  private _fieldRenderer = inject(FieldRendererService);
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   @ViewChild(FsHtmlEditorComponent)
   public htmlEditor: FsHtmlEditorComponent;
 
   public editorConfig: FsHtmlEditorConfig;
-
-  constructor(
-    private _fieldRenderer: FieldRendererService,
-    private _cdRef: ChangeDetectorRef,
-  ) {
-    super();
-  }
 
   public ngOnInit(): void {
     this.editorConfig = {

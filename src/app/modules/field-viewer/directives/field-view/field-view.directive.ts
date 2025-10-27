@@ -1,5 +1,5 @@
 
-import { Directive, TemplateRef, Input } from '@angular/core';
+import { Directive, TemplateRef, Input, inject } from '@angular/core';
 
 
 @Directive({
@@ -7,8 +7,8 @@ import { Directive, TemplateRef, Input } from '@angular/core';
     standalone: true
 })
 export class FieldViewDirective {
+  templateRef = inject<TemplateRef<any>>(TemplateRef);
+
 
   @Input() type;
-
-  constructor(public templateRef: TemplateRef<any>) {}
 }

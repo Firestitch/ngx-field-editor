@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
@@ -56,17 +56,15 @@ import { PopulateUrlComponent } from '../populate-url/populate-url.component';
     ],
 })
 export class SettingsComponent implements OnInit {
+  private _data = inject(MAT_DIALOG_DATA);
+  private _dialogRef = inject<MatDialogRef<SettingsComponent>>(MatDialogRef);
+
 
   public field: FieldOption;
   public populateValue = '';
   public FieldType = FieldType;
   public fieldEditor: FieldEditorService;
   public VisualSelectorFormat = VisualSelectorFormat;
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private _data,
-    private _dialogRef: MatDialogRef<SettingsComponent>,
-  ) { }
 
   public ngOnInit(): void {
     this.field = this._data.field;

@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  forwardRef,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 
 import { Field } from '@firestitch/field-editor';
@@ -33,6 +27,8 @@ import { FsFormModule } from '@firestitch/form';
     ],
 })
 export class SignatureFieldRenderComponent implements ControlValueAccessor {
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   @Input() public disabled = false;
 
@@ -41,11 +37,6 @@ export class SignatureFieldRenderComponent implements ControlValueAccessor {
 
   private _onChange: (value: unknown) => void;
   private _onTouch: (value: unknown) => void;
-
-  constructor(
-    private _cdRef: ChangeDetectorRef,
-  ) {
-  }
 
   public writeValue(field: Field | undefined): void {
     this.field = field;

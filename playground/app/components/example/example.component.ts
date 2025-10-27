@@ -1,6 +1,4 @@
-import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject, OnInit, ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
 
 
 import { MatDialog } from '@angular/material/dialog';
@@ -86,6 +84,10 @@ import { FsLabelModule } from '@firestitch/label';
     ],
 })
 export class ExampleComponent implements OnInit {
+  private _defaultConfig = inject<FieldEditorConfig>(FS_FIELD_EDITOR_CONFIG);
+  private _cdRef = inject(ChangeDetectorRef);
+  private _message = inject(FsMessage);
+
 
   @ViewChild(FieldEditorComponent)
   public fieldEditor: FieldEditorComponent;
@@ -103,12 +105,6 @@ export class ExampleComponent implements OnInit {
   public FieldType = FieldType;
 
   private _dialog = inject(MatDialog);
-
-  constructor(
-    @Inject(FS_FIELD_EDITOR_CONFIG) private _defaultConfig: FieldEditorConfig,
-    private _cdRef: ChangeDetectorRef,
-    private _message: FsMessage,
-  ) { }
 
   public ngOnInit(): void {
     this.initFieldEditor();

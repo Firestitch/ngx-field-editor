@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -33,6 +24,10 @@ import { FsMenuModule } from '@firestitch/menu';
     imports: [FsMenuModule],
 })
 export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
+  fieldEditor = inject(FieldEditorService);
+  private _dialog = inject(MatDialog);
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   @Input() public field: Field;
 
@@ -41,13 +36,6 @@ export class FieldHeaderMenuComponent implements OnInit, OnDestroy {
   public menuItems;
 
   private _destroy$ = new Subject();
-
-  constructor(
-    public fieldEditor: FieldEditorService,
-    private _dialog: MatDialog,
-    private _cdRef: ChangeDetectorRef,
-  ) {
-  }
 
   public ngOnInit(): void {
     const menuItems = [];
