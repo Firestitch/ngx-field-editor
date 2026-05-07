@@ -1,0 +1,25 @@
+@if (isSlider) {
+  <fs-field-slider-weight
+    [label]="field.label"
+    [hint]="field.description"
+    [required]="field.configs.required === true"
+    [disabled]="disabled"
+    [showUnitToggle]="showUnitToggle"
+    [minLb]="minLb"
+    [maxLb]="maxLb"
+    [name]="name"
+    [(ngModel)]="field.data.value"
+    (ngModelChange)="changed.emit(field)">
+  </fs-field-slider-weight>
+} @else {
+  <fs-field-input-weight
+    [label]="field.label"
+    [hint]="field.description"
+    [required]="field.configs.required === true"
+    [disabled]="disabled"
+    [showUnitToggle]="showUnitToggle"
+    [name]="name"
+    [(ngModel)]="field.data.value"
+    (ngModelChange)="changed.emit(field)">
+  </fs-field-input-weight>
+}

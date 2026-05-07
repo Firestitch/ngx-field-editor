@@ -118,6 +118,20 @@
           (changed)="fieldRenderer.fieldChange($event)">
         </fs-field-render-visual-selector>
       }
+      @case (fieldType.Height) {
+        <fs-field-render-height
+          [field]="field"
+          [disabled]="disabled$ | async"
+          (changed)="fieldRenderer.fieldChange($event)">
+        </fs-field-render-height>
+      }
+      @case (fieldType.Weight) {
+        <fs-field-render-weight
+          [field]="field"
+          [disabled]="disabled$ | async"
+          (changed)="fieldRenderer.fieldChange($event)">
+        </fs-field-render-weight>
+      }
     }
     <ng-template #fsFieldText>
       <fs-field-render-text

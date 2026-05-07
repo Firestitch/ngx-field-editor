@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, Optional } from '@angular/core';
-import { ControlContainer, NgForm, FormsModule } from '@angular/forms';
-
-import { controlContainerFactory } from '@firestitch/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ControlContainer, FormsModule } from '@angular/forms';
 
 
 import { FieldComponent } from '../field/field.component';
@@ -18,8 +16,7 @@ import { FsFormModule } from '@firestitch/form';
     providers: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
     ],
     standalone: true,

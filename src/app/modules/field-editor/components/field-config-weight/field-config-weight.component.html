@@ -1,0 +1,53 @@
+<div class="options">
+  <div class="row">
+    <fs-label-field>
+      <fs-label>Interface</fs-label>
+      <mat-button-toggle-group
+        [value]="field.configs.interface || 'slider'"
+        (change)="interfaceChange($event.value)"
+        aria-label="Weight interface">
+        <mat-button-toggle value="slider">Slider</mat-button-toggle>
+        <mat-button-toggle value="input">Input</mat-button-toggle>
+      </mat-button-toggle-group>
+    </fs-label-field>
+
+    <fs-label-field>
+      <fs-label>Show Unit Selection</fs-label>
+      <mat-checkbox
+        color="primary"
+        [(ngModel)]="field.configs.unitSelection"
+        (ngModelChange)="fieldSave()">
+      </mat-checkbox>
+    </fs-label-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field>
+      <mat-label>Min</mat-label>
+      <input
+        matInput
+        type="number"
+        min="1"
+        step="1"
+        name="minWeight"
+        [(ngModel)]="field.configs.min"
+        [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="configChange()">
+      <span matTextSuffix>lb</span>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Max</mat-label>
+      <input
+        matInput
+        type="number"
+        min="1"
+        step="1"
+        name="maxWeight"
+        [(ngModel)]="field.configs.max"
+        [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="configChange()">
+      <span matTextSuffix>lb</span>
+    </mat-form-field>
+  </div>
+</div>

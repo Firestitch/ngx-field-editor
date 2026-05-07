@@ -67,12 +67,80 @@ export function initField(field: Field | FieldOption): Field {
 
     case FieldType.VisualSelector: {
       initOptionVisualSelector(field);
-  
+
       break;
     }
+
+    case FieldType.Height:
+      initHeight(field);
+      break;
+
+    case FieldType.Weight:
+      initWeight(field);
+      break;
   }
 
   return field;
+}
+
+function initHeight(field: Field) {
+  if (!isObject(field.data.value)) {
+    field.data.value = {};
+  }
+
+  if (!field.data.value.unit) {
+    field.data.value.unit = 'in';
+  }
+
+  if (field.data.value.value === undefined) {
+    field.data.value.value = null;
+  }
+
+  if (!field.configs.interface) {
+    field.configs.interface = 'slider';
+  }
+
+  if (field.configs.unitSelection === undefined) {
+    field.configs.unitSelection = false;
+  }
+
+  if (field.configs.min === undefined || field.configs.min === null) {
+    field.configs.min = 4;
+  }
+
+  if (field.configs.max === undefined || field.configs.max === null) {
+    field.configs.max = 7;
+  }
+}
+
+function initWeight(field: Field) {
+  if (!isObject(field.data.value)) {
+    field.data.value = {};
+  }
+
+  if (!field.data.value.unit) {
+    field.data.value.unit = 'lb';
+  }
+
+  if (field.data.value.value === undefined) {
+    field.data.value.value = null;
+  }
+
+  if (!field.configs.interface) {
+    field.configs.interface = 'slider';
+  }
+
+  if (field.configs.unitSelection === undefined) {
+    field.configs.unitSelection = false;
+  }
+
+  if (field.configs.min === undefined || field.configs.min === null) {
+    field.configs.min = 80;
+  }
+
+  if (field.configs.max === undefined || field.configs.max === null) {
+    field.configs.max = 400;
+  }
 }
 
 

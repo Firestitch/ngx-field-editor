@@ -7,7 +7,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Optional, ViewChild,
+  ViewChild,
 } from '@angular/core';
 import {
   ControlContainer, ControlValueAccessor,
@@ -17,7 +17,6 @@ import {
 } from '@angular/forms';
 
 import { FsApiFile } from '@firestitch/api';
-import { controlContainerFactory } from '@firestitch/core';
 import { FsFile, FsFileModule } from '@firestitch/file';
 import { FsGalleryItem, FsGalleryItemAction } from '@firestitch/gallery';
 import { FsPrompt } from '@firestitch/prompt';
@@ -42,8 +41,7 @@ import { FieldGalleryComponent as FieldGalleryComponent_1 } from '../../../../fi
     providers: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
         {
             provide: NG_VALUE_ACCESSOR,

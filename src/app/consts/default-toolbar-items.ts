@@ -19,6 +19,8 @@ export const DefaultToolbarItems = [
   { type: FieldType.Email },
   { type: FieldType.Address },
   { type: FieldType.Gender },
+  { type: FieldType.Height },
+  { type: FieldType.Weight },
   { type: FieldType.Birthday },
   { type: FieldType.Divider },
   { type: FieldType.File },

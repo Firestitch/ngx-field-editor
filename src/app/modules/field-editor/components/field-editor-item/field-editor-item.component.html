@@ -110,6 +110,12 @@
           @case (FieldType.VisualSelector) {
             <fs-field-config-visual-selector [field]="field"></fs-field-config-visual-selector>
           }
+          @case (FieldType.Height) {
+            <fs-field-config-height [field]="field"></fs-field-config-height>
+          }
+          @case (FieldType.Weight) {
+            <fs-field-config-weight [field]="field"></fs-field-config-weight>
+          }
         }
       </div>
     </ng-template>
@@ -184,6 +190,12 @@
           }
           @case (FieldType.Address) {
             <fs-field-render-address [field]="field"></fs-field-render-address>
+          }
+          @case (FieldType.Height) {
+            <fs-field-render-height [field]="field"></fs-field-render-height>
+          }
+          @case (FieldType.Weight) {
+            <fs-field-render-weight [field]="field"></fs-field-render-weight>
           }
           @default {
             <fs-field-render-text [field]="field"></fs-field-render-text>

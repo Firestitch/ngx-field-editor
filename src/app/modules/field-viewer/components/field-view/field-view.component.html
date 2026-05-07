@@ -98,6 +98,20 @@
     @case (FieldType.VisualSelector) {
       <fs-field-view-options [field]="field"></fs-field-view-options>
     }
+    @case (FieldType.Height) {
+      @if (field.data.value?.value !== null && field.data.value?.value !== undefined) {
+        @if (field.data.value.unit === 'cm') {
+          {{ field.data.value.value }} cm
+        } @else {
+          {{ (field.data.value.value - (field.data.value.value % 12)) / 12 }}' {{ field.data.value.value % 12 }}"
+        }
+      }
+    }
+    @case (FieldType.Weight) {
+      @if (field.data.value?.value !== null && field.data.value?.value !== undefined) {
+        {{ field.data.value.value }} {{ field.data.value.unit }}
+      }
+    }
   }
   <ng-template #text>
     {{ field.data.value }}

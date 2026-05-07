@@ -1,0 +1,34 @@
+<div class="fs-form-message">
+  <div class="fs-form-hint">
+    @if (hint) { {{ hint }} }
+  </div>
+</div>
+@if (label) {
+  <div class="fs-form-label">{{ label }}</div>
+}
+<div class="weight-row">
+  <mat-form-field class="form-field-padless weight-input">
+    <input
+      matInput
+      type="number"
+      inputmode="numeric"
+      min="0"
+      step="1"
+      [(ngModel)]="value"
+      [ngModelOptions]="{ standalone: true }"
+      (ngModelChange)="valueChange()"
+      [disabled]="disabled">
+    <span matTextSuffix>{{ unit }}</span>
+  </mat-form-field>
+  @if (showUnitToggle) {
+    <mat-button-toggle-group
+      class="unit-toggle"
+      [value]="unit"
+      (change)="unitChange($event.value)"
+      [disabled]="disabled"
+      aria-label="Weight unit">
+      <mat-button-toggle value="lb">lb</mat-button-toggle>
+      <mat-button-toggle value="kg">kg</mat-button-toggle>
+    </mat-button-toggle-group>
+  }
+</div>

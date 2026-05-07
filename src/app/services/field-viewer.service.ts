@@ -79,6 +79,11 @@ export class FieldViewerService implements OnDestroy {
             hasValue = !!(value?.selected || []).length;
             break;
 
+          case FieldType.Height:
+          case FieldType.Weight:
+            hasValue = value?.value !== null && value?.value !== undefined && value?.value !== '';
+            break;
+
           default:
             hasValue = value !== null && value !== undefined && value !== '';
         }

@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit, Optional, SimpleChanges, ViewChild, inject } from '@angular/core';
-import { ControlContainer, NgForm, FormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { ControlContainer, FormsModule } from '@angular/forms';
 
 
-import { controlContainerFactory } from '@firestitch/core';
 import { FsHtmlEditorComponent, FsHtmlEditorConfig, FsHtmlEditorModule } from '@firestitch/html-editor';
 
 import { Observable } from 'rxjs';
@@ -21,8 +20,7 @@ import { FsFormModule } from '@firestitch/form';
     viewProviders: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

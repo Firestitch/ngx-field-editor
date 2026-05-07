@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, Optional } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
-
-import { controlContainerFactory } from '@firestitch/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ControlContainer } from '@angular/forms';
 
 import { FieldComponent } from '../field/field.component';
 import { FsLabelModule } from '@firestitch/label';
@@ -15,8 +13,7 @@ import { FsHtmlRendererModule } from '@firestitch/html-editor';
     viewProviders: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

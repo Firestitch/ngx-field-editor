@@ -24,6 +24,8 @@ import { FieldConfigContentComponent } from '../field-config-content/field-confi
 import { FieldConfigRichTextComponent } from '../field-config-rich-text/field-config-rich-text.component';
 import { FieldConfigAddressComponent } from '../field-config-address/field-config-address.component';
 import { FieldConfigVisualSelectorComponent } from '../field-config-visual-selector/field-config-visual-selector.component';
+import { FieldConfigHeightComponent } from '../field-config-height/field-config-height.component';
+import { FieldConfigWeightComponent } from '../field-config-weight/field-config-weight.component';
 import { FieldRenderTextComponent } from '../../../field-renderer/components/field-render-text/field-render-text.component';
 import { FieldRenderChoiceComponent } from '../../../field-renderer/components/field-render-choice/field-render-choice.component';
 import { FieldRenderDropdownComponent } from '../../../field-renderer/components/field-render-dropdown/field-render-dropdown.component';
@@ -36,6 +38,8 @@ import { FieldRenderVisualSelectorComponent } from '../../../field-renderer/comp
 import { FormsModule } from '@angular/forms';
 import { FsFormModule } from '@firestitch/form';
 import { FieldRenderAddressComponent } from '../../../field-renderer/components/field-render-address/field-render-address.component';
+import { FieldRenderHeightComponent } from '../../../field-renderer/components/field-render-height/field-render-height.component';
+import { FieldRenderWeightComponent } from '../../../field-renderer/components/field-render-weight/field-render-weight.component';
 
 
 @Component({
@@ -61,6 +65,8 @@ import { FieldRenderAddressComponent } from '../../../field-renderer/components/
         FieldConfigRichTextComponent,
         FieldConfigAddressComponent,
         FieldConfigVisualSelectorComponent,
+        FieldConfigHeightComponent,
+        FieldConfigWeightComponent,
         FieldRenderTextComponent,
         FieldRenderChoiceComponent,
         FieldRenderDropdownComponent,
@@ -74,6 +80,8 @@ import { FieldRenderAddressComponent } from '../../../field-renderer/components/
         FormsModule,
         FsFormModule,
         FieldRenderAddressComponent,
+        FieldRenderHeightComponent,
+        FieldRenderWeightComponent,
     ],
 })
 export class FieldEditorItemComponent implements OnInit, OnDestroy {

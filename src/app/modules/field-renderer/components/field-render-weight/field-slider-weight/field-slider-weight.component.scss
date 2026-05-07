@@ -1,0 +1,107 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  min-height: 32px;
+  order: 1;
+
+  .label {
+    font-weight: 600;
+    font-size: 16px;
+    flex: 0 0 auto;
+  }
+
+  .value {
+    margin-left: auto;
+    color: #14213d;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+
+    &__number {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    &__unit {
+      font-size: 14px;
+      color: #4a5468;
+      font-weight: 500;
+    }
+  }
+
+  .unit-toggle {
+    flex: 0 0 auto;
+  }
+
+  &.centered .value {
+    position: absolute;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    margin: 0;
+    pointer-events: none;
+  }
+}
+
+.slider {
+  --mdc-slider-active-track-color: #1ea7e0;
+  --mdc-slider-inactive-track-color: #1ea7e0;
+  --mdc-slider-handle-color: #ffffff;
+  --mdc-slider-focus-handle-color: #ffffff;
+  --mdc-slider-hover-handle-color: #ffffff;
+  --mdc-slider-active-track-height: 6px;
+  --mdc-slider-inactive-track-height: 6px;
+  --mdc-slider-handle-height: 22px;
+  --mdc-slider-handle-width: 22px;
+  --mdc-slider-handle-elevation: 0 1px 3px rgba(0, 0, 0, 0.18);
+  --mdc-slider-with-overlap-handle-outline-color: transparent;
+  --mat-slider-ripple-color: rgba(30, 167, 224, 0.12);
+  --mat-slider-hover-state-layer-color: rgba(30, 167, 224, 0.04);
+  --mat-slider-focus-state-layer-color: rgba(30, 167, 224, 0.12);
+
+  width: calc(100% - 40px);
+  margin: 8px 20px 0;
+  order: 2;
+
+  ::ng-deep {
+    .mdc-slider__track--inactive {
+      opacity: 0.25;
+    }
+
+    .mdc-slider__thumb-knob {
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.bounds {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #9aa3b1;
+  margin-top: 2px;
+  padding: 0 20px;
+  order: 3;
+}
+
+.fs-form-message {
+  min-height: 15px;
+  margin-top: 4px;
+  order: 99;
+}
+
+.fs-form-hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  min-height: 15px;
+}

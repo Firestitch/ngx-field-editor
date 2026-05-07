@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, Optional } from '@angular/core';
-import { ControlContainer, NgForm, FormsModule } from '@angular/forms';
-
-import { controlContainerFactory } from '@firestitch/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ControlContainer, FormsModule } from '@angular/forms';
 
 import { FieldOption } from '../../../../interfaces';
 import { FieldComponent } from '../field/field.component';
@@ -18,8 +16,7 @@ import { MatHint } from '@angular/material/form-field';
     viewProviders: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

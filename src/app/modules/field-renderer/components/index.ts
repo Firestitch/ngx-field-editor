@@ -17,3 +17,5 @@ export * from './field-renderer/field-renderer.component';
 export * from './field-render-content/field-render-content.component';
 export * from './field-render-birthday/field-render-birthday.component';
 export * from './field-render-visual-selector';
+export * from './field-render-height/field-render-height.component';
+export * from './field-render-weight/field-render-weight.component';

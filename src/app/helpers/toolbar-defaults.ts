@@ -19,4 +19,6 @@ export const TOOLBAR_DEFAULTS = {
   [FieldType.Content]: { icon: 'text_format', label: 'Content' },
   [FieldType.RichText]: { icon: 'art_track', label: 'Rich text' },
   [FieldType.VisualSelector]: { icon: 'grid_view', label: 'Visual selector' },
+  [FieldType.Height]: { icon: 'height', label: 'Height' },
+  [FieldType.Weight]: { icon: 'monitor_weight', label: 'Weight' },
 };

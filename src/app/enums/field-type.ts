@@ -19,4 +19,6 @@ export enum FieldType {
   Content = 'content',
   RichText = 'richtext',
   VisualSelector = 'visualSelector',
+  Height = 'height',
+  Weight = 'weight',
 }

@@ -1,7 +1,5 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, Input, Optional, QueryList, inject } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
-
-import { controlContainerFactory } from '@firestitch/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, Input, QueryList, inject } from '@angular/core';
+import { ControlContainer } from '@angular/forms';
 
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
@@ -29,6 +27,8 @@ import { FieldRenderContentComponent } from '../field-render-content/field-rende
 import { FieldRenderRichTextComponent } from '../field-render-rich-text/field-render-rich-text.component';
 import { FieldRenderVisualSelectorComponent } from '../field-render-visual-selector/field-render-visual-selector.component';
 import { FieldRenderTextComponent } from '../field-render-text/field-render-text.component';
+import { FieldRenderHeightComponent } from '../field-render-height/field-render-height.component';
+import { FieldRenderWeightComponent } from '../field-render-weight/field-render-weight.component';
 
 
 @Component({
@@ -38,8 +38,7 @@ import { FieldRenderTextComponent } from '../field-render-text/field-render-text
     viewProviders: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -62,6 +61,8 @@ import { FieldRenderTextComponent } from '../field-render-text/field-render-text
         FieldRenderRichTextComponent,
         FieldRenderVisualSelectorComponent,
         FieldRenderTextComponent,
+        FieldRenderHeightComponent,
+        FieldRenderWeightComponent,
         AsyncPipe,
     ],
 })

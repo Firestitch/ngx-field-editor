@@ -1,0 +1,25 @@
+@if (isSlider) {
+  <fs-field-slider-height
+    [label]="field.label"
+    [hint]="field.description"
+    [required]="field.configs.required === true"
+    [disabled]="disabled"
+    [showUnitToggle]="showUnitToggle"
+    [minFeet]="minFeet"
+    [maxFeet]="maxFeet"
+    [name]="name"
+    [(ngModel)]="field.data.value"
+    (ngModelChange)="changed.emit(field)">
+  </fs-field-slider-height>
+} @else {
+  <fs-field-input-height
+    [label]="field.label"
+    [hint]="field.description"
+    [required]="field.configs.required === true"
+    [disabled]="disabled"
+    [showUnitToggle]="showUnitToggle"
+    [name]="name"
+    [(ngModel)]="field.data.value"
+    (ngModelChange)="changed.emit(field)">
+  </fs-field-input-height>
+}

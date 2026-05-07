@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, Input, Optional, QueryList, inject } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
-
-import { controlContainerFactory } from '@firestitch/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, Input, QueryList, inject } from '@angular/core';
+import { ControlContainer } from '@angular/forms';
 
 
 import { FieldRendererService } from '../../../../services';
@@ -19,8 +17,7 @@ import { FieldRenderComponent } from '../field-render/field-render.component';
     viewProviders: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

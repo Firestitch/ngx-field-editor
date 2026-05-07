@@ -1,11 +1,9 @@
 import {
-  ChangeDetectionStrategy, Component, Input, OnInit, Optional, ViewChild,
+  ChangeDetectionStrategy, Component, inject, Input, OnInit, ViewChild,
 } from '@angular/core';
-import { ControlContainer, NgForm, NgModel, FormsModule } from '@angular/forms';
+import { ControlContainer, NgModel, FormsModule } from '@angular/forms';
 
 import { MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
-
-import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldOption } from '../../../../interfaces';
 import { FieldComponent } from '../field/field.component';
@@ -23,8 +21,7 @@ import { MatInput } from '@angular/material/input';
     viewProviders: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

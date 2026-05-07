@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit, Optional } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ControlContainer } from '@angular/forms';
 
 import { IFsAddressConfig, FsAddressModule } from '@firestitch/address';
-import { controlContainerFactory } from '@firestitch/core';
 
 import { FieldComponent } from '../field/field.component';
 
@@ -14,8 +13,7 @@ import { FieldComponent } from '../field/field.component';
     viewProviders: [
         {
             provide: ControlContainer,
-            useFactory: controlContainerFactory,
-            deps: [[new Optional(), NgForm]],
+            useFactory: () => inject(ControlContainer, { skipSelf: true, optional: true }),
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

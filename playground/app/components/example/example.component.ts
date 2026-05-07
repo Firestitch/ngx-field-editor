@@ -609,6 +609,20 @@ export class ExampleComponent implements OnInit {
         ],
       },
       {
+        data: {},
+        guid: 'height',
+        type: FieldType.Height,
+        label: 'Height',
+        configs: {},
+      },
+      {
+        data: {},
+        guid: 'weight',
+        type: FieldType.Weight,
+        label: 'Weight',
+        configs: {},
+      },
+      {
         data: {
           value: {
             //other: 'Some text',
