@@ -46,12 +46,6 @@
       .fs-field:not(.selected):hover {
         background-color: #f9f9f9;
       }
-
-      .fs-field:hover {
-        .field-drag-button {
-          visibility: visible;
-        }
-      }
     }
   }
 }

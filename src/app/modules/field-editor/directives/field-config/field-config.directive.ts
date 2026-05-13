@@ -7,12 +7,12 @@ import { FieldEditorService } from '../../../../services';
 
 
 @Directive({
-    selector: '[fsFieldConfig]',
-    standalone: true,
+  selector: '[fsFieldConfig]',
+  standalone: true,
 })
 export class FieldConfigDirective {
-  templateRef = inject<TemplateRef<any>>(TemplateRef);
 
+  public templateRef = inject<TemplateRef<any>>(TemplateRef);
 
   @Input() public type: string | FieldType;
 

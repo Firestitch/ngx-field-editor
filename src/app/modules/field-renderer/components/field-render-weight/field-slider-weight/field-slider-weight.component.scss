@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  box-sizing: border-box;
+  padding: 0 16px;
+  overflow: hidden;
 }
 
 .header {
@@ -53,8 +56,6 @@
 }
 
 .slider {
-  --mdc-slider-active-track-color: #1ea7e0;
-  --mdc-slider-inactive-track-color: #1ea7e0;
   --mdc-slider-handle-color: #ffffff;
   --mdc-slider-focus-handle-color: #ffffff;
   --mdc-slider-hover-handle-color: #ffffff;
@@ -68,8 +69,8 @@
   --mat-slider-hover-state-layer-color: rgba(30, 167, 224, 0.04);
   --mat-slider-focus-state-layer-color: rgba(30, 167, 224, 0.12);
 
-  width: calc(100% - 40px);
-  margin: 8px 20px 0;
+  width: 100%;
+  margin: 8px 0 0;
   order: 2;
 
   ::ng-deep {
@@ -90,7 +91,6 @@
   font-size: 13px;
   color: #9aa3b1;
   margin-top: 2px;
-  padding: 0 20px;
   order: 3;
 }
 

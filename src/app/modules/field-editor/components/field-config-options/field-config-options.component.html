@@ -1,39 +1,27 @@
 <div
-  cdkDropList
-  class="options"
-  (cdkDropListDropped)="drop($event)">
+    cdkDropList
+    class="options"
+    (cdkDropListDropped)="drop($event)">
   @for (option of field.options; track option; let idx = $index) {
     <div
-      cdkDrag
-      cdkDragLockAxis="y"
-      class="fs-field-option">
+        cdkDrag
+        cdkDragLockAxis="y"
+        class="fs-field-option">
       <div
-        class="option-container"
-        [ngClass]="{ 'has-notes': option.notes, 'visual-selector': field.type === FieldType.VisualSelector }">
+          class="option-container"
+          [ngClass]="{ 'has-notes': option.notes, 'visual-selector': field.type === FieldType.VisualSelector }">
         <div
-          class="option-drag"
-          cdkDragHandle>
-          <button
-            button
-            mat-icon-button
-            type="button"
-            class="option-drag-button">
-            <mat-icon>
-              drag_indicator
-            </mat-icon>
-          </button>
+            class="option-drag"
+            cdkDragHandle>
+          <ng-container [ngTemplateOutlet]="dragButton"></ng-container>
         </div>
         <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
         <div class="option-data-container">
           <div class="option-data">
-            @if (showOptionImage && (this.field.configs.format === VisualSelectorFormat.Image || this.field.configs.format === VisualSelectorFormat.ImageName)) {
-              <fs-file-image-picker
-                #fileImagePicker
-                [url]="option.image?.preview"
-                (select)="selectOptionImage($event, option, fileImagePicker)"
-                [previewDiameter]="60">
-              </fs-file-image-picker>
-            }
+            <ng-container
+              [ngTemplateOutlet]="imageOption"
+              [ngTemplateOutletContext]="{ option: option }">
+            </ng-container>
             @if (showOptionLabel) {
               <div class="option-label">
                 <mat-form-field class="form-field-padless">
@@ -61,55 +49,96 @@
               </div>
             }
           </div>
-          @if (option.notes && showNotes) {
-            <div class="option-note">
-              <mat-form-field class="form-field-padless">
-                <input
-                  matInput
-                  placeholder="Notes"
-                  [(ngModel)]="option.notesLabel"
-                  [name]="'notes-label' + idx"
-                  [ngModelOptions]="{ updateOn: 'blur' }"
-                  (ngModelChange)="optionSave(option)">
-              </mat-form-field>
-            </div>
-          }
         </div>
         @if (showNotes) {
           <button
-            mat-icon-button
-            type="button"
-            class="notes"
-            [ngClass]="{ enabled: option.notes }"
-            (click)="toggleOptionNotes(option)"
-            [matTooltip]="option.notes ? 'Disable response notes' : 'Enable response notes'">
+              mat-icon-button
+              type="button"
+              class="notes"
+              [ngClass]="{ enabled: option.notes }"
+              (click)="toggleOptionNotes(option)"
+              [matTooltip]="option.notes ? 'Disable response notes' : 'Enable response notes'">
             <mat-icon>
               chat
             </mat-icon>
           </button>
         }
         <button
-          button
-          mat-icon-button
-          type="button"
-          (click)="removeOption(option)">
+            button
+            mat-icon-button
+            type="button"
+            (click)="removeOption(option)">
           <mat-icon>
             delete
           </mat-icon>
         </button>
       </div>
+      @if (option.notes && showNotes) {
+        <div class="option-note">
+          <div class="option-drag invisible">
+            <ng-container [ngTemplateOutlet]="dragButton"></ng-container>
+          </div>
+          <div class="invisible">
+            <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
+          </div>
+          <div class="option-data-container">
+            <div class="option-data">
+              @if (showOptionImage && (this.field.configs.format === VisualSelectorFormat.Image || this.field.configs.format === VisualSelectorFormat.ImageName)) {
+                <div class="invisible">
+                  <ng-container
+                    [ngTemplateOutlet]="imageOption"
+                    [ngTemplateOutletContext]="{ option: option }">
+                  </ng-container>
+                </div>
+              }
+              <div class="option-label">
+                <mat-form-field class="form-field-padless">
+                  <input
+                    matInput
+                    placeholder="Notes"
+                    [(ngModel)]="option.notesLabel"
+                    [name]="'notes-label' + idx"
+                    [ngModelOptions]="{ updateOn: 'blur' }"
+                    (ngModelChange)="optionSave(option)">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          @if (showNotes) {
+            <button
+                mat-icon-button
+                type="button"
+                tabindex="-1"
+                class="notes invisible">
+              <mat-icon>
+                chat
+              </mat-icon>
+            </button>
+          }
+          <button
+              button
+              mat-icon-button
+              type="button"
+              tabindex="-1"
+              class="invisible">
+            <mat-icon>
+              delete
+            </mat-icon>
+          </button>
+        </div>
+      }
     </div>
   }
 </div>
 <div
-  class="option-container option-add-new"
-  [class.loading]="optionLoading$ | async">
+    class="option-container option-add-new"
+    [class.loading]="optionLoading$ | async">
   @if (field.options.length) {
     <button
-      button
-      mat-icon-button
-      type="button"
-      class="option-drag-placeholder">
+        button
+        mat-icon-button
+        type="button"
+        class="option-drag-placeholder">
       <mat-icon></mat-icon>
     </button>
     <ng-container [ngTemplateOutlet]="disabledPlaceholder"></ng-container>
@@ -123,8 +152,8 @@
       </fs-file-image-picker>
     }
     <div
-      class="option-label"
-      [ngClass]="{ hide: !showOptionLabel}">
+        class="option-label"
+        [ngClass]="{ hide: !showOptionLabel}">
       <mat-form-field class="new-option form-field-padless">
         <input
           matInput
@@ -134,8 +163,7 @@
       </mat-form-field>
     </div>
     @if (field.configs.showValues) {
-      <div
-        class="option-value">
+      <div class="option-value">
         <mat-form-field class="form-field-padless">
           <input
             matInput
@@ -150,19 +178,19 @@
         Or
       </span>
       <button
-        mat-button
-        type="button"
-        color="primary"
-        (click)="otherToggle()">
+          mat-button
+          type="button"
+          color="primary"
+          (click)="otherToggle()">
         {{ field.configs.other ? 'Remove' : 'Add' }} "Other" Option
       </button>
     }
   </div>
   <button
-    button
-    mat-icon-button
-    type="button"
-    style="visibility: hidden">
+      button
+      mat-icon-button
+      type="button"
+      style="visibility: hidden">
     <mat-icon>
       delete
     </mat-icon>
@@ -171,10 +199,10 @@
 @if (showOther && field.configs.other) {
   <div class="other">
     <button
-      button
-      mat-icon-button
-      type="button"
-      [ngStyle]="{'visibility': 'hidden'}">
+        button
+        mat-icon-button
+        type="button"
+        [ngStyle]="{'visibility': 'hidden'}">
       <mat-icon>
         drag_indicator
       </mat-icon>
@@ -188,31 +216,47 @@
         value="Other">
     </mat-form-field>
     <button
-      mat-icon-button
-      type="button"
-      (click)="otherToggle()">
+        mat-icon-button
+        type="button"
+        (click)="otherToggle()">
       <mat-icon>
         delete
       </mat-icon>
     </button>
   </div>
 }
+<ng-template #dragButton>
+  <button
+      button
+      mat-icon-button
+      type="button"
+      tabindex="-1"
+      class="option-drag-button">
+    <mat-icon>
+      drag_indicator
+    </mat-icon>
+  </button>
+</ng-template>
+<ng-template #imageOption let-option="option">
+  @if (showOptionImage && (this.field.configs.format === VisualSelectorFormat.Image || this.field.configs.format === VisualSelectorFormat.ImageName)) {
+    <fs-file-image-picker
+      #fileImagePicker
+      [url]="option.image?.preview"
+      (select)="selectOptionImage($event, option, fileImagePicker)"
+      [previewDiameter]="60">
+    </fs-file-image-picker>
+  }
+</ng-template>
 <ng-template #disabledPlaceholder>
   @switch (field.type) {
     @case (FieldType.Checkbox) {
-      <mat-checkbox
-        disabled="true">
-      </mat-checkbox>
+      <mat-checkbox disabled="true"></mat-checkbox>
     }
     @case (FieldType.Choice) {
-      <mat-radio-button
-        [disabled]="true">
-      </mat-radio-button>
+      <mat-radio-button [disabled]="true"></mat-radio-button>
     }
     @case (FieldType.Dropdown) {
-      <mat-radio-button
-        [disabled]="true">
-      </mat-radio-button>
+      <mat-radio-button [disabled]="true"></mat-radio-button>
     }
   }
 </ng-template>

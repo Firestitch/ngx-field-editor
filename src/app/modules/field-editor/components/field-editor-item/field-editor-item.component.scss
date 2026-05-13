@@ -47,8 +47,9 @@
 
 .field-container {
   margin: 5px 0;
-  padding: 15px 30px 15px 30px;
+  padding: 25px 30px 25px 30px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .field-config,
@@ -80,20 +81,27 @@ mat-form-field.label {
 
 
 .field-drag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
   text-align: center;
-  width: 100%;
   cursor: pointer;
-    
+  z-index: 999;
+
   .field-drag-button {
-    position: absolute;
-    margin-top: -29px;
-    z-index: 999;
+    margin-top: -10px;
     visibility: hidden;
 
     mat-icon {
       color: #676767;
       transform: rotate(90deg);
     }
+  }
+
+  &:hover .field-drag-button {
+    visibility: visible;
   }
 }
 
